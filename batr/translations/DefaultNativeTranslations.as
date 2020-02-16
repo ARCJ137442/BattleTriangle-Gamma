@@ -1,0 +1,251 @@
+package batr.translations 
+{
+	import batr.general.*;
+	import batr.game.block.*;
+	import batr.game.effect.*;
+	import batr.game.entity.*;
+	import batr.game.model.*;
+	
+	internal class DefaultNativeTranslations 
+	{
+		//============Constructor Function============//
+		public function DefaultNativeTranslations():void
+		{
+			throw new Error("Cannot construct this class!");
+		}
+		
+		//============Default Translations(Static)============//
+		//========Translations Create And Get========//
+		public static function get EN_US():Translations
+		{
+			//EN_US._getFunction=DefaultNativeTranslations.getDefaultTranslation;//=Translations.fromStringArr2("")
+			return new Translations(
+				//batr.language
+				TranslationKey.LANGUAGE_SELF,"English",
+				//batr.code
+				TranslationKey.INFINITY,"Infinity",
+				TranslationKey.TRUE,"True",
+				TranslationKey.FALSE,"False",
+				//batr.boolean
+				TranslationKey.BOOLEAN_YES,"Yes",
+				TranslationKey.BOOLEAN_NO,"No",
+				//batr.menu
+				TranslationKey.LANGUAGE,"Language",
+				TranslationKey.QUICK_GAME,"Quick Game",
+				TranslationKey.SELECT_GAME,"Select Game",
+				TranslationKey.CUSTOM_MODE,"Custom Mode",
+				TranslationKey.START,"Start",
+				TranslationKey.ADVANCED,"Advanced",
+				TranslationKey.SAVES,"Saves",
+				TranslationKey.BACK,"Back",
+				TranslationKey.CONTINUE,"Continue",
+				//batr.select
+				TranslationKey.PLAYER_COUNT,"Player Count",
+				TranslationKey.AI_PLAYER_COUNT,"AIPlayer Count",
+				TranslationKey.GAME_MODE,"Game Mode",
+				TranslationKey.INITIAL_MAP,"Initial Map",
+				//batr.game
+				TranslationKey.GAME_RESULT,"Game Result",
+				//batr.game.map
+				TranslationKey.MAP_RANDOM,"Random",
+				//batr.game.key
+				TranslationKey.REMAIN_TRANSFORM_TIME,"Remain Transform Time",
+				TranslationKey.GAME_DURATION,"Game Duration",
+				//batr.custom
+				TranslationKey.DEFAULT_WEAPON,"Default Weapon",
+				TranslationKey.DEFAULT_HEALTH,"Default Health",
+				TranslationKey.DEFAULT_MAX_HEALTH,"Default MaxHealth",
+				TranslationKey.REMAIN_LIFES_PLAYER,"Player Remain Lifes",
+				TranslationKey.REMAIN_LIFES_AI,"AI Remain Lifes",
+				TranslationKey.MAX_BONUS_COUNT,"Max Bonus Count",
+				TranslationKey.BONUS_SPAWN_AFTER_DEATH,"Bonus Spawn After Death",
+				TranslationKey.MAP_TRANSFORM_TIME,"Map Transfor Time(s)",
+				TranslationKey.WEAPONS_NO_CD,"Weapons No CD",
+				TranslationKey.RESPAWN_TIME,"Respawn Time(s)",
+				TranslationKey.ASPHYXIA_DAMAGE,"Asphyxia Damage",
+				//batr.custom.property
+				TranslationKey.COMPLETELY_RANDOM,"C-Random",
+				TranslationKey.UNIFORM_RANDOM,"U-Random",
+				TranslationKey.CERTAINLY_DEAD,"Certainly Dead",
+				TranslationKey.NEVER,"Never",
+				//GameModeTypes
+				TranslationKey.getTypeNameKey(GameModeType.REGULAR),
+					"Regular",
+				TranslationKey.getTypeNameKey(GameModeType.BATTLE),
+					"Battle",
+				TranslationKey.getTypeNameKey(GameModeType.SURVIVAL),
+					"Survival"
+			);
+		}
+		
+		public static function get ZH_CN():Translations
+		{
+			return new Translations(
+				//batr.language
+				TranslationKey.LANGUAGE_SELF,"\u7b80\u4f53\u4e2d\u6587",
+				//batr.code
+				TranslationKey.INFINITY,"\u65e0\u9650",
+				TranslationKey.TRUE,"\u771f",
+				TranslationKey.FALSE,"\u5047",
+				//batr.boolean
+				TranslationKey.BOOLEAN_YES,"\u662f",
+				TranslationKey.BOOLEAN_NO,"\u5426",
+				//batr.menu
+				TranslationKey.LANGUAGE,"\u8bed\u8a00",
+				TranslationKey.QUICK_GAME,"\u5feb\u901f\u6e38\u620f",
+				TranslationKey.SELECT_GAME,"\u9009\u62e9\u6e38\u620f",
+				TranslationKey.CUSTOM_MODE,"\u81ea\u5b9a\u4e49\u6a21\u5f0f",
+				TranslationKey.START,"\u5f00\u59cb",
+				TranslationKey.ADVANCED,"\u9ad8\u7ea7",
+				TranslationKey.SAVES,"\u5b58\u6863",
+				TranslationKey.BACK,"\u8fd4\u56de",
+				TranslationKey.CONTINUE,"\u7ee7\u7eed",
+				//batr.select
+				TranslationKey.PLAYER_COUNT,"\u73a9\u5bb6\u6570\u91cf",
+				TranslationKey.AI_PLAYER_COUNT,"\u0041\u0049\u73a9\u5bb6\u6570\u91cf",
+				TranslationKey.GAME_MODE,"\u6e38\u620f\u6a21\u5f0f",
+				TranslationKey.INITIAL_MAP,"\u521d\u59cb\u5730\u56fe",
+				//batr.game
+				TranslationKey.GAME_RESULT,"\u6e38\u620f\u7ed3\u679c",
+				//batr.game.map
+				TranslationKey.MAP_RANDOM,"\u968f\u673a",
+				//batr.game.key
+				TranslationKey.REMAIN_TRANSFORM_TIME,"\u5269\u4f59\u53d8\u6362\u65f6\u95f4",
+				TranslationKey.GAME_DURATION,"\u6e38\u620f\u65f6\u957f",
+				//batr.custom
+				TranslationKey.DEFAULT_WEAPON,"\u9ed8\u8ba4\u6b66\u5668",
+				TranslationKey.DEFAULT_HEALTH,"\u9ed8\u8ba4\u751f\u547d\u503c",
+				TranslationKey.DEFAULT_MAX_HEALTH,"\u9ed8\u8ba4\u6700\u5927\u751f\u547d\u503c",
+				TranslationKey.REMAIN_LIFES_PLAYER,"\u73a9\u5bb6\u5269\u4f59\u751f\u547d",
+				TranslationKey.REMAIN_LIFES_AI,"\u0041\u0049\u5269\u4f59\u751f\u547d",
+				TranslationKey.MAX_BONUS_COUNT,"\u6700\u5927\u5956\u52b1\u7bb1\u6570",
+				TranslationKey.BONUS_SPAWN_AFTER_DEATH,"\u5956\u52b1\u7bb1\u6b7b\u540e\u751f\u6210",
+				TranslationKey.MAP_TRANSFORM_TIME,"\u5730\u56fe\u53d8\u6362\u65f6\u95f4\u0028\u0073\u0029",
+				TranslationKey.WEAPONS_NO_CD,"\u6b66\u5668\u65e0\u51b7\u5374",
+				TranslationKey.RESPAWN_TIME,"\u91cd\u751f\u65f6\u95f4\u0028\u0073\u0029",
+				TranslationKey.ASPHYXIA_DAMAGE,"\u7a92\u606f\u4f24\u5bb3",
+				//batr.custom.property
+				TranslationKey.COMPLETELY_RANDOM,"\u5b8c\u5168\u968f\u673a",
+				TranslationKey.UNIFORM_RANDOM,"\u7edf\u4e00\u968f\u673a",
+				TranslationKey.CERTAINLY_DEAD,"\u5fc5\u6b7b",
+				TranslationKey.NEVER,"\u4ece\u4e0d",
+				//BlockTypes
+				TranslationKey.getTypeNameKey(BlockType.VOID),
+					"\u7a7a\u4f4d",
+				TranslationKey.getTypeNameKey(BlockType.WALL),
+					"\u5899",
+				TranslationKey.getTypeNameKey(BlockType.WATER),
+					"\u6c34",
+				TranslationKey.getTypeNameKey(BlockType.GLASS),
+					"\u73bb\u7483",
+				TranslationKey.getTypeNameKey(BlockType.BEDROCK),
+					"\u57fa\u5ca9",
+				TranslationKey.getTypeNameKey(BlockType.X_TRAP_HURT),
+					"\u0058\u002d\u4f24\u5bb3\u9677\u9631",
+				TranslationKey.getTypeNameKey(BlockType.X_TRAP_KILL),
+					"\u0058\u002d\u6b7b\u4ea1\u9677\u9631",
+				TranslationKey.getTypeNameKey(BlockType.COLORED_BLOCK),
+					"\u8272\u5757",
+				TranslationKey.getTypeNameKey(BlockType.COLOR_SPAWNER),
+					"\u8272\u5757\u751f\u6210\u5668",
+				//EntityTypes
+				TranslationKey.getTypeNameKey(EntityType.BULLET_BASIC),
+					"\u57fa\u7840\u5b50\u5f39",
+				TranslationKey.getTypeNameKey(EntityType.BULLET_NUKE),
+					"\u6838\u5f39",
+				TranslationKey.getTypeNameKey(EntityType.LASER_BASIC),
+					"\u57fa\u7840\u6fc0\u5149",
+				TranslationKey.getTypeNameKey(EntityType.LASER_CONTINUOUS),
+					"\u8fde\u7eed\u6fc0\u5149",
+				TranslationKey.getTypeNameKey(EntityType.LASER_TELEPORT),
+					"\u4f20\u9001\u6fc0\u5149",
+				TranslationKey.getTypeNameKey(EntityType.LASER_ABSORPTION),
+					"\u5438\u6536\u6fc0\u5149",
+				TranslationKey.getTypeNameKey(EntityType.WAVE),
+					"\u6ce2\u6d6a",
+				TranslationKey.getTypeNameKey(EntityType.THROWED_BLOCK),
+					"\u63b7\u51fa\u7684\u65b9\u5757",
+				TranslationKey.getTypeNameKey(EntityType.BONUS_BOX),
+					"\u5956\u52b1\u7bb1",
+				TranslationKey.getTypeNameKey(EntityType.PLAYER),
+					"\u73a9\u5bb6",
+				TranslationKey.getTypeNameKey(EntityType.AI_PLAYER),
+					"\u0041\u0049\u73a9\u5bb6",
+				//EffectTypes
+				TranslationKey.getTypeNameKey(EffectType.EXPLODE),
+					"\u7206\u70b8",
+				TranslationKey.getTypeNameKey(EffectType.SPAWN),
+					"\u91cd\u751f",
+				TranslationKey.getTypeNameKey(EffectType.TELEPORT),
+					"\u4f20\u9001",
+				TranslationKey.getTypeNameKey(EffectType.PLAYER_DEATH_LIGHT),
+					"\u73a9\u5bb6\u6b7b\u4ea1\u70ab\u5149",
+				TranslationKey.getTypeNameKey(EffectType.PLAYER_DEATH_ALPHA),
+					"\u73a9\u5bb6\u6b7b\u4ea1\u6de1\u51fa",
+				//WeaponTypes
+				TranslationKey.getTypeNameKey(WeaponType.BULLET),
+					"\u5b50\u5f39",
+				TranslationKey.getTypeNameKey(WeaponType.NUKE),
+					"\u6838\u5f39",
+				TranslationKey.getTypeNameKey(WeaponType.LASER),
+					"\u6fc0\u5149",
+				TranslationKey.getTypeNameKey(WeaponType.CONTINUOUS_LASER),
+					"\u8fde\u7eed\u6fc0\u5149",
+				TranslationKey.getTypeNameKey(WeaponType.TELEPORT_LASER),
+					"\u4f20\u9001\u6fc0\u5149",
+				TranslationKey.getTypeNameKey(WeaponType.ABSORPTION_LASER),
+					"\u5438\u6536\u6fc0\u5149",
+				TranslationKey.getTypeNameKey(WeaponType.WAVE),
+					"\u6ce2\u6d6a",
+				TranslationKey.getTypeNameKey(WeaponType.BLOCK_THROWER),
+					"\u65b9\u5757\u6295\u63b7\u8005",
+				TranslationKey.getTypeNameKey(WeaponType.MELEE),
+					"\u8fd1\u6218",
+				//GameModeTypes
+				TranslationKey.getTypeNameKey(GameModeType.REGULAR),
+					"\u6b63\u5e38",
+				TranslationKey.getTypeNameKey(GameModeType.BATTLE),
+					"\u6df7\u6218",
+				TranslationKey.getTypeNameKey(GameModeType.SURVIVAL),
+					"\u751f\u5b58"
+			);
+		}
+		
+		public static function getDefaultTranslation(key:String):String
+		{
+			var type:TypeCommon;
+			//Block Type
+			for each(type in BlockType._ALL_BLOCK)
+			{
+				if(type==null) continue;
+				if(key==TranslationKey.getTypeNameKey(type)) return type.name;
+			}
+			//Entity Type
+			for each(type in EntityType._ALL_ENTITY)
+			{
+				if(type==null) continue;
+				if(key==TranslationKey.getTypeNameKey(type)) return type.name;
+			}
+			//Effect Type
+			for each(type in EffectType._ALL_EFFECT)
+			{
+				if(type==null) continue;
+				if(key==TranslationKey.getTypeNameKey(type)) return type.name;
+			}
+			//Weapon Type
+			for each(type in WeaponType._ALL_WEAPON)
+			{
+				if(type==null) continue;
+				if(key==TranslationKey.getTypeNameKey(type)) return type.name;
+			}
+			//Bonus Type
+			for each(type in BonusType._ALL_TYPE)
+			{
+				if(type==null) continue;
+				if(key==TranslationKey.getTypeNameKey(type)) return type.name;
+			}
+			//Else
+			return TranslationKey.NULL
+		}
+	}
+}
