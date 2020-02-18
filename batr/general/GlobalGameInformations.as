@@ -6,9 +6,10 @@ package batr.general
 		public static const GAME_NAME:String="Battle Triangle";
 		public static const GAME_NAME_SHORT:String="BATR";
 		public static const GAME_DEV_STAGE:String="Gamma";
+		public static const GAME_VERSION_MAJOR:String="0.1.0";
 		public static const GAME_VERSION_MAIN:String="alpha";
 		public static const GAME_VERSION_BUILD:String="08";
-		public static const GAME_UPDATE_DESCRIPTION:String="Game Result&Internal Code Refresh";
+		public static const GAME_UPDATE_DESCRIPTION:String="Hosted on GitHub,update version text";
 		
 		//============Static Getter And Setter============//
 		public static function get GAME_FULL_NAME():String
@@ -18,7 +19,7 @@ package batr.general
 		
 		public static function get GAME_FULL_VERSION():String
 		{
-			return GAME_VERSION_MAIN+"_"+GAME_VERSION_BUILD;
+			return "v"+GAME_VERSION_MAJOR+"-"+GAME_VERSION_MAIN+"."+GAME_VERSION_BUILD;
 		}
 		
 		//============Static Functions============//

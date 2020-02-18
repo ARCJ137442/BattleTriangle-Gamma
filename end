@@ -1,0 +1,287 @@
+[33mcommit 712211166803dbd2d9646d85b67c0f0ac542fbbe[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;33mtag: v0.1.0-alpha.8[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Mon Feb 17 02:14:52 2020 +0800
+
+    Update README.md
+
+[33mcommit 004af2da8302779e569016daee1cc68b64f1df9e[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Mon Feb 17 02:06:47 2020 +0800
+
+    batr.game.model
+
+[33mcommit 9c479945bbac03fbbac9360e11d86d82bf9d32c7[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Mon Feb 17 02:06:07 2020 +0800
+
+    Added Map_V1.as
+
+[33mcommit 4c0006ffc73ce1faa79ee346abc6d9541edc622d[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Mon Feb 17 02:05:46 2020 +0800
+
+    Create BonusType.as
+
+[33mcommit fa4e8e7a26c20ac7073acef5380d4c6ed042fbac[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Mon Feb 17 02:04:53 2020 +0800
+
+    Create Map_Common.as
+
+[33mcommit eb51b2ac6ec6c6849cdcf3da75ea58bef0c0fea7[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Mon Feb 17 02:04:19 2020 +0800
+
+    Added Game.as
+
+[33mcommit a9299a96d5d63fc073995f64bbdc83d56b3de107[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Mon Feb 17 01:52:20 2020 +0800
+
+    Create GameRule.as
+
+[33mcommit 9fee197433b947a803faf4b7a2d933a99e452549[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Mon Feb 17 01:50:13 2020 +0800
+
+    Create GameRuleEvent.as
+
+[33mcommit e857c627b5e97dc76d712dffe1808aac5b56568f[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Mon Feb 17 01:04:35 2020 +0800
+
+    projectiles
+
+[33mcommit 5dbabac90ef9f5ecf0feeb93bd05a69d981f5463[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Mon Feb 17 00:38:13 2020 +0800
+
+    Create BulletBasic.as
+
+[33mcommit 868ac5e920490014aba884f54fdeca47149cb38d[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Mon Feb 17 00:37:10 2020 +0800
+
+    Added AIPlayer.as
+
+[33mcommit cc2bb9f8260e1a4a9849339d8dcd14a7048f4ef7[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Mon Feb 17 00:35:56 2020 +0800
+
+    Create Player.as
+
+[33mcommit eec79c0d942905b719a7552565e89570d847f658[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Mon Feb 17 00:35:08 2020 +0800
+
+    Create BonusBox.as
+
+[33mcommit de6d3cf50f34a00d643f5527b3c8e3aba15a8e16[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 21:05:18 2020 +0800
+
+    batr\game\entity
+
+[33mcommit e5c430b80cfd1dd18491368f18f1fee33f501382[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 21:04:41 2020 +0800
+
+    Create EntityCommon.as
+
+[33mcommit a6b1c523138a20e815f7087ab9aa45928cb62813[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 21:00:37 2020 +0800
+
+    batr\game\entity\ai\programs
+
+[33mcommit bd99ed133398d4e34d99fcf89892b48dad811e50[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:59:47 2020 +0800
+
+    Create AIProgram_Adventurer.as
+
+[33mcommit a9c7aaa61a335194ce841b14a85e94a092a0f403[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:58:48 2020 +0800
+
+    batr.translations
+
+[33mcommit ef67311f33eeb86c4309bfdf6c64e73e5d59828d[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:58:11 2020 +0800
+
+    Create Translations.as
+
+[33mcommit b8ecbeb93cb6f61da59c59150aa64abbbd54ee78[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:57:04 2020 +0800
+
+    Add files via upload
+
+[33mcommit f6eb7fe284bf77438fcf5e1ec53ba318c546fa49[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:55:07 2020 +0800
+
+    Add files via upload
+
+[33mcommit 20876a0b212d0f16a5348749760978dea6405ad4[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:54:45 2020 +0800
+
+    Create BatrSelecter.as
+
+[33mcommit 78845a865bcca55ecc8d92ca8c5bcc74a5b821b6[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:53:41 2020 +0800
+
+    Create Menu.as
+
+[33mcommit d3a3a6177d9e879ece78b1d5924d64f6080f3c35[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:52:26 2020 +0800
+
+    Add files via upload
+
+[33mcommit 934f321246e788185e9d3921ac0bf322b9bf3b8b[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:49:44 2020 +0800
+
+    Create BatrGUIEvent.as
+
+[33mcommit 2ca6f354e7c778366b1fc57e638ad7a453e73adc[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:48:57 2020 +0800
+
+    Add files via upload
+
+[33mcommit c1ff2cc3430351d8717168b51fad6d6de6a16173[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:45:58 2020 +0800
+
+    Create BackGround.as
+
+[33mcommit cca0b9be36ccd651d95a168a92f8b22b4a965e53[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:41:12 2020 +0800
+
+    Add files via upload
+
+[33mcommit 76ca7d2f54816c8a9acf17a069b9ae72012c1bae[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:38:09 2020 +0800
+
+    Create GlobalGameInformations.as
+
+[33mcommit 44b731be71f75ee0ba39168e23256e4c7ea456a8[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:37:26 2020 +0800
+
+    Add files via upload
+
+[33mcommit d9ef379360cd1bef41a50112a581850afe7b865c[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:37:00 2020 +0800
+
+    Create EffectBlockLight.as
+
+[33mcommit debf9cd932bad69ddd0d3f1645f3a406a1f9ad8d[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:33:22 2020 +0800
+
+    Add files via upload
+
+[33mcommit f4ddccec6f66b10552a62f9c3a12f0d4660128a4[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:29:47 2020 +0800
+
+    Create EffectCommon.as
+
+[33mcommit 807ccbf926291ddab6f65c7272dffb8f6c804d6a[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:26:50 2020 +0800
+
+    batr\game\block
+
+[33mcommit da998b218f97ff06a11853d64152561374bc88f1[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:26:20 2020 +0800
+
+    Create BlockAttributes.as
+
+[33mcommit 83eeb0a4354e78fb736b975bc8e126cb1650fb05[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:24:59 2020 +0800
+
+    batr\game\block\blocks
+
+[33mcommit 46255584de422fc083d282c2e3a892ceb51a9725[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:24:19 2020 +0800
+
+    Create Bedrock.as
+
+[33mcommit 7c359a598478d07fc380ed16447b4078df70c8b0[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:22:47 2020 +0800
+
+    Create MainFont.as
+
+[33mcommit 6b3d36fb2daf54b5ec076b67d7a623d1009707ea[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:20:35 2020 +0800
+
+    batr.common loaded
+
+[33mcommit c346a9741dc6d633158b9c9cbdafed30e6f6de8a[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 20:12:52 2020 +0800
+
+    Create Color.as
+
+[33mcommit 575a755457967231bdb00760eb00f24b33af2f7d[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 19:52:57 2020 +0800
+
+    swf,as3proj
+
+[33mcommit d4d620c6d6713a9e0692a68fa3fac7e589d4a86e[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 19:51:18 2020 +0800
+
+    Delete folder
+
+[33mcommit 17109a1fba2a158ab32c4eee6164e5d27f70a8b4[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 19:48:34 2020 +0800
+
+    Create folder
+
+[33mcommit c02bd14b45393a2a6278f76e06f47a69659555cb[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 19:42:33 2020 +0800
+
+    Add files via upload
+
+[33mcommit 368c5d4a5f85c6859a6815e2a06b7d20720e6005[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 19:38:54 2020 +0800
+
+    Update README.md
+
+[33mcommit 39b1cc1267aab34b3bb2bbb9db8dd9bd89bfeb8a[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 19:32:39 2020 +0800
+
+    Create README.md
+
+[33mcommit 802aaee2d74e5e7b7d84c4bef4ba348108037268[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 19:30:57 2020 +0800
+
+    Create batrfla.as
+
+[33mcommit 4c87d2208a1ddf53f983be7b7c249de24640465c[m
+Author: ARCJ137442 <61109168+ARCJ137442@users.noreply.github.com>
+Date:   Sun Feb 16 18:58:32 2020 +0800
+
+    Initial commit
