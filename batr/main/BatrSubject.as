@@ -201,6 +201,7 @@ package batr.main
 		{
 			//this.gameVisible=false
 			this.menuVisible=true;
+			this._game.visibleHUD=true;
 			this._menu.updateMapSize();
 		}
 		

@@ -74,7 +74,9 @@ package batr.translations
 				TranslationKey.getTypeNameKey(GameModeType.BATTLE),
 					"Battle",
 				TranslationKey.getTypeNameKey(GameModeType.SURVIVAL),
-					"Survival"
+					"Survival",
+				TranslationKey.getTypeNameKey(GameModeType.HARD),
+					"Hard"
 			);
 		}
 		
@@ -141,13 +143,19 @@ package batr.translations
 				TranslationKey.getTypeNameKey(BlockType.BEDROCK),
 					"\u57fa\u5ca9",
 				TranslationKey.getTypeNameKey(BlockType.X_TRAP_HURT),
-					"\u0058\u002d\u4f24\u5bb3\u9677\u9631",
+					"\u0058\u9677\u9631\u002d\u4f24\u5bb3",
 				TranslationKey.getTypeNameKey(BlockType.X_TRAP_KILL),
-					"\u0058\u002d\u6b7b\u4ea1\u9677\u9631",
+					"\u0058\u9677\u9631\u002d\u6b7b\u4ea1",
+				TranslationKey.getTypeNameKey(BlockType.X_TRAP_ROTATE),
+					"\u0058\u9677\u9631\u002d\u65cb\u8f6c",
 				TranslationKey.getTypeNameKey(BlockType.COLORED_BLOCK),
 					"\u8272\u5757",
 				TranslationKey.getTypeNameKey(BlockType.COLOR_SPAWNER),
 					"\u8272\u5757\u751f\u6210\u5668",
+				TranslationKey.getTypeNameKey(BlockType.LASER_TRAP),
+					"\u6fc0\u5149\u9677\u9631",
+				TranslationKey.getTypeNameKey(BlockType.METAL),
+					"\u91d1\u5c5e",
 				//EntityTypes
 				TranslationKey.getTypeNameKey(EntityType.BULLET_BASIC),
 					"\u57fa\u7840\u5b50\u5f39",
@@ -201,13 +209,17 @@ package batr.translations
 					"\u65b9\u5757\u6295\u63b7\u8005",
 				TranslationKey.getTypeNameKey(WeaponType.MELEE),
 					"\u8fd1\u6218",
+				TranslationKey.getTypeNameKey(WeaponType.LIGHTNING),
+					"\u95ea\u7535",
 				//GameModeTypes
 				TranslationKey.getTypeNameKey(GameModeType.REGULAR),
 					"\u6b63\u5e38",
 				TranslationKey.getTypeNameKey(GameModeType.BATTLE),
 					"\u6df7\u6218",
 				TranslationKey.getTypeNameKey(GameModeType.SURVIVAL),
-					"\u751f\u5b58"
+					"\u751f\u5b58",
+				TranslationKey.getTypeNameKey(GameModeType.HARD),
+					"\u56f0\u96be"
 			);
 		}
 		

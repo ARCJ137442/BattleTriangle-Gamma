@@ -13,9 +13,11 @@ package batr.game.block
 		public static const BEDROCK:BlockAttributes=new BlockAttributes(0x888888).asSolid.asUnbreakable
 		public static const X_TRAP_HURT:BlockAttributes=new BlockAttributes(0xffff00,0xc0000000).asGas.asHurtZone
 		public static const X_TRAP_KILL:BlockAttributes=new BlockAttributes(0xff0000,0xc0000000).asGas.asKillZone
+		public static const X_TRAP_ROTATE:BlockAttributes=new BlockAttributes(0x0000ff,0xc0000000).asGas.asRotateZone
 		public static const COLORED_BLOCK:BlockAttributes=new BlockAttributes(0x000000).asSolid
 		public static const COLOR_SPAWNER:BlockAttributes=new BlockAttributes(0x444444).asSolid
 		public static const LASER_TRAP:BlockAttributes=new BlockAttributes(0x444444).asSolid
+		public static const METAL:BlockAttributes=new BlockAttributes(0x666666).asSolid.asMetal
 		
 		//============Static Functions============//
 		public static function fromType(type:BlockType):BlockAttributes
@@ -24,7 +26,7 @@ package batr.game.block
 		}
 		
 		//============Instance Variables============//
-		//Attributes
+		//==Attributes==//
 		public var playerCanPass:Boolean
 		public var bulletCanPass:Boolean
 		public var laserCanPass:Boolean
@@ -42,7 +44,19 @@ package batr.game.block
 		 */
 		public var hurtPlayerDamage:int
 		
-		//Informations
+		/**
+		 * True means player/projectile will rotate when move in the block.
+		 */
+		public var rotateWhenMoveIn:Boolean
+		
+		/**
+		 * this attribute determines electric flow in the block,
+		 * 0 means lightning can flow in the block without energy
+		 * energy-=electricResistance
+		 */
+		public var electricResistance:uint
+		
+		//==Informations==//
 		public var defaultPixelColor:uint
 		/**
 		 * Using UINT PERCENT!
@@ -66,6 +80,8 @@ package batr.game.block
 			tempAttributes.drawLayer=this.drawLayer
 			tempAttributes.isCarriable=this.isCarriable
 			tempAttributes.hurtPlayerDamage=this.hurtPlayerDamage
+			tempAttributes.rotateWhenMoveIn=this.rotateWhenMoveIn
+			tempAttributes.electricResistance=this.electricResistance
 			tempAttributes.defaultPixelAlpha=this.defaultPixelAlpha
 			tempAttributes.defaultPixelColor=this.defaultPixelColor
 			return tempAttributes
@@ -113,6 +129,16 @@ package batr.game.block
 			return this.loadAsKillZone()
 		}
 		
+		public function get asRotateZone():BlockAttributes
+		{
+			return this.loadAsRotateZone()
+		}
+		
+		public function get asMetal():BlockAttributes
+		{
+			return this.loadAsMetal()
+		}
+		
 		//============Instance Functions============//
 		public function loadAsSolid():BlockAttributes
 		{
@@ -123,6 +149,8 @@ package batr.game.block
 			this.isCarriable=true
 			this.drawLayer=0
 			this.hurtPlayerDamage=-1
+			this.rotateWhenMoveIn=false
+			this.electricResistance=1000
 			return this
 		}
 		
@@ -135,6 +163,8 @@ package batr.game.block
 			this.isCarriable=false
 			this.drawLayer=-1
 			this.hurtPlayerDamage=-1
+			this.rotateWhenMoveIn=false
+			this.electricResistance=5000
 			return this
 		}
 		
@@ -147,6 +177,8 @@ package batr.game.block
 			this.isCarriable=false
 			this.drawLayer=-1
 			this.hurtPlayerDamage=-1
+			this.rotateWhenMoveIn=false
+			this.electricResistance=10
 			return this
 		}
 		
@@ -159,6 +191,8 @@ package batr.game.block
 			this.isCarriable=true
 			this.drawLayer=1
 			this.hurtPlayerDamage=-1
+			this.rotateWhenMoveIn=false
+			this.electricResistance=2000
 			return this
 		}
 		
@@ -177,6 +211,18 @@ package batr.game.block
 		public function loadAsKillZone():BlockAttributes
 		{
 			this.hurtPlayerDamage=-2
+			return this
+		}
+		
+		public function loadAsRotateZone():BlockAttributes
+		{
+			this.rotateWhenMoveIn=true
+			return this
+		}
+		
+		public function loadAsMetal():BlockAttributes
+		{
+			this.electricResistance=2
 			return this
 		}
 	}

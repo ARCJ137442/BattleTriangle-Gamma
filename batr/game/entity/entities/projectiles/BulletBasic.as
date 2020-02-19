@@ -1,7 +1,9 @@
 package batr.game.entity.entities.projectiles 
 {
 	import batr.general.*;
+	import batr.common.*;
 	
+	import batr.game.block.*;
 	import batr.game.entity.*;
 	import batr.game.entity.entities.players.*;
 	import batr.game.model.*;
@@ -21,6 +23,9 @@ package batr.game.entity.entities.projectiles
 		//============Instance Variables============//
 		public var speed:Number
 		public var finalExplodeRadius:Number//Entity Pos
+		
+		public var lastBlockType:BlockType=BlockType.NULL;
+		public var nowBlockType:BlockType=BlockType.NULL;
 		
 		//============Constructor Function============//
 		public function BulletBasic(host:Game,x:Number,y:Number,
@@ -63,6 +68,17 @@ package batr.game.entity.entities.projectiles
 			if(!_host.isOutOfMap(this.entityX,this.entityY)&&
 			   this._host.testFrontCanPass(this,this.speed,false,true,false))
 			{
+				this.nowBlockType=this._host.getBlockType(this.gridX,this.gridY);
+				//Random rotate
+				if(this.lastBlockType!=this.nowBlockType)
+				{
+					if(this.nowBlockType!=null&&
+						this.nowBlockType.currentAttributes.rotateWhenMoveIn)
+					{
+						this.rot+=exMath.random1();
+					}
+				}
+				this.lastBlockType=this.nowBlockType;
 				this.moveForward(this.speed)
 			}
 			else

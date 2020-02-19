@@ -11,6 +11,7 @@ package batr.game.model
 		public static const REGULAR:GameModeType=new GameModeType("regular");
 		public static const BATTLE:GameModeType=new GameModeType("battle");
 		public static const SURVIVAL:GameModeType=new GameModeType("survival");
+		public static const HARD:GameModeType=new GameModeType("hard");
 		
 		public static const _ALL_TYPE:Vector.<GameModeType>=new <GameModeType>
 		[

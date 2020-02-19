@@ -68,30 +68,37 @@
 			return Math.round(num*directNum)/directNum
 		}
 		
-		public static function random(x:Number,allowFloat:Boolean=false):uint
+		public static function randomFloat(x:Number):Number
 		{
-			if(allowFloat)
-			{
-				return Math.random()*Math.abs(x);
-			}
-			return Math.floor(Math.random()*Math.abs(x));
+			return Math.random()*x;
+		}
+		
+		/**
+		 * @param	x	int.
+		 * @return	uint
+		 */
+		public static function random(x:int):uint
+		{
+			return uint(randomFloat(x));
 		}
 		
 		public static function random1():int
 		{
-			return random(2)*2-1
+			return Math.random()<0.5?-1:1;
 		}
 		
-		public static function randomBetween(x:Number,y:Number,
-											 allowFloat:Boolean=false):uint
+		public static function randomBetween(x:Number,y:Number):Number
 		{
-			var h:Number=Math.max(x,y)
-			var l:Number=Math.min(x,y)
-			if(allowFloat)
-			{
-				return l+Math.random()*Math.abs(h-l);
-			}
-			return Math.floor(l+Math.random()*(h-l));
+			var h:Number=Math.max(x,y);
+			var l:Number=Math.min(x,y);
+			return l+random(h-l);
+		}
+		
+		public static function randomIntBetween(x:int,y:int):uint
+		{
+			var h:int=exMath.intMax(x,y);
+			var l:int=exMath.intMin(x,y);
+			return l+Math.random()*(h-l);
 		}
 		
 		public static function NumTo1(x:Number):int

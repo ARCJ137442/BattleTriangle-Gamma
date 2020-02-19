@@ -57,6 +57,7 @@ package batr.translations
 		
 		//batr.game
 		public static const GAME_RESULT:String="batr.game.gameResult";
+		
 		//batr.game.map
 		public static const MAP_RANDOM:String="batr.game.map.random";
 		

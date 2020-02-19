@@ -308,17 +308,6 @@ package batr.game.main
 		}
 		
 		//========Game AI Interface========//
-		public function get inMapPlayers():Vector.<Player>
-		{
-			var result:Vector.<Player>=new Vector.<Player>();
-			for each(var player:Player in this._entitySystem.players)
-			{
-				if(player==null) continue;
-				if(player.health>0&&!(player.isRespawning||this.isOutOfMap(player.entityX,player.entityY))) result.push(player);
-			}
-			return result;
-		}
-		
 		public function get allAvaliableBonusBox():Vector.<BonusBox>
 		{
 			return this.entitySystem.bonusBoxes;
@@ -358,6 +347,17 @@ package batr.game.main
 			{
 				if(player==null) continue;
 				if(!player.isCertainlyOut) result.push(player);
+			}
+			return result;
+		}
+		
+		public function getInMapPlayers():Vector.<Player>
+		{
+			var result:Vector.<Player>=new Vector.<Player>();
+			for each(var player:Player in this._entitySystem.players)
+			{
+				if(player==null) continue;
+				if(player.health>0&&!(player.isRespawning||this.isOutOfMap(player.entityX,player.entityY))) result.push(player);
 			}
 			return result;
 		}
@@ -872,12 +872,23 @@ package batr.game.main
 			}
 		}
 		
+		public function lightningHurtPlayers(lightning:Lightning,players:Vector.<Player>,damages:Vector.<uint>):void
+		{
+			var p:Player,d:uint;
+			for(var i:* in players)
+			{
+				p=players[i];
+				d=damages[i];
+				if(p!=null) p.finalRemoveHealth(lightning.owner,lightning.owner.weapon,d);
+			}
+		}
+		
 		public function damageTestWithEntity():void
 		{
 			//All Player
 			for each(var player:Player in this._entitySystem.players)
 			{
-				player.dealDamageTest(player.entityX,player.entityY,true)
+				player.dealDamageTest(player.entityX,player.entityY,true,false)
 			}
 			//BonusBox Displace by Asphyxia/Trap
 			for(var i:int=this._entitySystem.bonusBoxCount-1;i>=0;i--)
@@ -892,7 +903,7 @@ package batr.game.main
 		
 		/* Player Hurt by Trap
 		 */
-		public function damageTest(player:Player,x:Number=NaN,y:Number=NaN):Boolean
+		public function damageTest(player:Player,x:Number=NaN,y:Number=NaN,isLocationChange:Boolean=false):Boolean
 		{
 			if(!player.isActive) return false;
 			x=isNaN(x)?player.gridX:x;
@@ -911,6 +922,10 @@ package batr.game.main
 				{
 					player.removeHealth(attributes.hurtPlayerDamage<-1?int.MAX_VALUE:attributes.hurtPlayerDamage,null);
 					returnBoo=true;
+				}
+				if(isLocationChange&&attributes.rotateWhenMoveIn)
+				{
+					player.rot=GlobalRot.randomWithout(player.rot);
 				}
 			}
 			return returnBoo;
@@ -1266,6 +1281,18 @@ package batr.game.main
 			return returnV
 		}
 		
+		public function getHitPlayerAt(x:int,y:int):Player
+		{
+			for each(var player:Player in this._entitySystem.players)
+			{
+				if(hitTestPlayer(player,x,y))
+				{
+					return player;
+				}
+			}
+			return null;
+		}
+		
 		public function randomizeAllPlayerTeam():void
 		{
 			for each(var player:Player in this._entitySystem.players)
@@ -1339,8 +1366,8 @@ package batr.game.main
 			var p:ProjectileCommon=null
 			var spawnX:Number=player.getFrontIntX(GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE)
 			var spawnY:Number=player.getFrontIntY(GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE)
-			var spawnGridX:Number=player.getFrontIntX(1)
-			var spawnGridY:Number=player.getFrontIntY(1)
+			var spawnCenterX:Number=player.getFrontIntX(1)
+			var spawnCenterY:Number=player.getFrontIntY(1)
 			var frontBlock:BlockCommon
 			var laserLength:uint=this._rule.defaultLaserLength
 			if(WeaponType.isIncludeIn(player.weapon,WeaponType._LASERS)&&
@@ -1349,46 +1376,46 @@ package batr.game.main
 				laserLength=getLaserLength(player,rot)-GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE
 			}
 			//Debug
-			if(debugMode) trace("playerUse:","X=",player.getX(),spawnX,"Y:",player.getY(),spawnY)
+			if(debugMode) trace("playerUseWeapon:","X=",player.getX(),spawnX,"Y:",player.getY(),spawnY)
 			//Summon Projectile
 			switch(player.weapon)
 			{
 				case WeaponType.BULLET:
 					p=new BulletBasic(this,spawnX,spawnY,player)
-				break;
+					break;
 				case WeaponType.NUKE:
 					p=new BulletNuke(this,spawnX,spawnY,player)
-				break;
+					break;
 				case WeaponType.LASER:
 					p=new LaserBasic(this,spawnX,spawnY,player,laserLength,chargePercent)
-				break;
+					break;
 				case WeaponType.CONTINUOUS_LASER:
 					p=new LaserContinuous(this,spawnX,spawnY,player,laserLength)
-				break;
+					break;
 				case WeaponType.TELEPORT_LASER:
 					p=new LaserTeleport(this,spawnX,spawnY,player,laserLength)
-				break;
+					break;
 				case WeaponType.ABSORPTION_LASER:
 					p=new LaserAbsorption(this,spawnX,spawnY,player,laserLength)
-				break;
+					break;
 				case WeaponType.WAVE:
 					p=new Wave(this,spawnX,spawnY,player,chargePercent)
-				break
+					break;
 				case WeaponType.BLOCK_THROWER:
 					if(player.isCarriedBlock)
 					{
 						if(this.testPlayerFrontCanPass(player,5,false))
 						{
 							//Throw
-							p=new ThrowedBlock(this,spawnGridX,spawnGridY,player,player.carriedBlock.clone(),player.rot,chargePercent);
+							p=new ThrowedBlock(this,spawnCenterX,spawnCenterY,player,player.carriedBlock.clone(),player.rot,chargePercent);
 							//Clear
 							player.setCarriedBlock(null);
 						}
 					}
 					else if(chargePercent>=1)
 					{
-						var carryX=this.lockPosInMap(PosTransform.alignToGrid(spawnGridX),true);
-						var carryY=this.lockPosInMap(PosTransform.alignToGrid(spawnGridY),false);
+						var carryX=this.lockPosInMap(PosTransform.alignToGrid(spawnCenterX),true);
+						var carryY=this.lockPosInMap(PosTransform.alignToGrid(spawnCenterY),false);
 						frontBlock=this.getBlock(carryX,carryY);
 						if(frontBlock!=null&&frontBlock.attributes.isCarriable)
 						{
@@ -1397,10 +1424,16 @@ package batr.game.main
 							this.updateMapDisplay();
 							this.updateMapSize();
 							//Effect
-							this.addBlockLightEffect2(spawnGridX,spawnGridY,frontBlock,true);
+							this.addBlockLightEffect2(spawnCenterX,spawnCenterY,frontBlock,true);
 						}
 					}
-				break
+					break;
+				case WeaponType.MELEE:
+					
+					break;
+				case WeaponType.LIGHTNING:
+					p=new Lightning(this,spawnCenterX,spawnCenterY,player,player.operateFinalLightningEnergy(100));
+					break;
 			}
 			if(p!=null)
 			{
@@ -1698,7 +1731,7 @@ package batr.game.main
 			if(!player.isActive||!player.visible) return;
 			//TransForm Pos:Lock Player In Map
 			if(isOutOfMap(player.entityX,player.entityY)) lockEntityInMap(player);
-			player.dealDamageTest(newX,newY,true);
+			player.dealDamageTestOnLocationChange(newX,newY,true,true);
 			this.bonusBoxTest(player,newX,newY);
 		}
 		

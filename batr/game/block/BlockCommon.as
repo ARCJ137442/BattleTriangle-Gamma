@@ -15,6 +15,7 @@ package batr.game.block
 			{
 				case BlockType.X_TRAP_HURT:
 				case BlockType.X_TRAP_KILL:
+				case BlockType.X_TRAP_ROTATE:
 					return new XTrap(type)
 				default:
 					if(type!=null&&type.currentBlock!=null)

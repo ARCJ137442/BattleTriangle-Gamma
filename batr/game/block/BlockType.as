@@ -19,17 +19,20 @@ package batr.game.block
 		public static const BEDROCK:BlockType=new BlockType("BedRock",Bedrock,BlockAttributes.BEDROCK)
 		public static const X_TRAP_HURT:BlockType=new BlockType("XTrapHurt",XTrap,BlockAttributes.X_TRAP_HURT)
 		public static const X_TRAP_KILL:BlockType=new BlockType("XTrapKill",XTrap,BlockAttributes.X_TRAP_KILL)
+		public static const X_TRAP_ROTATE:BlockType=new BlockType("XTrapRotate",XTrap,BlockAttributes.X_TRAP_ROTATE)
 		public static const COLORED_BLOCK:BlockType=new BlockType("ColoredBlock",ColoredBlock,BlockAttributes.COLORED_BLOCK)
 		public static const COLOR_SPAWNER:BlockType=new BlockType("ColorSpawner",ColorSpawner,BlockAttributes.COLOR_SPAWNER)
 		public static const LASER_TRAP:BlockType=new BlockType("LaserTrap",LaserTrap,BlockAttributes.LASER_TRAP)
+		public static const METAL:BlockType=new BlockType("Metal",Metal,BlockAttributes.METAL)
 		
 		public static const _SOLID_BLOCKS:Vector.<BlockType>=new <BlockType>[
 		BlockType.WALL,BlockType.GLASS,BlockType.BEDROCK,
-		BlockType.COLORED_BLOCK,BlockType.COLOR_SPAWNER,LASER_TRAP]
+		BlockType.COLORED_BLOCK,BlockType.COLOR_SPAWNER,
+		BlockType.LASER_TRAP,BlockType.METAL];
 		public static const _LIQUID_BLOCKS:Vector.<BlockType>=new <BlockType>[BlockType.WATER]
 		public static const _GAS_BLOCKS:Vector.<BlockType>=new <BlockType>[BlockType.NULL]
-		public static const _OTHER_BLOCKS:Vector.<BlockType>=new <BlockType>[BlockType.X_TRAP_HURT,BlockType.X_TRAP_KILL]
-		public static const _ALL_BLOCK:Vector.<BlockType>=_SOLID_BLOCKS.concat(_LIQUID_BLOCKS).concat(_GAS_BLOCKS).concat(_OTHER_BLOCKS)
+		public static const _OTHER_BLOCKS:Vector.<BlockType>=new <BlockType>[BlockType.X_TRAP_HURT,BlockType.X_TRAP_KILL,BlockType.X_TRAP_ROTATE]
+		public static const _ALL_BLOCK:Vector.<BlockType>=_SOLID_BLOCKS.concat(_LIQUID_BLOCKS).concat(_GAS_BLOCKS).concat(_OTHER_BLOCKS);
 		
 		//============Static Getter And Setter============//
 		public static function get RANDOM():BlockType

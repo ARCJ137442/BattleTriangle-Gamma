@@ -14,6 +14,7 @@ package batr.game.block.blocks
 		protected static const COLOR_NULL:uint=0
 		protected static const COLOR_HURT:uint=0xffff00
 		protected static const COLOR_KILL:uint=0xff0000
+		protected static const COLOR_ROTATE:uint=0x0000ff
 		
 		//============Constructor Functions============//
 		private static function getColorByType(type:BlockType):uint
@@ -22,6 +23,7 @@ package batr.game.block.blocks
 			{
 				case BlockType.X_TRAP_HURT: return XTrap.COLOR_HURT;
 				case BlockType.X_TRAP_KILL: return XTrap.COLOR_KILL;
+				case BlockType.X_TRAP_ROTATE: return XTrap.COLOR_ROTATE;
 				default: return XTrap.COLOR_NULL;
 			}
 		}

@@ -1,2 +1,4 @@
-# BattleTriangle-Gamma
-A flash game based on ActionScript 3.0
+BattleTriangle-Gamma
+====================
+A flash game based on `ActionScript 3.0`
+*Newest Version: 0.1.0

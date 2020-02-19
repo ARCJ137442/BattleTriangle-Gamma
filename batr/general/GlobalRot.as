@@ -47,6 +47,11 @@ package batr.general
 			return lockIntToStandard(rot+angle);
 		}
 		
+		public static function randomWithout(rot:uint):uint
+		{
+			return lockIntToStandard(rot+1+exMath.random(3));
+		}
+		
 		public static function lockToStandard(rot:Number):Number
 		{
 			if(isNaN(rot)||!isFinite(rot)) return DEFAULT;

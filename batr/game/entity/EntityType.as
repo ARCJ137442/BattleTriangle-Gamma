@@ -17,9 +17,11 @@ package batr.game.entity
 		public static const LASER_TELEPORT:EntityType=new EntityType("LaserTeleport")
 		public static const LASER_ABSORPTION:EntityType=new EntityType("LaserAbsorption")
 		public static const WAVE:EntityType=new EntityType("Wave")
-		public static const THROWED_BLOCK:EntityType=new EntityType("ThrowedBlock")
 		//public static const CHAOS_RING:EntityType=new EntityType("ChaosRing")
 		//public static const T_BOMB:EntityType=new EntityType("TBomb")
+		public static const THROWED_BLOCK:EntityType=new EntityType("ThrowedBlock")
+		public static const LIGHTNING:EntityType=new EntityType("Lightning").asUnrotatable
+		
 		public static const BONUS_BOX:EntityType=new EntityType("BonusBox")
 		
 		public static const PLAYER:EntityType=new EntityType("Player")
@@ -62,10 +64,24 @@ package batr.game.entity
 			super(name);
 		}
 		
+		//============Instance Variables============//
+		protected var _rotatable:Boolean=true;
+		
 		//============Instance Getter And Setter============//
 		public override function get label():String
 		{
 			return "entity";
+		}
+		
+		public function get rotatable():Boolean
+		{
+			return this._rotatable;
+		}
+		
+		public function get asUnrotatable():EntityType
+		{
+			this._rotatable=false;
+			return this;
 		}
 	}
 }

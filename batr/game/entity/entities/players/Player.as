@@ -2,6 +2,7 @@ package batr.game.entity.entities.players
 {
 	import batr.common.*;
 	import batr.general.*;
+	import batr.game.stat.*;
 	
 	import batr.game.block.*;
 	import batr.game.entity.entities.*;
@@ -713,6 +714,16 @@ package batr.game.entity.entities.players
 					isAlly(player)&&weapon.weaponCanHurtAlly)
 		}
 		
+		public function filterPlayersThisCanHurt(players:Vector.<Player>,weapon:WeaponType):Vector.<Player>
+		{
+			return players.filter(
+				function(player:Player,index:int,vector:Vector.<Player>)
+				{
+					return this.canUseWeaponHurtPlayer(player,weapon);
+				},this
+			);
+		}
+		
 		public function isEnemy(player:Player):Boolean
 		{
 			return (!isAlly(player,true))
@@ -739,18 +750,23 @@ package batr.game.entity.entities.players
 			return this._carriedBlock!=null&&this._carriedBlock.visible
 		}
 		
-		public function dealDamageTest(x:Number,y:Number,forceTest:Boolean=false):void
+		public function dealDamageTestOnLocationChange(x:Number,y:Number,ignoreDelay:Boolean=false,isLocationChange:Boolean=false):void
 		{
-			if(forceTest)
+			dealDamageTest(x,y,ignoreDelay,isLocationChange)
+		}
+		
+		public function dealDamageTest(x:Number,y:Number,ignoreDelay:Boolean=false,isLocationChange:Boolean=false):void
+		{
+			if(ignoreDelay)
 			{
-				this._host.damageTest(this,x,y);
+				this._host.damageTest(this,x,y,isLocationChange);
 				this._damageDelay=MAX_DAMAGE_DELAY;
 			}
 			else if(this._damageDelay>0)
 			{
 				this._damageDelay--;
 			}
-			else if(this._damageDelay==0&&this._host.damageTest(this,x,y))
+			else if(this._damageDelay==0&&this._host.damageTest(this,x,y,isLocationChange))
 			{
 				this._damageDelay=MAX_DAMAGE_DELAY;
 			}
@@ -886,9 +902,14 @@ package batr.game.entity.entities.players
 			return weapon.getBuffedCD(this.buffCD);
 		}
 		
-		public final function operateFinalRadius(defaultRadius:Number):Number
+		public final function operateFinalRadius(defaultRadius:uint):Number
 		{
 			return defaultRadius*(1+this._buffRadius/10);
+		}
+		
+		public final function operateFinalLightningEnergy(defaultEnergy:uint):int
+		{
+			return defaultEnergy*(1+this._buffDamage/20+this._buffRadius/10)
 		}
 		
 		//====Functions About Graphics====//

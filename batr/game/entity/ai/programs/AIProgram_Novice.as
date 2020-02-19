@@ -20,7 +20,7 @@ package batr.game.entity.ai.programs
 		protected static function getLineEnemyPlayer(owner:AIPlayer):Player
 		{
 			if(owner==null) return null;
-			var mapPlayers:Vector.<Player>=owner.host.inMapPlayers;
+			var mapPlayers:Vector.<Player>=owner.host.getInMapPlayers();
 			for each(var player:Player in mapPlayers)
 			{
 				if(player==owner) continue;

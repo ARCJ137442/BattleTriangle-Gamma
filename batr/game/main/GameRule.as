@@ -231,7 +231,7 @@ package batr.game.main
 					sum+=Number(mapPotential["weight"]);
 				}
 			}
-			var randomNum:Number=exMath.random(sum,true);
+			var randomNum:Number=exMath.randomFloat(sum);
 			//Choose
 			for(var i:uint=0;i<weights.length;i++)
 			{
@@ -263,7 +263,7 @@ package batr.game.main
 					sum+=Number(bonusPotential["weight"]);
 				}
 			}
-			var randomNum:Number=exMath.random(sum,true);
+			var randomNum:Number=exMath.randomFloat(sum);
 			//Choose
 			for(var i:uint=0;i<weights.length;i++)
 			{

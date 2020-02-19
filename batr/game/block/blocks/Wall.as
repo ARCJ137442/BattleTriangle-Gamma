@@ -15,7 +15,7 @@ package batr.game.block.blocks
 		protected var _lineColor:uint,_fillColor:uint
 		
 		//============Constructor Function============//
-		public function Wall(lineColor:uint=0xAAAAAA,fillColor:uint=0xBBBBBB):void
+		public function Wall(lineColor:uint=0xaaaaaa,fillColor:uint=0xbbbbbb):void
 		{
 			super();
 			this._lineColor=lineColor,this._fillColor=fillColor
@@ -25,8 +25,7 @@ package batr.game.block.blocks
 		//============Destructor Function============//
 		public override function deleteSelf():void
 		{
-			this._lineColor=0;
-			this._fillColor=0;
+			this._lineColor=this._fillColor=0;
 			super.deleteSelf();
 		}
 		

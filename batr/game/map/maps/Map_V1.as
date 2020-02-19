@@ -186,7 +186,7 @@ package batr.game.map.maps
 				//right
 				MAP_9.fillBlock(23,0,23,23,BlockType.LASER_TRAP);
 				//center
-				MAP_7.fillBlock(12,12,13,13,BlockType.COLOR_SPAWNER)//up side
+				MAP_9.fillBlock(11,11,12,12,BlockType.COLOR_SPAWNER)//up side
 			}
 			//Set Variables//
 			return true;
