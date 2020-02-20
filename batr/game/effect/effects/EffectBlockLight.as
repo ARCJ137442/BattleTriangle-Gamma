@@ -12,7 +12,7 @@ package batr.game.effect.effects
 		//============Static Variables============//
 		public static const SIZE:Number=GlobalGameVariables.DEFAULT_SIZE
 		public static const LINE_SIZE:Number=GlobalGameVariables.DEFAULT_SIZE/25
-		public static const MAX_LIFE:uint=GlobalGameVariables.TPS/2
+		public static const MAX_LIFE:uint=GlobalGameVariables.TPS*0.4
 		public static const MAX_SCALE:Number=2
 		public static const MIN_SCALE:Number=1
 		
@@ -49,7 +49,7 @@ package batr.game.effect.effects
 		//============Instance Getter And Setter============//
 		public override function get type():EffectType
 		{
-			return EffectType.PLAYER_DEATH_LIGHT
+			return EffectType.BLOCK_LIGHT;
 		}
 		
 		public function get color():uint 

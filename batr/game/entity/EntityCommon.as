@@ -134,6 +134,16 @@ package batr.game.entity
 			return this._host.lockPosInMap(this.entityY,false);
 		}
 		
+		public function get lockedGridX():Number
+		{
+			return this._host.lockPosInMap(this.gridX,true);
+		}
+		
+		public function get lockedGridY():Number
+		{
+			return this._host.lockPosInMap(this.gridY,false);
+		}
+		
 		//============Instance Functions============//
 		//====Tickrun Functions====//
 		public function tickFunction():void

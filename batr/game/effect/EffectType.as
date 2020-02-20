@@ -15,6 +15,7 @@ package batr.game.effect
 		public static const PLAYER_DEATH_LIGHT:EffectType=new EffectType("PlayerDeathLight",1)
 		public static const PLAYER_DEATH_ALPHA:EffectType=new EffectType("PlayerDeathAlpha",0)
 		public static const PLAYER_LEVELUP:EffectType=new EffectType("PlayerLevelUp",1)
+		public static const BLOCK_LIGHT:EffectType=new EffectType("BlockLight",1)
 		
 		public static const _ALL_EFFECT:Vector.<EffectType>=new <EffectType>[
 			EffectType.EXPLODE,
@@ -22,7 +23,8 @@ package batr.game.effect
 			EffectType.TELEPORT,
 			EffectType.PLAYER_DEATH_LIGHT,
 			EffectType.PLAYER_DEATH_ALPHA,
-			EffectType.PLAYER_LEVELUP]
+			EffectType.PLAYER_LEVELUP,
+			EffectType.BLOCK_LIGHT]
 		
 		//============Static Getter And Setter============//
 		public static function get RANDOM():EffectType

@@ -126,7 +126,7 @@ package batr.game.entity.entities
 					player.buffRadius++;
 				break;
 				case BonusType.ADD_EXPERIENCE:
-					player.experience+=(player.level+1)<<3;
+					player.experience+=((player.level>>2)+1)<<2;
 				break;
 				//Team
 				case BonusType.RANDOM_CHANGE_TEAM:

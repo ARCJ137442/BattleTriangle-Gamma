@@ -190,6 +190,10 @@ package batr.translations
 					"\u73a9\u5bb6\u6b7b\u4ea1\u70ab\u5149",
 				TranslationKey.getTypeNameKey(EffectType.PLAYER_DEATH_ALPHA),
 					"\u73a9\u5bb6\u6b7b\u4ea1\u6de1\u51fa",
+				TranslationKey.getTypeNameKey(EffectType.PLAYER_LEVELUP),
+					"\u73a9\u5bb6\u5347\u7ea7",
+				TranslationKey.getTypeNameKey(EffectType.BLOCK_LIGHT),
+					"\u65b9\u5757\u9ad8\u4eae",
 				//WeaponTypes
 				TranslationKey.getTypeNameKey(WeaponType.BULLET),
 					"\u5b50\u5f39",

@@ -61,10 +61,15 @@ package batr.game.entity.entities.projectiles
 		//====Tick Function====//
 		public override function onProjectileTick():void
 		{
-			if(!_host.isOutOfMap(this.gridX+this.xSpeed,this.gridY+this.ySpeed)&&
-				this._host.testCanPass(this._host.lockPosInMap(this.entityX+this.xSpeed,true),
-									  this._host.lockPosInMap(this.entityY+this.ySpeed,false),
-									  false,true,false,false)&&
+			if(!_host.isOutOfMap(
+					this._host.lockPosInMap(this.entityX+this.xSpeed,true),
+					this._host.lockPosInMap(this.entityY+this.ySpeed,false)
+				)&&
+				this._host.testCanPass(
+					this._host.lockPosInMap(this.entityX+this.xSpeed,true),
+					this._host.lockPosInMap(this.entityY+this.ySpeed,false),
+					false,true,false,false
+				)&&
 			   !this._host.isHitAnyPlayer(this.gridX,this.gridY))
 			{
 				this.addXY(this.xSpeed,this.ySpeed)
@@ -72,18 +77,21 @@ package batr.game.entity.entities.projectiles
 			else
 			{
 				if(Game.debugMode) trace("Block Hit:",this.getX(),this.getY())
-				onBlockHit()
+				this.onBlockHit()
 			}
 		}
 		
 		protected function onBlockHit():void
 		{
-			this._host.setBlock(this.gridX,this.gridY,this._carriedBlock);
-			this._host.updateMapDisplay();
-			this._host.updateMapSize();
+			var lx:int=this.lockedGridX,ly:int=this.lockedGridY;
+			this._host.setBlock(lx,ly,this._carriedBlock);
 			this._host.throwedBlockHurtPlayer(this);
 			//Effect
-			this.host.addBlockLightEffect2(PosTransform.alignToEntity(this.gridX),PosTransform.alignToEntity(this.gridY),this.carriedBlock,false);
+			this.host.addBlockLightEffect2(
+				PosTransform.alignToEntity(lx),
+				PosTransform.alignToEntity(ly),
+				this.carriedBlock,false
+			);
 			//Remove
 			this._host.entitySystem.removeProjectile(this);
 		}
