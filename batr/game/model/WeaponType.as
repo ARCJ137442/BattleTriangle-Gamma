@@ -18,7 +18,7 @@ package batr.game.model
 		public static const TELEPORT_LASER:WeaponType=new WeaponType("Teleport Laser",3.5,40).setExtraProperty(4,4)
 		public static const ABSORPTION_LASER:WeaponType=new WeaponType("Absorption Laser",4,10).setExtraProperty(4,2)
 		
-		public static const WAVE:WeaponType=new WeaponType("Wave",0.5,10,2).setExtraProperty(3,3)//Full Charge
+		public static const WAVE:WeaponType=new WeaponType("Wave",0.5,20,2).setExtraProperty(3,3)//Full Charge
 		//public static const CHAOS_RING:WeaponType=new WeaponType("Chaos Ring",7,20)
 		
 		//public static const T_BOMB:WeaponType=new WeaponType("T-Bomb",7.5,80)

@@ -685,7 +685,7 @@ package batr.game.entity.entities.players
 			
 		}
 		
-		public override function onLocationChange(newX:Number,newY:Number):void
+		public override function onLocationUpdate(newX:Number,newY:Number):void
 		{
 			if(this._GUI!=null)
 			{
@@ -693,7 +693,7 @@ package batr.game.entity.entities.players
 				this._GUI.entityY=this.entityY;
 			}
 			this._host.onPlayerLocationChange(this,newX,newY);
-			super.onLocationChange(newX,newY);
+			super.onLocationUpdate(newX,newY);
 		}
 		
 		public function onLevelup():void

@@ -18,7 +18,7 @@ package batr.game.entity.entities.projectiles
 		public static const ALPHA:Number=0.64
 		public static const DEFAULT_SPEED:Number=24/GlobalGameVariables.TPS*2
 		public static const MAX_SCALE:Number=4
-		public static const MIN_SCALE:Number=1/8
+		public static const MIN_SCALE:Number=1/4
 		public static const LIFE:uint=GlobalGameVariables.TPS*2.5
 		public static const DAMAGE_DELAY:uint=GlobalGameVariables.TPS/25
 		

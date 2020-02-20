@@ -22,9 +22,10 @@ package batr.game.entity.entities.projectiles
 		//============Constructor Function============//
 		public function BulletNuke(host:Game,x:Number,y:Number,owner:Player,chargePercent:Number):void
 		{
-			super(host,x,y,owner,DEFAULT_SPEED*(1.5-chargePercent*0.5),DEFAULT_EXPLODE_RADIUS*(0.25+chargePercent*0.75));
+			var scalePercent:Number=(0.25+chargePercent*0.75);
+			super(host,x,y,owner,DEFAULT_SPEED*(2-scalePercent),DEFAULT_EXPLODE_RADIUS*scalePercent);
 			this._currentWeapon=WeaponType.NUKE
-			this.damage=this._currentWeapon.defaultDamage*(0.25+chargePercent*0.75);
+			this.damage=this._currentWeapon.defaultDamage*scalePercent;
 			drawShape();
 		}
 		
