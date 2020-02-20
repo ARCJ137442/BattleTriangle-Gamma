@@ -50,7 +50,8 @@ package batr.game.main
 			Map_V1.MAP_6,
 			Map_V1.MAP_7,
 			Map_V1.MAP_8,
-			Map_V1.MAP_9
+			Map_V1.MAP_9,
+			Map_V1.MAP_A
 		]
 		
 		public static const MAP_TRANSFORM_TEXT_FORMAT:TextFormat=new TextFormat(
@@ -404,13 +405,15 @@ package batr.game.main
 		
 		protected function initDisplay():void
 		{
-			//GUI Text
+			//HUD Text
 			this._mapTransformTimeText.setBlockPos(0,23);
 			this._mapTransformTimeText.defaultTextFormat=MAP_TRANSFORM_TEXT_FORMAT;
 			this._mapTransformTimeText.selectable=false;
 			this._gamePlayingTimeText.setBlockPos(0,0);
 			this._gamePlayingTimeText.defaultTextFormat=GAME_PLAYING_TIME_TEXT_FORMET;
 			this._gamePlayingTimeText.selectable=false;
+			//Initial HUD visible
+			this.visibleHUD=false;
 		}
 		
 		protected function addChilds():void

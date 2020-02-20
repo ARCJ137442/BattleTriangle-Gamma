@@ -65,26 +65,28 @@ package batr.game.entity.entities.projectiles
 		
 		public function onBulletCommonTick():void
 		{
-			if(!_host.isOutOfMap(this.entityX,this.entityY)&&
-			   this._host.testFrontCanPass(this,this.speed,false,true,false))
+			//Move
+			//Detect
+			this.nowBlockType=this._host.getBlockType(this.gridX,this.gridY);
+			if(this.lastBlockType!=this.nowBlockType)
 			{
-				this.nowBlockType=this._host.getBlockType(this.gridX,this.gridY);
 				//Random rotate
-				if(this.lastBlockType!=this.nowBlockType)
+				if(this.nowBlockType!=null&&
+					this.nowBlockType.currentAttributes.rotateWhenMoveIn)
 				{
-					if(this.nowBlockType!=null&&
-						this.nowBlockType.currentAttributes.rotateWhenMoveIn)
-					{
-						this.rot+=exMath.random1();
-					}
+					this.rot+=exMath.random1();
 				}
+			}
+			this.moveForward(this.speed)
+			if(!_host.isOutOfMap(this.entityX,this.entityY)&&
+			   this._host.testCanPass(this.entityX,this.entityY,false,true,false))
+			{
 				this.lastBlockType=this.nowBlockType;
-				this.moveForward(this.speed)
 			}
 			else
 			{
 				if(Game.debugMode) trace("Bullet explode:",this.getX(),this.getY())
-				explode()
+				this.explode()
 			}
 		}
 		

@@ -2,6 +2,7 @@ package batr.game.map.maps
 {
 	import batr.common.*;
 	import batr.general.*;
+	import batr.game.block.blocks.XTrap;
 	
 	import batr.game.map.*;
 	import batr.game.block.*;
@@ -29,6 +30,7 @@ package batr.game.map.maps
 		public static var MAP_7:Map_V1
 		public static var MAP_8:Map_V1
 		public static var MAP_9:Map_V1
+		public static var MAP_A:Map_V1
 		
 		protected static var isInited:Boolean=cInit()
 		
@@ -60,6 +62,7 @@ package batr.game.map.maps
 			MAP_7=new Map_V1()
 			MAP_8=new Map_V1()
 			MAP_9=new Map_V1()
+			MAP_A=new Map_V1()
 			//====Basic Frame====//
 			BASIC_FRAME.fillBlock(0,0,_SIZE-1,_SIZE-1,
 								  BlockType.BEDROCK,true)
@@ -187,6 +190,24 @@ package batr.game.map.maps
 				MAP_9.fillBlock(23,0,23,23,BlockType.LASER_TRAP);
 				//center
 				MAP_9.fillBlock(11,11,12,12,BlockType.COLOR_SPAWNER)//up side
+			}
+			//====Map A====//
+			MAP_A.copyFrom(BASIC_FRAME)
+			{
+				for(i=0;i<5;i++)
+				{
+					//base
+					MAP_A.fillBlock(5,5+3*i,18,6+3*i,BlockType.WALL);
+					if(i<4)
+					{
+						//lines
+						MAP_A.fillBlock(6,7+3*i,17,7+3*i,BlockType.METAL);
+						//corner
+						MAP_A.fillBlock(1+(i>>1)*20,1+(i&1)*20,2+(i>>1)*20,2+(i&1)*20,BlockType.X_TRAP_ROTATE);
+					}
+				}
+				//center
+				//MAP_A.fillBlock(11,11,12,12,BlockType.COLOR_SPAWNER)
 			}
 			//Set Variables//
 			return true;
