@@ -20,11 +20,11 @@ package batr.game.entity.entities.projectiles
 		public static const DEFAULT_EXPLODE_RADIUS:Number=6.4
 		
 		//============Constructor Function============//
-		public function BulletNuke(host:Game,x:Number,y:Number,owner:Player):void
+		public function BulletNuke(host:Game,x:Number,y:Number,owner:Player,chargePercent:Number):void
 		{
-			super(host,x,y,owner,DEFAULT_SPEED,DEFAULT_EXPLODE_RADIUS);
+			super(host,x,y,owner,DEFAULT_SPEED*(1.5-chargePercent*0.5),DEFAULT_EXPLODE_RADIUS*(0.25+chargePercent*0.75));
 			this._currentWeapon=WeaponType.NUKE
-			this.damage=this._currentWeapon.defaultDamage
+			this.damage=this._currentWeapon.defaultDamage*(0.25+chargePercent*0.75);
 			drawShape();
 		}
 		

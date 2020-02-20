@@ -10,7 +10,7 @@ package batr.game.model
 		public static const ABSTRACT:WeaponType=new WeaponType("Abstract",0,0)
 		
 		public static const BULLET:WeaponType=new WeaponType("Bullet",0.25,5).setExtraProperty(1,1)
-		public static const NUKE:WeaponType=new WeaponType("Nuke",10,320,0,true,true,true).setExtraProperty(20,20)
+		public static const NUKE:WeaponType=new WeaponType("Nuke",5,320,5,true,true,true).setExtraProperty(20,20)
 		//public static const POISON_BOMB:WeaponType=new WeaponType("Poison Bomb",9,50)
 		
 		public static const LASER:WeaponType=new WeaponType("Laser",3,120,1).setExtraProperty(8,6)
@@ -156,7 +156,7 @@ package batr.game.model
 			this._canHurtAlly=canHurtAlly
 		}
 		
-		public function setExtraProperty(damageCoefficient:uint,
+		protected function setExtraProperty(damageCoefficient:uint,
 										resistanceCoefficient:uint):WeaponType
 		{
 			this._extraDamageCoefficient=damageCoefficient;

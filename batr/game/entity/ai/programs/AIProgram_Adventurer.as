@@ -3,6 +3,7 @@ package batr.game.entity.ai.programs
 	import batr.common.*;
 	import batr.general.*;
 	
+	import batr.game.block.*;
 	import batr.game.entity.ai.*;
 	import batr.game.model.*;
 	import batr.game.entity.*;
@@ -57,6 +58,22 @@ package batr.game.entity.ai.programs
 					return false;
 			}
 			return true;
+		}
+		
+		protected static function weaponNeedCarryBlock(weapon:WeaponType):Boolean
+		{
+			return weapon==WeaponType.BLOCK_THROWER;
+		}
+		
+		protected static function detectCarryBlock(player:Player):Boolean
+		{
+			if(weaponNeedCarryBlock(player.weapon)&&!player.isCarriedBlock) return false;
+			return true;
+		}
+		
+		protected static function detectBlockCanCarry(player:Player,blockAtt:BlockAttributes):Boolean
+		{
+			return !player.isCarriedBlock&&blockAtt.isCarriable;
 		}
 		
 		/*========A Star Algorithm========*/
@@ -401,7 +418,7 @@ package batr.game.entity.ai.programs
 				//Clear Invalid Target
 				if(this._lastTarget!=null&&!this._lastTarget.isActive||
 					lastTargetPlayer!=null&&(!player.canUseWeaponHurtPlayer(lastTargetPlayer,player.weapon)||
-					lastTargetPlayer.isRespawning))
+					lastTargetPlayer!=null&&lastTargetPlayer.isRespawning))
 				{
 					this.resetTarget();
 				}
@@ -426,13 +443,17 @@ package batr.game.entity.ai.programs
 					//========Find BonusBox========//
 					var target:EntityCommon=null;
 					//set Player as Target
-					target=getNearestEnemy(player,host);
+					target=this._pickupFirst?getNearestBonusBox(ownerPoint,host):getNearestEnemy(player,host);
 					//if cannot find player
-					if(_pickupFirst||target==null)
+					if(target==null)
 					{
-						if(host.entitySystem.bonusBoxCount>0)
+						if(!this._pickupFirst&&host.entitySystem.bonusBoxCount>0)
 						{
 							target=getNearestBonusBox(ownerPoint,host);
+						}
+						else
+						{
+							target=getNearestEnemy(player,host);
 						}
 					}
 					if(target!=null)
@@ -451,6 +472,7 @@ package batr.game.entity.ai.programs
 					var tempRot:uint=GlobalRot.fromLinearDistance(this._lastTarget.entityX-player.entityX,this._lastTarget.entityY-player.entityY);
 					//Attack Enemy
 					if(GlobalRot.isValidRot(tempRot)&&
+						detectCarryBlock(player)&&
 						lastTargetPlayer!=null&&
 						weaponUseTestWall(player,host,tempRot,ownerPoint.getManhattanDistance(lastTargetPlayerPoint))&&
 						player.canUseWeaponHurtPlayer(lastTargetPlayer,player.weapon))
@@ -465,6 +487,14 @@ package batr.game.entity.ai.programs
 						//Press Use
 						if(!player.isPress_Use) return AIPlayerAction.PRESS_KEY_USE;
 						traceLog(player,"attack target "+getEntityName(this._lastTarget))
+					}
+					//Carry Block
+					else if(!detectCarryBlock(player)&&
+							detectBlockCanCarry(player,host.getBlockAttributes(player.getFrontIntX(),player.getFrontIntY())))
+					{
+						//Press Use
+						player.clearActionThread();
+						if(!player.isPress_Use) return AIPlayerAction.PRESS_KEY_USE;
 					}
 					//Find Path
 					else
@@ -541,6 +571,7 @@ package batr.game.entity.ai.programs
 		public function requestActionOnKill(player:AIPlayer,damage:uint,victim:Player):AIPlayerAction
 		{
 			this.resetTarget();
+			this.resetCloseTarget();
 			return AIPlayerAction.NULL;
 		}
 		

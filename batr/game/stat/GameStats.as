@@ -21,6 +21,7 @@ package batr.game.stat
 			this.rule=rule;
 		}
 		
+		//Unfinished
 		public function clone():GameStats
 		{
 			

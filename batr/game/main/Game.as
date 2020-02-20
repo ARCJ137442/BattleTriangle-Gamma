@@ -1384,7 +1384,7 @@ package batr.game.main
 					p=new BulletBasic(this,spawnX,spawnY,player)
 					break;
 				case WeaponType.NUKE:
-					p=new BulletNuke(this,spawnX,spawnY,player)
+					p=new BulletNuke(this,spawnX,spawnY,player,chargePercent)
 					break;
 				case WeaponType.LASER:
 					p=new LaserBasic(this,spawnX,spawnY,player,laserLength,chargePercent)
