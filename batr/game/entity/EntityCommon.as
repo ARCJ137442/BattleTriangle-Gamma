@@ -10,52 +10,35 @@ package batr.game.entity
 	public class EntityCommon extends Sprite
 	{
 		//============Static Variables============//
-		protected static const _ACTIVE_AT_CREATE:Boolean=true
-		
-		protected static var _NEXT_UUID:uint=1
 		
 		//============Static Functions============//
-		public static function inValidUUID(entity:EntityCommon):Boolean
-		{
-			return entity._uuid==0;
-		}
 		
 		//============Instance Variables============//
-		protected var _uuid:uint
 		protected var _host:Game
 		protected var _isActive:Boolean
 		
 		//============Constructor Function============//
 		public function EntityCommon(host:Game,
 									x:Number,y:Number,
-									isActive:Boolean=EntityCommon._ACTIVE_AT_CREATE):void
+									initActive:Boolean=true):void
 		{
 			super();
-			//Init ID
-			this._uuid=_NEXT_UUID;
-			_NEXT_UUID++;
 			//Init Host
 			this._host=host;
 			//Init Positions
 			this.setXY(x,y);
 			//Be Active
-			if(isActive) this.isActive=true;
+			if(initActive) this.isActive=true;
 		}
 		
 		//============Destructor Function============//
 		public function deleteSelf():void
 		{
-			this.isActive=false
-			this._host=null
-			this._uuid=0
+			this.isActive=false;
+			this._host=null;
 		}
 		
 		//============Instance Getters And Setters============//
-		public function get uuid():uint
-		{
-			return this._uuid;
-		}
-		
 		public function get host():Game
 		{
 			return this._host;

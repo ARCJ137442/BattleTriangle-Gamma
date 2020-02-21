@@ -14,7 +14,7 @@ package batr.game.map.maps
 	/* This's a Game Map<Version 1>
 	 * This Map only save BlockType,not BlockCommon
 	 */
-	public class Map_V1 extends Map_Common
+	public class Map_V1 extends NativeMapCommon
 	{
 		//============Static Variables============//
 		protected static const _SIZE:uint=GlobalGameVariables.DISPLAY_GRIDS
@@ -103,11 +103,15 @@ package batr.game.map.maps
 			//====Map 5====//
 			MAP_5.copyFrom(BASIC_FRAME)
 			{
-				var randNum:uint=16+exMath.random(47)
+				var randNum:uint=16+exMath.random(47),randType:BlockType
 				for(i=0;i<randNum;i++)
 				{
 					ix=MAP_5.randomX,iy=MAP_5.randomY
-					if(UsefulTools.randomBoolean())
+					if(MAP_5.getBlockType(ix,iy)==BlockType.BEDROCK)
+					{
+						MAP_5.setVoid(ix,iy)
+					}
+					else if(UsefulTools.randomBoolean())
 					{
 						if(UsefulTools.randomBoolean(1,3))
 						{
@@ -118,13 +122,11 @@ package batr.game.map.maps
 							MAP_5.setBlock(ix,iy,BlockCommon.fromType(BlockType.X_TRAP_HURT))
 						}
 					}
-					else if(MAP_5.getBlockType(ix,iy)==BlockType.BEDROCK)
-					{
-						MAP_5.setVoid(ix,iy)
-					}
 					else
 					{
-						MAP_5.setBlock(ix,iy,BlockCommon.fromType(BlockType.RANDOM))
+						randType=BlockType.RANDOM
+						MAP_5.setBlock(ix,iy,BlockCommon.fromType(randType))
+						if(randType==BlockType.SPAWN_POINT_MARK) MAP_5.addSpawnPoint(UintPointCompress.compressFromPoint(ix,iy))
 					}
 				}
 			}
@@ -254,7 +256,7 @@ package batr.game.map.maps
 		}
 		
 		//============Instance Variables============//
-		protected var _context:Object=new Object()
+		protected var _context:Object=new Object();
 		
 		//============Constructor============//
 		public function Map_V1(context:Object=null):void
@@ -298,6 +300,7 @@ package batr.game.map.maps
 		
 		public override function clone(createBlock:Boolean=true):IMap
 		{
+			//context
 			var tempContext:Object=new Object()
 			var context:BlockCommon
 			for(var index:String in this._context)
@@ -307,18 +310,24 @@ package batr.game.map.maps
 				context=createBlock?context.clone():context
 				tempContext[index]=context
 			}
-			var copy:IMap=new Map_V1(tempContext)
+			//construct
+			var copy:Map_V1=new Map_V1(tempContext)
+			//spawnpoints
+			copy._spawnPoints=this._spawnPoints.concat()
 			return copy
 		}
 		
 		public override function copyFrom(target:IMap,clearSelf:Boolean=false):void
 		{
 			if(clearSelf) this.removeAllBlock(false)
+			//context
 			var points:Vector.<iPoint>=target.allDefinedPositions
 			for each(var point:iPoint in points)
 			{
 				this._setBlock(point.x,point.y,target.getBlock(point.x,point.y))
 			}
+			//spawnpoints
+			this._spawnPoints=target.spawnPoints.concat()
 		}
 		
 		public override function hasBlock(x:int,y:int):Boolean

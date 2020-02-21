@@ -57,7 +57,7 @@ package batr.game.block.blocks
 			this.graphics.drawRect(LINE_SIZE,LINE_SIZE,GlobalGameVariables.DEFAULT_SIZE-LINE_SIZE*2,GlobalGameVariables.DEFAULT_SIZE-LINE_SIZE*2);
 			this.graphics.endFill();
 			//Rhombus
-			this.graphics.lineStyle(GlobalGameVariables.DEFAULT_SIZE/32,LINE_COLOR);
+			this.graphics.lineStyle(LINE_SIZE,LINE_COLOR);
 			this.drawRhombus(
 				GlobalGameVariables.DEFAULT_SIZE/2,
 				GlobalGameVariables.DEFAULT_SIZE/2,
@@ -89,7 +89,6 @@ package batr.game.block.blocks
 		
 		private function drawRhombus(cX:Number,cY:int,radius:Number):void
 		{
-			this.graphics.lineStyle(GlobalGameVariables.DEFAULT_SIZE/32,LINE_COLOR);
 			this.graphics.moveTo(cX-radius,cY);
 			this.graphics.lineTo(cX,cY+radius);
 			this.graphics.lineTo(cX+radius,cY);

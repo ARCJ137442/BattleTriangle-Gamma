@@ -459,6 +459,8 @@ package batr.game.main
 			this._rule.addEventListener(GameRuleEvent.TEAMS_CHANGE,this.onPlayerTeamsChange);
 			//Active
 			if(becomeActive) this.isActive=true;
+			//For test
+			trace("List of Entity UUIDs:",this.entitySystem.getAllUUID());
 			//Return
 			return true;
 		}
@@ -1157,8 +1159,7 @@ package batr.game.main
 			for(i=0;i<this._rule.playerCount;i++)
 			{
 				player=addPlayer(i+1,this._rule.randomTeam,-1,-1,0,false)
-				spreadPlayer(player,true,false)
-				addSpawnEffect(player.entityX,player.entityY)
+				respawnPlayer(player)
 				player.initVariablesByRule(this.rule.defaultWeaponID,this._tempUniformWeapon);
 				player.gui.updateHealth();
 			}
@@ -1166,8 +1167,7 @@ package batr.game.main
 			for(i=0;i<this._rule.AICount;i++)
 			{
 				player=addAI(this._rule.randomTeam,-1,-1,0,false)
-				spreadPlayer(player,true,false)
-				addSpawnEffect(player.entityX,player.entityY)
+				respawnPlayer(player)
 				player.initVariablesByRule(this.rule.defaultWeaponID,this._tempUniformWeapon);
 				player.gui.updateHealth();
 			}
@@ -1200,6 +1200,90 @@ package batr.game.main
 			}
 			if(debugMode) trace("spread "+player.customName+" "+(i+1)+" times.")
 			return player;
+		}
+		
+		/**
+		 * Respawn player to spawnpoint(if map contained)
+		 * @param	player	The player will respawn.
+		 * @return	The same as param:player.
+		 */
+		public function respawnPlayer(player:Player):Player
+		{
+			//Test
+			if(player==null||player.isRespawning) return player;
+			var p:iPoint=this.map.randomSpawnPoint;
+			//Position offer
+			if(p!=null) p=this.findFitSpawnPoint(player,p.x,p.y);
+			//p as spawnpoint
+			if(p==null) this.spreadPlayer(player,true,false);
+			else player.setPositions(
+				PosTransform.alignToEntity(p.x),
+				PosTransform.alignToEntity(p.y),
+				GlobalRot.RANDOM
+			);
+			//Spawn Effect
+			this.addSpawnEffect(player.entityX,player.entityY);
+			this.addPlayerDeathLightEffect2(player.entityX,player.entityY,player,true);
+			//Return
+			if(debugMode) trace("respawnPlayer:respawn "+player.customName+".")
+			return player;
+		}
+		
+		/**
+		 * @param	x	SpawnPoint.x
+		 * @param	y	SpawnPoint.y
+		 * @return	The nearest point from SpawnPoint.
+		 */
+		protected function findFitSpawnPoint(player:Player,x:int,y:int):iPoint
+		{
+			//Older Code uses Open List/Close List
+			/*{
+				var oP:Vector.<uint>=new <uint>[UintPointCompress.compressFromPoint(x,y)];
+				var wP:Vector.<uint>=new Vector.<uint>();
+				var cP:Vector.<uint>=new Vector.<uint>();
+				var tP:iPoint;
+				while(oP.length>0)
+				{
+					for each(var p:uint in oP)
+					{
+						if(cP.indexOf(p)>=0) continue;
+						tP=UintPointCompress.releaseFromUint(p);
+						if(this.isIntOutOfMap(tP.x,tP.y)) continue;
+						if(this.testPlayerCanPass(player,tP.x,tP.y,true,true)) return tP;
+						wP.push(
+							this.lockIPointInMap(UintPointCompress.compressFromPoint(tP.x-1,tP.y)),
+							this.lockIPointInMap(UintPointCompress.compressFromPoint(tP.x+1,tP.y)),
+							this.lockIPointInMap(UintPointCompress.compressFromPoint(tP.x,tP.y-1)),
+							this.lockIPointInMap(UintPointCompress.compressFromPoint(tP.x,tP.y+1))
+						);
+						cP.push(p);
+					}
+					oP=oP.splice(0,oP.length).concat(wP);
+					wP.splice(0,wP.length);
+				}
+			}*/
+			//Newest code uses subFindSpawnPoint
+			var p:iPoint=null;
+			for(var i:uint=0;p==null&&i<(this.mapWidth+this.mapHeight);i++)
+			{
+				p=this.subFindSpawnPoint(player,x,y,i);
+			}
+			return p;
+		}
+		
+		protected function subFindSpawnPoint(player:Player,x:int,y:int,r:int):iPoint
+		{
+			for(var cx:int=x-r;cx<=x+r;cx++)
+			{
+				for(var cy:int=y-r;cy<=y+r;cy++)
+				{
+					if(exMath.intAbs(cx-x)==r&&exMath.intAbs(cy-y)==r)
+					{
+						if(!this.isOutOfMap(cx,cy)&&this.testPlayerCanPass(player,cx,cy,true,true)) return new iPoint(cx,cy);
+					}
+				}
+			}
+			return null;
 		}
 		
 		public function spreadAllPlayer():void
@@ -1504,6 +1588,7 @@ package batr.game.main
 		
 		public function lockIPointInMap(point:iPoint):iPoint
 		{
+			if(point==null) return null;
 			point.x=exMath.lockInt(point.x,this.mapWidth);
 			point.y=exMath.lockInt(point.y,this.mapHeight);
 			return point;
@@ -1719,13 +1804,14 @@ package batr.game.main
 		
 		public function onPlayerRespawn(player:Player):void
 		{
+			//Active
 			player.health=player.maxHealth;
 			player.isActive=true;
-			this.spreadPlayer(player,true,false);
+			//Visible
 			player.visible=true;
 			player.gui.visible=true;
-			addSpawnEffect(player.entityX,player.entityY);
-			addPlayerDeathLightEffect2(player.entityX,player.entityY,player,true);
+			//Spread&Effect
+			this.respawnPlayer(player);
 		}
 		
 		public function onPlayerLocationChange(player:Player,newX:Number,newY:Number):void

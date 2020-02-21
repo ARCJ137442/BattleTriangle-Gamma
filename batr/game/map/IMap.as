@@ -12,6 +12,10 @@ package batr.game.map
 		function get randomX():int
 		function get randomY():int
 		function get allDefinedPositions():Vector.<iPoint>
+		function get spawnPoints():Vector.<uint>
+		function get numSpawnPoints():uint
+		function get hasSpawnPoint():Boolean
+		function get randomSpawnPoint():iPoint
 		function clone(createBlock:Boolean=false):IMap
 		function copyFrom(target:IMap,clearSelf:Boolean=false):void
 		function hasBlock(x:int,y:int):Boolean
@@ -25,6 +29,10 @@ package batr.game.map
 		//Display About
 		function setDisplayTo(target:IMapDisplayer):void
 		function setDisplayToLayers(targetBottom:IMapDisplayer,targetMiddle:IMapDisplayer,targetTop:IMapDisplayer):void
+		//SpawnPoint About
+		function addSpawnPoint(p:uint):void
+		function removeSpawnPoint(p:uint):void
+		function clearSpawnPoints():void
 		//AI About
 		function getMatrixObject():Vector.<Vector.<Object>>
 		function getMatrixInt():Vector.<Vector.<int>>

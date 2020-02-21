@@ -1,21 +1,30 @@
-package batr.game.map.maps 
+package batr.game.map 
 {
+	import batr.common.exMath;
+	import batr.common.iPoint;
+	import batr.common.UintPointCompress;
+	
 	import batr.game.map.IMapDisplayer;
 	import batr.game.block.BlockType;
 	import batr.game.block.BlockAttributes;
 	import batr.game.block.BlockCommon;
-	import batr.common.iPoint;
 	import batr.game.map.IMap;
 	
-	public class Map_Common extends Object implements IMap
+	/**
+	 * This class only achieved spawnpoints
+	 */
+	public class NativeMapCommon extends Object implements IMap
 	{
+		//============Instance Variables============//
+		protected var _spawnPoints:Vector.<uint>=new Vector.<uint>();
+		
 		//============Constructor============//
-		public function Map_Common() 
+		public function NativeMapCommon() 
 		{
 			super();
 		}
 		
-		//============Interface Functions============//
+		//============Interface Getter And Setter============//
 		public function get mapWidth():uint
 		{
 			return 0;
@@ -41,6 +50,31 @@ package batr.game.map.maps
 			return null;
 		}
 		
+		public function get spawnPoints():Vector.<uint>
+		{
+			return this._spawnPoints;
+		}
+		
+		public function get numSpawnPoints():uint
+		{
+			return this._spawnPoints.length;
+		}
+		
+		public function get hasSpawnPoint():Boolean
+		{
+			return this.numSpawnPoints>0;
+		}
+		
+		public function get randomSpawnPoint():iPoint
+		{
+			if(this.hasSpawnPoint)
+			{
+				return UintPointCompress.releaseFromUint(this._spawnPoints[exMath.random(this.numSpawnPoints)]);
+			}
+			return null;
+		}
+		
+		//============Interface Functions============//
 		public function clone(createBlock:Boolean=false):IMap 
 		{
 			return null;
@@ -99,6 +133,30 @@ package batr.game.map.maps
 		public function setDisplayToLayers(targetBottom:IMapDisplayer,targetMiddle:IMapDisplayer,targetTop:IMapDisplayer):void
 		{
 			return;
+		}
+		
+		/**
+		 * @param	p	the point uses UintPointCompress
+		 */
+		public function addSpawnPoint(p:uint):void
+		{
+			this._spawnPoints.push(p);
+		}
+		
+		/**
+		 * @param	p	the point uses UintPointCompress
+		 */
+		public function removeSpawnPoint(p:uint):void
+		{
+			for(var i:int=this._spawnPoints.length-1;i>0;--i)
+			{
+				if(this._spawnPoints[i]==p) this._spawnPoints.splice(i,1);
+			}
+		}
+		
+		public function clearSpawnPoints():void
+		{
+			this._spawnPoints.splice(0,this.numSpawnPoints);
 		}
 		
 		//========AI About========//

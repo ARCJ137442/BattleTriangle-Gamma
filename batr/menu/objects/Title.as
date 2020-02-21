@@ -2,7 +2,7 @@ package batr.menu.objects
 {
 	import flash.display.*;
 	
-	public class Title extends Sprite
+	public class Title extends Bitmap
 	{
 		//============Static Variables============//
 		public static const WIDTH:Number=2048.75;
@@ -13,13 +13,13 @@ package batr.menu.objects
 		//============Constructor Function============//
 		public function Title():void
 		{
+			super(new TitleImg());//TitleImg.IMAGE_DATA
 			//AddBitMap
-			var bitmap:Bitmap=new Bitmap(new TitleImg());//TitleImg.IMAGE_DATA
-			bitmap.x=X;
-			bitmap.y=Y;
-			bitmap.width=WIDTH;
-			bitmap.height=HEIGHT;
-			this.addChild(bitmap);
+			//var bitmap:Bitmap=new Bitmap();
+			this.x=X;
+			this.y=Y;
+			this.width=WIDTH;
+			this.height=HEIGHT;
 		}
 	}
 }

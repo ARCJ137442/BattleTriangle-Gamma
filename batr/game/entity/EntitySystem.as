@@ -8,6 +8,8 @@ package batr.game.entity
 	import batr.game.entity.entities.projectiles.*;
 	import batr.game.main.*;
 	
+	import flash.utils.Dictionary;
+	
 	/* The class is use for game that deal with entities
 	 * The class have some functions about game entity
 	 */
@@ -15,10 +17,16 @@ package batr.game.entity
 	{
 		//============Static Variables============//
 		
-		//============Static Functions============//
-		
 		//============Instance Variables============//
 		protected var _host:Game
+		
+		//UUID
+		/**
+		 * The UUID Process to system.
+		 * getEntityByUUID(this._headUUID) usual equals null.
+		 */
+		private var _headUUID:uint=1
+		private var _uuidDic:Dictionary=new Dictionary(true);
 		
 		protected var _entities:Vector.<EntityCommon>=new Vector.<EntityCommon>
 		protected var _players:Vector.<Player>=new Vector.<Player>
@@ -104,6 +112,96 @@ package batr.game.entity
 		}
 		
 		//============Instance Functions============//
+		//UUID About
+		/**
+		 * Find next empty UUID,let getEntityByUUID(this._headUUID)==null
+		 * @return
+		 */
+		public function nextUUID():uint
+		{
+			while(getEntityByUUID(++this._headUUID)==null&&isValidUUID(this._headUUID))
+			{
+				return this._headUUID;
+			}
+			return 0;
+		}
+		
+		public function getEntityByUUID(uuid:uint):EntityCommon
+		{
+			return (this._uuidDic[uuid] as EntityCommon);
+		}
+		
+		public function getUUIDByEntity(entity:EntityCommon):uint
+		{
+			return uint(this._uuidDic[entity]);
+		}
+		
+		/**
+		 * Use for loop to register UUID for entity.
+		 * @param	uuid	needed UUID
+		 * @return	if uuid!=0
+		 */
+		public function isValidUUID(uuid:uint):Boolean
+		{
+			return uuid>0;
+		}
+		
+		public function hasValidEntity(uuid:uint):Boolean
+		{
+			return this.isValidUUID(uuid)&&this.getEntityByUUID(uuid)!=null;
+		}
+		
+		public function hasValidUUID(entity:EntityCommon):Boolean
+		{
+			return entity!=null&&this.isValidUUID(this.getUUIDByEntity(entity));
+		}
+		
+		public function getAllEntity():Vector.<EntityCommon>
+		{
+			var result:Vector.<EntityCommon>=new Vector.<EntityCommon>();
+			for each(var obj:Object in this._uuidDic)
+			{
+				if(obj!=null&&obj is EntityCommon) result.push(obj as EntityCommon);
+			}
+			return result;
+		}
+		
+		public function getAllUUID():Vector.<uint>
+		{
+			var result:Vector.<uint>=new Vector.<uint>();
+			for each(var obj:Object in this._uuidDic)
+			{
+				if(obj!=null&&obj is uint&&isValidUUID(obj as uint)) result.push(obj as uint);
+			}
+			return result;
+		}
+		
+		public function registerEntityforUUID(entity:EntityCommon):Boolean
+		{
+			if(entity==null) return false;
+			var uuid:uint=this.nextUUID();
+			if(this.isValidUUID(uuid))
+			{
+				this._uuidDic[entity]=uuid;
+				this._uuidDic[uuid]=entity;
+				return true;
+			}
+			return false;
+		}
+		
+		public function cencellEntityforUUID(entity:EntityCommon):Boolean
+		{
+			var uuid:uint=this.getUUIDByEntity(entity);
+			if(this.isValidUUID(uuid))
+			{
+				this._uuidDic[entity]=0;
+				this._uuidDic[uuid]=null;
+				return true;
+			}
+			return false;
+		}
+		
+		//Ealier System Functions
 		public function GC():void
 		{
 			if(this._entities==null) return;
@@ -142,14 +240,20 @@ package batr.game.entity
 		public function registerEntity(entity:EntityCommon):Boolean
 		{
 			if(entity==null||isRegisteredEntity(entity)) return false
+			//List
 			this._entities.push(entity)
+			//UUIDMap
+			if(!this.hasValidUUID(entity)) this.registerEntityforUUID(entity);
 			return true
 		}
 		
 		public function cencellEntity(entity:EntityCommon):Boolean
 		{
 			if(entity==null||!isRegisteredEntity(entity)) return false
+			//List
 			this._entities.splice(this._entities.indexOf(entity),1)
+			//UUIDMap
+			if(this.hasValidUUID(entity)) this.cencellEntityforUUID(entity);
 			return true
 		}
 		
@@ -166,7 +270,8 @@ package batr.game.entity
 			UsefulTools.removeChildIfContains(this._host.bonusBoxContainer,entity);
 		}
 		
-		/* All Entity!
+		/**
+		 * Remove All Entity!
 		 */
 		public function removeAllEntity():void
 		{
@@ -174,6 +279,9 @@ package batr.game.entity
 			{
 				this.removeEntity(this._entities[0])
 			}
+			//Reset UUID Head
+			this._headUUID=0;
+			this._uuidDic=new Dictionary(true);
 		}
 		
 		public function isRegisteredPlayer(player:Player):Boolean
@@ -197,14 +305,14 @@ package batr.game.entity
 		{
 			if(player==null||!isRegisteredPlayer(player)) return false
 			this._players.splice(this._players.indexOf(player),1)
-			cencellEntity(player)
+			this.cencellEntity(player)
 			return true
 		}
 		
 		public function removePlayer(player:Player):void
 		{
-			cencellPlayer(player)
-			removeEntity(player)
+			this.cencellPlayer(player)
+			this.removeEntity(player)
 		}
 		
 		public function removeAllPlayer():void
@@ -227,7 +335,7 @@ package batr.game.entity
 		public function registerProjectile(projectile:ProjectileCommon):Boolean
 		{
 			if(projectile==null||isRegisteredEntity(projectile)) return false
-			registerEntity(projectile)
+			this.registerEntity(projectile)
 			this._projectiles.push(projectile)
 			return true
 		}
@@ -242,8 +350,8 @@ package batr.game.entity
 		
 		public function removeProjectile(projectile:ProjectileCommon):void
 		{
-			cencellProjectile(projectile)
-			removeEntity(projectile)
+			this.cencellProjectile(projectile)
+			this.removeEntity(projectile)
 		}
 		
 		public function removeAllProjectile():void
@@ -266,7 +374,7 @@ package batr.game.entity
 		public function registerBonusBox(bonusBox:BonusBox):Boolean
 		{
 			if(bonusBox==null||isRegisteredBonusBox(bonusBox)) return false
-			registerEntity(bonusBox)
+			this.registerEntity(bonusBox)
 			this._bonusBoxes.push(bonusBox)
 			return true
 		}
@@ -275,14 +383,14 @@ package batr.game.entity
 		{
 			if(bonusBox==null||!isRegisteredBonusBox(bonusBox)) return false
 			this._bonusBoxes.splice(this._bonusBoxes.indexOf(bonusBox),1)
-			cencellEntity(bonusBox)
+			this.cencellEntity(bonusBox)
 			return true
 		}
 		
 		public function removeBonusBox(bonusBox:BonusBox):void
 		{
-			cencellBonusBox(bonusBox)
-			removeEntity(bonusBox)
+			this.cencellBonusBox(bonusBox)
+			this.removeEntity(bonusBox)
 		}
 		
 		public function removeAllBonusBox():void

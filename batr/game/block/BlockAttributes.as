@@ -18,11 +18,12 @@ package batr.game.block
 		public static const COLOR_SPAWNER:BlockAttributes=new BlockAttributes(0x444444).asSolid
 		public static const LASER_TRAP:BlockAttributes=new BlockAttributes(0x444444).asSolid
 		public static const METAL:BlockAttributes=new BlockAttributes(0x666666).asSolid.asMetal
+		public static const SPAWN_POINT_MARK:BlockAttributes=new BlockAttributes(0x6666ff).asGas.asSpawnPoint
 		
 		//============Static Functions============//
 		public static function fromType(type:BlockType):BlockAttributes
 		{
-			return type.currentAttributes
+			return type.currentAttributes;
 		}
 		
 		//============Instance Variables============//
@@ -96,47 +97,52 @@ package batr.game.block
 		//============Instance Getter And Setter============//
 		public function get asSolid():BlockAttributes
 		{
-			return this.loadAsSolid()
+			return this.loadAsSolid();
 		}
 		
 		public function get asLiquid():BlockAttributes
 		{
-			return this.loadAsLiquid()
+			return this.loadAsLiquid();
 		}
 		
 		public function get asGas():BlockAttributes
 		{
-			return this.loadAsGas()
+			return this.loadAsGas();
 		}
 		
 		public function get asTransParent():BlockAttributes
 		{
-			return this.loadAsTransParent()
+			return this.loadAsTransParent();
 		}
 		
 		public function get asUnbreakable():BlockAttributes
 		{
-			return this.loadAsUnbreakable()
+			return this.loadAsUnbreakable();
 		}
 		
 		public function get asHurtZone():BlockAttributes
 		{
-			return this.loadAsHurtZone()
+			return this.loadAsHurtZone();
 		}
 		
 		public function get asKillZone():BlockAttributes
 		{
-			return this.loadAsKillZone()
+			return this.loadAsKillZone();
 		}
 		
 		public function get asRotateZone():BlockAttributes
 		{
-			return this.loadAsRotateZone()
+			return this.loadAsRotateZone();
 		}
 		
 		public function get asMetal():BlockAttributes
 		{
-			return this.loadAsMetal()
+			return this.loadAsMetal();
+		}
+		
+		public function get asSpawnPoint():BlockAttributes
+		{
+			return this.loadAsSpawnPoint();
 		}
 		
 		//============Instance Functions============//
@@ -224,6 +230,17 @@ package batr.game.block
 		{
 			this.electricResistance=2
 			return this
+		}
+		
+		public function loadAsSpawnPoint():BlockAttributes
+		{
+			this.bulletCanPass=false;
+			this.laserCanPass=true;
+			this.isTransParent=true;
+			this.isCarriable=false;
+			this.electricResistance=100;
+			this.drawLayer=-1;
+			return this;
 		}
 	}
 }

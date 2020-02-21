@@ -12,7 +12,7 @@ package batr.menu.objects
 		//============Constructor Function============//
 		public function TitleImg():void
 		{
-			super(1680,500,true);
+			super(840,250,true);
 		}
 	}
 }

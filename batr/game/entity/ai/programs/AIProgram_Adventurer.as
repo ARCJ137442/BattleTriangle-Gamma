@@ -519,13 +519,13 @@ package batr.game.entity.ai.programs
 						}
 						else//Default as Bonus
 						{
-							finalNode=getDynamicNode(
-								ownerPoint,
-								this._lastTarget.gridPoint,
-								host,
-								player,
-								this._remember
-							);
+							finalNode=host.lockIPointInMap(
+								getDynamicNode(
+									ownerPoint,
+									this._lastTarget.gridPoint,
+									host,player,this._remember
+								)
+							) as PathNode;
 						}
 						//==Execute==//
 						//Find Failed
