@@ -31,6 +31,7 @@ package batr.game.map.maps
 		public static var MAP_8:Map_V1
 		public static var MAP_9:Map_V1
 		public static var MAP_A:Map_V1
+		public static var MAP_B:Map_V1
 		
 		protected static var isInited:Boolean=cInit()
 		
@@ -63,6 +64,7 @@ package batr.game.map.maps
 			MAP_8=new Map_V1()
 			MAP_9=new Map_V1()
 			MAP_A=new Map_V1()
+			MAP_B=new Map_V1(null,true)
 			//====Basic Frame====//
 			BASIC_FRAME.fillBlock(0,0,_SIZE-1,_SIZE-1,
 								  BlockType.BEDROCK,true)
@@ -211,6 +213,50 @@ package batr.game.map.maps
 				//center
 				//MAP_A.fillBlock(11,11,12,12,BlockType.COLOR_SPAWNER)
 			}
+			//====Map B====//
+			MAP_B.copyFrom(BASIC_FRAME)
+			{
+				/**
+				 * Spin 180*:x=23-x,y=23-y
+				 * for fill:cross imput
+				 */
+				//corner spawnpoint
+				for(i=0;i<4;i++) MAP_B.addSpawnPointWithMark(2+(i>>1)*19,2+(i&1)*19);
+				//Metal Middle Line&Laser Trap
+				//l
+				MAP_B.fillBlock(0,9,13,9,BlockType.METAL);
+				MAP_B.setBlock(14,9,BlockCommon.fromType(BlockType.LASER_TRAP));
+				//r
+				MAP_B.fillBlock(10,14,23,14,BlockType.METAL);
+				MAP_B.setBlock(9,14,BlockCommon.fromType(BlockType.LASER_TRAP));
+				//center X_TRAP_KILL
+				MAP_B.fillBlock(11,11,12,12,BlockType.X_TRAP_KILL);
+				//side water&spawner
+				//l
+				MAP_B.fillBlock(6,10,6,17,BlockType.WATER)
+				MAP_B.setBlock(3,16,BlockCommon.fromType(BlockType.COLOR_SPAWNER));
+				MAP_B.setBlock(3,12,BlockCommon.fromType(BlockType.COLOR_SPAWNER));
+				//r
+				MAP_B.fillBlock(17,6,17,13,BlockType.WATER)
+				MAP_B.setBlock(3,16,BlockCommon.fromType(BlockType.COLOR_SPAWNER));
+				MAP_B.setBlock(3,12,BlockCommon.fromType(BlockType.COLOR_SPAWNER));
+				//up&down side X_TRAP_HURT/WATER/BEDROCK
+				//u
+				MAP_B.fillBlock(19,4,22,4,BlockType.BEDROCK)
+				MAP_B.fillBlock(6,4,18,4,BlockType.X_TRAP_HURT)
+				MAP_B.fillBlock(6,2,20,2,BlockType.WATER)
+				//d
+				MAP_B.fillBlock(1,19,4,19,BlockType.BEDROCK)
+				MAP_B.fillBlock(5,19,17,19,BlockType.X_TRAP_HURT)
+				MAP_B.fillBlock(3,21,17,21,BlockType.WATER)
+				//corner X_TRAP_HURT
+				//ul
+				MAP_B.fillBlock(2,3,2,7,BlockType.X_TRAP_HURT)
+				MAP_B.fillBlock(4,1,4,7,BlockType.X_TRAP_HURT)
+				//dr
+				MAP_B.fillBlock(21,16,21,20,BlockType.X_TRAP_HURT)
+				MAP_B.fillBlock(19,16,19,22,BlockType.X_TRAP_HURT)
+			}
 			//Set Variables//
 			return true;
 		}
@@ -259,8 +305,9 @@ package batr.game.map.maps
 		protected var _context:Object=new Object();
 		
 		//============Constructor============//
-		public function Map_V1(context:Object=null):void
+		public function Map_V1(context:Object=null,isArena:Boolean=false):void
 		{
+			super(isArena);
 			if(context!=null) this._context=context;
 		}
 		
@@ -298,6 +345,9 @@ package batr.game.map.maps
 			return returnPoints
 		}
 		
+		/**
+		 * truly overrite virual function
+		 */
 		public override function clone(createBlock:Boolean=true):IMap
 		{
 			//context
@@ -310,10 +360,11 @@ package batr.game.map.maps
 				context=createBlock?context.clone():context
 				tempContext[index]=context
 			}
-			//construct
-			var copy:Map_V1=new Map_V1(tempContext)
+			//construct(included isArena)
+			var copy:Map_V1=new Map_V1(tempContext,this._arena)
 			//spawnpoints
 			copy._spawnPoints=this._spawnPoints.concat()
+			//return
 			return copy
 		}
 		
@@ -326,8 +377,8 @@ package batr.game.map.maps
 			{
 				this._setBlock(point.x,point.y,target.getBlock(point.x,point.y))
 			}
-			//spawnpoints
-			this._spawnPoints=target.spawnPoints.concat()
+			//super
+			super.copyFrom(target,clearSelf)
 		}
 		
 		public override function hasBlock(x:int,y:int):Boolean

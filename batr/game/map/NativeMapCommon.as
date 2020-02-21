@@ -17,11 +17,13 @@ package batr.game.map
 	{
 		//============Instance Variables============//
 		protected var _spawnPoints:Vector.<uint>=new Vector.<uint>();
+		protected var _arena:Boolean=false;
 		
 		//============Constructor============//
-		public function NativeMapCommon() 
+		public function NativeMapCommon(arena:Boolean=false) 
 		{
 			super();
+			this._arena=arena;
 		}
 		
 		//============Interface Getter And Setter============//
@@ -74,15 +76,38 @@ package batr.game.map
 			return null;
 		}
 		
+		/**
+		 * This property determines this map's
+		 * switch/mechine/trap/spawner can be destroy or carry
+		 * by Weapon BlockThrower.
+		 */
+		public function get isArenaMap():Boolean
+		{
+			return this._arena;
+		}
+		
+		//============Tool Functions============//
+		public function addSpawnPointWithMark(x:int,y:int):void
+		{
+			this.addSpawnPoint(UintPointCompress.compressFromPoint(x,y));
+			this.setBlock(x,y,BlockCommon.fromType(BlockType.SPAWN_POINT_MARK));
+		}
+		
 		//============Interface Functions============//
 		public function clone(createBlock:Boolean=false):IMap 
 		{
 			return null;
 		}
 		
+		/**
+		 * only copy spawnpoints and _isArena
+		 */
 		public function copyFrom(target:IMap,clearSelf:Boolean=false):void
 		{
-			return;
+			//spawnpoints
+			this._spawnPoints=target.spawnPoints.concat();
+			//isArena
+			this._arena=target.isArenaMap;
 		}
 		
 		public function hasBlock(x:int,y:int):Boolean
@@ -135,6 +160,7 @@ package batr.game.map
 			return;
 		}
 		
+		//========SpawnPoint About========//
 		/**
 		 * @param	p	the point uses UintPointCompress
 		 */

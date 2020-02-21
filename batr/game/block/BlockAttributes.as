@@ -8,16 +8,16 @@ package batr.game.block
 		
 		public static const VOID:BlockAttributes=new BlockAttributes(0xffffff,0x0).asGas
 		public static const WALL:BlockAttributes=new BlockAttributes(0xBBBBBB).asSolid
-		public static const WATER:BlockAttributes=new BlockAttributes(0x2222FF,0x40000000).asLiquid
-		public static const GLASS:BlockAttributes=new BlockAttributes(0x000000,0x80000000).asTransParent
+		public static const WATER:BlockAttributes=new BlockAttributes(0x2222FF,0x40000000).asLiquid.asArenaBlock
+		public static const GLASS:BlockAttributes=new BlockAttributes(0x000000,0x80000000).asTransParent.asArenaBlock
 		public static const BEDROCK:BlockAttributes=new BlockAttributes(0x888888).asSolid.asUnbreakable
-		public static const X_TRAP_HURT:BlockAttributes=new BlockAttributes(0xffff00,0xc0000000).asGas.asHurtZone
-		public static const X_TRAP_KILL:BlockAttributes=new BlockAttributes(0xff0000,0xc0000000).asGas.asKillZone
-		public static const X_TRAP_ROTATE:BlockAttributes=new BlockAttributes(0x0000ff,0xc0000000).asGas.asRotateZone
+		public static const X_TRAP_HURT:BlockAttributes=new BlockAttributes(0xffff00,0xc0000000).asGas.asHurtZone.asArenaBlock
+		public static const X_TRAP_KILL:BlockAttributes=new BlockAttributes(0xff0000,0xc0000000).asGas.asKillZone.asArenaBlock
+		public static const X_TRAP_ROTATE:BlockAttributes=new BlockAttributes(0x0000ff,0xc0000000).asGas.asRotateZone.asArenaBlock
 		public static const COLORED_BLOCK:BlockAttributes=new BlockAttributes(0x000000).asSolid
-		public static const COLOR_SPAWNER:BlockAttributes=new BlockAttributes(0x444444).asSolid
-		public static const LASER_TRAP:BlockAttributes=new BlockAttributes(0x444444).asSolid
-		public static const METAL:BlockAttributes=new BlockAttributes(0x666666).asSolid.asMetal
+		public static const COLOR_SPAWNER:BlockAttributes=new BlockAttributes(0x444444).asSolid.asArenaBlock
+		public static const LASER_TRAP:BlockAttributes=new BlockAttributes(0x444444).asSolid.asArenaBlock
+		public static const METAL:BlockAttributes=new BlockAttributes(0x666666).asSolid.asMetal.asArenaBlock
 		public static const SPAWN_POINT_MARK:BlockAttributes=new BlockAttributes(0x6666ff).asGas.asSpawnPoint
 		
 		//============Static Functions============//
@@ -57,6 +57,8 @@ package batr.game.block
 		 */
 		public var electricResistance:uint
 		
+		public var unbreakableInArenaMap:Boolean=false
+		
 		//==Informations==//
 		public var defaultPixelColor:uint
 		/**
@@ -83,6 +85,7 @@ package batr.game.block
 			tempAttributes.hurtPlayerDamage=this.hurtPlayerDamage
 			tempAttributes.rotateWhenMoveIn=this.rotateWhenMoveIn
 			tempAttributes.electricResistance=this.electricResistance
+			tempAttributes.unbreakableInArenaMap=this.unbreakableInArenaMap
 			tempAttributes.defaultPixelAlpha=this.defaultPixelAlpha
 			tempAttributes.defaultPixelColor=this.defaultPixelColor
 			return tempAttributes
@@ -143,6 +146,11 @@ package batr.game.block
 		public function get asSpawnPoint():BlockAttributes
 		{
 			return this.loadAsSpawnPoint();
+		}
+		
+		public function get asArenaBlock():BlockAttributes
+		{
+			return this.loadAsArenaBlock();
 		}
 		
 		//============Instance Functions============//
@@ -240,6 +248,12 @@ package batr.game.block
 			this.isCarriable=false;
 			this.electricResistance=100;
 			this.drawLayer=-1;
+			return this;
+		}
+		
+		public function loadAsArenaBlock():BlockAttributes
+		{
+			this.unbreakableInArenaMap=true;
 			return this;
 		}
 	}

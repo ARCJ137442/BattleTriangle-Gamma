@@ -61,16 +61,11 @@ package batr.game.entity.entities.projectiles
 		//====Tick Function====//
 		public override function onProjectileTick():void
 		{
-			if(!_host.isOutOfMap(
-					this._host.lockPosInMap(this.entityX+this.xSpeed,true),
-					this._host.lockPosInMap(this.entityY+this.ySpeed,false)
-				)&&
+			if(!this._host.isOutOfMap(this.lockedEntityX,this.lockedEntityY)&&
 				this._host.testCanPass(
-					this._host.lockPosInMap(this.entityX+this.xSpeed,true),
-					this._host.lockPosInMap(this.entityY+this.ySpeed,false),
+					this.lockedEntityX,this.lockedEntityY,
 					false,true,false,false
-				)&&
-			   !this._host.isHitAnyPlayer(this.gridX,this.gridY))
+				)&&!this._host.isHitAnyPlayer(this.gridX,this.gridY))
 			{
 				this.addXY(this.xSpeed,this.ySpeed)
 			}
@@ -83,15 +78,22 @@ package batr.game.entity.entities.projectiles
 		
 		protected function onBlockHit():void
 		{
+			//Locate
 			var lx:int=this.lockedGridX,ly:int=this.lockedGridY;
-			this._host.setBlock(lx,ly,this._carriedBlock);
-			this._host.throwedBlockHurtPlayer(this);
-			//Effect
-			this.host.addBlockLightEffect2(
-				PosTransform.alignToEntity(lx),
-				PosTransform.alignToEntity(ly),
-				this.carriedBlock,false
-			);
+			//Detect
+			var lba:BlockAttributes=this.host.getBlockAttributes(lx,ly);
+			if(this.host.testCarribleWithMap(lba,this.host.map))
+			{
+				//Place
+				this._host.setBlock(lx,ly,this._carriedBlock);
+				this._host.throwedBlockHurtPlayer(this);
+				//Effect
+				this.host.addBlockLightEffect2(
+					PosTransform.alignToEntity(lx),
+					PosTransform.alignToEntity(ly),
+					this.carriedBlock,false
+				);
+			}
 			//Remove
 			this._host.entitySystem.removeProjectile(this);
 		}

@@ -16,6 +16,7 @@ package batr.game.map
 		function get numSpawnPoints():uint
 		function get hasSpawnPoint():Boolean
 		function get randomSpawnPoint():iPoint
+		function get isArenaMap():Boolean
 		function clone(createBlock:Boolean=false):IMap
 		function copyFrom(target:IMap,clearSelf:Boolean=false):void
 		function hasBlock(x:int,y:int):Boolean
