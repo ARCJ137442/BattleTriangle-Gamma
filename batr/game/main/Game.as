@@ -698,6 +698,7 @@ package batr.game.main
 		{
 			return testIntCanPass(PosTransform.alignToGrid(x),PosTransform.alignToGrid(y),asPlayer,asBullet,asLaser,includePlayer,avoidHurting);
 		}
+		
 		public function testIntCanPass(x:int,y:int,asPlayer:Boolean,asBullet:Boolean,asLaser:Boolean,includePlayer:Boolean=true,avoidHurting:Boolean=false):Boolean
 		{
 			//if(debugMode) trace("testCanPass:"+arguments+";"+this.getBlockAttributes(x,y).bulletCanPass,isHitAnyPlayer(x,y))
@@ -1502,11 +1503,15 @@ package batr.game.main
 					p=new Wave(this,spawnX,spawnY,player,chargePercent)
 					break;
 				case WeaponType.BLOCK_THROWER:
+					var carryX:int=this.lockPosInMap(PosTransform.alignToGrid(spawnCenterX),true);
+					var carryY:int=this.lockPosInMap(PosTransform.alignToGrid(spawnCenterY),false);
+					frontBlock=this.getBlock(carryX,carryY);
 					if(player.isCarriedBlock)
 					{
-						if(this.testPlayerFrontCanPass(player,5,false))
+						//Throw
+						if(this.testCanPass(carryX,carryY,false,true,false,false,false))
 						{
-							//Throw
+							//Add Block
 							p=new ThrowedBlock(this,spawnCenterX,spawnCenterY,player,player.carriedBlock.clone(),player.rot,chargePercent);
 							//Clear
 							player.setCarriedBlock(null);
@@ -1515,10 +1520,6 @@ package batr.game.main
 					else if(chargePercent>=1)
 					{
 						//Carry
-						var carryX=this.lockPosInMap(PosTransform.alignToGrid(spawnCenterX),true);
-						var carryY=this.lockPosInMap(PosTransform.alignToGrid(spawnCenterY),false);
-						frontBlock=this.getBlock(carryX,carryY);
-						//detect condition
 						if(frontBlock!=null&&this.testCarryableWithMap(frontBlock.attributes,this.map))
 						{
 							player.setCarriedBlock(frontBlock,false);
