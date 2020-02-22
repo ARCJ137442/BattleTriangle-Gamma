@@ -20,6 +20,8 @@
 		public static const CD_BAR_FRAME_COLOR:uint=0xaaddaa
 		public static const EXPERIENCE_COLOR:uint=0xcc88ff
 		public static const EXPERIENCE_BAR_FRAME_COLOR:uint=0xbbaadd
+		public static const LEVEL_COLOR:uint=0x8800ff
+		
 		//Display Graphics
 		public static const HEALTH_BAR_HEIGHT:Number=GlobalGameVariables.DEFAULT_SIZE/10
 		public static const BAR_FRAME_SIZE:Number=GlobalGameVariables.DEFAULT_SIZE/320
@@ -27,6 +29,16 @@
 		public static const UNDER_BAR_Y_0:Number=0.5*GlobalGameVariables.DEFAULT_SIZE
 		public static const UNDER_BAR_Y_1:Number=UNDER_BAR_Y_0+UNDER_BAR_HEIGHT
 		public static const UNDER_BAR_Y_2:Number=UNDER_BAR_Y_1+UNDER_BAR_HEIGHT
+		
+		//Display Texts
+		public static const EXPERIENCE_FORMAT:TextFormat=new TextFormat(
+			GlobalGameVariables.MAIN_FONT.fontName,
+			0.4*GlobalGameVariables.DEFAULT_SIZE,
+			LEVEL_COLOR,true,
+			null,null,null,null,
+			TextFormatAlign.CENTER
+		)
+		public static const LEVEL_TEXT_HEAD:String="Lv."
 		
 		//============Instance Functions============//
 		public static function getUnderBarY(barNum:uint=0):Number
@@ -60,6 +72,7 @@
 		
 		protected var _healthBarText:TextField=new TextField()
 		protected var _nameTagText:TextField=new TextField()
+		protected var _levelText:TextField=new TextField()
 		
 		//============Constructor Function============//
 		public function PlayerGUI(owner:Player):void
@@ -174,6 +187,7 @@
 			this._experienceBarExperience.visible=this._experienceBarFrame.visible=this.getVisibleExperience()
 			/*if(sort) sortUnderBars()*/
 			this._experienceBarExperience.scaleX=this._owner.experiencePercent
+			this._levelText.text=LEVEL_TEXT_HEAD+this._owner.level;
 		}
 		
 		protected function sortUnderBars():void
@@ -213,10 +227,11 @@
 		{
 			this._healthBarText.defaultTextFormat=this._healthBarFormat
 			this._nameTagText.defaultTextFormat=this._nameTagFormat
-			this._healthBarText.selectable=this._nameTagText.selectable=false
-			this._healthBarText.multiline=this._nameTagText.multiline=false
-			this._healthBarText.embedFonts=this._nameTagText.embedFonts=true
-			this._healthBarText.autoSize=this._nameTagText.autoSize=TextFieldAutoSize.CENTER
+			this._levelText.defaultTextFormat=EXPERIENCE_FORMAT
+			this._healthBarText.selectable=this._nameTagText.selectable=this._levelText.selectable=false
+			this._healthBarText.multiline=this._nameTagText.multiline=this._levelText.multiline=false
+			this._healthBarText.embedFonts=this._nameTagText.embedFonts=this._levelText.embedFonts=true
+			this._healthBarText.autoSize=this._nameTagText.autoSize=this._levelText.autoSize=TextFieldAutoSize.CENTER
 			//this._healthBarText.border=this._nameTagText.border=true
 		}
 		
@@ -227,9 +242,14 @@
 			this._pointerTriangle.y=-1.2*GlobalGameVariables.DEFAULT_SIZE
 			//Name Tag
 			this._nameTagText.x=-1.875*GlobalGameVariables.DEFAULT_SIZE
-			this._nameTagText.y=-2.0375*GlobalGameVariables.DEFAULT_SIZE
+			this._nameTagText.y=-2.5*GlobalGameVariables.DEFAULT_SIZE
 			this._nameTagText.width=3.75*GlobalGameVariables.DEFAULT_SIZE
 			this._nameTagText.height=0.625*GlobalGameVariables.DEFAULT_SIZE
+			//Level Text
+			this._levelText.x=-1.875*GlobalGameVariables.DEFAULT_SIZE
+			this._levelText.y=-1.9375*GlobalGameVariables.DEFAULT_SIZE
+			this._levelText.width=3.75*GlobalGameVariables.DEFAULT_SIZE
+			this._levelText.height=0.6*GlobalGameVariables.DEFAULT_SIZE
 			//Health Bar
 			drawHealthBar()
 			this._healthBarFrame.x=this._healthBarHealth.x=-0.46875*GlobalGameVariables.DEFAULT_SIZE
@@ -333,6 +353,7 @@
 			this.addChild(this._chargeBarFrame)
 			this.addChild(this._experienceBarExperience)
 			this.addChild(this._experienceBarFrame)
+			this.addChild(this._levelText)
 			this.addChild(this._nameTagText)
 			this.addChild(this._pointerTriangle)
 		}
@@ -346,6 +367,9 @@
 			this.removeChild(this._CDBarFrame)
 			this.removeChild(this._chargeBarCharge)
 			this.removeChild(this._chargeBarFrame)
+			this.removeChild(this._experienceBarExperience)
+			this.removeChild(this._experienceBarFrame)
+			this.removeChild(this._levelText)
 			this.removeChild(this._nameTagText)
 			this.removeChild(this._pointerTriangle)
 		}
@@ -353,7 +377,6 @@
 		public function deleteSelf():void
 		{
 			this.removeChilds()
-			this._owner=null
 			this._healthBarHealth=null
 			this._healthBarFrame=null
 			this._healthBarText=null
@@ -361,10 +384,14 @@
 			this._CDBarFrame=null
 			this._chargeBarCharge=null
 			this._chargeBarFrame=null
+			this._experienceBarExperience=null
+			this._experienceBarFrame=null
+			this._levelText=null
 			this._nameTagText=null
 			this._pointerTriangle=null
 			this._healthBarFormat=null
 			this._nameTagFormat=null
+			this._owner=null
 		}
 	}
 }

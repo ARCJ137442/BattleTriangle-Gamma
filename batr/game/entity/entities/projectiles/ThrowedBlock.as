@@ -83,11 +83,12 @@ package batr.game.entity.entities.projectiles
 			var lx:int=this.lockedGridX,ly:int=this.lockedGridY;
 			//Detect
 			var lba:BlockAttributes=this.host.getBlockAttributes(lx,ly);
+			//Hurt
+			this._host.throwedBlockHurtPlayer(this);
 			if(this.host.testBreakableWithMap(lba,this.host.map))
 			{
 				//Place
 				this._host.setBlock(lx,ly,this._carriedBlock);
-				this._host.throwedBlockHurtPlayer(this);
 				//Effect
 				this.host.addBlockLightEffect2(
 					PosTransform.alignToEntity(lx),
