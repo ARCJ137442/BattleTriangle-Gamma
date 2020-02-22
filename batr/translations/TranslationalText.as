@@ -16,7 +16,7 @@ package batr.translations
 		public static function getTextsByAllBlocks(translations:Translations,isDescription:Boolean):Vector.<TranslationalText>
 		{
 			var result:Vector.<TranslationalText>=new Vector.<TranslationalText>();
-			for each(var type:BlockType in BlockType._ALL_BLOCK)
+			for each(var type:BlockType in BlockType._NORMAL_BLOCKS)
 			{
 				result.push(new TranslationalText(translations,TranslationKey.getTypeKey(type,isDescription)));
 			}

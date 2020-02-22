@@ -39,7 +39,11 @@ package batr.game.block
 		/**
 		 * Weapon:BlockThrower can carry
 		 */
-		public var isCarriable:Boolean
+		public var isCarryable:Boolean
+		/**
+		 * Weapon:BlockThrower can carry
+		 */
+		public var isBreakable:Boolean
 		/**
 		 * -1 means no damage,the other NEGATIVE lower than -1 means they can kill player once a damage
 		 */
@@ -81,7 +85,8 @@ package batr.game.block
 			tempAttributes.laserCanPass=this.laserCanPass
 			tempAttributes.isTransParent=this.isTransParent
 			tempAttributes.drawLayer=this.drawLayer
-			tempAttributes.isCarriable=this.isCarriable
+			tempAttributes.isCarryable=this.isCarryable
+			tempAttributes.isBreakable=this.isBreakable
 			tempAttributes.hurtPlayerDamage=this.hurtPlayerDamage
 			tempAttributes.rotateWhenMoveIn=this.rotateWhenMoveIn
 			tempAttributes.electricResistance=this.electricResistance
@@ -160,7 +165,8 @@ package batr.game.block
 			this.bulletCanPass=false
 			this.laserCanPass=false
 			this.isTransParent=false
-			this.isCarriable=true
+			this.isCarryable=true
+			this.isBreakable=true
 			this.drawLayer=0
 			this.hurtPlayerDamage=-1
 			this.rotateWhenMoveIn=false
@@ -174,7 +180,8 @@ package batr.game.block
 			this.bulletCanPass=true
 			this.laserCanPass=true
 			this.isTransParent=true
-			this.isCarriable=false
+			this.isCarryable=false
+			this.isBreakable=true
 			this.drawLayer=-1
 			this.hurtPlayerDamage=-1
 			this.rotateWhenMoveIn=false
@@ -188,7 +195,8 @@ package batr.game.block
 			this.bulletCanPass=true
 			this.laserCanPass=true
 			this.isTransParent=true
-			this.isCarriable=false
+			this.isCarryable=false
+			this.isBreakable=true
 			this.drawLayer=-1
 			this.hurtPlayerDamage=-1
 			this.rotateWhenMoveIn=false
@@ -202,7 +210,8 @@ package batr.game.block
 			this.bulletCanPass=false
 			this.laserCanPass=true
 			this.isTransParent=true
-			this.isCarriable=true
+			this.isCarryable=true
+			this.isBreakable=true
 			this.drawLayer=1
 			this.hurtPlayerDamage=-1
 			this.rotateWhenMoveIn=false
@@ -212,7 +221,8 @@ package batr.game.block
 		
 		public function loadAsUnbreakable():BlockAttributes
 		{
-			this.isCarriable=false
+			this.isCarryable=false
+			this.isBreakable=false
 			return this
 		}
 		
@@ -245,7 +255,8 @@ package batr.game.block
 			this.bulletCanPass=false;
 			this.laserCanPass=true;
 			this.isTransParent=true;
-			this.isCarriable=false;
+			this.isCarryable=false;
+			this.isBreakable=false;
 			this.electricResistance=100;
 			this.drawLayer=-1;
 			return this;

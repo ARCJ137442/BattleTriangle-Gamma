@@ -10,9 +10,10 @@ package batr.game.block.blocks
 	{
 		//============Static Variables============//
 		protected static const LINE_SIZE:uint=GlobalGameVariables.DEFAULT_SIZE/20
-		protected static const ALPHA:Number=0.8
+		protected static const ALPHA:Number=1
+		protected static const ALPHA_BACK:Number=0.4
 		protected static const COLOR_NULL:uint=0
-		protected static const COLOR_HURT:uint=0xffff00
+		protected static const COLOR_HURT:uint=0xff8000
 		protected static const COLOR_KILL:uint=0xff0000
 		protected static const COLOR_ROTATE:uint=0x0000ff
 		
@@ -60,7 +61,11 @@ package batr.game.block.blocks
 		
 		protected override function drawMain():void
 		{
-			//Line
+			//Back
+			this.graphics.beginFill(XTrap.getColorByType(this._type),ALPHA_BACK)
+			this.graphics.drawRect(0,0,GlobalGameVariables.DEFAULT_SIZE,GlobalGameVariables.DEFAULT_SIZE)
+			this.graphics.endFill()
+			//X
 			this.graphics.lineStyle(LINE_SIZE,XTrap.getColorByType(this._type),ALPHA)
 			this.graphics.moveTo(LINE_SIZE/2,LINE_SIZE/2)
 			this.graphics.lineTo(GlobalGameVariables.DEFAULT_SIZE-LINE_SIZE/2,GlobalGameVariables.DEFAULT_SIZE-LINE_SIZE/2)

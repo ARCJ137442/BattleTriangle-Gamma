@@ -72,6 +72,7 @@ package batr.game.entity.entities.projectiles
 			else
 			{
 				if(Game.debugMode) trace("Block Hit:",this.getX(),this.getY())
+				if(!this._host.isHitAnyPlayer(this.gridX,this.gridY)) this.addXY(-this.xSpeed,-this.ySpeed)
 				this.onBlockHit()
 			}
 		}
@@ -82,7 +83,7 @@ package batr.game.entity.entities.projectiles
 			var lx:int=this.lockedGridX,ly:int=this.lockedGridY;
 			//Detect
 			var lba:BlockAttributes=this.host.getBlockAttributes(lx,ly);
-			if(this.host.testCarribleWithMap(lba,this.host.map))
+			if(this.host.testBreakableWithMap(lba,this.host.map))
 			{
 				//Place
 				this._host.setBlock(lx,ly,this._carriedBlock);
@@ -91,6 +92,14 @@ package batr.game.entity.entities.projectiles
 				this.host.addBlockLightEffect2(
 					PosTransform.alignToEntity(lx),
 					PosTransform.alignToEntity(ly),
+					this.carriedBlock,false
+				);
+			}
+			else
+			{
+				//Effect
+				this.host.addBlockLightEffect2(
+					this.entityX,this.entityY,
 					this.carriedBlock,false
 				);
 			}

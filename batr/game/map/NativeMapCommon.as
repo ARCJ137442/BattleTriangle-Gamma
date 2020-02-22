@@ -100,19 +100,26 @@ package batr.game.map
 		}
 		
 		/**
-		 * only copy spawnpoints and _isArena
+		 * only copy _isArena
 		 */
 		public function copyFrom(target:IMap,clearSelf:Boolean=false):void
 		{
-			//spawnpoints
-			this._spawnPoints=target.spawnPoints.concat();
 			//isArena
 			this._arena=target.isArenaMap;
 		}
 		
+		/**
+		 * only copy spawnpoints
+		 */
+		public function copyContextFrom(target:IMap,clearSelf:Boolean=false):void
+		{
+			//spawnpoints
+			this._spawnPoints=target.spawnPoints.concat();
+		}
+		
 		public function hasBlock(x:int,y:int):Boolean
 		{
-			return false
+			return false;
 		}
 		
 		public function getBlock(x:int,y:int):BlockCommon

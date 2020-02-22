@@ -31,20 +31,21 @@ package batr.game.block
 		BlockType.COLORED_BLOCK,BlockType.COLOR_SPAWNER,
 		BlockType.LASER_TRAP,BlockType.METAL];
 		public static const _LIQUID_BLOCKS:Vector.<BlockType>=new <BlockType>[BlockType.WATER]
-		public static const _GAS_BLOCKS:Vector.<BlockType>=new <BlockType>[BlockType.VOID,BlockType.SPAWN_POINT_MARK]
+		public static const _GAS_BLOCKS:Vector.<BlockType>=new <BlockType>[BlockType.VOID]
 		public static const _OTHER_BLOCKS:Vector.<BlockType>=new <BlockType>[BlockType.X_TRAP_HURT,BlockType.X_TRAP_KILL,BlockType.X_TRAP_ROTATE]
-		public static const _ALL_BLOCK:Vector.<BlockType>=_SOLID_BLOCKS.concat(_LIQUID_BLOCKS).concat(_GAS_BLOCKS).concat(_OTHER_BLOCKS);
+		public static const _NORMAL_BLOCKS:Vector.<BlockType>=_SOLID_BLOCKS.concat(_LIQUID_BLOCKS).concat(_GAS_BLOCKS).concat(_OTHER_BLOCKS);
+		public static const _SPECIAL:Vector.<BlockType>=new <BlockType>[BlockType.SPAWN_POINT_MARK]
 		
 		//============Static Getter And Setter============//
-		public static function get RANDOM():BlockType
+		public static function get RANDOM_NORMAL():BlockType
 		{
-			return _ALL_BLOCK[exMath.random(_ALL_BLOCK.length)]
+			return _NORMAL_BLOCKS[exMath.random(_NORMAL_BLOCKS.length)]
 		}
 		
 		//============Static Functions============//
 		public static function fromString(str:String):BlockType
 		{
-			for each(var type:BlockType in BlockType._ALL_BLOCK)
+			for each(var type:BlockType in BlockType._NORMAL_BLOCKS)
 			{
 				if(type.name==str) return type
 			}

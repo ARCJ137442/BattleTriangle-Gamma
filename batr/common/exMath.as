@@ -6,6 +6,7 @@
 		private static var PrimeList:Vector.<uint>=new <uint>[2]
 		
 		//==============Static Functions==============//
+		//==Special Function==//
 		public static function $(x:Number):Number
 		{
 			return x>0?x:1/(-x)
@@ -17,6 +18,22 @@
 			return y<0?-1/(x):x
 		}
 		
+		/**
+		 * A Function in Natrual Number.
+		 * even(0,2,4,6,...)->0
+		 * odd:
+		 * >num[%4=1](1,5,9,...)->1
+		 * >num[%4=3](3,7,11...)->-1
+		 * Total list:[0,1,0,-1,0,1,0,-1,0,1,0,-1...]
+		 * ASpecial Property: χ(x)*χ(y)=χ(x*y)
+		 * @return	χ(x∈N)
+		 */
+		public static function chi(x:uint):int
+		{
+			return -(x&1)*((x&3)-2);
+		}
+		
+		//==Int Function==//
 		/**
 		 * lash the number,keep the phase in Section[0,max);
 		 * @param	n
@@ -68,6 +85,7 @@
 			return Math.round(num*directNum)/directNum
 		}
 		
+		//==Random About==//
 		public static function randomFloat(x:Number):Number
 		{
 			return Math.random()*x;

@@ -136,46 +136,22 @@ package batr.general
 		
 		public static function towardIntX(rot:uint,radius:Number=1):Number
 		{
-			switch(lockIntToStandard(rot))
-			{
-				case 0: return radius;
-				case 1: case 3: return 0;
-				case 2: return -radius;
-			}
-			return 0;
+			return exMath.chi(rot+1)*radius;
 		}
 		
 		public static function towardIntY(rot:uint,radius:Number=1):Number
 		{
-			switch(lockIntToStandard(rot))
-			{
-				case 1: return radius;
-				case 0: case 2: return 0;
-				case 3: return -radius;
-			}
-			return 0;
+			return exMath.chi(rot)*radius;
 		}
 		
 		public static function towardXInt(rot:uint,radius:int=1):int
 		{
-			switch(lockIntToStandard(rot))
-			{
-				case 0: return radius;
-				case 1: case 3: return 0;
-				case 2: return -radius;
-			}
-			return 0;
+			return exMath.chi(rot+1)*radius;
 		}
 		
 		public static function towardYInt(rot:uint,radius:int=1):int
 		{
-			switch(lockIntToStandard(rot))
-			{
-				case 1: return radius;
-				case 0: case 2: return 0;
-				case 3: return -radius;
-			}
-			return 0;
+			return exMath.chi(rot)*radius;
 		}
 	}
 }

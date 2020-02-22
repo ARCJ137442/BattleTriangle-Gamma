@@ -52,7 +52,9 @@ package batr.game.main
 			Map_V1.MAP_8,
 			Map_V1.MAP_9,
 			Map_V1.MAP_A,
-			Map_V1.MAP_B
+			Map_V1.MAP_B,
+			Map_V1.MAP_C,
+			Map_V1.MAP_D
 		]
 		
 		public static const MAP_TRANSFORM_TEXT_FORMAT:TextFormat=new TextFormat(
@@ -754,9 +756,14 @@ package batr.game.main
 									 avoidTrap)
 		}
 		
-		public function testCarribleWithMap(blockAtt:BlockAttributes,map:IMap):Boolean
+		public function testCarryableWithMap(blockAtt:BlockAttributes,map:IMap):Boolean
 		{
-			return blockAtt.isCarriable&&!(map.isArenaMap&&blockAtt.unbreakableInArenaMap);
+			return blockAtt.isCarryable&&!(map.isArenaMap&&blockAtt.unbreakableInArenaMap);
+		}
+		
+		public function testBreakableWithMap(blockAtt:BlockAttributes,map:IMap):Boolean
+		{
+			return blockAtt.isBreakable&&!(map.isArenaMap&&blockAtt.unbreakableInArenaMap);
 		}
 		
 		public function weaponCreateExplode(x:Number,y:Number,finalRadius:Number=1,
@@ -1512,7 +1519,7 @@ package batr.game.main
 						var carryY=this.lockPosInMap(PosTransform.alignToGrid(spawnCenterY),false);
 						frontBlock=this.getBlock(carryX,carryY);
 						//detect condition
-						if(frontBlock!=null&&this.testCarribleWithMap(frontBlock.attributes,this.map))
+						if(frontBlock!=null&&this.testCarryableWithMap(frontBlock.attributes,this.map))
 						{
 							player.setCarriedBlock(frontBlock,false);
 							this.setBlock(carryX,carryY,null);

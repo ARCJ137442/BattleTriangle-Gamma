@@ -32,6 +32,8 @@ package batr.game.map.maps
 		public static var MAP_9:Map_V1
 		public static var MAP_A:Map_V1
 		public static var MAP_B:Map_V1
+		public static var MAP_C:Map_V1
+		public static var MAP_D:Map_V1
 		
 		protected static var isInited:Boolean=cInit()
 		
@@ -63,13 +65,15 @@ package batr.game.map.maps
 			MAP_7=new Map_V1()
 			MAP_8=new Map_V1()
 			MAP_9=new Map_V1()
-			MAP_A=new Map_V1()
+			MAP_A=new Map_V1(null,true)
 			MAP_B=new Map_V1(null,true)
+			MAP_C=new Map_V1(null,true)
+			MAP_D=new Map_V1(null,true)
 			//====Basic Frame====//
 			BASIC_FRAME.fillBlock(0,0,_SIZE-1,_SIZE-1,
 								  BlockType.BEDROCK,true)
 			//====Map 1====//
-			MAP_1.copyFrom(BASIC_FRAME)
+			MAP_1.copyContextFrom(BASIC_FRAME)
 			{
 				for(ix=3;ix<_SIZE-4;ix+=4)
 				{
@@ -80,7 +84,7 @@ package batr.game.map.maps
 				}
 			}
 			//====Map 2====//
-			MAP_2.copyFrom(BASIC_FRAME)
+			MAP_2.copyContextFrom(BASIC_FRAME)
 			{
 				MAP_2.fillBlock(4,4,10,10,BlockType.WALL)
 				MAP_2.fillBlock(4,13,10,19,BlockType.WALL)
@@ -88,7 +92,7 @@ package batr.game.map.maps
 				MAP_2.fillBlock(13,13,19,19,BlockType.WALL)
 			}
 			//====Map 3====//
-			MAP_3.copyFrom(BASIC_FRAME)
+			MAP_3.copyContextFrom(BASIC_FRAME)
 			{
 				for(iy=3;iy<_SIZE-4;iy+=4)
 				{
@@ -96,17 +100,17 @@ package batr.game.map.maps
 				}
 			}
 			//====Map 4====//
-			MAP_4.copyFrom(BASIC_FRAME)
+			MAP_4.copyContextFrom(BASIC_FRAME)
 			{
 				MAP_4.fillBlock(3,3,20,4,BlockType.WALL)
 				MAP_4.fillBlock(3,19,20,20,BlockType.WALL)
 				MAP_4.fillBlock(11,5,12,18,BlockType.GLASS)
 			}
 			//====Map 5====//
-			MAP_5.copyFrom(BASIC_FRAME)
+			MAP_5.copyContextFrom(BASIC_FRAME)
 			{
-				var randNum:uint=16+exMath.random(47),randType:BlockType
-				for(i=0;i<randNum;i++)
+				var randNum:int=24+exMath.random(47),randType:BlockType
+				while(--randNum>0)
 				{
 					ix=MAP_5.randomX,iy=MAP_5.randomY
 					if(MAP_5.getBlockType(ix,iy)==BlockType.BEDROCK)
@@ -126,14 +130,13 @@ package batr.game.map.maps
 					}
 					else
 					{
-						randType=BlockType.RANDOM
+						randType=BlockType.RANDOM_NORMAL
 						MAP_5.setBlock(ix,iy,BlockCommon.fromType(randType))
-						if(randType==BlockType.SPAWN_POINT_MARK) MAP_5.addSpawnPoint(UintPointCompress.compressFromPoint(ix,iy))
 					}
 				}
 			}
 			//====Map 6====//
-			MAP_6.copyFrom(BASIC_FRAME)
+			MAP_6.copyContextFrom(BASIC_FRAME)
 			{
 				MAP_6.setBlock(3,3,BlockCommon.fromType(BlockType.COLOR_SPAWNER))
 				MAP_6.setBlock(3,20,BlockCommon.fromType(BlockType.COLOR_SPAWNER))
@@ -159,7 +162,7 @@ package batr.game.map.maps
 				MAP_6.fillBlock(11,11,12,12,BlockType.X_TRAP_KILL,true)
 			}
 			//====Map 7====//
-			MAP_7.copyFrom(BASIC_FRAME)
+			MAP_7.copyContextFrom(BASIC_FRAME)
 			{
 				MAP_7.fillBlock(1,5,23,6,BlockType.WATER)//up side
 				MAP_7.fillBlock(1,17,23,18,BlockType.WATER)//down side
@@ -173,7 +176,7 @@ package batr.game.map.maps
 				MAP_7.fillBlock(11,14,12,14,BlockType.X_TRAP_KILL)//y+
 			}
 			//====Map 8====//
-			MAP_8.copyFrom(BASIC_FRAME)
+			MAP_8.copyContextFrom(BASIC_FRAME)
 			{
 				//hole
 				MAP_8.fillBlock(0,12,0,13,BlockType.VOID)
@@ -186,7 +189,7 @@ package batr.game.map.maps
 				drawLaserTrapUpPillar(MAP_8,19);
 			}
 			//====Map 9====//
-			MAP_9.copyFrom(EMPTY)
+			MAP_9.copyContextFrom(EMPTY)
 			{
 				//left
 				MAP_9.fillBlock(0,0,0,23,BlockType.LASER_TRAP);
@@ -195,8 +198,9 @@ package batr.game.map.maps
 				//center
 				MAP_9.fillBlock(11,11,12,12,BlockType.COLOR_SPAWNER)//up side
 			}
+			//======Arena Maps======//
 			//====Map A====//
-			MAP_A.copyFrom(BASIC_FRAME)
+			MAP_A.copyContextFrom(BASIC_FRAME)
 			{
 				for(i=0;i<5;i++)
 				{
@@ -208,13 +212,12 @@ package batr.game.map.maps
 						MAP_A.fillBlock(6,7+3*i,17,7+3*i,BlockType.METAL);
 						//corner
 						MAP_A.fillBlock(1+(i>>1)*20,1+(i&1)*20,2+(i>>1)*20,2+(i&1)*20,BlockType.X_TRAP_ROTATE);
+						MAP_A.addSpawnPointWithMark(2+(i>>1)*19,2+(i&1)*19);
 					}
 				}
-				//center
-				//MAP_A.fillBlock(11,11,12,12,BlockType.COLOR_SPAWNER)
 			}
 			//====Map B====//
-			MAP_B.copyFrom(BASIC_FRAME)
+			MAP_B.copyContextFrom(BASIC_FRAME)
 			{
 				/**
 				 * Spin 180*:x=23-x,y=23-y
@@ -238,26 +241,103 @@ package batr.game.map.maps
 				MAP_B.setBlock(3,12,BlockCommon.fromType(BlockType.COLOR_SPAWNER));
 				//r
 				MAP_B.fillBlock(17,6,17,13,BlockType.WATER)
-				MAP_B.setBlock(3,16,BlockCommon.fromType(BlockType.COLOR_SPAWNER));
-				MAP_B.setBlock(3,12,BlockCommon.fromType(BlockType.COLOR_SPAWNER));
+				MAP_B.setBlock(20,7,BlockCommon.fromType(BlockType.COLOR_SPAWNER));
+				MAP_B.setBlock(20,11,BlockCommon.fromType(BlockType.COLOR_SPAWNER));
 				//up&down side X_TRAP_HURT/WATER/BEDROCK
 				//u
 				MAP_B.fillBlock(19,4,22,4,BlockType.BEDROCK)
-				MAP_B.fillBlock(6,4,18,4,BlockType.X_TRAP_HURT)
-				MAP_B.fillBlock(6,2,20,2,BlockType.WATER)
+				MAP_B.fillBlock(6,4,18,4,BlockType.WATER)
+				MAP_B.fillBlock(6,2,20,2,BlockType.X_TRAP_HURT)
 				//d
 				MAP_B.fillBlock(1,19,4,19,BlockType.BEDROCK)
-				MAP_B.fillBlock(5,19,17,19,BlockType.X_TRAP_HURT)
-				MAP_B.fillBlock(3,21,17,21,BlockType.WATER)
-				//corner X_TRAP_HURT
+				MAP_B.fillBlock(5,19,17,19,BlockType.WATER)
+				MAP_B.fillBlock(3,21,17,21,BlockType.X_TRAP_HURT)
+				//corner X_TRAP_HURT/WATER
 				//ul
 				MAP_B.fillBlock(2,3,2,7,BlockType.X_TRAP_HURT)
-				MAP_B.fillBlock(4,1,4,7,BlockType.X_TRAP_HURT)
+				MAP_B.fillBlock(4,1,4,7,BlockType.WATER)
 				//dr
 				MAP_B.fillBlock(21,16,21,20,BlockType.X_TRAP_HURT)
-				MAP_B.fillBlock(19,16,19,22,BlockType.X_TRAP_HURT)
+				MAP_B.fillBlock(19,16,19,22,BlockType.WATER)
+			}
+			//====Map C====//
+			MAP_C.copyContextFrom(BASIC_FRAME)
+			{
+				//center C
+				//h
+				MAP_C.fillBlock(6,6,17,6,BlockType.BEDROCK)
+				MAP_C.fillBlock(6,17,17,17,BlockType.BEDROCK)
+				//l
+				MAP_C.fillBlock(6,6,6,17,BlockType.BEDROCK)
+				for(i=0;i<4;i++)
+				{
+					if(i<2)
+					{
+						//10*Spawner
+						MAP_C.setBlock(6,6+i*11,BlockCommon.fromType(BlockType.COLOR_SPAWNER));
+						MAP_C.setBlock(10,6+i*11,BlockCommon.fromType(BlockType.COLOR_SPAWNER));
+						MAP_C.setBlock(13,6+i*11,BlockCommon.fromType(BlockType.COLOR_SPAWNER));
+						MAP_C.setBlock(17,6+i*11,BlockCommon.fromType(BlockType.COLOR_SPAWNER));
+						MAP_C.setBlock(6,10+i*3,BlockCommon.fromType(BlockType.COLOR_SPAWNER));
+						//Spawnpoint/Wall,l
+						MAP_C.addSpawnPointWithMark(3,11+i);
+						MAP_C.setBlock(3,10+i*3,BlockCommon.fromType(BlockType.WALL));
+						//water/wall,r
+						MAP_C.setBlock(20,11+i,BlockCommon.fromType(BlockType.WATER));
+						MAP_C.setBlock(20,10+i*3,BlockCommon.fromType(BlockType.WALL));
+					}
+					//Spawnpoint/Wall,u&d
+					MAP_C.addSpawnPointWithMark(11+(i&1),3+17*(i>>1));
+					MAP_C.setBlock(10+(i&1)*3,3+17*(i>>1),BlockCommon.fromType(BlockType.WALL));
+					//corner LaserTrap/XTrapHurt
+					MAP_C.setBlock(3+(i>>1)*17,3+(i&1)*17,BlockCommon.fromType(BlockType.LASER_TRAP));
+					MAP_C.setBlock(2+(i>>1)*17,3+(i&1)*17,BlockCommon.fromType(BlockType.X_TRAP_HURT));
+					MAP_C.setBlock(3+(i>>1)*17,2+(i&1)*17,BlockCommon.fromType(BlockType.X_TRAP_HURT));
+					MAP_C.setBlock(4+(i>>1)*17,3+(i&1)*17,BlockCommon.fromType(BlockType.X_TRAP_HURT));
+					MAP_C.setBlock(3+(i>>1)*17,4+(i&1)*17,BlockCommon.fromType(BlockType.X_TRAP_HURT));
+				}
+			}
+			MAP_D.copyContextFrom(BASIC_FRAME)
+			{
+				for(i=0;i<4;i++)
+				{
+					//Water Circle
+					//long_line
+					MAP_D.fillBlock(9+(i>>1)*2,4+(i&1)*15,12+(i>>1)*2,4+(i&1)*15,BlockType.WATER)
+					MAP_D.fillBlock(4+(i&1)*15,9+(i>>1)*2,4+(i&1)*15,12+(i>>1)*2,BlockType.WATER)
+					//2x line
+					//h
+					MAP_D.setBlock(7+(i>>1)*8,5+(i&1)*13,BlockCommon.fromType(BlockType.WATER));
+					MAP_D.setBlock(8+(i>>1)*8,5+(i&1)*13,BlockCommon.fromType(BlockType.WATER));
+					//v
+					MAP_D.setBlock(5+(i&1)*13,7+(i>>1)*8,BlockCommon.fromType(BlockType.WATER));
+					MAP_D.setBlock(5+(i&1)*13,8+(i>>1)*8,BlockCommon.fromType(BlockType.WATER));
+					//point
+					MAP_D.setBlock(6+(i>>1)*11,6+(i&1)*11,BlockCommon.fromType(BlockType.WATER));
+					if(i<2)
+					{
+						//Spawnpoint/Wall,d
+						MAP_D.addSpawnPointWithMark(11+i,21);
+						MAP_D.setBlock(10+i*3,21,BlockCommon.fromType(BlockType.WALL));
+					}
+					//corner spawner
+					MAP_D.setBlock(4+(i>>1)*15,4+(i&1)*15,BlockCommon.fromType(BlockType.COLOR_SPAWNER));
+					//Spawnpoint/Wall,l&r
+					MAP_D.addSpawnPointWithMark(2+19*(i>>1),11+(i&1));
+					MAP_D.setBlock(2+19*(i>>1),10+(i&1)*3,BlockCommon.fromType(BlockType.WALL));
+					//center band
+					MAP_D.setBlock(11+(i>>1),10+(i&1)*3,BlockCommon.fromType(BlockType.LASER_TRAP));
+				}
+				//XTrapRotate,u
+				MAP_D.fillBlock(11,3,12,4,BlockType.X_TRAP_ROTATE)
+				//XTrapKill,l
+				MAP_D.fillBlock(7,10,10,13,BlockType.X_TRAP_KILL)
+				//XTrapHurt,r
+				MAP_D.fillBlock(13,10,16,13,BlockType.X_TRAP_HURT)
 			}
 			//Set Variables//
+			//arena
+			MAP_A._arena=MAP_B._arena=MAP_C._arena=MAP_D._arena=true
 			return true;
 		}
 		
@@ -368,9 +448,8 @@ package batr.game.map.maps
 			return copy
 		}
 		
-		public override function copyFrom(target:IMap,clearSelf:Boolean=false):void
+		public override function copyContextFrom(target:IMap,clearSelf:Boolean=false):void
 		{
-			if(clearSelf) this.removeAllBlock(false)
 			//context
 			var points:Vector.<iPoint>=target.allDefinedPositions
 			for each(var point:iPoint in points)
@@ -378,7 +457,16 @@ package batr.game.map.maps
 				this._setBlock(point.x,point.y,target.getBlock(point.x,point.y))
 			}
 			//super
-			super.copyFrom(target,clearSelf)
+			super.copyContextFrom(target,clearSelf)
+		}
+		
+		public override function copyFrom(target:IMap,clearSelf:Boolean=false):void
+		{
+			if(clearSelf) this.removeAllBlock(false)
+			//context
+			this.copyContextFrom(target,clearSelf);
+			//super
+			super.copyFrom(target,clearSelf);
 		}
 		
 		public override function hasBlock(x:int,y:int):Boolean

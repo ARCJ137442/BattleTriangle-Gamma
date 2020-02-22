@@ -231,7 +231,7 @@ package batr.translations
 		{
 			var type:TypeCommon;
 			//Block Type
-			for each(type in BlockType._ALL_BLOCK)
+			for each(type in BlockType._NORMAL_BLOCKS)
 			{
 				if(type==null) continue;
 				if(key==TranslationKey.getTypeNameKey(type)) return type.name;

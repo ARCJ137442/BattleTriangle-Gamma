@@ -73,7 +73,7 @@ package batr.game.entity.ai.programs
 		
 		protected static function detectBlockCanCarry(player:Player,blockAtt:BlockAttributes):Boolean
 		{
-			return !player.isCarriedBlock&&blockAtt.isCarriable;
+			return !player.isCarriedBlock&&blockAtt.isCarryable&&player.host.testCarryableWithMap(blockAtt,player.host.map);
 		}
 		
 		/*========A Star Algorithm========*/

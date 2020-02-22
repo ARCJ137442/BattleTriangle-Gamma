@@ -10,7 +10,7 @@ package batr.game.block.blocks
 		//============Static Variables============//
 		public static const LINE_COLOR:uint=0x808080
 		public static const FILL_COLOR:uint=0xcccccc
-		public static const CENTER_COLOR:uint=0x0000ff
+		public static const CENTER_COLOR:uint=0x8000ff
 		public static const BASE_ALPHA:Number=0.5
 		
 		public static const LINE_SIZE:Number=GlobalGameVariables.DEFAULT_SIZE/32
