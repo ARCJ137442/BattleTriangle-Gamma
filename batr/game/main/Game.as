@@ -318,15 +318,18 @@ package batr.game.main
 			return this.entitySystem.bonusBoxes;
 		}
 		
-		public function getBlockHurtDamage(x:int,y:int):int
+		public function getBlockPlayerDamage(x:int,y:int):int
 		{
-			if(this._map==null) return 0;
 			var blockAtt:BlockAttributes=this._map.getBlockAttributes(x,y);
-			if(blockAtt!=null)
-			{
-				return blockAtt.playerDamage;
-			}
+			if(blockAtt!=null) return blockAtt.playerDamage;
 			return 0;
+		}
+		
+		public function isKillZone(x:int,y:int):Boolean
+		{
+			var blockAtt:BlockAttributes=this._map.getBlockAttributes(x,y);
+			if(blockAtt!=null) return blockAtt.playerDamage==int.MAX_VALUE;
+			return false;
 		}
 		
 		//========About Game End========//
@@ -934,12 +937,12 @@ package batr.game.main
 			var returnBoo:Boolean=false;
 			if(attributes!=null)
 			{
-				if(!attributes.playerCanPass)
+				if(attributes.playerDamage==-1)
 				{
 					player.removeHealth(this._rule.playerAsphyxiaDamage>0?this._rule.playerAsphyxiaDamage:uint.MAX_VALUE,null);
 					returnBoo=true;
 				}
-				if(attributes.playerDamage>-1)
+				else if(attributes.playerDamage>-1)
 				{
 					player.removeHealth(attributes.playerDamage==int.MAX_VALUE?uint.MAX_VALUE:attributes.playerDamage,null);
 					returnBoo=true;
@@ -953,7 +956,7 @@ package batr.game.main
 						returnBoo=true;
 					}
 				}
-				if(isLocationChange&&attributes.rotateWhenMoveIn)
+				if(attributes.rotateWhenMoveIn)
 				{
 					player.rot=GlobalRot.randomWithout(player.rot);
 					returnBoo=true;

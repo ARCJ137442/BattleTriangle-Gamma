@@ -48,11 +48,12 @@ package batr.game.block
 		 */
 		public var isBreakable:Boolean
 		/**
-		 * -1 means no damage
+		 * -1 means is will damage player as axphyxia
 		 * -2 means it will suppling player health and experience
+		 * int.MIN_VALUE means no damage
 		 * int.MAX_VALUE means they can kill player once a damage
 		 */
-		public var playerDamage:int=-1
+		public var playerDamage:int=int.MIN_VALUE
 		
 		/**
 		 * True means player/projectile will rotate when move in the block.
@@ -212,7 +213,6 @@ package batr.game.block
 			this.isCarryable=false
 			this.isBreakable=true
 			this.drawLayer=-1
-			this.playerDamage=-1
 			this.rotateWhenMoveIn=false
 			this.electricResistance=5000
 			return this
@@ -227,7 +227,6 @@ package batr.game.block
 			this.isCarryable=false
 			this.isBreakable=true
 			this.drawLayer=-1
-			this.playerDamage=-1
 			this.rotateWhenMoveIn=false
 			this.electricResistance=10
 			return this
@@ -301,6 +300,7 @@ package batr.game.block
 			this.isCarryable=false;
 			this.isBreakable=false;
 			this.electricResistance=100;
+			this.playerDamage=int.MIN_VALUE;
 			this.drawLayer=-1;
 			return this;
 		}
@@ -324,7 +324,8 @@ package batr.game.block
 		public function loadAsGateClose():BlockAttributes
 		{
 			this.loadAsSolid();
-			this.playerDamage=-1;
+			//No Damage on preMoveOut,still devlop
+			this.playerDamage=-int.MIN_VALUE;
 			return this;
 		}
 	}

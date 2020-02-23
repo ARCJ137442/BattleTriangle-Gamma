@@ -40,14 +40,14 @@ package batr.game.entity.ai.programs
 					cx,cy,weapon==WeaponType.MELEE,
 					WeaponType.isBulletWeapon(weapon)||weapon==WeaponType.BLOCK_THROWER,
 					WeaponType.isLaserWeapon(weapon),
-					weaponCanThroughPlayer(weapon),false
+					weaponNotThroughPlayer(weapon),false
 					)
 				) return false;
 			}
 			return true;
 		}
 		
-		protected static function weaponCanThroughPlayer(weapon:WeaponType):Boolean
+		protected static function weaponNotThroughPlayer(weapon:WeaponType):Boolean
 		{
 			switch(weapon)
 			{
@@ -55,9 +55,10 @@ package batr.game.entity.ai.programs
 				case WeaponType.NUKE:
 				case WeaponType.BLOCK_THROWER:
 				case WeaponType.MELEE:
-					return false;
+				case WeaponType.LIGHTNING:
+					return true;
 			}
-			return true;
+			return false;
 		}
 		
 		protected static function weaponNeedCarryBlock(weapon:WeaponType):Boolean
@@ -198,8 +199,8 @@ package batr.game.entity.ai.programs
 		 */
 		protected static function getPathWeight(node:PathNode,host:Game,player:Player):int
 		{
-			var damage:int=host.getBlockHurtDamage(node.x,node.y);
-			if(!host.testPlayerCanPass(player,node.x,node.y,true,false)||damage<-1) return 1000;
+			var damage:int=host.getBlockPlayerDamage(node.x,node.y);
+			if(!host.testPlayerCanPass(player,node.x,node.y,true,false)) return 1000;
 			if(damage>0) return damage*100;
 			return 0;
 		}
@@ -218,7 +219,7 @@ package batr.game.entity.ai.programs
 			for each(var node:PathNode in nearbyNodes)
 			{
 				if(node==null||pointInRemember(node,remember)||
-					host.getBlockHurtDamage(node.x,node.y)<-1) continue;
+					host.isKillZone(node.x,node.y)) continue;
 				if(node.F<_leastF)
 				{
 					_leastNode=node;
@@ -447,14 +448,8 @@ package batr.game.entity.ai.programs
 					//if cannot find player
 					if(target==null)
 					{
-						if(!this._pickupFirst&&host.entitySystem.bonusBoxCount>0)
-						{
-							target=getNearestBonusBox(ownerPoint,host);
-						}
-						else
-						{
-							target=getNearestEnemy(player,host);
-						}
+						if(!this._pickupFirst&&host.entitySystem.bonusBoxCount>0) target=getNearestBonusBox(ownerPoint,host);
+						else target=getNearestEnemy(player,host);
 					}
 					if(target!=null)
 					{
@@ -480,10 +475,7 @@ package batr.game.entity.ai.programs
 						//Reset
 						this.resetRemember();
 						//Trun
-						if(player.rot!=tempRot)
-						{
-							player.addActionToThread(AIPlayerAction.getTrunActionFromEntityRot(tempRot));
-						}
+						if(player.rot!=tempRot) player.addActionToThread(AIPlayerAction.getTrunActionFromEntityRot(tempRot));
 						//Press Use
 						if(!player.isPress_Use) return AIPlayerAction.PRESS_KEY_USE;
 						traceLog(player,"attack target "+getEntityName(this._lastTarget))
