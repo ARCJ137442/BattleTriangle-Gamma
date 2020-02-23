@@ -54,7 +54,8 @@ package batr.game.main
 			Map_V1.MAP_A,
 			Map_V1.MAP_B,
 			Map_V1.MAP_C,
-			Map_V1.MAP_D
+			Map_V1.MAP_D,
+			Map_V1.MAP_E
 		]
 		
 		public static const MAP_TRANSFORM_TEXT_FORMAT:TextFormat=new TextFormat(
@@ -323,7 +324,7 @@ package batr.game.main
 			var blockAtt:BlockAttributes=this._map.getBlockAttributes(x,y);
 			if(blockAtt!=null)
 			{
-				return blockAtt.hurtPlayerDamage;
+				return blockAtt.playerDamage;
 			}
 			return 0;
 		}
@@ -706,7 +707,7 @@ package batr.game.main
 			var mapY:int=this.lockPosInMap(y,false)
 			//if(isOutOfMap(gridX,gridY)) return true
 			var attributes:BlockAttributes=this.getBlockAttributes(mapX,mapY)
-			if(avoidHurting&&attributes.hurtPlayerDamage!=-1) return false
+			if(avoidHurting&&attributes.playerDamage>-1) return false
 			if(asPlayer&&!attributes.playerCanPass) return false
 			if(asBullet&&!attributes.bulletCanPass) return false
 			if(asLaser&&!attributes.laserCanPass) return false
@@ -742,7 +743,7 @@ package batr.game.main
 			var attributes:BlockAttributes=this.getBlockAttributes(gridX,gridY)
 			//Test
 			//if(isOutOfMap(gridX,gridY)) return true
-			if(avoidHurting&&attributes.hurtPlayerDamage!=-1) return false
+			if(avoidHurting&&attributes.playerDamage>-1) return false
 			if(!attributes.playerCanPass) return false
 			if(includePlayer&&isHitAnyPlayer(gridX,gridY)) return false
 			return true
@@ -837,7 +838,7 @@ package batr.game.main
 							attacker.heal+=damage
 						}
 					}
-					if(victim!=attacker&&attacker!=null&&!victim.isRespawning)
+					if(victim!=attacker&&!victim.isRespawning)
 					{
 						if(teleport)
 						{
@@ -902,12 +903,12 @@ package batr.game.main
 			}
 		}
 		
-		public function damageTestWithEntity():void
+		public function moveInTestWithEntity():void
 		{
 			//All Player
 			for each(var player:Player in this._entitySystem.players)
 			{
-				player.dealDamageTest(player.entityX,player.entityY,true,false)
+				player.dealMoveInTest(player.entityX,player.entityY,true,false)
 			}
 			//BonusBox Displace by Asphyxia/Trap
 			for(var i:int=this._entitySystem.bonusBoxCount-1;i>=0;i--)
@@ -920,9 +921,10 @@ package batr.game.main
 			}
 		}
 		
-		/* Player Hurt by Trap
+		/** 
+		 * Execute when Player Move in blocks
 		 */
-		public function damageTest(player:Player,x:Number=NaN,y:Number=NaN,isLocationChange:Boolean=false):Boolean
+		public function moveInTestPlayer(player:Player,x:Number=NaN,y:Number=NaN,isLocationChange:Boolean=false):Boolean
 		{
 			if(!player.isActive) return false;
 			x=isNaN(x)?player.gridX:x;
@@ -937,14 +939,24 @@ package batr.game.main
 					player.removeHealth(this._rule.playerAsphyxiaDamage>0?this._rule.playerAsphyxiaDamage:uint.MAX_VALUE,null);
 					returnBoo=true;
 				}
-				if(attributes.hurtPlayerDamage!=-1)
+				if(attributes.playerDamage>-1)
 				{
-					player.removeHealth(attributes.hurtPlayerDamage<-1?int.MAX_VALUE:attributes.hurtPlayerDamage,null);
+					player.removeHealth(attributes.playerDamage==int.MAX_VALUE?uint.MAX_VALUE:attributes.playerDamage,null);
 					returnBoo=true;
+				}
+				else if(attributes.playerDamage==-2)
+				{
+					if(!isLocationChange)
+					{
+						if(!player.isFullHealth) player.addHealth(1);
+						else player.heal++;
+						returnBoo=true;
+					}
 				}
 				if(isLocationChange&&attributes.rotateWhenMoveIn)
 				{
 					player.rot=GlobalRot.randomWithout(player.rot);
+					returnBoo=true;
 				}
 			}
 			return returnBoo;
@@ -1836,7 +1848,7 @@ package batr.game.main
 			if(!player.isActive||!player.visible) return;
 			//TransForm Pos:Lock Player In Map
 			if(isOutOfMap(player.entityX,player.entityY)) lockEntityInMap(player);
-			player.dealDamageTestOnLocationChange(newX,newY,true,true);
+			player.dealMoveInTestOnLocationChange(newX,newY,true,true);
 			this.bonusBoxTest(player,newX,newY);
 		}
 		
@@ -1875,15 +1887,14 @@ package batr.game.main
 		
 		public function onRandomTick(x:int,y:int):void
 		{
-			//BonusBox
+			//BonusBox(Supply)
 			if(testCanPass(x,y,true,false,false,true,true))
 			{
-				if(this._entitySystem.bonusBoxCount<this._rule.bonusBoxMaxCount)
+				if(this.getBlockAttributes(x,y).supplingBonus||
+					(this._entitySystem.bonusBoxCount<this._rule.bonusBoxMaxCount&&
+					UsefulTools.randomBoolean2(this._rule.bonusBoxSpawnChance)))
 				{
-					if(UsefulTools.randomBoolean2(this._rule.bonusBoxSpawnChance))
-					{
-						this.addBonusBox(x,y,this._rule.randomBonusEnable);
-					}
+					this.addBonusBox(x,y,this._rule.randomBonusEnable);
 				}
 			}
 			//ColorSpawner
@@ -1900,8 +1911,8 @@ package batr.game.main
 		
 		protected function onBlockUpdate(x:int,y:int,block:BlockCommon):void
 		{
-			this.updateMapDisplay()
-			this.damageTestWithEntity()
+			this.updateMapDisplay();
+			this.moveInTestWithEntity();
 		}
 		
 		//====Block Functions====//

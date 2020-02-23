@@ -7,8 +7,9 @@ package batr.game.block.blocks
 	public class ColorSpawner extends BlockCommon
 	{
 		//============Static Variables============//
-		public static const LINE_COLOR:uint=0x444444
-		public static const FILL_COLOR:uint=0xdddddd
+		public static const LINE_COLOR:uint=Bedrock.LINE_COLOR
+		public static const FILL_COLOR:uint=Bedrock.FILL_COLOR
+		public static const CENTER_COLOR:uint=0x444444
 		
 		public static const LINE_SIZE:Number=GlobalGameVariables.DEFAULT_SIZE/32
 		
@@ -55,7 +56,7 @@ package batr.game.block.blocks
 			this.graphics.drawRect(LINE_SIZE,LINE_SIZE,GlobalGameVariables.DEFAULT_SIZE-LINE_SIZE*2,GlobalGameVariables.DEFAULT_SIZE-LINE_SIZE*2);
 			this.graphics.endFill();
 			//Circle
-			this.graphics.lineStyle(GlobalGameVariables.DEFAULT_SIZE/32,LINE_COLOR);
+			this.graphics.lineStyle(GlobalGameVariables.DEFAULT_SIZE/32,CENTER_COLOR);
 			//1
 			this.graphics.drawCircle(GlobalGameVariables.DEFAULT_SIZE/2,
 									 GlobalGameVariables.DEFAULT_SIZE/2,
@@ -65,7 +66,6 @@ package batr.game.block.blocks
 									 GlobalGameVariables.DEFAULT_SIZE/2,
 									 GlobalGameVariables.DEFAULT_SIZE*0.25);
 			//3
-			this.graphics.lineStyle(GlobalGameVariables.DEFAULT_SIZE/20,LINE_COLOR);
 			this.graphics.drawCircle(GlobalGameVariables.DEFAULT_SIZE/2,
 									 GlobalGameVariables.DEFAULT_SIZE/2,
 									 GlobalGameVariables.DEFAULT_SIZE*0.325);

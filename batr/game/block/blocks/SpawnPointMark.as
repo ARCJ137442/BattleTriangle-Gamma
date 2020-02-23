@@ -49,12 +49,11 @@ package batr.game.block.blocks
 		
 		protected override function drawMain():void
 		{
-			//Line
+			//Base
 			this.graphics.beginFill(LINE_COLOR,BASE_ALPHA);
 			this.graphics.drawRect(0,0,GlobalGameVariables.DEFAULT_SIZE,GlobalGameVariables.DEFAULT_SIZE);
 			this.graphics.drawRect(LINE_SIZE,LINE_SIZE,GlobalGameVariables.DEFAULT_SIZE-LINE_SIZE*2,GlobalGameVariables.DEFAULT_SIZE-LINE_SIZE*2);
 			this.graphics.endFill();
-			//Fill
 			this.graphics.beginFill(FILL_COLOR,BASE_ALPHA);
 			this.graphics.drawRect(LINE_SIZE,LINE_SIZE,GlobalGameVariables.DEFAULT_SIZE-LINE_SIZE*2,GlobalGameVariables.DEFAULT_SIZE-LINE_SIZE*2);
 			this.graphics.endFill();

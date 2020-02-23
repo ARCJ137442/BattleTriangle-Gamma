@@ -9,7 +9,7 @@ package batr.game.block.blocks
 	public class Wall extends BlockCommon
 	{
 		//============Static Variables============//
-		protected static const LINE_SIZE:uint=GlobalGameVariables.DEFAULT_SIZE/50
+		public static const LINE_SIZE:uint=GlobalGameVariables.DEFAULT_SIZE/50
 		
 		//============Instance Variables============//
 		protected var _lineColor:uint,_fillColor:uint

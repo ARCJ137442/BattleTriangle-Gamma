@@ -615,7 +615,7 @@ package batr.game.entity.entities.players
 		public function addHealth(value:uint,healer:Player=null):void
 		{
 			this.health+=value
-			onHeal(value,healer)
+			this.onHeal(value,healer)
 		}
 		
 		public function removeHealth(value:uint,attacker:Player=null):void
@@ -629,7 +629,7 @@ package batr.game.entity.entities.players
 			}
 			else
 			{
-				health=0;
+				this.health=0;
 				this.onDeath(health,attacker);
 			}
 		}
@@ -750,23 +750,23 @@ package batr.game.entity.entities.players
 			return this._carriedBlock!=null&&this._carriedBlock.visible
 		}
 		
-		public function dealDamageTestOnLocationChange(x:Number,y:Number,ignoreDelay:Boolean=false,isLocationChange:Boolean=false):void
+		public function dealMoveInTestOnLocationChange(x:Number,y:Number,ignoreDelay:Boolean=false,isLocationChange:Boolean=false):void
 		{
-			dealDamageTest(x,y,ignoreDelay,isLocationChange)
+			this.dealMoveInTest(x,y,ignoreDelay,isLocationChange)
 		}
 		
-		public function dealDamageTest(x:Number,y:Number,ignoreDelay:Boolean=false,isLocationChange:Boolean=false):void
+		public function dealMoveInTest(x:Number,y:Number,ignoreDelay:Boolean=false,isLocationChange:Boolean=false):void
 		{
 			if(ignoreDelay)
 			{
-				this._host.damageTest(this,x,y,isLocationChange);
+				this._host.moveInTestPlayer(this,x,y,isLocationChange);
 				this._damageDelay=MAX_DAMAGE_DELAY;
 			}
 			else if(this._damageDelay>0)
 			{
 				this._damageDelay--;
 			}
-			else if(this._damageDelay==0&&this._host.damageTest(this,x,y,isLocationChange))
+			else if(this._damageDelay==0&&this._host.moveInTestPlayer(this,x,y,isLocationChange))
 			{
 				this._damageDelay=MAX_DAMAGE_DELAY;
 			}
@@ -983,7 +983,7 @@ package batr.game.entity.entities.players
 			this.dealUsingCD();
 			this.updateKeyDelay();
 			this.dealKeyContol();
-			this.dealDamageTest(this.entityX,this.entityY);
+			this.dealMoveInTest(this.entityX,this.entityY);
 			this.dealHeal();
 			if(this._hurtOverlay.life>0) this._hurtOverlay.dealLife();
 			super.tickFunction();

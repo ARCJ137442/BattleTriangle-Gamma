@@ -28,9 +28,9 @@
 		 * ASpecial Property: χ(x)*χ(y)=χ(x*y)
 		 * @return	χ(x∈N)
 		 */
-		public static function chi(x:uint):int
+		public static function chi(X:uint):int
 		{
-			return -(x&1)*((x&3)-2);
+			return (((((X&1)^((X>>1)&1))&((X&1)|2))<<1)|((X+1)&1))-1;
 		}
 		
 		//==Int Function==//

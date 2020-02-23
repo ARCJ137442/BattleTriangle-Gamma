@@ -34,6 +34,7 @@ package batr.game.map.maps
 		public static var MAP_B:Map_V1
 		public static var MAP_C:Map_V1
 		public static var MAP_D:Map_V1
+		public static var MAP_E:Map_V1
 		
 		protected static var isInited:Boolean=cInit()
 		
@@ -69,6 +70,7 @@ package batr.game.map.maps
 			MAP_B=new Map_V1(null,true)
 			MAP_C=new Map_V1(null,true)
 			MAP_D=new Map_V1(null,true)
+			MAP_E=new Map_V1(null,true)
 			//====Basic Frame====//
 			BASIC_FRAME.fillBlock(0,0,_SIZE-1,_SIZE-1,
 								  BlockType.BEDROCK,true)
@@ -335,10 +337,60 @@ package batr.game.map.maps
 				//XTrapHurt,r
 				MAP_D.fillBlock(13,10,16,13,BlockType.X_TRAP_HURT)
 			}
+			MAP_E.copyContextFrom(BASIC_FRAME)
+			{
+				for(i=0;i<4;i++) MAP_E.addSpawnPointWithMark(2+(i>>1)*19,2+(i&1)*19);
+				//Center E
+				fillReflectBlock(MAP_E,false,true,6,6,17,7,BlockType.BEDROCK)
+				MAP_E.fillBlock(6,8,7,15,BlockType.BEDROCK)
+				MAP_E.fillBlock(6,11,17,12,BlockType.BEDROCK)
+				//corner water/laserTrap
+				fillReflectBlock(MAP_E,true,true,4,1,4,5,BlockType.WATER);
+				setReflectBlock(MAP_E,true,true,6,6,BlockCommon.fromType(BlockType.LASER_TRAP));
+				//1x1 Water,l
+				setReflectBlock(MAP_E,false,true,2,4,BlockCommon.fromType(BlockType.WATER))
+				//killTrap/spawner,l
+				setReflectBlock(MAP_E,false,true,3,11,BlockCommon.fromType(BlockType.COLOR_SPAWNER))
+				setReflectBlock(MAP_E,false,true,1,11,BlockCommon.fromType(BlockType.X_TRAP_KILL))
+				setReflectBlock(MAP_E,false,true,5,11,BlockCommon.fromType(BlockType.X_TRAP_KILL))
+				fillReflectBlock(MAP_E,false,true,1,7,2,7,BlockType.X_TRAP_KILL)
+				fillReflectBlock(MAP_E,false,true,4,7,5,7,BlockType.X_TRAP_KILL)
+				fillReflectBlock(MAP_E,false,true,2,9,4,9,BlockType.X_TRAP_KILL)
+				//water/rotate/supply,u&d
+				fillReflectBlock(MAP_E,false,true,6,4,18,4,BlockType.WATER)
+				fillReflectBlock(MAP_E,false,true,9,9,18,9,BlockType.WATER)
+				MAP_E.fillBlock(19,6,19,17,BlockType.WATER)
+				fillReflectBlock(MAP_E,false,true,15,1,15,3,BlockType.X_TRAP_ROTATE)
+				MAP_E.setBlock(19,11,BlockCommon.fromType(BlockType.X_TRAP_ROTATE))
+				MAP_E.setBlock(19,12,BlockCommon.fromType(BlockType.X_TRAP_ROTATE))
+				setReflectBlock(MAP_E,false,true,17,2,BlockCommon.fromType(BlockType.SUPPLY_POINT))
+				//hurt,r
+				MAP_E.fillBlock(21,4,21,19,BlockType.X_TRAP_HURT)
+			}
 			//Set Variables//
-			//arena
-			MAP_A._arena=MAP_B._arena=MAP_C._arena=MAP_D._arena=true
 			return true;
+		}
+		
+		protected static function setReflectBlock(map:Map_V1,rX:Boolean,rY:Boolean,x:int,y:int,block:BlockCommon):void
+		{
+			map.setBlock(x,y,block);
+			if(rX) map.setBlock(23-x,y,block);
+			if(rY)
+			{
+				map.setBlock(x,23-y,block);
+				if(rX) map.setBlock(23-x,23-y,block);
+			}
+		}
+		
+		protected static function fillReflectBlock(map:Map_V1,rX:Boolean,rY:Boolean,x1:int,y1:int,x2:int,y2:int,type:BlockType,outline:Boolean=false):void
+		{
+			map.fillBlock(x1,y1,x2,y2,type,outline);
+			if(rX) map.fillBlock(23-x2,y1,23-x1,y2,type,outline);
+			if(rY)
+			{
+				map.fillBlock(x1,23-y2,x2,23-y1,type,outline);
+				if(rX) map.fillBlock(23-x2,23-y2,23-x1,23-y1,type,outline);
+			}
 		}
 		
 		//Sub Graphics functions

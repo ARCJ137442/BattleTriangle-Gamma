@@ -18,7 +18,8 @@ package batr.game.block
 		public static const COLOR_SPAWNER:BlockAttributes=new BlockAttributes(0x444444).asSolid.asArenaBlock
 		public static const LASER_TRAP:BlockAttributes=new BlockAttributes(0x444444).asSolid.asArenaBlock
 		public static const METAL:BlockAttributes=new BlockAttributes(0x666666).asSolid.asMetal.asArenaBlock
-		public static const SPAWN_POINT_MARK:BlockAttributes=new BlockAttributes(0x6666ff).asGas.asSpawnPoint
+		public static const SPAWN_POINT_MARK:BlockAttributes=new BlockAttributes(0x6666ff).asBase
+		public static const SUPPLY_POINT:BlockAttributes=new BlockAttributes(0x66ff66).asBase.asSupplyPoint
 		
 		//============Static Functions============//
 		public static function fromType(type:BlockType):BlockAttributes
@@ -45,9 +46,11 @@ package batr.game.block
 		 */
 		public var isBreakable:Boolean
 		/**
-		 * -1 means no damage,the other NEGATIVE lower than -1 means they can kill player once a damage
+		 * -1 means no damage
+		 * -2 means it will suppling player health and experience
+		 * int.MAX_VALUE means they can kill player once a damage
 		 */
-		public var hurtPlayerDamage:int
+		public var playerDamage:int
 		
 		/**
 		 * True means player/projectile will rotate when move in the block.
@@ -61,7 +64,15 @@ package batr.game.block
 		 */
 		public var electricResistance:uint
 		
+		/**
+		 * Cann't be control in Arena Map.
+		 */
 		public var unbreakableInArenaMap:Boolean=false
+		
+		/**
+		 * Spawn BonusBox ignore max count.
+		 */
+		public var supplingBonus:Boolean=false
 		
 		//==Informations==//
 		public var defaultPixelColor:uint
@@ -87,10 +98,11 @@ package batr.game.block
 			tempAttributes.drawLayer=this.drawLayer
 			tempAttributes.isCarryable=this.isCarryable
 			tempAttributes.isBreakable=this.isBreakable
-			tempAttributes.hurtPlayerDamage=this.hurtPlayerDamage
+			tempAttributes.playerDamage=this.playerDamage
 			tempAttributes.rotateWhenMoveIn=this.rotateWhenMoveIn
 			tempAttributes.electricResistance=this.electricResistance
 			tempAttributes.unbreakableInArenaMap=this.unbreakableInArenaMap
+			tempAttributes.supplingBonus=this.supplingBonus
 			tempAttributes.defaultPixelAlpha=this.defaultPixelAlpha
 			tempAttributes.defaultPixelColor=this.defaultPixelColor
 			return tempAttributes
@@ -148,14 +160,19 @@ package batr.game.block
 			return this.loadAsMetal();
 		}
 		
-		public function get asSpawnPoint():BlockAttributes
-		{
-			return this.loadAsSpawnPoint();
-		}
-		
 		public function get asArenaBlock():BlockAttributes
 		{
 			return this.loadAsArenaBlock();
+		}
+		
+		public function get asBase():BlockAttributes
+		{
+			return this.loadAsBase();
+		}
+		
+		public function get asSupplyPoint():BlockAttributes
+		{
+			return this.loadAsSupplyPoint();
 		}
 		
 		//============Instance Functions============//
@@ -168,7 +185,7 @@ package batr.game.block
 			this.isCarryable=true
 			this.isBreakable=true
 			this.drawLayer=0
-			this.hurtPlayerDamage=-1
+			this.playerDamage=-1
 			this.rotateWhenMoveIn=false
 			this.electricResistance=1000
 			return this
@@ -183,7 +200,7 @@ package batr.game.block
 			this.isCarryable=false
 			this.isBreakable=true
 			this.drawLayer=-1
-			this.hurtPlayerDamage=-1
+			this.playerDamage=-1
 			this.rotateWhenMoveIn=false
 			this.electricResistance=5000
 			return this
@@ -198,7 +215,7 @@ package batr.game.block
 			this.isCarryable=false
 			this.isBreakable=true
 			this.drawLayer=-1
-			this.hurtPlayerDamage=-1
+			this.playerDamage=-1
 			this.rotateWhenMoveIn=false
 			this.electricResistance=10
 			return this
@@ -213,7 +230,7 @@ package batr.game.block
 			this.isCarryable=true
 			this.isBreakable=true
 			this.drawLayer=1
-			this.hurtPlayerDamage=-1
+			this.playerDamage=-1
 			this.rotateWhenMoveIn=false
 			this.electricResistance=2000
 			return this
@@ -228,13 +245,13 @@ package batr.game.block
 		
 		public function loadAsHurtZone(damage:int=10):BlockAttributes
 		{
-			this.hurtPlayerDamage=damage
+			this.playerDamage=damage
 			return this
 		}
 		
 		public function loadAsKillZone():BlockAttributes
 		{
-			this.hurtPlayerDamage=-2
+			this.playerDamage=int.MAX_VALUE
 			return this
 		}
 		
@@ -250,8 +267,22 @@ package batr.game.block
 			return this
 		}
 		
-		public function loadAsSpawnPoint():BlockAttributes
+		public function loadAsArenaBlock():BlockAttributes
 		{
+			this.unbreakableInArenaMap=true;
+			return this;
+		}
+		
+		public function loadAsSupplyPoint():BlockAttributes
+		{
+			this.playerDamage=-2;
+			this.supplingBonus=true;
+			return this;
+		}
+		
+		public function loadAsBase():BlockAttributes
+		{
+			this.playerCanPass=true;
 			this.bulletCanPass=false;
 			this.laserCanPass=true;
 			this.isTransParent=true;
@@ -259,12 +290,6 @@ package batr.game.block
 			this.isBreakable=false;
 			this.electricResistance=100;
 			this.drawLayer=-1;
-			return this;
-		}
-		
-		public function loadAsArenaBlock():BlockAttributes
-		{
-			this.unbreakableInArenaMap=true;
 			return this;
 		}
 	}

@@ -8,10 +8,11 @@ package batr.game.block.blocks
 	public class LaserTrap extends BlockCommon
 	{
 		//============Static Variables============//
-		public static const LINE_COLOR:uint=0x444444
-		public static const FILL_COLOR:uint=0xdddddd
+		public static const LINE_COLOR:uint=Bedrock.LINE_COLOR
+		public static const FILL_COLOR:uint=Bedrock.FILL_COLOR
+		public static const CENTER_COLOR:uint=ColorSpawner.CENTER_COLOR
 		
-		public static const LINE_SIZE:Number=GlobalGameVariables.DEFAULT_SIZE/32
+		public static const LINE_SIZE:uint=Wall.LINE_SIZE
 		
 		//============Instance Variables============//
 		
@@ -50,14 +51,13 @@ package batr.game.block.blocks
 			//Line
 			this.graphics.beginFill(LINE_COLOR);
 			this.graphics.drawRect(0,0,GlobalGameVariables.DEFAULT_SIZE,GlobalGameVariables.DEFAULT_SIZE);
-			this.graphics.drawRect(LINE_SIZE,LINE_SIZE,GlobalGameVariables.DEFAULT_SIZE-LINE_SIZE*2,GlobalGameVariables.DEFAULT_SIZE-LINE_SIZE*2);
 			this.graphics.endFill();
 			//Fill
 			this.graphics.beginFill(FILL_COLOR);
 			this.graphics.drawRect(LINE_SIZE,LINE_SIZE,GlobalGameVariables.DEFAULT_SIZE-LINE_SIZE*2,GlobalGameVariables.DEFAULT_SIZE-LINE_SIZE*2);
 			this.graphics.endFill();
 			//Rhombus
-			this.graphics.lineStyle(LINE_SIZE,LINE_COLOR);
+			this.graphics.lineStyle(LINE_SIZE,CENTER_COLOR);
 			this.drawRhombus(
 				GlobalGameVariables.DEFAULT_SIZE/2,
 				GlobalGameVariables.DEFAULT_SIZE/2,
@@ -78,11 +78,12 @@ package batr.game.block.blocks
 				GlobalGameVariables.DEFAULT_SIZE/2,
 				GlobalGameVariables.DEFAULT_SIZE/6
 			);
-			this.graphics.beginFill(LINE_COLOR);
+			//Point
+			this.graphics.beginFill(CENTER_COLOR);
 			this.graphics.drawCircle(
 				GlobalGameVariables.DEFAULT_SIZE/2,
 				GlobalGameVariables.DEFAULT_SIZE/2,
-				GlobalGameVariables.DEFAULT_SIZE/10
+				GlobalGameVariables.DEFAULT_SIZE/16
 			);
 			this.graphics.endFill();
 		}
