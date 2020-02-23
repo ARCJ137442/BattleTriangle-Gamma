@@ -685,6 +685,12 @@ package batr.game.entity.entities.players
 			
 		}
 		
+		public override function preLocationUpdate(oldX:Number,oldY:Number):void
+		{
+			this._host.prePlayerLocationChange(this,oldX,oldY);
+			super.preLocationUpdate(oldX,oldY);
+		}
+		
 		public override function onLocationUpdate(newX:Number,newY:Number):void
 		{
 			if(this._GUI!=null)
@@ -759,14 +765,14 @@ package batr.game.entity.entities.players
 		{
 			if(ignoreDelay)
 			{
-				this._host.moveInTestPlayer(this,x,y,isLocationChange);
+				this._host.moveInTestPlayer(this,isLocationChange);
 				this._damageDelay=MAX_DAMAGE_DELAY;
 			}
 			else if(this._damageDelay>0)
 			{
 				this._damageDelay--;
 			}
-			else if(this._damageDelay==0&&this._host.moveInTestPlayer(this,x,y,isLocationChange))
+			else if(this._damageDelay==0&&this._host.moveInTestPlayer(this,isLocationChange))
 			{
 				this._damageDelay=MAX_DAMAGE_DELAY;
 			}
@@ -983,7 +989,7 @@ package batr.game.entity.entities.players
 			this.dealUsingCD();
 			this.updateKeyDelay();
 			this.dealKeyContol();
-			this.dealMoveInTest(this.entityX,this.entityY);
+			this.dealMoveInTest(this.entityX,this.entityY,false,false);
 			this.dealHeal();
 			if(this._hurtOverlay.life>0) this._hurtOverlay.dealLife();
 			super.tickFunction();

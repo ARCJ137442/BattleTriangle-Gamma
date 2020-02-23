@@ -26,13 +26,15 @@ package batr.game.block
 		public static const METAL:BlockType=new BlockType("Metal",Metal,BlockAttributes.METAL)
 		public static const SPAWN_POINT_MARK:BlockType=new BlockType("SpawnPointMark",SpawnPointMark,BlockAttributes.SPAWN_POINT_MARK)
 		public static const SUPPLY_POINT:BlockType=new BlockType("Supplypoint",SupplyPoint,BlockAttributes.SUPPLY_POINT)
+		public static const GATE_OPEN:BlockType=new BlockType("GateOpen",Gate,BlockAttributes.GATE_OPEN)
+		public static const GATE_CLOSE:BlockType=new BlockType("GateClose",Gate,BlockAttributes.GATE_CLOSE)
 		
 		public static const _SOLID_BLOCKS:Vector.<BlockType>=new <BlockType>[
 		BlockType.WALL,BlockType.GLASS,BlockType.BEDROCK,
 		BlockType.COLORED_BLOCK,BlockType.COLOR_SPAWNER,
-		BlockType.LASER_TRAP,BlockType.METAL];
+		BlockType.LASER_TRAP,BlockType.METAL,BlockType.GATE_CLOSE];
 		public static const _LIQUID_BLOCKS:Vector.<BlockType>=new <BlockType>[BlockType.WATER]
-		public static const _GAS_BLOCKS:Vector.<BlockType>=new <BlockType>[]
+		public static const _GAS_BLOCKS:Vector.<BlockType>=new <BlockType>[BlockType.GATE_OPEN]
 		public static const _BASE_BLOCKS:Vector.<BlockType>=new <BlockType>[SUPPLY_POINT]
 		public static const _OTHER_BLOCKS:Vector.<BlockType>=new <BlockType>[BlockType.X_TRAP_HURT,BlockType.X_TRAP_KILL,BlockType.X_TRAP_ROTATE]
 		public static const _NORMAL_BLOCKS:Vector.<BlockType>=_SOLID_BLOCKS.concat(_LIQUID_BLOCKS).concat(_GAS_BLOCKS).concat(_OTHER_BLOCKS);

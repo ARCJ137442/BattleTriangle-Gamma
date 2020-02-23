@@ -17,6 +17,10 @@ package batr.game.block
 				case BlockType.X_TRAP_KILL:
 				case BlockType.X_TRAP_ROTATE:
 					return new XTrap(type)
+				case BlockType.GATE_OPEN:
+					return new Gate(true)
+				case BlockType.GATE_CLOSE:
+					return new Gate(false)
 				default:
 					if(type!=null&&type.currentBlock!=null)
 					{

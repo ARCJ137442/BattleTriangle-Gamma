@@ -147,6 +147,7 @@ package batr.game.entity
 		public function setX(value:Number,update:Boolean=true):void
 		{
 			//if(value==this.getX()) return;
+			if(update) this.preLocationUpdate(this.entityX,this.entityY);
 			this.x=PosTransform.localPosToRealPos(value);
 			if(!update) return;
 			this.onLocationUpdate(value,this.entityY);
@@ -156,6 +157,7 @@ package batr.game.entity
 		public function setY(value:Number,update:Boolean=true):void
 		{
 			//if(value==this.getY()) return;
+			if(update) this.preLocationUpdate(this.entityX,this.entityY);
 			this.y=PosTransform.localPosToRealPos(value);
 			if(!update) return;
 			this.onLocationUpdate(this.entityX,value);
@@ -174,6 +176,7 @@ package batr.game.entity
 		
 		public function setXY(x:Number,y:Number,update:Boolean=true):void
 		{
+			if(update) this.preLocationUpdate(this.entityX,this.entityY);
 			this.setX(x,false);
 			this.setY(y,false);
 			if(!update) return;
@@ -188,6 +191,7 @@ package batr.game.entity
 		
 		public function setPositions(x:Number,y:Number,rot:Number):void
 		{
+			this.preLocationUpdate(this.entityX,this.entityY);
 			this.setXY(x,y,false);
 			if(GlobalRot.isValidRot(rot)) this.rot=rot;
 			this.onLocationUpdate(x,y);
@@ -196,6 +200,7 @@ package batr.game.entity
 		
 		public function addPositions(x:Number,y:Number,rot:Number=NaN):void
 		{
+			this.preLocationUpdate(this.entityX,this.entityY);
 			this.addXY(x,y,false);
 			if(!isNaN(rot)) this.rot=GlobalRot.rotate(this.rot,rot);
 			this.onLocationUpdate(x,y);
@@ -243,12 +248,18 @@ package batr.game.entity
 					   GlobalRot.towardIntY(this.rot,distance));
 		}
 		
+		//Hook Functions
 		public function onPositionUpdate(newX:Number,newY:Number,newRot:Number):void
 		{
 			
 		}
 		
 		public function onLocationUpdate(newX:Number,newY:Number):void
+		{
+			
+		}
+		
+		public function preLocationUpdate(oldX:Number,oldY:Number):void
 		{
 			
 		}

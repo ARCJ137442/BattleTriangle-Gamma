@@ -20,6 +20,8 @@ package batr.game.block
 		public static const METAL:BlockAttributes=new BlockAttributes(0x666666).asSolid.asMetal.asArenaBlock
 		public static const SPAWN_POINT_MARK:BlockAttributes=new BlockAttributes(0x6666ff).asBase
 		public static const SUPPLY_POINT:BlockAttributes=new BlockAttributes(0x66ff66).asBase.asSupplyPoint
+		public static const GATE_OPEN:BlockAttributes=new BlockAttributes(0x888888,0x50000000).asGate
+		public static const GATE_CLOSE:BlockAttributes=new BlockAttributes(0x888888).asGateClose
 		
 		//============Static Functions============//
 		public static function fromType(type:BlockType):BlockAttributes
@@ -50,7 +52,7 @@ package batr.game.block
 		 * -2 means it will suppling player health and experience
 		 * int.MAX_VALUE means they can kill player once a damage
 		 */
-		public var playerDamage:int
+		public var playerDamage:int=-1
 		
 		/**
 		 * True means player/projectile will rotate when move in the block.
@@ -175,6 +177,16 @@ package batr.game.block
 			return this.loadAsSupplyPoint();
 		}
 		
+		public function get asGate():BlockAttributes
+		{
+			return this.loadAsGate();
+		}
+		
+		public function get asGateClose():BlockAttributes
+		{
+			return this.loadAsGateClose();
+		}
+		
 		//============Instance Functions============//
 		public function loadAsSolid():BlockAttributes
 		{
@@ -290,6 +302,29 @@ package batr.game.block
 			this.isBreakable=false;
 			this.electricResistance=100;
 			this.drawLayer=-1;
+			return this;
+		}
+		
+		/**
+		 * Gate Open
+		 */
+		public function loadAsGate():BlockAttributes
+		{
+			this.playerCanPass=true;
+			this.bulletCanPass=true;
+			this.laserCanPass=true;
+			this.isTransParent=true;
+			this.drawLayer=-1;
+			return this;
+		}
+		
+		/**
+		 * Gate Close
+		 */
+		public function loadAsGateClose():BlockAttributes
+		{
+			this.loadAsSolid();
+			this.playerDamage=-1;
 			return this;
 		}
 	}

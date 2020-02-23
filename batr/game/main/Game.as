@@ -922,13 +922,13 @@ package batr.game.main
 		}
 		
 		/** 
-		 * Execute when Player Move in blocks
+		 * Execute when Player Move in block
 		 */
-		public function moveInTestPlayer(player:Player,x:Number=NaN,y:Number=NaN,isLocationChange:Boolean=false):Boolean
+		public function moveInTestPlayer(player:Player,isLocationChange:Boolean=false):Boolean
 		{
 			if(!player.isActive) return false;
-			x=isNaN(x)?player.gridX:x;
-			y=isNaN(y)?player.gridY:y;
+			var x:int=player.gridX;
+			var y:int=player.gridY;
 			var type:BlockType=this.getBlockType(player.gridX,player.gridY);
 			var attributes:BlockAttributes=BlockAttributes.fromType(type);
 			var returnBoo:Boolean=false;
@@ -960,6 +960,21 @@ package batr.game.main
 				}
 			}
 			return returnBoo;
+		}
+		
+		/** 
+		 * Execute when Player Move out block
+		 * @param	x	the old X
+		 * @param	y	the old Y
+		 */
+		public function moveOutTestPlayer(player:Player,x:int,y:int,isLocationChange:Boolean=false):void
+		{
+			if(!player.isActive) return;
+			var type:BlockType=this.getBlockType(x,y);
+			if(type==BlockType.GATE_OPEN)
+			{
+				this.setBlock(x,y,BlockCommon.fromType(BlockType.GATE_CLOSE))
+			}
 		}
 		
 		/* Function about Player pickup BonusBox
@@ -1842,6 +1857,11 @@ package batr.game.main
 			this.respawnPlayer(player);
 		}
 		
+		public function prePlayerLocationChange(player:Player,oldX:Number,oldY:Number):void
+		{
+			this.moveOutTestPlayer(player,oldX,oldY);
+		}
+		
 		public function onPlayerLocationChange(player:Player,newX:Number,newY:Number):void
 		{
 			//Detect
@@ -1897,14 +1917,17 @@ package batr.game.main
 					this.addBonusBox(x,y,this._rule.randomBonusEnable);
 				}
 			}
-			//ColorSpawner
+			//Other
 			switch(this.getBlockType(x,y))
 			{
 				case BlockType.COLOR_SPAWNER:
-					colorSpawnerSpawnBlock(x,y);
+					this.colorSpawnerSpawnBlock(x,y);
 				break;
 				case BlockType.LASER_TRAP:
-					laserTrapShootLaser(x,y);
+					this.laserTrapShootLaser(x,y);
+				break;
+				case BlockType.GATE_CLOSE:
+					this.setBlock(x,y,BlockCommon.fromType(BlockType.GATE_OPEN));
 				break;
 			}
 		}
