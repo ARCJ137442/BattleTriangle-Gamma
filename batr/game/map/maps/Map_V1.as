@@ -35,6 +35,7 @@ package batr.game.map.maps
 		public static var MAP_C:Map_V1
 		public static var MAP_D:Map_V1
 		public static var MAP_E:Map_V1
+		public static var MAP_F:Map_V1
 		
 		protected static var isInited:Boolean=cInit()
 		
@@ -71,6 +72,7 @@ package batr.game.map.maps
 			MAP_C=new Map_V1(null,true)
 			MAP_D=new Map_V1(null,true)
 			MAP_E=new Map_V1(null,true)
+			MAP_F=new Map_V1(null,true)
 			//====Basic Frame====//
 			BASIC_FRAME.fillBlock(0,0,_SIZE-1,_SIZE-1,
 								  BlockType.BEDROCK,true)
@@ -346,7 +348,7 @@ package batr.game.map.maps
 				MAP_E.fillBlock(6,11,17,12,BlockType.BEDROCK)
 				//corner water/laserTrap
 				fillReflectBlock(MAP_E,true,true,4,1,4,5,BlockType.WATER);
-				setReflectBlock(MAP_E,true,true,6,6,BlockCommon.fromType(BlockType.LASER_TRAP));
+				setReflectBlock(MAP_E,true,true,6,6,BlockCommon.fromType(BlockType.LASER_TRAP))
 				//1x1 Water,l
 				setReflectBlock(MAP_E,false,true,2,4,BlockCommon.fromType(BlockType.WATER))
 				//killTrap/spawner,l
@@ -366,6 +368,31 @@ package batr.game.map.maps
 				setReflectBlock(MAP_E,false,true,17,2,BlockCommon.fromType(BlockType.SUPPLY_POINT))
 				//hurt,r
 				MAP_E.fillBlock(21,4,21,19,BlockType.X_TRAP_HURT)
+			}
+			MAP_F.copyContextFrom(EMPTY)
+			{
+				//Center spawnPoint
+				for(i=0;i<4;i++) MAP_F.addSpawnPointWithMark(11+(i>>1),11+(i&1));
+				//Bedrock&Gate
+				setReflectBlock(MAP_F,true,true,1,1,BlockCommon.fromType(BlockType.BEDROCK))
+				fillReflectMirrorBlock(MAP_F,true,true,2,1,8,1,BlockType.BEDROCK)
+				setReflectMirrorBlock(MAP_F,true,true,1,0,BlockCommon.fromType(BlockType.GATE_OPEN))
+				setReflectMirrorBlock(MAP_F,true,true,9,1,BlockCommon.fromType(BlockType.GATE_OPEN))
+				//Traps/gate/supply
+				setReflectBlock(MAP_F,true,true,3,3,BlockCommon.fromType(BlockType.X_TRAP_KILL))
+				setReflectBlock(MAP_F,true,true,5,5,BlockCommon.fromType(BlockType.X_TRAP_HURT))
+				setReflectBlock(MAP_F,true,true,7,7,BlockCommon.fromType(BlockType.X_TRAP_HURT))
+				setReflectBlock(MAP_F,true,true,6,6,BlockCommon.fromType(BlockType.SUPPLY_POINT))
+				setReflectMirrorBlock(MAP_F,true,true,7,5,BlockCommon.fromType(BlockType.X_TRAP_HURT))
+				setReflectMirrorBlock(MAP_F,true,true,6,5,BlockCommon.fromType(BlockType.X_TRAP_ROTATE))
+				setReflectMirrorBlock(MAP_F,true,true,7,6,BlockCommon.fromType(BlockType.X_TRAP_ROTATE))
+				//Water/Trap/spawner/gate,c
+				fillReflectMirrorBlock(MAP_F,true,true,10,1,10,6,BlockType.WATER)
+				setReflectBlock(MAP_F,true,true,8,8,BlockCommon.fromType(BlockType.COLOR_SPAWNER))
+				setReflectMirrorBlock(MAP_F,true,true,9,8,BlockCommon.fromType(BlockType.LASER_TRAP))
+				setReflectMirrorBlock(MAP_F,true,true,10,7,BlockCommon.fromType(BlockType.GATE_OPEN))
+				setReflectMirrorBlock(MAP_F,true,true,10,8,BlockCommon.fromType(BlockType.BEDROCK))
+				setReflectMirrorBlock(MAP_F,true,true,11,8,BlockCommon.fromType(BlockType.GATE_OPEN))
 			}
 			//Set Variables//
 			return true;
@@ -391,6 +418,28 @@ package batr.game.map.maps
 				map.fillBlock(x1,23-y2,x2,23-y1,type,outline);
 				if(rX) map.fillBlock(23-x2,23-y2,23-x1,23-y1,type,outline);
 			}
+		}
+		
+		protected static function setMirrorBlock(map:Map_V1,x:int,y:int,block:BlockCommon):void
+		{
+			map.setBlock(y,x,block);
+		}
+		
+		protected static function fillMirrorBlock(map:Map_V1,x1:int,y1:int,x2:int,y2:int,type:BlockType,outline:Boolean=false):void
+		{
+			map.fillBlock(y1,x1,y2,x2,type,outline);
+		}
+		
+		protected static function setReflectMirrorBlock(map:Map_V1,rX:Boolean,rY:Boolean,x:int,y:int,block:BlockCommon):void
+		{
+			setReflectBlock(map,rX,rY,x,y,block);
+			setReflectBlock(map,rY,rX,y,x,block);
+		}
+		
+		protected static function fillReflectMirrorBlock(map:Map_V1,rX:Boolean,rY:Boolean,x1:int,y1:int,x2:int,y2:int,type:BlockType,outline:Boolean=false):void
+		{
+			fillReflectBlock(map,rX,rY,x1,y1,x2,y2,type,outline);
+			fillReflectBlock(map,rY,rX,y1,x1,y2,x2,type,outline);
 		}
 		
 		//Sub Graphics functions

@@ -38,15 +38,15 @@ package batr.game.block
 		/**
 		 * NEGATIVE means Bottom,POSITIVE means Top,Zero Means Middle
 		 */
-		public var drawLayer:int
+		public var drawLayer:int=1
 		/**
 		 * Weapon:BlockThrower can carry
 		 */
-		public var isCarryable:Boolean
+		public var isCarryable:Boolean=true
 		/**
 		 * Weapon:BlockThrower can carry
 		 */
-		public var isBreakable:Boolean
+		public var isBreakable:Boolean=true
 		/**
 		 * -1 means is will damage player as axphyxia
 		 * -2 means it will suppling player health and experience
@@ -58,14 +58,14 @@ package batr.game.block
 		/**
 		 * True means player/projectile will rotate when move in the block.
 		 */
-		public var rotateWhenMoveIn:Boolean
+		public var rotateWhenMoveIn:Boolean=false
 		
 		/**
 		 * this attribute determines electric flow in the block,
 		 * 0 means lightning can flow in the block without energy
 		 * energy-=electricResistance
 		 */
-		public var electricResistance:uint
+		public var electricResistance:uint=100
 		
 		/**
 		 * Cann't be control in Arena Map.
@@ -310,10 +310,9 @@ package batr.game.block
 		 */
 		public function loadAsGate():BlockAttributes
 		{
-			this.playerCanPass=true;
-			this.bulletCanPass=true;
-			this.laserCanPass=true;
-			this.isTransParent=true;
+			this.loadAsGas();
+			this.isCarryable=true;
+			this.unbreakableInArenaMap=true;
 			this.drawLayer=-1;
 			return this;
 		}
@@ -324,7 +323,8 @@ package batr.game.block
 		public function loadAsGateClose():BlockAttributes
 		{
 			this.loadAsSolid();
-			//No Damage on preMoveOut,still devlop
+			this.unbreakableInArenaMap=true;
+			//No Damage on preMoveOut,still devloping
 			this.playerDamage=-int.MIN_VALUE;
 			return this;
 		}

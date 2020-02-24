@@ -55,7 +55,8 @@ package batr.game.main
 			Map_V1.MAP_B,
 			Map_V1.MAP_C,
 			Map_V1.MAP_D,
-			Map_V1.MAP_E
+			Map_V1.MAP_E,
+			Map_V1.MAP_F
 		]
 		
 		public static const MAP_TRANSFORM_TEXT_FORMAT:TextFormat=new TextFormat(
