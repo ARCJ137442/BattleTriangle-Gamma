@@ -1,6 +1,7 @@
 package batr.game.map 
 {
 	import batr.game.block.*;
+	import flash.display.DisplayObject;
 	
 	public interface IMapDisplayer
 	{

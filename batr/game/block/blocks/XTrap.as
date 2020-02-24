@@ -41,6 +41,11 @@ package batr.game.block.blocks
 		}
 		
 		//============Destructor Function============//
+		public override function deleteSelf():void
+		{
+			this._type==null;
+			super.deleteSelf();
+		}
 		
 		//============Instance Getter And Setter============//
 		public override function get attributes():BlockAttributes

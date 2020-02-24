@@ -582,78 +582,60 @@ package batr.game.map.maps
 		
 		public override function getBlock(x:int,y:int):BlockCommon
 		{
-			return this._getBlock(x,y)
+			return this._getBlock(x,y);
 		}
 		
 		public override function getBlockAttributes(x:int,y:int):BlockAttributes
 		{
-			if(hasBlock(x,y))
-			{
-				return this._getBlock(x,y).attributes
-			}
-			else
-			{
-				return BlockAttributes.VOID
-			}
+			if(hasBlock(x,y)) return this._getBlock(x,y).attributes;
+			else return BlockAttributes.VOID;
 		}
 		
 		public override function getBlockType(x:int,y:int):BlockType
 		{
-			if(hasBlock(x,y))
-			{
-				return this._getBlock(x,y).type
-			}
-			else
-			{
-				return BlockType.VOID
-			}
+			if(hasBlock(x,y)) return this._getBlock(x,y).type;
+			else return BlockType.VOID;
 		}
 		
 		public override function setBlock(x:int,y:int,block:BlockCommon):void
 		{
-			this._setBlock(x,y,block)
+			this._setBlock(x,y,block);
 		}
 		
 		public override function isVoid(x:int,y:int):Boolean
 		{
-			return (!this.hasBlock(x,y)||this.getBlockType(x,y)==BlockType.VOID)
+			return (!this.hasBlock(x,y)||this.getBlockType(x,y)==BlockType.VOID);
 		}
 		
 		public override function setVoid(x:int,y:int):void
 		{
-			this._setVoid(x,y)
+			this._setVoid(x,y);
 		}
 		
 		public override function removeAllBlock(deleteBlock:Boolean=false):void
 		{
 			//trace(this+":removeAllBlock!")
-			for(var key:String in this._context)
-			{
-				delete this._context[key]
-			}
+			for(var key:String in this._context) delete this._context[key];
 		}
 		
-		public override function setDisplayTo(target:IMapDisplayer):void 
+		public override function setDisplayTo(target:IMapDisplayer):void
 		{
-			target.removeAllBlock()
-			var ix:int,iy:int,iBlock:BlockCommon
+			target.removeAllBlock();
+			var ix:int,iy:int,iBlock:BlockCommon;
 			for(var index:String in this._context)
 			{
-				ix=indexToPoint(index).x
-				iy=indexToPoint(index).y
-				iBlock=this._getBlock(ix,iy)
-				target.setBlock(ix,iy,iBlock)
+				ix=indexToPoint(index).x;
+				iy=indexToPoint(index).y;
+				iBlock=this._getBlock(ix,iy);
+				target.setBlock(ix,iy,iBlock);
 			}
 		}
 		
-		public override function setDisplayToLayers(targetBottom:IMapDisplayer,
-										   targetMiddle:IMapDisplayer,
-										   targetTop:IMapDisplayer):void
+		public override function forceDisplayToLayers(targetBottom:IMapDisplayer,targetMiddle:IMapDisplayer,targetTop:IMapDisplayer):void
 		{
-			targetBottom.removeAllBlock()
-			targetMiddle.removeAllBlock()
-			targetTop.removeAllBlock()
-			var target:IMapDisplayer
+			targetBottom.removeAllBlock();
+			targetMiddle.removeAllBlock();
+			targetTop.removeAllBlock();
 			var ix:int,iy:int,iBlock:BlockCommon,iLayer:int
 			for(var index:String in this._context)
 			{
@@ -662,10 +644,7 @@ package batr.game.map.maps
 				iBlock=this._getBlock(ix,iy)
 				if(iBlock==null) continue
 				iLayer=iBlock.attributes.drawLayer
-				if(iLayer>0) target=targetTop
-				else if(iLayer<0) target=targetBottom
-				else target=targetMiddle
-				if(target!=null) target.setBlock(ix,iy,iBlock)
+				NativeMapCommon.getTargetByLayer(iLayer,targetTop,targetBottom,targetMiddle).setBlock(ix,iy,iBlock)
 			}
 		}
 		

@@ -6,26 +6,25 @@ package batr.game.block.blocks
 	
 	import flash.display.*;
 	
-	public class Wall extends BlockCommon
+	public class Wall extends ColoredBlock
 	{
 		//============Static Variables============//
 		public static const LINE_SIZE:uint=GlobalGameVariables.DEFAULT_SIZE/50
 		
 		//============Instance Variables============//
-		protected var _lineColor:uint,_fillColor:uint
+		protected var _lineColor:uint;
 		
 		//============Constructor Function============//
 		public function Wall(lineColor:uint=0xaaaaaa,fillColor:uint=0xbbbbbb):void
 		{
-			super();
-			this._lineColor=lineColor,this._fillColor=fillColor
-			drawMain()
+			this._lineColor=lineColor;
+			super(fillColor);
 		}
 		
 		//============Destructor Function============//
 		public override function deleteSelf():void
 		{
-			this._lineColor=this._fillColor=0;
+			this._lineColor=0;
 			super.deleteSelf();
 		}
 		
@@ -45,27 +44,18 @@ package batr.game.block.blocks
 			return this._lineColor;
 		}
 		
-		public function get fillColor():uint
-		{
-			return this._fillColor;
-		}
-		
 		public function set lineColor(color:uint):void
 		{
 			if(this._lineColor!=color)
 			{
 				this._lineColor=color;
-				reDraw();
+				this.reDraw();
 			}
 		}
 		
-		public function set fillColor(color:uint):void
+		public override function get pixelColor():uint
 		{
-			if(this._fillColor!=color)
-			{
-				this._fillColor=color;
-				reDraw();
-			}
+			return this.attributes.defaultPixelColor;
 		}
 		
 		//============Instance Functions============//

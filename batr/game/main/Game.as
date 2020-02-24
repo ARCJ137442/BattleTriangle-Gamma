@@ -122,9 +122,9 @@ package batr.game.main
 		protected var _effectSystem:EffectSystem
 		
 		//Map
-		protected var _mapDisplayerBottom:IMapDisplayer=new MapDisplay()
-		protected var _mapDisplayerMiddle:IMapDisplayer=new MapDisplay()
-		protected var _mapDisplayerTop:IMapDisplayer=new MapDisplay()
+		protected var _mapDisplayerBottom:IMapDisplayer=new MapDisplayer()
+		protected var _mapDisplayerMiddle:IMapDisplayer=new MapDisplayer()
+		protected var _mapDisplayerTop:IMapDisplayer=new MapDisplayer()
 		
 		//Players
 		protected var _playerGUIContainer:Sprite=new Sprite()
@@ -146,8 +146,7 @@ package batr.game.main
 		//Temp
 		protected var _tempUniformWeapon:WeaponType
 		protected var _tempMapTransformSecond:uint
-		protected var _tempTimer:int=getTimer();
-		protected var _tempTimeDistance:int=0;
+		//protected var _tempTimer:int=getTimer();
 		protected var _tempSecordPhase:uint=0;
 		protected var _second:uint;
 		
@@ -406,7 +405,7 @@ package batr.game.main
 		protected function onAddedToStage(E:Event):void
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE,onAddedToStage);
-			this.addEventListener(Event.ENTER_FRAME,onEnterFrame);
+			//this.addEventListener(Event.ENTER_FRAME,onEnterFrame);
 			this.subject.addEventListener(TranslationsChangeEvent.TYPE,this.onTranslationsChange);
 			this.addChilds();
 		}
@@ -458,8 +457,7 @@ package batr.game.main
 			this.spawnPlayersByRule();
 			//Timer
 			this._tickTimer.reset();
-			this._tempTimer=getTimer();
-			this._tempTimeDistance=0;
+			//this._tempTimer=getTimer();
 			this._tempSecordPhase=0;
 			this._second=0;
 			this.updateGUIText();
@@ -486,7 +484,7 @@ package batr.game.main
 			//Map
 			this._map.removeAllBlock();
 			this._map=null;
-			this.updateMapDisplay();
+			this.forceMapDisplay();
 			this.updateMapSize(false);
 			this.removeAllPlayer(false);
 			//Entity
@@ -514,16 +512,16 @@ package batr.game.main
 		}
 		
 		//====Listener Functions====//
-		protected function onEnterFrame(E:Event):void
+		/*protected function onEnterFrame(E:Event):void
 		{
-			this._tempTimeDistance=getTimer()-this._tempTimer;
+			//Reset
 			this._tempTimer=getTimer();
-		}
+		}*/
 		
 		protected function onGameTick(E:Event):void
 		{
-			//=====Second Tick=====//
-			this._tempSecordPhase+=_tempTimeDistance;
+			//=====Ticking=====//
+			this._tempSecordPhase+=GlobalGameVariables.TICK_TIME_MS;
 			if(this._tempSecordPhase>=1000)
 			{
 				this._tempSecordPhase-=1000;
@@ -1022,6 +1020,12 @@ package batr.game.main
 			return this._map.getBlockType(x,y);
 		}
 		
+		/**
+		 * Set Block in map,and update Block in map displayer.
+		 * @param	x	the Block position x.
+		 * @param	y	the Block position y.
+		 * @param	block	the current Block.
+		 */
 		public function setBlock(x:int,y:int,block:BlockCommon):void
 		{
 			this._map.setBlock(x,y,block);
@@ -1033,22 +1037,36 @@ package batr.game.main
 			return this._map.isVoid(x,y)
 		}
 		
+		/**
+		 * Set Void in map,and clear Block in map displayer.
+		 * @param	x	the Void position x.
+		 * @param	y	the Void position y.
+		 */
 		public function setVoid(x:int,y:int):void
 		{
 			this._map.setVoid(x,y);
 			this.onBlockUpdate(x,y,null);
 		}
 		
-		public function updateMapDisplay():void 
+		public function forceMapDisplay():void 
 		{
 			if(this._map==null)
 			{
 				this._mapDisplayerBottom.removeAllBlock();
 				this._mapDisplayerMiddle.removeAllBlock();
 				this._mapDisplayerTop.removeAllBlock();
-				return;
 			}
-			this._map.setDisplayToLayers(this._mapDisplayerBottom,this._mapDisplayerMiddle,this._mapDisplayerTop);
+			else this._map.forceDisplayToLayers(this._mapDisplayerBottom,this._mapDisplayerMiddle,this._mapDisplayerTop);
+		}
+		
+		public function updateMapDisplay(x:int,y:int,block:BlockCommon):void 
+		{
+			this._map.updateDisplayToLayers(x,y,block,this._mapDisplayerBottom,this._mapDisplayerMiddle,this._mapDisplayerTop)
+		}
+		
+		public function getDisplayerThenLayer(layer:int):IMapDisplayer
+		{
+			return layer>0?this._mapDisplayerTop:((layer<0)?this._mapDisplayerBottom:this._mapDisplayerMiddle);
 		}
 		
 		public function updateMapSize(updateBackground:Boolean=true):void
@@ -1090,17 +1108,11 @@ package batr.game.main
 		public function loadMap(isInitial:Boolean=false,update:Boolean=true,reSperadPlayer:Boolean=false):void
 		{
 			if(isInitial&&this._rule.initialMap!=null)
-			{
 				this.changeMap(this._rule.initialMap,update,reSperadPlayer);
-			}
 			else if(this._rule.mapRandomPotentials==null,this._rule.initialMapID)
-			{
 				this.changeMap(getRandomMap(),update,reSperadPlayer);
-			}
 			else
-			{
 				this.changeMap(Game.ALL_MAPS[exMath.randomByWeightV(this._rule.mapWeightsByGame)],update,reSperadPlayer);
-			}
 		}
 		
 		/* Get Map from Rule
@@ -1115,15 +1127,15 @@ package batr.game.main
 		public function changeMap(map:IMap,update:Boolean=true,reSperadPlayer:Boolean=false):void
 		{
 			this._map=map.clone(true);
-			if(update) this.updateMapDisplay()
-			if(reSperadPlayer) this.spreadAllPlayer()
+			if(update) this.forceMapDisplay();
+			if(reSperadPlayer) this.spreadAllPlayer();
 		}
 		
 		public function transformMap():void 
 		{
 			this._entitySystem.removeAllProjectile();
 			this._entitySystem.removeAllBonusBox();
-			loadMap(false,true,true);
+			this.loadMap(false,true,true);
 			//Call AI
 			var players:Vector.<Player>=this.getAlivePlayers();
 			for each(var player:Player in players)
@@ -1555,8 +1567,6 @@ package batr.game.main
 						{
 							player.setCarriedBlock(frontBlock,false);
 							this.setBlock(carryX,carryY,null);
-							this.updateMapDisplay();
-							this.updateMapSize();
 							//Effect
 							this.addBlockLightEffect2(spawnCenterX,spawnCenterY,frontBlock,true);
 						}
@@ -1938,7 +1948,8 @@ package batr.game.main
 		
 		protected function onBlockUpdate(x:int,y:int,block:BlockCommon):void
 		{
-			this.updateMapDisplay();
+			this.updateMapDisplay(x,y,block);
+			this.updateMapSize();
 			this.moveInTestWithEntity();
 		}
 		

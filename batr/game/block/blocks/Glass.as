@@ -23,6 +23,10 @@
 		}
 		
 		//============Destructor Function============//
+		public override function deleteSelf():void
+		{
+			super.deleteSelf();
+		}
 		
 		//============Instance Getter And Setter============//
 		public override function get attributes():BlockAttributes
@@ -38,18 +42,18 @@
 		//============Instance Functions============//
 		public override function clone():BlockCommon 
 		{
-			return new Glass(this._color)
+			return new Glass(this._fillColor)
 		}
 		
 		protected override function drawMain():void
 		{
 			//Line
-			this.graphics.beginFill(this._color,Glass.ALPHA_FRAME)
+			this.graphics.beginFill(this._fillColor,Glass.ALPHA_FRAME)
 			this.graphics.drawRect(0,0,GlobalGameVariables.DEFAULT_SIZE,GlobalGameVariables.DEFAULT_SIZE)
 			this.graphics.drawRect(Glass.LINE_SIZE,Glass.LINE_SIZE,GlobalGameVariables.DEFAULT_SIZE-Glass.LINE_SIZE*2,GlobalGameVariables.DEFAULT_SIZE-Glass.LINE_SIZE*2)
 			this.graphics.endFill()
 			//Fill
-			this.graphics.beginFill(this._color,Glass.ALPHA_FILL)
+			this.graphics.beginFill(this._fillColor,Glass.ALPHA_FILL)
 			this.graphics.drawRect(Glass.LINE_SIZE,Glass.LINE_SIZE,GlobalGameVariables.DEFAULT_SIZE-Glass.LINE_SIZE*2,GlobalGameVariables.DEFAULT_SIZE-Glass.LINE_SIZE*2)
 			this.graphics.endFill()
 		}

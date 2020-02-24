@@ -15,6 +15,12 @@ package batr.game.map
 	 */
 	public class NativeMapCommon extends Object implements IMap
 	{
+		//============Static Functions============//
+		protected static function getTargetByLayer(l:int,top:IMapDisplayer,bottom:IMapDisplayer,middle:IMapDisplayer):IMapDisplayer
+		{
+			return l>0?top:(l<0?bottom:middle);
+		}
+		
 		//============Instance Variables============//
 		protected var _spawnPoints:Vector.<uint>=new Vector.<uint>();
 		protected var _arena:Boolean=false;
@@ -100,6 +106,13 @@ package batr.game.map
 			this.setBlock(x,y,BlockCommon.fromType(BlockType.SPAWN_POINT_MARK));
 		}
 		
+		protected function removeDisplayerBlockAt(x:int,y:int,bottom:IMapDisplayer,middle:IMapDisplayer,top:IMapDisplayer):void
+		{
+			if(bottom!=null) bottom.removeBlock(x,y);
+			if(middle!=null) middle.removeBlock(x,y);
+			if(top!=null) top.removeBlock(x,y);
+		}
+		
 		//============Interface Functions============//
 		public function clone(createBlock:Boolean=false):IMap 
 		{
@@ -171,9 +184,15 @@ package batr.game.map
 			return;
 		}
 		
-		public function setDisplayToLayers(targetBottom:IMapDisplayer,targetMiddle:IMapDisplayer,targetTop:IMapDisplayer):void
+		public function forceDisplayToLayers(targetBottom:IMapDisplayer,targetMiddle:IMapDisplayer,targetTop:IMapDisplayer):void
 		{
 			return;
+		}
+		
+		public function updateDisplayToLayers(x:int,y:int,block:BlockCommon,targetBottom:IMapDisplayer,targetMiddle:IMapDisplayer,targetTop:IMapDisplayer):void
+		{
+			this.removeDisplayerBlockAt(x,y,targetBottom,targetMiddle,targetTop);
+			if(block!=null) getTargetByLayer(block.attributes.drawLayer,targetTop,targetBottom,targetMiddle).setBlock(x,y,block)
 		}
 		
 		//========SpawnPoint About========//

@@ -31,7 +31,8 @@ package batr.game.map
 		function removeAllBlock(deleteBlock:Boolean=false):void
 		//Display About
 		function setDisplayTo(target:IMapDisplayer):void
-		function setDisplayToLayers(targetBottom:IMapDisplayer,targetMiddle:IMapDisplayer,targetTop:IMapDisplayer):void
+		function forceDisplayToLayers(targetBottom:IMapDisplayer,targetMiddle:IMapDisplayer,targetTop:IMapDisplayer):void
+		function updateDisplayToLayers(x:int,y:int,block:BlockCommon,targetBottom:IMapDisplayer,targetMiddle:IMapDisplayer,targetTop:IMapDisplayer):void
 		//SpawnPoint About
 		function addSpawnPoint(p:uint):void
 		function removeSpawnPoint(p:uint):void

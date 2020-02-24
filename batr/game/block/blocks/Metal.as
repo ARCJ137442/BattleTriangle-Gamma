@@ -6,26 +6,23 @@ package batr.game.block.blocks
 	
 	import flash.display.*;
 	
-	public class Metal extends BlockCommon
+	public class Metal extends Wall
 	{
 		//============Static Variables============//
 		protected static const LINE_SIZE:uint=GlobalGameVariables.DEFAULT_SIZE/20
 		
 		//============Instance Variables============//
-		protected var _lineColor:uint,_fillColor:uint
 		
 		//============Constructor Function============//
 		public function Metal(lineColor:uint=0x444444,fillColor:uint=0xdddddd):void
 		{
-			super();
-			this._lineColor=lineColor,this._fillColor=fillColor;
+			super(lineColor,fillColor);
 			this.drawMain();
 		}
 		
 		//============Destructor Function============//
 		public override function deleteSelf():void
 		{
-			this._lineColor=this._fillColor=0;
 			super.deleteSelf();
 		}
 		
@@ -38,34 +35,6 @@ package batr.game.block.blocks
 		public override function get type():BlockType 
 		{
 			return BlockType.METAL;
-		}
-		
-		public function get lineColor():uint
-		{
-			return this._lineColor;
-		}
-		
-		public function get fillColor():uint
-		{
-			return this._fillColor;
-		}
-		
-		public function set lineColor(color:uint):void
-		{
-			if(this._lineColor!=color)
-			{
-				this._lineColor=color;
-				reDraw();
-			}
-		}
-		
-		public function set fillColor(color:uint):void
-		{
-			if(this._fillColor!=color)
-			{
-				this._fillColor=color;
-				reDraw();
-			}
 		}
 		
 		//============Instance Functions============//

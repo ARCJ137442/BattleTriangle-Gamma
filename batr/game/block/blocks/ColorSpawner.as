@@ -19,7 +19,7 @@ package batr.game.block.blocks
 		public function ColorSpawner():void
 		{
 			super();
-			drawMain()
+			this.drawMain();
 		}
 		
 		//============Destructor Function============//

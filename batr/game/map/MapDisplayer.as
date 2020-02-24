@@ -7,10 +7,16 @@ package batr.game.map
 	
 	import flash.display.Sprite;
 	
-	public class MapDisplay extends Sprite implements IMapDisplayer
+	public class MapDisplayer extends Sprite implements IMapDisplayer
 	{
+		//============Static Functions============//
+		protected static function isBlockLocationEquals(block:BlockCommon,x:int,y:int):Boolean
+		{
+			return PosTransform.realPosToLocalPos(block.x)==x&&PosTransform.realPosToLocalPos(block.y)==y;
+		}
+		
 		//============Constructor Function============//
-		public function MapDisplay()
+		public function MapDisplayer():void
 		{
 			super();
 		}
@@ -21,19 +27,15 @@ package batr.game.map
 			this.removeAllBlock();
 		}
 		
-		//============Instance Functions============//
+		//============Interface Functions============//
 		public function hasBlock(x:int,y:int):Boolean
 		{
 			var b:BlockCommon;
 			for(var i:int=0;i<this.numChildren;i++)
 			{
-				b=this.getChildAt(i) as BlockCommon;
+				b=this.getBlockAsChildAt(i);
 				if(b==null) continue;
-				if(b.x/GlobalGameVariables.DEFAULT_SIZE==x&&
-				   b.y/GlobalGameVariables.DEFAULT_SIZE==y)
-				{
-					return true;
-				}
+				if(isBlockLocationEquals(b,x,y)) return true;
 			}
 			return false;
 		}
@@ -43,13 +45,9 @@ package batr.game.map
 			var b:BlockCommon;
 			for(var i:int=0;i<this.numChildren;i++)
 			{
-				b=this.getChildAt(i) as BlockCommon;
+				b=this.getBlockAsChildAt(i);
 				if(b==null) continue;
-				if(b.x/GlobalGameVariables.DEFAULT_SIZE==x&&
-				   b.y/GlobalGameVariables.DEFAULT_SIZE==y)
-				{
-					return b;
-				}
+				if(isBlockLocationEquals(b,x,y)) return b;
 			}
 			return null;
 		}
@@ -59,31 +57,42 @@ package batr.game.map
 			var b:BlockCommon;
 			for(var i:int=0;i<this.numChildren;i++)
 			{
-				b=this.getChildAt(i) as BlockCommon;
+				b=this.getBlockAsChildAt(i);
 				if(b==null) continue;
-				if(b.x/GlobalGameVariables.DEFAULT_SIZE==x&&
-				   b.y/GlobalGameVariables.DEFAULT_SIZE==y)
+				if(isBlockLocationEquals(b,x,y))
 				{
 					this.removeChildAt(i);
+					b.deleteSelf();
 				}
 			}
 		}
 		
 		public function removeAllBlock():void
 		{
+			var b:BlockCommon;
 			for(var i:int=this.numChildren-1;i>=0;i--)
 			{
-				this.removeChildAt(i);
+				b=this.getBlockAsChildAt(i);
+				if(b!=null) b.deleteSelf();
+				this.removeChild(b);
 			}
 		}
 		
 		public function setBlock(x:int,y:int,block:BlockCommon,overwrite:Boolean=true):void
 		{
-			if(overwrite) this.removeBlock(x,y);
 			if(block==null) return;
+			var iBlock:BlockCommon=this.getBlock(x,y);
+			if(overwrite||!block.displayEquals(iBlock)) this.removeBlock(x,y);
 			block.x=PosTransform.localPosToRealPos(x);
 			block.y=PosTransform.localPosToRealPos(y);
 			this.addChild(block);
+		}
+		
+		//============Instance Functions============//
+		private function getBlockAsChildAt(index:int):BlockCommon
+		{
+			if(index>=this.numChildren) return null;
+			return this.getChildAt(index) as BlockCommon;
 		}
 	}
 }

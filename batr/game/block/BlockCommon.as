@@ -15,21 +15,12 @@ package batr.game.block
 			{
 				case BlockType.X_TRAP_HURT:
 				case BlockType.X_TRAP_KILL:
-				case BlockType.X_TRAP_ROTATE:
-					return new XTrap(type)
-				case BlockType.GATE_OPEN:
-					return new Gate(true)
-				case BlockType.GATE_CLOSE:
-					return new Gate(false)
+				case BlockType.X_TRAP_ROTATE: return new XTrap(type);
+				case BlockType.GATE_OPEN: return new Gate(true);
+				case BlockType.GATE_CLOSE: return new Gate(false);
 				default:
-					if(type!=null&&type.currentBlock!=null)
-					{
-						return new type.currentBlock()
-					}
-					else
-					{
-						return null
-					}
+					if(type!=null&&type.currentBlock!=null) return new type.currentBlock();
+					else return null;
 			}
 		}
 		
@@ -37,6 +28,11 @@ package batr.game.block
 		public function BlockCommon():void
 		{
 			super();
+		}
+		
+		public function clone():BlockCommon
+		{
+			return new BlockCommon();
 		}
 		
 		//============Destructor Function============//
@@ -69,14 +65,9 @@ package batr.game.block
 		}
 		
 		//============Instance Functions============//
-		private function callDraw(event:Event):void
+		public function displayEquals(block:BlockCommon):Boolean
 		{
-			this.drawMain()
-		}
-		
-		public function clone():BlockCommon
-		{
-			return new BlockCommon();
+			return this===block;
 		}
 		
 		public function reDraw():void
