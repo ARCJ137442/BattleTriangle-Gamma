@@ -18,12 +18,14 @@ package batr.game.map
 		//============Instance Variables============//
 		protected var _spawnPoints:Vector.<uint>=new Vector.<uint>();
 		protected var _arena:Boolean=false;
+		protected var _name:String;
 		
 		//============Constructor============//
-		public function NativeMapCommon(arena:Boolean=false) 
+		public function NativeMapCommon(name:String,arena:Boolean=false):void
 		{
 			super();
 			this._arena=arena;
+			this._name=name;
 		}
 		
 		//============Interface Getter And Setter============//
@@ -55,6 +57,11 @@ package batr.game.map
 		public function get spawnPoints():Vector.<uint>
 		{
 			return this._spawnPoints;
+		}
+		
+		public function get name():String
+		{
+			return this._name;
 		}
 		
 		public function get numSpawnPoints():uint
@@ -104,6 +111,8 @@ package batr.game.map
 		 */
 		public function copyFrom(target:IMap,clearSelf:Boolean=false):void
 		{
+			//name
+			this._name=target.name;
 			//isArena
 			this._arena=target.isArenaMap;
 		}

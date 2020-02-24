@@ -6,6 +6,7 @@ package batr.translations
 	import batr.game.model.BonusType;
 	import batr.game.model.WeaponType;
 	import batr.game.model.GameModeType;
+	import batr.game.main.Game;
 	import batr.game.main.GameRule;
 	
 	public class TranslationalText
@@ -86,11 +87,9 @@ package batr.translations
 		public static function getTextsByRuleWeapons(rule:GameRule,translations:Translations,isDescription:Boolean):Vector.<TranslationalText>
 		{
 			var result:Vector.<TranslationalText>=new Vector.<TranslationalText>();
-			var type:WeaponType;
 			for(var i:uint=0;i<rule.enableWeaponCount;i++)
 			{
-				type=rule.enableWeapons[i];
-				result.push(new TranslationalText(translations,TranslationKey.getTypeKey(type,isDescription)));
+				result.push(new TranslationalText(translations,TranslationKey.getTypeKey(rule.enableWeapons[i],isDescription)));
 			}
 			return result;
 		}
@@ -103,7 +102,16 @@ package batr.translations
 				result.push(new TranslationalText(Translations.translationsList[i],TranslationKey.LANGUAGE_SELF));
 			}
 			return result;
-			
+		}
+		
+		public static function getTextsByMapNames():Vector.<TranslationalText>
+		{
+			var result:Vector.<TranslationalText>=new Vector.<TranslationalText>();
+			for(var i:uint=0;i<Game.VALID_MAP_COUNT;i++)
+			{
+				result.push(new TranslationalText(null,null,Game.ALL_MAPS[i].name));
+			}
+			return result;
 		}
 		
 		//============Static Functions============//

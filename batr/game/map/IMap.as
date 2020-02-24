@@ -17,6 +17,7 @@ package batr.game.map
 		function get hasSpawnPoint():Boolean
 		function get randomSpawnPoint():iPoint
 		function get isArenaMap():Boolean
+		function get name():String
 		function clone(createBlock:Boolean=false):IMap
 		function copyContextFrom(target:IMap,clearSelf:Boolean=false):void
 		function copyFrom(target:IMap,clearSelf:Boolean=false):void

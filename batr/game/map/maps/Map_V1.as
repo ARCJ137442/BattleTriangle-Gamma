@@ -20,7 +20,7 @@ package batr.game.map.maps
 		protected static const _SIZE:uint=GlobalGameVariables.DISPLAY_GRIDS
 		
 		public static var EMPTY:Map_V1
-		public static var BASIC_FRAME:Map_V1
+		public static var FRAME:Map_V1
 		public static var MAP_1:Map_V1
 		public static var MAP_2:Map_V1
 		public static var MAP_3:Map_V1
@@ -56,28 +56,28 @@ package batr.game.map.maps
 			//if(isInited) return
 			//========Init Maps========//
 			var i:uint,ix:uint,iy:uint
-			EMPTY=new Map_V1()
-			BASIC_FRAME=new Map_V1()
-			MAP_1=new Map_V1()
-			MAP_2=new Map_V1()
-			MAP_3=new Map_V1()
-			MAP_4=new Map_V1()
-			MAP_5=new Map_V1()
-			MAP_6=new Map_V1()
-			MAP_7=new Map_V1()
-			MAP_8=new Map_V1()
-			MAP_9=new Map_V1()
-			MAP_A=new Map_V1(null,true)
-			MAP_B=new Map_V1(null,true)
-			MAP_C=new Map_V1(null,true)
-			MAP_D=new Map_V1(null,true)
-			MAP_E=new Map_V1(null,true)
-			MAP_F=new Map_V1(null,true)
+			EMPTY=new Map_V1("EMPTY")
+			FRAME=new Map_V1("FRAME")
+			MAP_1=new Map_V1("1")
+			MAP_2=new Map_V1("2")
+			MAP_3=new Map_V1("3")
+			MAP_4=new Map_V1("4")
+			MAP_5=new Map_V1("5")
+			MAP_6=new Map_V1("6")
+			MAP_7=new Map_V1("7")
+			MAP_8=new Map_V1("8")
+			MAP_9=new Map_V1("9")
+			MAP_A=new Map_V1("A",null,true)
+			MAP_B=new Map_V1("B",null,true)
+			MAP_C=new Map_V1("C",null,true)
+			MAP_D=new Map_V1("D",null,true)
+			MAP_E=new Map_V1("E",null,true)
+			MAP_F=new Map_V1("F",null,true)
 			//====Basic Frame====//
-			BASIC_FRAME.fillBlock(0,0,_SIZE-1,_SIZE-1,
+			FRAME.fillBlock(0,0,_SIZE-1,_SIZE-1,
 								  BlockType.BEDROCK,true)
 			//====Map 1====//
-			MAP_1.copyContextFrom(BASIC_FRAME)
+			MAP_1.copyContextFrom(FRAME)
 			{
 				for(ix=3;ix<_SIZE-4;ix+=4)
 				{
@@ -88,7 +88,7 @@ package batr.game.map.maps
 				}
 			}
 			//====Map 2====//
-			MAP_2.copyContextFrom(BASIC_FRAME)
+			MAP_2.copyContextFrom(FRAME)
 			{
 				MAP_2.fillBlock(4,4,10,10,BlockType.WALL)
 				MAP_2.fillBlock(4,13,10,19,BlockType.WALL)
@@ -96,7 +96,7 @@ package batr.game.map.maps
 				MAP_2.fillBlock(13,13,19,19,BlockType.WALL)
 			}
 			//====Map 3====//
-			MAP_3.copyContextFrom(BASIC_FRAME)
+			MAP_3.copyContextFrom(FRAME)
 			{
 				for(iy=3;iy<_SIZE-4;iy+=4)
 				{
@@ -104,14 +104,14 @@ package batr.game.map.maps
 				}
 			}
 			//====Map 4====//
-			MAP_4.copyContextFrom(BASIC_FRAME)
+			MAP_4.copyContextFrom(FRAME)
 			{
 				MAP_4.fillBlock(3,3,20,4,BlockType.WALL)
 				MAP_4.fillBlock(3,19,20,20,BlockType.WALL)
 				MAP_4.fillBlock(11,5,12,18,BlockType.GLASS)
 			}
 			//====Map 5====//
-			MAP_5.copyContextFrom(BASIC_FRAME)
+			MAP_5.copyContextFrom(FRAME)
 			{
 				var randNum:int=24+exMath.random(47),randType:BlockType
 				while(--randNum>0)
@@ -140,7 +140,7 @@ package batr.game.map.maps
 				}
 			}
 			//====Map 6====//
-			MAP_6.copyContextFrom(BASIC_FRAME)
+			MAP_6.copyContextFrom(FRAME)
 			{
 				MAP_6.setBlock(3,3,BlockCommon.fromType(BlockType.COLOR_SPAWNER))
 				MAP_6.setBlock(3,20,BlockCommon.fromType(BlockType.COLOR_SPAWNER))
@@ -166,7 +166,7 @@ package batr.game.map.maps
 				MAP_6.fillBlock(11,11,12,12,BlockType.X_TRAP_KILL,true)
 			}
 			//====Map 7====//
-			MAP_7.copyContextFrom(BASIC_FRAME)
+			MAP_7.copyContextFrom(FRAME)
 			{
 				MAP_7.fillBlock(1,5,23,6,BlockType.WATER)//up side
 				MAP_7.fillBlock(1,17,23,18,BlockType.WATER)//down side
@@ -180,7 +180,7 @@ package batr.game.map.maps
 				MAP_7.fillBlock(11,14,12,14,BlockType.X_TRAP_KILL)//y+
 			}
 			//====Map 8====//
-			MAP_8.copyContextFrom(BASIC_FRAME)
+			MAP_8.copyContextFrom(FRAME)
 			{
 				//hole
 				MAP_8.fillBlock(0,12,0,13,BlockType.VOID)
@@ -204,7 +204,7 @@ package batr.game.map.maps
 			}
 			//======Arena Maps======//
 			//====Map A====//
-			MAP_A.copyContextFrom(BASIC_FRAME)
+			MAP_A.copyContextFrom(FRAME)
 			{
 				for(i=0;i<5;i++)
 				{
@@ -221,7 +221,7 @@ package batr.game.map.maps
 				}
 			}
 			//====Map B====//
-			MAP_B.copyContextFrom(BASIC_FRAME)
+			MAP_B.copyContextFrom(FRAME)
 			{
 				/**
 				 * Spin 180*:x=23-x,y=23-y
@@ -265,7 +265,7 @@ package batr.game.map.maps
 				MAP_B.fillBlock(19,16,19,22,BlockType.WATER)
 			}
 			//====Map C====//
-			MAP_C.copyContextFrom(BASIC_FRAME)
+			MAP_C.copyContextFrom(FRAME)
 			{
 				//center C
 				//h
@@ -301,7 +301,7 @@ package batr.game.map.maps
 					MAP_C.setBlock(3+(i>>1)*17,4+(i&1)*17,BlockCommon.fromType(BlockType.X_TRAP_HURT));
 				}
 			}
-			MAP_D.copyContextFrom(BASIC_FRAME)
+			MAP_D.copyContextFrom(FRAME)
 			{
 				for(i=0;i<4;i++)
 				{
@@ -339,7 +339,7 @@ package batr.game.map.maps
 				//XTrapHurt,r
 				MAP_D.fillBlock(13,10,16,13,BlockType.X_TRAP_HURT)
 			}
-			MAP_E.copyContextFrom(BASIC_FRAME)
+			MAP_E.copyContextFrom(FRAME)
 			{
 				for(i=0;i<4;i++) MAP_E.addSpawnPointWithMark(2+(i>>1)*19,2+(i&1)*19);
 				//Center E
@@ -486,9 +486,9 @@ package batr.game.map.maps
 		protected var _context:Object=new Object();
 		
 		//============Constructor============//
-		public function Map_V1(context:Object=null,isArena:Boolean=false):void
+		public function Map_V1(name:String=null,context:Object=null,isArena:Boolean=false):void
 		{
-			super(isArena);
+			super(name,isArena);
 			if(context!=null) this._context=context;
 		}
 		
@@ -542,8 +542,8 @@ package batr.game.map.maps
 				tempContext[index]=context
 			}
 			//construct(included isArena)
-			var copy:Map_V1=new Map_V1(tempContext,this._arena)
-			//spawnpoints
+			var copy:Map_V1=new Map_V1(this._name,tempContext,this._arena)
+			//spawnPoints
 			copy._spawnPoints=this._spawnPoints.concat()
 			//return
 			return copy

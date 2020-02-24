@@ -394,9 +394,11 @@ package batr.menu.main
 					).appendSelecterAndText(
 						this._subject,
 						imS=this.quickSelecterBuild(new BatrSelecterContext().initAsEnum(
-								new <TranslationalText>[
+								(new <TranslationalText>[
 									this.quickTranslationalTextBuild(TranslationKey.MAP_RANDOM)
-								],0,0
+								]).concat(
+									TranslationalText.getTextsByMapNames()
+								),0,0
 							).initAsInt(
 								Game.VALID_MAP_COUNT,0,this.gameRule.initialMapID+1
 							).autoInitLoopSelect(),1/*,this.onMapPreviewSwitch*/

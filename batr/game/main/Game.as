@@ -41,7 +41,7 @@ package batr.game.main
 		//============Static Variables============//
 		public static const ALL_MAPS:Vector.<IMap>=new <IMap>[
 			Map_V1.EMPTY,
-			Map_V1.BASIC_FRAME,
+			Map_V1.FRAME,
 			Map_V1.MAP_1,
 			Map_V1.MAP_2,
 			Map_V1.MAP_3,
