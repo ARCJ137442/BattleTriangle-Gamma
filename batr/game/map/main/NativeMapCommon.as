@@ -1,4 +1,4 @@
-package batr.game.map 
+package batr.game.map.main
 {
 	import batr.common.exMath;
 	import batr.common.iPoint;
@@ -114,7 +114,7 @@ package batr.game.map
 		}
 		
 		//============Interface Functions============//
-		public function clone(createBlock:Boolean=false):IMap 
+		public function clone(createBlock:Boolean=true):IMap 
 		{
 			return null;
 		}
@@ -122,7 +122,7 @@ package batr.game.map
 		/**
 		 * only copy _isArena
 		 */
-		public function copyFrom(target:IMap,clearSelf:Boolean=false):void
+		public function copyFrom(target:IMap,clearSelf:Boolean=false,createBlock:Boolean=true):void
 		{
 			//name
 			this._name=target.name;
@@ -133,10 +133,15 @@ package batr.game.map
 		/**
 		 * only copy spawnpoints
 		 */
-		public function copyContextFrom(target:IMap,clearSelf:Boolean=false):void
+		public function copyContextFrom(target:IMap,clearSelf:Boolean=false,createBlock:Boolean=true):void
 		{
 			//spawnpoints
 			this._spawnPoints=target.spawnPoints.concat();
+		}
+		
+		public function generateNew():IMap
+		{
+			return this.clone(true);
 		}
 		
 		public function hasBlock(x:int,y:int):Boolean
@@ -174,7 +179,7 @@ package batr.game.map
 			return;
 		}
 		
-		public function removeAllBlock(deleteBlock:Boolean=false):void
+		public function removeAllBlock(deleteBlock:Boolean=true):void
 		{
 			return;
 		}

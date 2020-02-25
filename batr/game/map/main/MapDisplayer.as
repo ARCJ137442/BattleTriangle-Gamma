@@ -1,4 +1,4 @@
-package batr.game.map 
+package batr.game.map.main
 {
 	import batr.general.*;
 	

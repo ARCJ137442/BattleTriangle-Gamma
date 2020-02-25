@@ -6,10 +6,10 @@ package batr.general
 		public static const GAME_NAME:String="Battle Triangle";
 		public static const GAME_NAME_SHORT:String="BATR";
 		public static const GAME_DEV_STAGE:String="Gamma";
-		public static const GAME_VERSION_MAJOR:String="0.1.0";
+		public static const GAME_VERSION_MAJOR:String="0.2.0";
 		public static const GAME_VERSION_MAIN:String="alpha";
-		public static const GAME_VERSION_BUILD:String="09";
-		public static const GAME_UPDATE_LOG:String="Update Block Extendition(Wall extends ColoredBlock)>>>Rewrite MapDisplay>>>Map Displays Name>>>Added Map_F>>>Added Gate>>>Update colorSpawner&laserTrap's color>>>Added SupplyPoint>>>New Texture of X-Trap>>>Added Arena Maps>>>Spawnpoints>>>Lower size of title>>>More stats>>>New gameMode called Hard>>>New block called Metal>>>New weapon called Lightning";
+		public static const GAME_VERSION_BUILD:String="01";
+		public static const GAME_UPDATE_LOG:String="Uses \"`\" can control game speed>>>Added MapGenerater>>>Fixed a bug about ColorSpawner";
 		
 		//============Static Getter And Setter============//
 		public static function get GAME_FULL_NAME():String

@@ -17,7 +17,7 @@ package batr.game.main
 	
 	import batr.game.main.*;
 	import batr.game.map.*;
-	import batr.game.map.maps.*;
+	import batr.game.map.main.*;
 	import batr.game.model.*;
 	import batr.game.events.*;
 	
@@ -142,6 +142,7 @@ package batr.game.main
 		protected var _isLoaded:Boolean
 		protected var _tickTimer:Timer=new Timer(GlobalGameVariables.TICK_TIME_MS)
 		//protected var _secondTimer:Timer=new Timer(1000);//When a timer stop and start the timer will lost its phase.
+		protected var _speed:int;
 		
 		//Temp
 		protected var _tempUniformWeapon:WeaponType
@@ -236,6 +237,16 @@ package batr.game.main
 		public function get isLoaded():Boolean
 		{
 			return this._isLoaded;
+		}
+		
+		public function get speed():int
+		{
+			return this._speed;
+		}
+		
+		public function set speed(value:int):void
+		{
+			this._speed=value;
 		}
 		
 		//======Entity Getters======//
@@ -453,6 +464,7 @@ package batr.game.main
 			this._isLoaded=true;
 			this._tempUniformWeapon=this._rule.randomWeaponEnable;
 			this._tempMapTransformSecond=this.mapTransformPeriod;
+			this._speed=1;
 			//Create
 			this.spawnPlayersByRule();
 			//Timer
@@ -507,18 +519,6 @@ package batr.game.main
 		}
 		
 		public function dealGameTick():void
-		{
-			this.onGameTick(null)
-		}
-		
-		//====Listener Functions====//
-		/*protected function onEnterFrame(E:Event):void
-		{
-			//Reset
-			this._tempTimer=getTimer();
-		}*/
-		
-		protected function onGameTick(E:Event):void
 		{
 			//=====Ticking=====//
 			this._tempSecordPhase+=GlobalGameVariables.TICK_TIME_MS;
@@ -575,6 +575,18 @@ package batr.game.main
 			}
 			//=====Random Tick=====//
 			this.onRandomTick(this._map.randomX,this._map.randomY)
+		}
+		
+		//====Listener Functions====//
+		/*protected function onEnterFrame(E:Event):void
+		{
+			//Reset
+			this._tempTimer=getTimer();
+		}*/
+		
+		protected function onGameTick(E:Event):void
+		{
+			for(var i:uint=0;i<this._speed;i++) this.dealGameTick();
 		}
 		
 		protected function dealSecond():void
@@ -1119,14 +1131,14 @@ package batr.game.main
 		 */
 		protected function getRandomMap():IMap
 		{
-			return this._rule.randomMapEnable.clone(true)//ALL_MAPS[exMath.random(Game.VALID_MAP_COUNT)].clone()
+			return this._rule.randomMapEnable.generateNew();//ALL_MAPS[exMath.random(Game.VALID_MAP_COUNT)].clone()
 		}
 		
 		/* Change Map into the other
 		 */
 		public function changeMap(map:IMap,update:Boolean=true,reSperadPlayer:Boolean=false):void
 		{
-			this._map=map.clone(true);
+			this._map=map.generateNew();
 			if(update) this.forceMapDisplay();
 			if(reSperadPlayer) this.spreadAllPlayer();
 		}
@@ -1956,8 +1968,8 @@ package batr.game.main
 		//====Block Functions====//
 		protected function colorSpawnerSpawnBlock(x:int,y:int):void
 		{
-			var randomX:int=x+exMath.random1()*(exMath.random(2)+1)
-			var randomY:int=y+exMath.random1()*(exMath.random(2)+1)
+			var randomX:int=x+exMath.random1()*(exMath.random(3))
+			var randomY:int=y+exMath.random1()*(exMath.random(3))
 			var block:ColoredBlock=new ColoredBlock(exMath.random(0xffffff))
 			if(!this.isOutOfMap(randomX,randomY)&&this.isVoid(randomX,randomY))
 			{

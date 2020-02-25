@@ -77,6 +77,10 @@ package
 				case KeyCode.ENTER:
 					sub.gameObj.dealGameTick();
 				break;
+				case KeyCode.BACK_QUOTES:
+					if(shift) sub.gameObj.speed--;
+					else sub.gameObj.speed++;
+				break;
 			}
 		}
 	}
