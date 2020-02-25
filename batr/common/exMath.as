@@ -80,6 +80,11 @@
 			return (num/modNum-Math.floor(num/modNum))*modNum
 		}
 		
+		public static function intMod(num:uint,modNum:uint):uint
+		{
+			return num%modNum
+		}
+		
 		public static function redirectNum(num:Number,directNum:Number):Number
 		{
 			return Math.round(num*directNum)/directNum

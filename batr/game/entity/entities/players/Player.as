@@ -237,15 +237,15 @@ package batr.game.entity.entities.players
 			//Set Team
 			this._team=team;
 			//Set Shape
-			initColors(fillColor,lineColor);
-			drawShape();
+			this.initColors(fillColor,lineColor);
+			this.drawShape();
 			//Set GUI And Effects
 			this._GUI=new PlayerGUI(this)
 			this._hurtOverlay=new PlayerHurtOverlay(this)
 			this.addChilds()
 			//Set Contol Key
-			initContolKey(contolKeyId);
-			updateKeyDelay();
+			this.initContolKey(contolKeyId);
+			this.updateKeyDelay();
 		}
 		
 		//============Destructor Function============//
@@ -1034,7 +1034,7 @@ package batr.game.entity.entities.players
 					contolKey_Down=KeyCode.NUMPAD_5;//Down:Num 2
 					contolKey_Left=KeyCode.NUMPAD_4;//Left:Num 1
 					contolKey_Right=KeyCode.NUMPAD_6;//Right:Num 3
-					contolKey_Use=KeyCode.NUMPAD_ADD;//Use:Num 9
+					contolKey_Use=KeyCode.NUMPAD_ADD;//Use:Num +
 					break;
 			}
 		}

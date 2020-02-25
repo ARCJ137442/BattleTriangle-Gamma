@@ -1123,8 +1123,7 @@ package batr.game.main
 				this.changeMap(this._rule.initialMap,update,reSperadPlayer);
 			else if(this._rule.mapRandomPotentials==null,this._rule.initialMapID)
 				this.changeMap(getRandomMap(),update,reSperadPlayer);
-			else
-				this.changeMap(Game.ALL_MAPS[exMath.randomByWeightV(this._rule.mapWeightsByGame)],update,reSperadPlayer);
+			else this.changeMap(Game.ALL_MAPS[exMath.intMod(exMath.randomByWeightV(this._rule.mapWeightsByGame),Game.VALID_MAP_COUNT)],update,reSperadPlayer);
 		}
 		
 		/* Get Map from Rule
