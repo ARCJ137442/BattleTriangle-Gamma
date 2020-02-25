@@ -5,8 +5,7 @@ A flash game based on `ActionScript 3.0`
 
 ## Spoken Language
 * English
-* \u7b80\u4f53\u4e2d\u6587
-
+* ¼òÌåÖĞÎÄ
 ## Newest Version
 v0.1.0
 
