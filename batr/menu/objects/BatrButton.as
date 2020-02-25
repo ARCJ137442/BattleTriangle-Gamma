@@ -21,7 +21,7 @@ package batr.menu.objects
 		//============Static Variables============//
 		public static const LINE_COLOR:uint=0x888888
 		public static const FILL_COLOR:uint=0xcccccc
-		public static const FILL_ALPHA:Number=0.5
+		public static const FILL_ALPHA:Number=0.375
 		public static const LINE_SIZE:Number=GlobalGameVariables.DEFAULT_SIZE/16
 		public static const HOLD_ALPHA:Number=1
 		public static const OVER_ALPHA:Number=0.75
@@ -43,23 +43,20 @@ package batr.menu.objects
 								   translations:Translations,
 								   translationKey:String="",
 								   smoothLine:Boolean=true,
-								   lineColor:uint=LINE_COLOR,
-								   fillColor:uint=FILL_COLOR,
+								   color:uint=LINE_COLOR,
 								   lineSize:Number=LINE_SIZE):void
 		{
 			super();
 			this._displayWidth=width;
 			this._displayHeight=height;
-			this._lineColor=lineColor;
-			this._fillColor=fillColor;
+			this._lineColor=Color.trunBrightnessTo(color,0.5);
+			this._fillColor=color;
 			this._lineSize=lineSize;
 			this._smoothLine=smoothLine;
 			this._translations=translations;
-			this._text=new BatrTextField("",this._translations,translationKey);
+			this._text=new BatrTextField("",this._translations,translationKey,TextFieldAutoSize.CENTER);
 			this.initDisplay();
 			this.drawShape();
-			this.buttonMode=true;
-			this.tabEnabled=true;
 			this.onMouseRollOut(null);
 		}
 		
@@ -82,7 +79,7 @@ package batr.menu.objects
 		{
 			if(this._displayWidth==value) return;
 			this._displayWidth=value;
-			drawShape();
+			this.drawShape();
 		}
 		
 		public function get displayHeight():Number
@@ -94,7 +91,7 @@ package batr.menu.objects
 		{
 			if(this._displayHeight==value) return;
 			this._displayHeight=value;
-			drawShape();
+			this.drawShape();
 		}
 		
 		public function get lineColor():uint 
@@ -106,7 +103,7 @@ package batr.menu.objects
 		{
 			if(this._lineColor==value) return;
 			this._lineColor=value;
-			drawShape();
+			this.drawShape();
 		}
 		
 		public function get fillColor():uint 
@@ -118,7 +115,7 @@ package batr.menu.objects
 		{
 			if(this._fillColor==value) return;
 			this._fillColor=value;
-			drawShape();
+			this.drawShape();
 		}
 		
 		public function get lineSize():Number 
@@ -130,7 +127,7 @@ package batr.menu.objects
 		{
 			if(this.lineSize==value) return;
 			this._lineSize=value;
-			drawShape();
+			this.drawShape();
 		}
 		
 		public function get smoothLine():Boolean
@@ -142,7 +139,7 @@ package batr.menu.objects
 		{
 			if(this._smoothLine==value) return;
 			this._smoothLine=value;
-			drawShape();
+			this.drawShape();
 		}
 		
 		//============Instance Functions============//
@@ -160,11 +157,14 @@ package batr.menu.objects
 		
 		protected function initDisplay():void
 		{
+			this.buttonMode=true;
+			this.tabEnabled=true;
 			this._text.x=this._text.y=0;
 			this._text.width=this._displayWidth;
 			this._text.height=this._displayHeight;
 			this._text.selectable=false;
 			this._text.setTextFormat(Menu.TEXT_FORMAT);
+			this._text.textColor=this.lineColor;
 			this.addChild(this._text);
 		}
 		
@@ -189,6 +189,8 @@ package batr.menu.objects
 			this.graphics.endFill();
 		}
 		
+		
+		//Event Functions
 		protected override function onMouseRollOver(event:MouseEvent):void
 		{
 			super.onMouseRollOver(event);
@@ -222,8 +224,8 @@ package batr.menu.objects
 		{
 			this._translations=translations;
 			this._text.trunTranslationsTo(translations);
-			this._text.width=this._displayWidth;
-			this._text.height=this._displayHeight;
+			/*this._text.width=this._displayWidth;
+			this._text.height=this._displayHeight;*/
 		}
 	}
 }

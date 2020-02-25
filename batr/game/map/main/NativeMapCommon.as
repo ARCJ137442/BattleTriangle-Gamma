@@ -34,6 +34,13 @@ package batr.game.map.main
 			this._name=name;
 		}
 		
+		//============Destructor============//
+		public function deleteSelf():void
+		{
+			this._spawnPoints=null;
+			this._name=null;
+		}
+		
 		//============Interface Getter And Setter============//
 		public function get mapWidth():uint
 		{

@@ -494,7 +494,7 @@ package batr.game.main
 			this._isLoaded=false;
 			this._rule=null;
 			//Map
-			this._map.removeAllBlock();
+			this._map.deleteSelf();
 			this._map=null;
 			this.forceMapDisplay();
 			this.updateMapSize(false);
@@ -521,7 +521,7 @@ package batr.game.main
 		public function dealGameTick():void
 		{
 			//=====Ticking=====//
-			this._tempSecordPhase+=GlobalGameVariables.TICK_TIME_MS;
+			this._tempSecordPhase+=this._tickTimer.delay;
 			if(this._tempSecordPhase>=1000)
 			{
 				this._tempSecordPhase-=1000;
@@ -1138,6 +1138,8 @@ package batr.game.main
 		 */
 		public function changeMap(map:IMap,update:Boolean=true,reSperadPlayer:Boolean=false):void
 		{
+			//Remove and generateNew
+			if(this._map!=null) this._map.deleteSelf();
 			this._map=map.generateNew();
 			if(update) this.forceMapDisplay();
 			if(reSperadPlayer) this.spreadAllPlayer();

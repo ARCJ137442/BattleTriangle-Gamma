@@ -285,6 +285,21 @@ package batr.menu.main
 			return button;
 		}
 		
+		protected function quickButtonBuild2(tKey:String,clickListenerFunction:Function,color:uint,blockWidth:Number=6,blockHeight:Number=1):BatrButton
+		{
+			var button:BatrButton=new BatrButton(GlobalGameVariables.DEFAULT_SIZE*blockWidth,
+												 GlobalGameVariables.DEFAULT_SIZE*blockHeight,
+												 this.translations,tKey,true,color);
+			this._subject.addEventListener(TranslationsChangeEvent.TYPE,button.onTranslationsChange);
+			if(clickListenerFunction!=null) button.addEventListener(BatrGUIEvent.CLICK,clickListenerFunction);
+			return button;
+		}
+		
+		protected function quickBackButtonBuild():BatrButton
+		{
+			return this.quickButtonBuild2(TranslationKey.BACK,this.onBackButtonClick,0x333333);
+		}
+		
 		//TextField Build
 		protected function quickTextFieldBuild(text:String,tKey:String,blockX:Number=0,blockY:Number=0):BatrTextField
 		{
@@ -355,10 +370,10 @@ package batr.menu.main
 				//Main
 				this._sheetMain=this.buildSheet(true).appendDirectElements(
 					(new BatrButtonList().appendDirectElements(
-						this.quickButtonBuild(TranslationKey.CONTINUE,this.onContinueButtonClick),
-						this.quickButtonBuild(TranslationKey.QUICK_GAME,this.onQuickGameButtonClick),
-						this.quickButtonBuild(TranslationKey.SELECT_GAME,this.onSelectGameButtonClick),
-						this.quickButtonBuild(TranslationKey.CUSTOM_MODE,this.onCustomModeButtonClick)
+						this.quickButtonBuild2(TranslationKey.CONTINUE,this.onContinueButtonClick,0xff8000),
+						this.quickButtonBuild2(TranslationKey.QUICK_GAME,this.onQuickGameButtonClick,0x0080ff),
+						this.quickButtonBuild2(TranslationKey.SELECT_GAME,this.onSelectGameButtonClick,0x00ff80),
+						this.quickButtonBuild2(TranslationKey.CUSTOM_MODE,this.onCustomModeButtonClick,0xff0080)
 					) as BatrButtonList).setPos(
 						GlobalGameVariables.DEFAULT_SIZE*9,
 						GlobalGameVariables.DEFAULT_SIZE*9
@@ -367,10 +382,10 @@ package batr.menu.main
 				//Select
 				this._sheetSelect=this.buildSheet(true).appendDirectElements(
 					(new BatrButtonList().appendDirectElements(
-						this.quickButtonBuild(TranslationKey.START,this.onSelectStartButtonClick),
-						this.quickButtonBuild(TranslationKey.ADVANCED,this.onSelectAdvancedButtonClick),
-						this.quickButtonBuild(TranslationKey.SAVES,null),
-						this.quickButtonBuild(TranslationKey.BACK,this.onBackButtonClick)
+						this.quickButtonBuild2(TranslationKey.START,this.onSelectStartButtonClick,0x0080ff),
+						this.quickButtonBuild2(TranslationKey.ADVANCED,this.onSelectAdvancedButtonClick,0x00ff80),
+						this.quickButtonBuild2(TranslationKey.SAVES,null,0xff0080),
+						this.quickBackButtonBuild()
 					) as BatrButtonList).setPos(
 						GlobalGameVariables.DEFAULT_SIZE*9,
 						GlobalGameVariables.DEFAULT_SIZE*9
@@ -410,8 +425,8 @@ package batr.menu.main
 				//Advanced Custom
 				this._sheetAdvancedCustom=this.buildSheet(true).appendDirectElements(
 					(new BatrButtonList().appendDirectElements(
-						this.quickButtonBuild(TranslationKey.START,this.onSelectStartButtonClick),
-						this.quickButtonBuild(TranslationKey.BACK,this.onBackButtonClick)
+						this.quickButtonBuild2(TranslationKey.START,this.onSelectStartButtonClick,0x0080ff),
+						this.quickBackButtonBuild()
 					) as BatrButtonList).setPos(
 						GlobalGameVariables.DEFAULT_SIZE*9,
 						GlobalGameVariables.DEFAULT_SIZE*19
@@ -519,7 +534,7 @@ package batr.menu.main
 				//Unfinished
 				this._sheetGameResult=this.buildSheet(false).appendDirectElements(
 					this._gameResultText=quickTextFieldBuild("",TranslationKey.GAME_RESULT,2,2).setBlockSize(20,2).setFormet(RESULT_TITLE_FORMET,true),
-					this.quickButtonBuild(TranslationKey.BACK,this.onBackButtonClick).setBlockPos(9,21)
+					this.quickBackButtonBuild().setBlockPos(9,21)
 				) as BatrMenuSheet
 			];
 			//Set Variable 2

@@ -9,7 +9,7 @@ package batr.general
 		public static const GAME_VERSION_MAJOR:String="0.2.0";
 		public static const GAME_VERSION_MAIN:String="alpha";
 		public static const GAME_VERSION_BUILD:String="01";
-		public static const GAME_UPDATE_LOG:String="Uses \"`\" can control game speed>>>Added MapGenerater>>>Fixed a bug about ColorSpawner";
+		public static const GAME_UPDATE_LOG:String="Button color changed>>>Uses \"`\" can control game speed>>>Added MapGenerater>>>Fixed a bug about ColorSpawner";
 		
 		//============Static Getter And Setter============//
 		public static function get GAME_FULL_NAME():String

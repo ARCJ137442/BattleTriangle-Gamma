@@ -172,7 +172,7 @@ package batr.menu.objects.selecter
 		public function updateTextByContext():BatrSelecter
 		{
 			if(this._context==null) return this;
-			this._textField.setText(this._context.currentText,false);
+			this._textField.setText(this._context.currentText);
 			this.updateText();
 			return this;
 		}

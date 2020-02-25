@@ -496,6 +496,15 @@ package batr.game.map.main
 			if(context!=null) this._context=context;
 		}
 		
+		//============Destructor============//
+		public override function deleteSelf():void
+		{
+			this.removeAllBlock();
+			this._context=null;
+			this._generater=null;
+			super.deleteSelf();
+		}
+		
 		//============Instance Getter And Setter============//
 		
 		//============Interface Functions============//
