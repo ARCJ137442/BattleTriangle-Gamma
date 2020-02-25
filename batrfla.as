@@ -36,6 +36,7 @@ package
 			 * C:Projectile/Effect
 			 * V:Weapon
 			 * X:Sheet/Translations
+			 * <`~>:Game Speed
 			 * <Enter>:Game Ticking
 			 */
 			switch(code)
@@ -58,29 +59,30 @@ package
 					if(ctrl||ctrl&&shift) sub.gameObj.setATeamToAIPlayer();
 					else if(shift) sub.gameObj.setATeamToNotAIPlayer();
 					else sub.gameObj.randomizeAllPlayerTeam();
-				break;
+					break;
 				case KeyCode.T:
 					if(shift) sub.gameObj.transformMap();
 					else sub.gameObj.spreadAllPlayer();
-				break;
+					break;
 				case KeyCode.C:
 					if(shift) sub.gameObj.effectSystem.removeAllEffect();
 					else sub.gameObj.entitySystem.removeAllProjectile();
-				break;
+					break;
 				case KeyCode.V:
 					if(shift) sub.gameObj.changeAllPlayerWeapon();
 					else sub.gameObj.changeAllPlayerWeaponRandomly();
-				break;
+					break;
 				case KeyCode.B:
-					sub.gameObj.randomAddRandomBonusBox();
-				break;
+					if(shift) sub.gameObj.entitySystem.removeAllBonusBox();
+					else sub.gameObj.randomAddRandomBonusBox();
+					break;
 				case KeyCode.ENTER:
 					sub.gameObj.dealGameTick();
-				break;
+					break;
 				case KeyCode.BACK_QUOTES:
 					if(shift) sub.gameObj.speed--;
 					else sub.gameObj.speed++;
-				break;
+					break;
 			}
 		}
 	}

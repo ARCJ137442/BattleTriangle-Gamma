@@ -538,7 +538,7 @@ package batr.game.main
 						entity.tickFunction()
 					}
 				}
-				else if(this._entitySystem.entities.indexOf(null)>=0)
+				else
 				{
 					this._entitySystem.GC()
 				}
