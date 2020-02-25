@@ -10,4 +10,4 @@ A flash game based on `ActionScript 3.0`
 v0.1.0
 
 ## Debug Key in Devloup
-See ![DEBUG_KEYS](DEBUG_KEYS.md)
+See [DEBUG_KEYS](DEBUG_KEYS.md)
