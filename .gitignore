@@ -24,7 +24,6 @@ git status
 *.apk
 
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-*.as3proj
 
 # should NOT be excluded as they contain compiler settings and other important
 asconfig.*
