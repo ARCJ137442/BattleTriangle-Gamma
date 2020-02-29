@@ -145,6 +145,11 @@ package batr.game.main
 		protected var _deadPlayerMoveToX:Number
 		protected var _deadPlayerMoveToY:Number
 		protected var _recordPlayerStats:Boolean
+		/**
+		 * int.MAX_VALUE -> uint.MAX_VALUE
+		 * Negative number -> uint.MAX_VALUE
+		 * damage operator function=Game.operateFinalPlayerHurtDamage
+		 */
 		protected var _playerAsphyxiaDamage:int
 		
 		//Bonus

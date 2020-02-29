@@ -782,34 +782,31 @@ package batr.game.main
 			return blockAtt.isBreakable&&!(map.isArenaMap&&blockAtt.unbreakableInArenaMap);
 		}
 		
-		public function weaponCreateExplode(x:Number,y:Number,finalRadius:Number=1,
-											damage:uint=5,projectile:ProjectileCommon=null,
-											color:uint=0xffff00):void
+		public function weaponCreateExplode(x:Number,y:Number,finalRadius:Number,
+											damage:uint,projectile:ProjectileCommon,
+											color:uint,edgePercent:Number=1):void
 		{
 			//Operate
 			var creater:Player=projectile.owner;
 			//Effect
 			this._effectSystem.addEffect(new EffectExplode(this,x,y,finalRadius,color));
 			//Hurt Player
-			var distance:Number,canHurt:Boolean;
+			var distanceP:Number;
 			for each(var player:Player in this._entitySystem.players)
 			{
 				if(player==null) continue;
-				distance=exMath.getDistance(x,y,player.entityX,player.entityY);
-				canHurt=false;
-				if(distance<=finalRadius)
+				distanceP=exMath.getDistanceSquare(x,y,player.entityX,player.entityY)/(finalRadius*finalRadius);
+				if(distanceP<=1)
 				{
-					if(projectile==null) canHurt=true;
-					else
-					{
-						if(creater==null||creater.canUseWeaponHurtPlayer(player,projectile.currentWeapon))
+					//Operate damage by percent
+					if(edgePercent<1) damage*=edgePercent+(distanceP*(1-edgePercent));
+					if(projectile==null||
+						(creater==null||creater.canUseWeaponHurtPlayer(player,projectile.currentWeapon)))
 						{
-							canHurt=true;
+							//Hurt With FinalDamage
+							player.finalRemoveHealth(creater,projectile.currentWeapon,damage);
 						}
-					}
 				}
-				//Hurt With FinalDamage
-				if(canHurt) player.finalRemoveHealth(creater,projectile.currentWeapon,damage);
 			}
 		}
 		
@@ -822,19 +819,20 @@ package batr.game.main
 			var rot:uint=laser.rot
 			var teleport:Boolean=laser is LaserTeleport
 			var absorption:Boolean=laser is LaserAbsorption
+			var pulse:Boolean=laser is LaserPulse
 			//Pos
 			var baseX:int=PosTransform.alignToGrid(laser.entityX)
 			var baseY:int=PosTransform.alignToGrid(laser.entityY)
-			var vx:int=Math.round(GlobalRot.towardX(rot,1))
-			var vy:int=Math.round(GlobalRot.towardY(rot,1))
-			var cx:int,cy:int,players:Vector.<Player>
+			var vx:int=GlobalRot.towardXInt(rot,1)
+			var vy:int=GlobalRot.towardYInt(rot,1)
+			var cx:int=baseX,cy:int=baseY,players:Vector.<Player>
+			//var nextBlockAtt:BlockAttributes
 			//Damage
 			laser.isDamaged=true
 			var finalDamage:uint;
 			for(var i:uint=0;i<length;i++)
 			{
-				cx=baseX+vx*i
-				cy=baseY+vy*i
+				//nextBlockAtt=this.getBlockAttributes(cx+vx,cy+vy);
 				players=getHitPlayers(cx,cy)
 				for each(var victim:Player in players)
 				{
@@ -849,17 +847,22 @@ package batr.game.main
 						//Absorption
 						if(attacker!=null&&!attacker.isRespawning&&absorption)
 						{
-							attacker.heal+=damage
+							attacker.heal+=damage;
 						}
 					}
 					if(victim!=attacker&&!victim.isRespawning)
 					{
 						if(teleport)
 						{
-							spreadPlayer(victim)
+							spreadPlayer(victim);
+						}
+						if(pulse&&this.testCanPass(cx+vx,cy+vy,true,false,false,true,false))
+						{
+							victim.addXY(vx,vy);
 						}
 					}
 				}
+				cx+=vx;cy+=vy;
 			}
 		}
 		
@@ -950,12 +953,12 @@ package batr.game.main
 			{
 				if(attributes.playerDamage==-1)
 				{
-					player.removeHealth(this._rule.playerAsphyxiaDamage>0?this._rule.playerAsphyxiaDamage:uint.MAX_VALUE,null);
+					player.removeHealth(operateFinalPlayerHurtDamage(player,x,y,this._rule.playerAsphyxiaDamage),null);
 					returnBoo=true;
 				}
 				else if(attributes.playerDamage>-1)
 				{
-					player.removeHealth(attributes.playerDamage==int.MAX_VALUE?uint.MAX_VALUE:attributes.playerDamage,null);
+					player.removeHealth(this.operateFinalPlayerHurtDamage(player,x,y,attributes.playerDamage),null);
 					returnBoo=true;
 				}
 				else if(attributes.playerDamage==-2)
@@ -974,6 +977,21 @@ package batr.game.main
 				}
 			}
 			return returnBoo;
+		}
+		
+		/**
+		 * Operate damage to player by blockAtt.playerDamage,
+		 * int.MAX_VALUE -> uint.MAX_VALUE
+		 * [...0) -> uint.MAX_VALUE
+		 * [0,100] -> player.maxHealth*playerDamage/100
+		 * (100...] -> playerDamage-100
+		 * @return	The damage.
+		 */
+		protected function operateFinalPlayerHurtDamage(player:Player,x:int,y:int,playerDamage:int):uint
+		{
+			if(playerDamage==int.MAX_VALUE||playerDamage<0) return uint.MAX_VALUE;
+			if(playerDamage<=100) return player.maxHealth*playerDamage/100;
+			return playerDamage-100;
 		}
 		
 		/** 
@@ -1248,8 +1266,17 @@ package batr.game.main
 			}
 		}
 		
-		public function spreadPlayer(player:Player,rotatePlayer:Boolean=true,
-									 createEffect:Boolean=true):Player
+		public function teleportPlayerTo(player:Player,x:int,y:int,rotateTo:uint=GlobalRot.NULL,effect:Boolean=false):Player
+		{
+			player.isActive=false;
+			if(GlobalRot.isValidRot(rotateTo)) player.setPositions(PosTransform.alignToEntity(x),PosTransform.alignToEntity(y),rotateTo);
+			else player.setXY(PosTransform.alignToEntity(x),PosTransform.alignToEntity(y));
+			if(effect) this.addTeleportEffect(player.entityX,player.entityY);
+			player.isActive=true;
+			return player;
+		}
+		
+		public function spreadPlayer(player:Player,rotatePlayer:Boolean=true,createEffect:Boolean=true):Player
 		{
 			if(player==null||player.isRespawning) return player;
 			var p:iPoint=new iPoint(0,0);
@@ -1259,12 +1286,7 @@ package batr.game.main
 				p.y=this.map.randomY;
 				if(testPlayerCanPass(player,p.x,p.y,true,true))
 				{
-					player.isActive=false;
-					player.setPositions(PosTransform.alignToEntity(p.x),
-										PosTransform.alignToEntity(p.y),
-										rotatePlayer?GlobalRot.RANDOM:GlobalRot.NULL);
-					if(createEffect) this.addTeleportEffect(player.entityX,player.entityY);
-					player.isActive=true;
+					teleportPlayerTo(player,p.x,p.y,(rotatePlayer?GlobalRot.RANDOM:GlobalRot.NULL),createEffect);
 					break;
 				}
 			}
@@ -1546,8 +1568,8 @@ package batr.game.main
 				case WeaponType.LASER:
 					p=new LaserBasic(this,spawnX,spawnY,player,laserLength,chargePercent)
 					break;
-				case WeaponType.CONTINUOUS_LASER:
-					p=new LaserContinuous(this,spawnX,spawnY,player,laserLength)
+				case WeaponType.PULSE_LASER:
+					p=new LaserPulse(this,spawnX,spawnY,player,laserLength)
 					break;
 				case WeaponType.TELEPORT_LASER:
 					p=new LaserTeleport(this,spawnX,spawnY,player,laserLength)
@@ -2001,6 +2023,9 @@ package batr.game.main
 						break;
 					case 2:
 						p=new LaserAbsorption(this,rotX,rotY,null,laserLength);
+						break;
+					case 3:
+						p=new LaserPulse(this,rotX,rotY,null,laserLength);
 						break;
 					default:
 						p=new LaserBasic(this,rotX,rotY,null,laserLength,1);

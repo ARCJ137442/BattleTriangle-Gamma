@@ -10,11 +10,11 @@ package batr.game.model
 		public static const ABSTRACT:WeaponType=new WeaponType("Abstract",0,0)
 		
 		public static const BULLET:WeaponType=new WeaponType("Bullet",0.25,5).setExtraProperty(1,1)
-		public static const NUKE:WeaponType=new WeaponType("Nuke",5,320,5,true,true,true).setExtraProperty(20,20)
+		public static const NUKE:WeaponType=new WeaponType("Nuke",5,320,5,true,true,true).setExtraProperty(20,5)
 		//public static const POISON_BOMB:WeaponType=new WeaponType("Poison Bomb",9,50)
 		
 		public static const LASER:WeaponType=new WeaponType("Laser",3,120,1).setExtraProperty(8,6)
-		public static const CONTINUOUS_LASER:WeaponType=new WeaponType("Continuous Laser",0.1,2).setExtraProperty(1,1)
+		public static const PULSE_LASER:WeaponType=new WeaponType("Pulse Laser",0.5,8,0.5).setExtraProperty(5,1)
 		public static const TELEPORT_LASER:WeaponType=new WeaponType("Teleport Laser",3.5,40).setExtraProperty(4,4)
 		public static const ABSORPTION_LASER:WeaponType=new WeaponType("Absorption Laser",4,10).setExtraProperty(4,2)
 		
@@ -27,7 +27,7 @@ package batr.game.model
 		public static const LIGHTNING:WeaponType=new WeaponType("Lightning",0.75,20).setExtraProperty(2,1)
 		
 		public static const _BULLETS:Vector.<WeaponType>=new <WeaponType>[WeaponType.BULLET,WeaponType.NUKE]//,WeaponType.POISON_BOMB
-		public static const _LASERS:Vector.<WeaponType>=new <WeaponType>[WeaponType.LASER,WeaponType.CONTINUOUS_LASER,WeaponType.TELEPORT_LASER,WeaponType.ABSORPTION_LASER]
+		public static const _LASERS:Vector.<WeaponType>=new <WeaponType>[WeaponType.LASER,WeaponType.PULSE_LASER,WeaponType.TELEPORT_LASER,WeaponType.ABSORPTION_LASER]
 		//public static const _WAVES:Vector.<WeaponType>=new <WeaponType>[WeaponType.WAVE,WeaponType.CHAOS_RING]
 		public static const _SPECIAL:Vector.<WeaponType>=new <WeaponType>[WeaponType.WAVE,WeaponType.MELEE,WeaponType.BLOCK_THROWER,WeaponType.LIGHTNING]//WeaponType.T_BOMB,
 		public static const _ALL_WEAPON:Vector.<WeaponType>=_BULLETS.concat(_LASERS).concat(_SPECIAL)//.concat(_WAVES)
@@ -36,7 +36,7 @@ package batr.game.model
 			WeaponType.BULLET,
 			WeaponType.NUKE,
 			WeaponType.LASER,
-			WeaponType.CONTINUOUS_LASER,
+			WeaponType.PULSE_LASER,
 			WeaponType.TELEPORT_LASER,
 			WeaponType.ABSORPTION_LASER,
 			WeaponType.WAVE,

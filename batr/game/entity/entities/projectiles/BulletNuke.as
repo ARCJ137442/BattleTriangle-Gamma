@@ -23,8 +23,8 @@ package batr.game.entity.entities.projectiles
 		public function BulletNuke(host:Game,x:Number,y:Number,owner:Player,chargePercent:Number):void
 		{
 			var scalePercent:Number=(0.25+chargePercent*0.75);
-			super(host,x,y,owner,DEFAULT_SPEED*(2-scalePercent),DEFAULT_EXPLODE_RADIUS*scalePercent);
-			this._currentWeapon=WeaponType.NUKE
+			super(host,x,y,owner,DEFAULT_SPEED*(2-scalePercent),DEFAULT_EXPLODE_RADIUS*(2*scalePercent));
+			this._currentWeapon=WeaponType.NUKE;
 			this.damage=this._currentWeapon.defaultDamage*scalePercent;
 			drawShape();
 		}
@@ -45,7 +45,7 @@ package batr.game.entity.entities.projectiles
 		//============Instance Functions============//
 		protected override function explode():void
 		{
-			this._host.weaponCreateExplode(this.entityX,this.entityY,this.finalExplodeRadius,this.damage,this,DEFAULT_EXPLODE_COLOR)
+			this._host.weaponCreateExplode(this.entityX,this.entityY,this.finalExplodeRadius,this.damage,this,DEFAULT_EXPLODE_COLOR,0.5)
 			this._host.entitySystem.removeProjectile(this)
 		}
 		

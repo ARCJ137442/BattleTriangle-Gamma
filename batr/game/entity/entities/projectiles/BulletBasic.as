@@ -97,7 +97,7 @@ package batr.game.entity.entities.projectiles
 		
 		protected function explode():void
 		{
-			this._host.weaponCreateExplode(this.entityX,this.entityY,this.finalExplodeRadius,this.damage,this)
+			this._host.weaponCreateExplode(this.entityX,this.entityY,this.finalExplodeRadius,this.damage,this,0xffff00,1)
 			this._host.entitySystem.removeProjectile(this)
 		}
 		

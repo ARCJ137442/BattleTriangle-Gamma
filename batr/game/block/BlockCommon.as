@@ -24,6 +24,11 @@ package batr.game.block
 			}
 		}
 		
+		public static function fromMapColor(color:uint):BlockCommon
+		{
+			return BlockCommon.fromType(BlockType.fromMapColor(color));
+		}
+		
 		//============Constructor Function============//
 		public function BlockCommon():void
 		{

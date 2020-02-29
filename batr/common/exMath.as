@@ -289,7 +289,7 @@
 				if(i is Number&&!isNaN(i))
 				{
 					sum+=i;
-					count++
+					count++;
 				}
 			}
 			return sum/count;
@@ -304,7 +304,7 @@
 				if(!isNaN(i))
 				{
 					sum+=i;
-					count++
+					count++;
 				}
 			}
 			return sum/count;
@@ -319,7 +319,7 @@
 				if(i is Number&&!isNaN(i))
 				{
 					sum+=i;
-					count++
+					count++;
 				}
 			}
 			return sum/count;
@@ -329,10 +329,9 @@
 		{
 			for(var i:uint=Math.max(A.length-1,0);i>=0;i--)
 			{
-				if(A[i]==null||
-				   isNaN(A[i]))
+				if(A[i]==null||isNaN(A[i]))
 				{
-					A.splice(i,1)
+					A.splice(i,1);
 				}
 			}
 		}
@@ -343,7 +342,7 @@
 			{
 				if(isNaN(V[i]))
 				{
-					V.splice(i,1)
+					V.splice(i,1);
 				}
 			}
 		}
@@ -354,11 +353,11 @@
 			{
 				if(i is Array)
 				{
-					removeEmptyInArray(i)
+					removeEmptyInArray(i);
 				}
 				if(i is Vector.<Number>)
 				{
-					removeEmptyInNumberVector(i)
+					removeEmptyInNumberVector(i);
 				}
 			}
 		}
@@ -366,12 +365,23 @@
 		public static function getDistance(x1:Number,y1:Number,
 										   x2:Number,y2:Number):Number
 		{
-			return getDistance2(x1-x2,y1-y2)
+			return getDistance2(x1-x2,y1-y2);
 		}
 		
 		public static function getDistance2(x:Number,y:Number):Number
 		{
-			return Math.sqrt(x*x+y*y)
+			return Math.sqrt(getDistanceSquare2(x,y));
+		}
+		
+		public static function getDistanceSquare(x1:Number,y1:Number,
+												x2:Number,y2:Number):Number
+		{
+			return getDistanceSquare2(x1-x2,y1-y2);
+		}
+		
+		public static function getDistanceSquare2(x:Number,y:Number):Number
+		{
+			return x*x+y*y;
 		}
 		
 		public static function NumberBetween(x:Number,
