@@ -10,8 +10,8 @@ package batr.game.entity
 	
 	import flash.utils.Dictionary;
 	
-	/* The class is use for game that deal with entities
-	 * The class have some functions about game entity
+	/**
+	 * Use for manage entities in game.
 	 */
 	public class EntitySystem
 	{
@@ -230,11 +230,14 @@ package batr.game.entity
 		//Register,Cencell and Remove
 		public function isRegisteredEntity(entity:EntityCommon):Boolean
 		{
-			return this._entities.some(
+			//List
+			/*return this._entities.some(
 			function(e2:EntityCommon,i:uint,v:Vector.<EntityCommon>)
 			{
 				return e2==entity
-			})
+			})*/
+			//UUIDMap
+			return this.hasValidUUID(entity)
 		}
 		
 		public function registerEntity(entity:EntityCommon):Boolean
@@ -281,11 +284,12 @@ package batr.game.entity
 			}
 			//Reset UUID Head
 			this._headUUID=0;
-			this._uuidDic=new Dictionary(true);
+			//this._uuidDic=new Dictionary(true);
 		}
 		
 		public function isRegisteredPlayer(player:Player):Boolean
 		{
+			//List
 			return this._players.some(
 			function(p2:Player,i:uint,v:Vector.<Player>)
 			{
@@ -325,6 +329,7 @@ package batr.game.entity
 		
 		public function isRegisteredProjectile(projectile:ProjectileCommon):Boolean
 		{
+			//List
 			return this._projectiles.some(
 			function(p2:ProjectileCommon,i:uint,v:Vector.<ProjectileCommon>)
 			{
@@ -364,6 +369,7 @@ package batr.game.entity
 		
 		public function isRegisteredBonusBox(bonusBox:BonusBox):Boolean
 		{
+			//List
 			return this._bonusBoxes.some(
 			function(p2:BonusBox,i:uint,v:Vector.<BonusBox>)
 			{

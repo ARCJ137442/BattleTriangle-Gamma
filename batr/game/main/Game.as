@@ -477,8 +477,6 @@ package batr.game.main
 			this._rule.addEventListener(GameRuleEvent.TEAMS_CHANGE,this.onPlayerTeamsChange);
 			//Active
 			if(becomeActive) this.isActive=true;
-			//For test
-			trace("List of Entity UUIDs:",this.entitySystem.getAllUUID());
 			//Return
 			return true;
 		}
@@ -568,7 +566,7 @@ package batr.game.main
 						effect.onEffectTick()
 					}
 				}
-				else if(this._effectSystem.effects.indexOf(null)>=0)
+				else
 				{
 					this._effectSystem.GC()
 				}
@@ -856,9 +854,18 @@ package batr.game.main
 						{
 							spreadPlayer(victim);
 						}
-						if(pulse&&this.testCanPass(cx+vx,cy+vy,true,false,false,true,false))
+						if(pulse)
 						{
-							victim.addXY(vx,vy);
+							if((laser as LaserPulse).isPull)
+							{
+								if(this.testCanPass(cx-vx,cy-vy,true,false,false,true,false))
+									victim.addXY(-vx,-vy);
+							}
+							else
+							{
+								if(this.testCanPass(cx+vx,cy+vy,true,false,false,true,false))
+									victim.addXY(vx,vy);
+							}
 						}
 					}
 				}
@@ -1569,7 +1576,7 @@ package batr.game.main
 					p=new LaserBasic(this,spawnX,spawnY,player,laserLength,chargePercent)
 					break;
 				case WeaponType.PULSE_LASER:
-					p=new LaserPulse(this,spawnX,spawnY,player,laserLength)
+					p=new LaserPulse(this,spawnX,spawnY,player,laserLength,chargePercent)
 					break;
 				case WeaponType.TELEPORT_LASER:
 					p=new LaserTeleport(this,spawnX,spawnY,player,laserLength)

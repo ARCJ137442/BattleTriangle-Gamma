@@ -36,6 +36,7 @@ package
 			 * C:Projectile/Effect
 			 * V:Weapon
 			 * X:Sheet/Translations
+			 * L:Game UUID List
 			 * <`~>:Game Speed
 			 * <Enter>:Game Ticking
 			 */
@@ -82,6 +83,11 @@ package
 				case KeyCode.BACK_QUOTES:
 					if(shift) sub.gameObj.speed--;
 					else sub.gameObj.speed++;
+					break;
+				case KeyCode.L:
+					if(shift)
+						trace("List of Effect UUIDs:",sub.gameObj.effectSystem.getAllUUID());
+					else trace("List of Entity UUIDs:",sub.gameObj.entitySystem.getAllUUID());
 					break;
 			}
 		}

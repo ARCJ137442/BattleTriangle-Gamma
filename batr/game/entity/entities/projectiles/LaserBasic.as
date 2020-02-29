@@ -24,8 +24,8 @@ package batr.game.entity.entities.projectiles
 			this._currentWeapon=WeaponType.LASER;
 			this.damage=this._currentWeapon.defaultDamage;
 			this.scaleX=length;
-			dealCharge(chargePercent);
-			drawShape();
+			this.dealCharge(chargePercent);
+			this.drawShape();
 		}
 		
 		//============Destructor Function============//
