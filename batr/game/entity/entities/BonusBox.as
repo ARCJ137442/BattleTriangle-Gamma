@@ -100,48 +100,48 @@ package batr.game.entity.entities
 				//Health,Heal&Life
 				case BonusType.ADD_HEALTH:
 					player.addHealth(5*(1+exMath.random(10)));
-				break;
+					break;
 				case BonusType.ADD_HEAL:
 					player.heal+=5*(1+exMath.random(25));
-				break;
+					break;
 				case BonusType.ADD_LIFE:
-					if(player.infinityLife||UsefulTools.randomBoolean()) player.maxHealth+=5;
+					if(player.infinityLife||player.isFullHealth) player.maxHealth+=5;
 					else player.lifes++;
-				break;
+					break;
 				//Weapon
 				case BonusType.RANDOM_WEAPON:
-					player.weapon=this._host.rule.randomWeaponEnable;
-				break;
+					player.weapon=WeaponType.getRandomAvaliableWithout(player.weapon);
+					break;
 				//Attributes
 				case BonusType.BUFF_DAMAGE:
 					player.buffDamage++;
-				break;
+					break;
 				case BonusType.BUFF_CD:
 					player.buffCD++;
-				break;
+					break;
 				case BonusType.BUFF_RESISTANCE:
 					player.buffResistance++;
-				break;
+					break;
 				case BonusType.BUFF_RADIUS:
 					player.buffRadius++;
-				break;
+					break;
 				case BonusType.ADD_EXPERIENCE:
 					player.experience+=((player.level>>2)+1)<<2;
-				break;
+					break;
 				//Team
 				case BonusType.RANDOM_CHANGE_TEAM:
 					this._host.randomizePlayerTeam(player);
-				break;
+					break;
 				case BonusType.UNITE_AI:
 					this._host.setATeamToAIPlayer();
-				break;
+					break;
 				case BonusType.UNITE_PLAYER:
 					this._host.setATeamToNotAIPlayer();
-				break;
+					break;
 				//Other
 				case BonusType.RANDOM_TELEPORT:
 					this._host.spreadPlayer(player,false,true);
-				break;
+					break;
 			}
 			//Stats Operations
 			player.stats.pickupBonusBoxCount++;

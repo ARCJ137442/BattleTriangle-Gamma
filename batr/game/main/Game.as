@@ -844,9 +844,7 @@ package batr.game.main
 						victim.removeHealth(finalDamage,attacker)
 						//Absorption
 						if(attacker!=null&&!attacker.isRespawning&&absorption)
-						{
 							attacker.heal+=damage;
-						}
 					}
 					if(victim!=attacker&&!victim.isRespawning)
 					{
@@ -861,11 +859,8 @@ package batr.game.main
 								if(this.testCanPass(cx-vx,cy-vy,true,false,false,true,false))
 									victim.addXY(-vx,-vy);
 							}
-							else
-							{
-								if(this.testCanPass(cx+vx,cy+vy,true,false,false,true,false))
-									victim.addXY(vx,vy);
-							}
+							else if(this.testCanPass(cx+vx,cy+vy,true,false,false,true,false))
+								victim.addXY(vx,vy);
 						}
 					}
 				}
@@ -1489,7 +1484,13 @@ package batr.game.main
 		
 		public function randomizePlayerTeam(player:Player):void
 		{
-			player.team=this._rule.randomTeam
+			var tempT:PlayerTeam,i:uint=0;
+			do
+			{
+				tempT=this._rule.randomTeam;
+			}
+			while(tempT==player.team&&++i<0xf);
+			player.team=tempT;
 		}
 		
 		public function setATeamToNotAIPlayer(team:PlayerTeam=null):void

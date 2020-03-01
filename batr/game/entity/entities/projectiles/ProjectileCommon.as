@@ -18,7 +18,7 @@ package batr.game.entity.entities.projectiles
 										 owner:Player):void
 		{
 			super(host,x,y);
-			this._owner=owner
+			this._owner=owner;
 			this._currentWeapon=WeaponType.ABSTRACT;
 		}
 		

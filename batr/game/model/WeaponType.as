@@ -14,7 +14,7 @@ package batr.game.model
 		//public static const POISON_BOMB:WeaponType=new WeaponType("Poison Bomb",9,50)
 		
 		public static const LASER:WeaponType=new WeaponType("Laser",3,120,1).setExtraProperty(8,6)
-		public static const PULSE_LASER:WeaponType=new WeaponType("Pulse Laser",0.5,8,0.5).setExtraProperty(5,1)
+		public static const PULSE_LASER:WeaponType=new WeaponType("Pulse Laser",0.5,5,0.5).setExtraProperty(5,1)
 		public static const TELEPORT_LASER:WeaponType=new WeaponType("Teleport Laser",3.5,40).setExtraProperty(4,4)
 		public static const ABSORPTION_LASER:WeaponType=new WeaponType("Absorption Laser",4,10).setExtraProperty(4,2)
 		
@@ -123,6 +123,17 @@ package batr.game.model
 		public static function isLaserWeapon(type:WeaponType):Boolean
 		{
 			return WeaponType.isIncludeIn(type,WeaponType._LASERS);
+		}
+		
+		public static function getRandomAvaliableWithout(weapon:WeaponType):WeaponType
+		{
+			var tempW:WeaponType,i:uint=0;
+			do
+			{
+				tempW=WeaponType.RANDOM_AVAILABLE;
+			}
+			while(tempW==weapon&&++i<0xf);
+			return tempW;
 		}
 		
 		//============Instance Variables============//

@@ -20,9 +20,9 @@
 		public function LaserPulse(host:Game,x:Number,y:Number,owner:Player,length:uint=LENGTH,chargePercent:Number=1):void
 		{
 			super(host,x,y,owner,length,chargePercent);
-			this.damage=this._currentWeapon.defaultDamage;
-			this._life=LaserPulse.LIFE;
 			this._currentWeapon=WeaponType.PULSE_LASER;
+			this._life=LaserPulse.LIFE;
+			this.damage=this._currentWeapon.defaultDamage;
 			this.dealCharge(chargePercent);
 		}
 		
@@ -30,21 +30,26 @@
 		public override function onLaserTick():void
 		{
 			if(!this.isDamaged) this._host.laserHurtPlayers(this);
-			this.scaleY=2-(this._life/LaserPulse.LIFE);
-			this.alpha=(2-this.scaleY)*ALPHA;
+			if(this.isPull)
+			{
+				this.scaleY=1+this._life/LaserPulse.LIFE;
+				this.alpha=(2-this.scaleY)*ALPHA;
+			}
+			else
+			{
+				this.scaleY=2-(this._life/LaserPulse.LIFE);
+				this.alpha=(2-this.scaleY)*ALPHA;
+			}
 		}
 		
 		protected override function dealCharge(percent:Number):void
 		{
-			if(percent==1) return;
-			this.isPull=true;
-			this.damage*=percent;
-			this._life*=percent;
+			if(percent!=1) this.isPull=true;
 		}
 		
 		public override function drawShape():void
 		{
-			graphics.clear();
+			this.graphics.clear();
 			for(var i:uint=0;i<2;i++)//0,1
 			{
 				this.drawOwnerLine(-SIZE/Math.pow(2,i+1),

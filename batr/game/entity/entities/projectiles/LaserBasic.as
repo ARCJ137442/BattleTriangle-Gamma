@@ -38,22 +38,23 @@ package batr.game.entity.entities.projectiles
 		//============Instance Getter And Setter============//
 		public function get length():Number
 		{
-			return this.scaleX
+			return this.scaleX;
 		}
 		
 		public function get life():uint
 		{
-			return this._life
+			return this._life;
 		}
 		
 		//============Instance Functions============//
 		public override function drawShape():void
 		{
-			graphics.clear();
+			this.graphics.clear();
 			for(var i:uint=0;i<3;i++)//0,1,2
 			{
-				drawOwnerLine(-SIZE/Math.pow(2,i+1),SIZE/Math.pow(2,i+1),
-							  i*0.1+0.5);
+				this.drawOwnerLine(-SIZE/Math.pow(2,i+1),
+									SIZE/Math.pow(2,i+1),
+									i*0.1+0.5);
 			}
 		}
 		
@@ -67,10 +68,7 @@ package batr.game.entity.entities.projectiles
 		public function dealLife():void
 		{
 			if(this._life>0) this._life--;
-			else
-			{
-				this._host.entitySystem.removeProjectile(this);
-			}
+			else this._host.entitySystem.removeProjectile(this);
 		}
 		
 		public function onLaserCommonTick():void
