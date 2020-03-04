@@ -46,6 +46,9 @@ package batr.translations
 				TranslationKey.INITIAL_MAP,"Initial Map",
 				//batr.game
 				TranslationKey.GAME_RESULT,"Game Result",
+				TranslationKey.NOTHING_WIN,"No player wins in the game",
+				TranslationKey.WIN_SIGNLE_PLAYER," wins in the game",
+				TranslationKey.WIN_MULTI_PLAYER," win in the game",
 				//batr.game.map
 				TranslationKey.MAP_RANDOM,"Random",
 				//batr.game.key
@@ -109,6 +112,9 @@ package batr.translations
 				TranslationKey.INITIAL_MAP,"\u521d\u59cb\u5730\u56fe",
 				//batr.game
 				TranslationKey.GAME_RESULT,"\u6e38\u620f\u7ed3\u679c",
+				TranslationKey.NOTHING_WIN,"\u6ca1\u6709\u73a9\u5bb6\u5728\u6e38\u620f\u4e2d\u80dc\u5229",
+				TranslationKey.WIN_SIGNLE_PLAYER,"\u5728\u6e38\u620f\u4e2d\u80dc\u5229",
+				TranslationKey.WIN_MULTI_PLAYER,"\u5728\u6e38\u620f\u4e2d\u80dc\u5229",
 				//batr.game.map
 				TranslationKey.MAP_RANDOM,"\u968f\u673a",
 				//batr.game.key

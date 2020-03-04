@@ -2,6 +2,7 @@ package batr.game.main
 {
 	import batr.common.*;
 	import batr.general.*;
+	import batr.game.stat.*;
 	
 	import batr.game.block.*;
 	import batr.game.block.blocks.*;
@@ -101,6 +102,19 @@ package batr.game.main
 			return Game.ALL_MAPS.indexOf(map);
 		}
 		
+		//Tools
+		public static function joinNamesFromPlayers(players:Vector.<Player>):String
+		{
+			var result:String="";
+			for(var i:uint=0;i<players.length;i++)
+			{
+				if(players[i]==null) result+="NULL";
+				else result+=players[i].customName;
+				if(i<players.length-1) result+=",";
+			}
+			return result;
+		}
+		
 		//============Instance Variables============//
 		//General
 		/**
@@ -154,8 +168,8 @@ package batr.game.main
 		//HUD
 		protected var _globalHUDContainer:Sprite=new Sprite()
 		
-		protected var _mapTransformTimeText:BatrTextField=new BatrTextField("",null,null)
-		protected var _gamePlayingTimeText:BatrTextField=new BatrTextField("",null,null)
+		protected var _mapTransformTimeText:BatrTextField=BatrTextField.fromKey(null,null)
+		protected var _gamePlayingTimeText:BatrTextField=BatrTextField.fromKey(null,null)
 		
 		//============Constructor Function============//
 		public function Game(subject:BatrSubject,active:Boolean=false):void
@@ -343,6 +357,7 @@ package batr.game.main
 			return false;
 		}
 		
+		//============Instance Functions============//
 		//========About Game End========//
 		/**
 		 * Condition: Only one team's player alive.
@@ -409,9 +424,35 @@ package batr.game.main
 		protected function onGameEnd(winners:Vector.<Player>):void
 		{
 			this.subject.pauseGame();
+			this.subject.gotoMenu();
+			this.subject.menuObj.loadResult(this.getGameResult(winners));
 		}
 		
-		//============Instance Functions============//
+		protected function getGameResult(winners:Vector.<Player>):GameResult
+		{
+			var result:GameResult=new GameResult(this,
+				this.getResultMessage(winners),
+				new GameStats(this.rule,this.entitySystem.players)
+			);
+			return result;
+		}
+		
+		protected function getResultMessage(winners:Vector.<Player>):TranslationalText
+		{
+			if(winners.length<1)
+			{
+				return new TranslationalText(this.translations,TranslationKey.NOTHING_WIN);
+			}
+			else
+			{
+				return new FixedTranslationalText(
+					this.translations,
+					winners.length>1?TranslationKey.WIN_MULTI_PLAYER:TranslationKey.WIN_SIGNLE_PLAYER,
+					joinNamesFromPlayers(winners)
+					);
+			}
+		}
+		
 		//====Functions About Init====//
 		protected function onAddedToStage(E:Event):void
 		{
@@ -1872,7 +1913,7 @@ package batr.game.main
 			victim.setXY(this._rule.deadPlayerMoveToX,this._rule.deadPlayerMoveToY)
 			victim.respawnTick=this._rule.defaultRespawnTime
 			victim.gui.visible=false
-			//Add Stats
+			//Store Stats
 			if(this._rule.recordPlayerStats)
 			{
 				victim.stats.deathCount++

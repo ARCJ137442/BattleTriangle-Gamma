@@ -10,21 +10,32 @@ package batr.game.stat
 	 */
 	public class GameStats extends Object 
 	{
+		//============Static Functions============//
+		
 		//============Instance Variables============//
 		protected var _rule:GameRule
 		protected var _players:Vector.<PlayerStats>=new Vector.<PlayerStats>();
 		
-		//============Constructor Function============//
-		public function GameStats(rule:GameRule):void
+		//============Constructor============//
+		public function GameStats(rule:GameRule,players:Vector.<Player>=null):void
 		{
 			super();
 			this.rule=rule;
+			if(players!=null) this.loadPlayers(players);
 		}
 		
 		//Unfinished
 		public function clone():GameStats
 		{
-			
+			return new GameStats(this._rule).setPlayers(this._players);
+		}
+		
+		//============Destructor============//
+		public function deleteSelf():void
+		{
+			this.rule=null;
+			this.clearPlayers();
+			this._players=null;
 		}
 		
 		//============Instance Getter And Setter============//
@@ -44,6 +55,20 @@ package batr.game.stat
 		}
 		
 		//============Instance Functions============//
+		public function setPlayers(players:Vector.<PlayerStats>):GameStats
+		{
+			this._players=players;
+			return this;
+		}
+		
+		public function loadPlayers(players:Vector.<Player>):void
+		{
+			for(var i:uint=0;i<players.length;i++)
+			{
+				this._players.push(players[i].stats.flushProfile());
+			}
+		}
+		
 		public function clearPlayers():void
 		{
 			this._players.splice(0,int.MAX_VALUE);

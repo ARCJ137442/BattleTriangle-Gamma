@@ -236,7 +236,7 @@ package batr.menu.objects.selecter
 			//Selecter
 			this._selecters.push(selecter);
 			//Text
-			var textField:BatrTextField=new BatrTextField("",host.translations,tKey);
+			var textField:BatrTextField=BatrTextField.fromKey(host.translations,tKey);
 			textField.initFormetAsMenu();
 			this._selectTextFields.push(textField);
 			host.addEventListener(TranslationsChangeEvent.TYPE,textField.onTranslationChange);

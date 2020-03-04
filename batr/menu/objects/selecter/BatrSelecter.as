@@ -64,7 +64,7 @@ package batr.menu.objects.selecter
 			//Right
 			this._rightArrow=new BatrSelecterArrow();
 			//Text
-			this._textField=new BatrTextField("",null,null);
+			this._textField=BatrTextField.fromKey(null,null);
 			//AddEventListener
 			this._leftArrow.clickFunction=this.onClickLeft;
 			this._rightArrow.clickFunction=this.onClickRight;

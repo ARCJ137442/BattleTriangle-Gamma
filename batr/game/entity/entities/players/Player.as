@@ -3,6 +3,7 @@ package batr.game.entity.entities.players
 	import batr.common.*;
 	import batr.general.*;
 	import batr.game.stat.*;
+	import batr.game.entity.model.IPlayerProfile;
 	
 	import batr.game.block.*;
 	import batr.game.entity.entities.*;
@@ -15,7 +16,7 @@ package batr.game.entity.entities.players
 	import flash.display.*;
 	import flash.geom.*;
 	
-	public class Player extends EntityCommon
+	public class Player extends EntityCommon implements IPlayerProfile
 	{
 		//============Static Variables============//
 		public static const SIZE:Number=1*GlobalGameVariables.DEFAULT_SIZE
@@ -103,7 +104,7 @@ package batr.game.entity.entities.players
 		
 		//Gameplay
 		protected var _lastHurtbyPlayer:Player=null
-		protected var _stats:PlayerStats=new PlayerStats()
+		protected var _stats:PlayerStats
 		protected var _damageDelay:int=0
 		protected var _healDelay:uint=0
 		
@@ -236,6 +237,8 @@ package batr.game.entity.entities.players
 			super(host,x,y,isActive);
 			//Set Team
 			this._team=team;
+			//Set Stats
+			this._stats=new PlayerStats(this);
 			//Set Shape
 			this.initColors(fillColor,lineColor);
 			this.drawShape();
@@ -304,6 +307,11 @@ package batr.game.entity.entities.players
 			this.drawShape();
 			this._GUI.updateTeam();
 			this._host.updateProjectilesColor();
+		}
+		
+		public function get teamColor():uint
+		{
+			return this.team.defaultColor;
 		}
 		
 		public function get stats():PlayerStats

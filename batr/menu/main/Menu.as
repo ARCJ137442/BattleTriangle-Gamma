@@ -94,7 +94,7 @@ package batr.menu.main
 		protected var _selecterListAdvanced_R:BatrSelecterList;
 		
 		protected var _gameResultText:BatrTextField;
-		protected var _storedGameResult:String;
+		protected var _storedGameResult:GameResult;
 		/**
 		 * A intager combine with limitted indexes.
 		 */
@@ -193,7 +193,7 @@ package batr.menu.main
 			return Math.floor(this._sheetHistory/Math.pow(this.numSheet+1,this.historyLength-1));
 		}
 		
-		public function set storedGameResult(value:String):void
+		public function set storedGameResult(value:GameResult):void
 		{
 			this._storedGameResult=value;
 		}
@@ -301,9 +301,9 @@ package batr.menu.main
 		}
 		
 		//TextField Build
-		protected function quickTextFieldBuild(text:String,tKey:String,blockX:Number=0,blockY:Number=0):BatrTextField
+		protected function quickTextFieldBuild(tKey:String,blockX:Number=0,blockY:Number=0):BatrTextField
 		{
-			var textField:BatrTextField=new BatrTextField(text,this.translations,tKey);
+			var textField:BatrTextField=BatrTextField.fromKey(this.translations,tKey);
 			textField.x=GlobalGameVariables.DEFAULT_SIZE*blockX;
 			textField.y=GlobalGameVariables.DEFAULT_SIZE*blockY;
 			textField.initFormetAsMenu();
@@ -324,7 +324,7 @@ package batr.menu.main
 		//TranslationalText Build
 		protected function quickTranslationalTextBuild(key:String,forcedText:String=null):TranslationalText
 		{
-			return new TranslationalText(this.translations,key,forcedText);
+			return new ForcedTranslationalText(this.translations,key,forcedText);
 		}
 		
 		//Menu Main
@@ -531,9 +531,9 @@ package batr.menu.main
 						true
 					)
 				) as BatrMenuSheet,
-				//Unfinished
+				//In progress
 				this._sheetGameResult=this.buildSheet(false).appendDirectElements(
-					this._gameResultText=quickTextFieldBuild("",TranslationKey.GAME_RESULT,2,2).setBlockSize(20,2).setFormet(RESULT_TITLE_FORMET,true),
+					this._gameResultText=quickTextFieldBuild(TranslationKey.GAME_RESULT,2,2).setBlockSize(20,2).setFormet(RESULT_TITLE_FORMET,true),
 					this.quickBackButtonBuild().setBlockPos(9,21)
 				) as BatrMenuSheet
 			];
@@ -590,6 +590,17 @@ package batr.menu.main
 			this._titleTimer.addEventListener(TimerEvent.TIMER,onTitleTimerTick);
 			this._titleTimer.addEventListener(TimerEvent.TIMER_COMPLETE,onTitleTimerComplete);
 			this._titleTimer.start();
+		}
+		
+		/**
+		 * Loading game result when game end.
+		 */
+		public function loadResult(result:GameResult):void
+		{
+			//set
+			this._gameResultText.translationalText=result.message;
+			//trun
+			this.nowSheet=this._sheetGameResult;
 		}
 		
 		protected function onTitleTimerTick(event:TimerEvent):void

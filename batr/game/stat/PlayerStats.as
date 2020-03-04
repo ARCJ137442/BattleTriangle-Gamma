@@ -1,6 +1,7 @@
 package batr.game.stat 
 {
 	import batr.game.entity.entities.players.*;
+	import batr.game.entity.model.*;
 	
 	import flash.utils.Dictionary;
 	
@@ -9,6 +10,9 @@ package batr.game.stat
 	public class PlayerStats
 	{
 		//============Instance Variables============//
+		//Profile
+		protected var _profile:IPlayerProfile=null
+		
 		//kills and deaths
 		protected var _killPlayerCount:uint=0
 		protected var _killAICount:uint=0
@@ -32,10 +36,20 @@ package batr.game.stat
 		//bonus boxes
 		protected var _pickupBonusBoxCount:uint=0
 		
-		//============Constructor Function============//
-		public function PlayerStats():void
+		//============Constructor============//
+		public function PlayerStats(owner:Player):void
 		{
-			
+			this._profile=owner as IPlayerProfile;
+		}
+		
+		//============Destructor============//
+		public function deleteSelf():void
+		{
+			this._profile=null;
+			this._killPlayers.deleteSelf();
+			this._deathByPlayers.deleteSelf();
+			this._causeDamagePlayers.deleteSelf();
+			this._damageByPlayers.deleteSelf();
 		}
 		
 		//============Instance Getter And Setter============//
@@ -180,6 +194,17 @@ package batr.game.stat
 		}
 		
 		//============Instance Functions============//
+		//About Profile
+		/**
+		 * If profile is player,then conver it to PlayeProfile.
+		 * @return	this
+		 */
+		public function flushProfile():PlayerStats
+		{
+			if(this._profile is Player) this._profile=new PlayerProfile(this._profile);
+			return this;
+		}
+		
 		//Kill And Death By
 		public function getKillPlayerCount(player:Player):uint
 		{
@@ -239,14 +264,6 @@ package batr.game.stat
 		public function addDamageByPlayerCount(player:Player,value:uint=1):void
 		{
 			this._damageByPlayers.setPlayerValue(player,getDamageByPlayerCount(player)+value)
-		}
-		//Delete Self
-		public function deleteSelf():void
-		{
-			this._killPlayers.deleteSelf()
-			this._deathByPlayers.deleteSelf()
-			this._causeDamagePlayers.deleteSelf()
-			this._damageByPlayers.deleteSelf()
 		}
 	}
 }

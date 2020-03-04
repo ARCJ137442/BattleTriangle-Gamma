@@ -54,7 +54,7 @@ package batr.menu.objects
 			this._lineSize=lineSize;
 			this._smoothLine=smoothLine;
 			this._translations=translations;
-			this._text=new BatrTextField("",this._translations,translationKey,TextFieldAutoSize.CENTER);
+			this._text=BatrTextField.fromKey(this._translations,translationKey,TextFieldAutoSize.CENTER);
 			this.initDisplay();
 			this.drawShape();
 			this.onMouseRollOut(null);

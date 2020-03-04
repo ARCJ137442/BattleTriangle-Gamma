@@ -57,6 +57,9 @@ package batr.translations
 		
 		//batr.game
 		public static const GAME_RESULT:String="batr.game.gameResult";
+		public static const NOTHING_WIN:String="batr.game.nothingWin";
+		public static const WIN_SIGNLE_PLAYER:String="batr.game.winSinglePlayer";
+		public static const WIN_MULTI_PLAYER:String="batr.game.winMultiPlayer";
 		
 		//batr.game.map
 		public static const MAP_RANDOM:String="batr.game.map.random";

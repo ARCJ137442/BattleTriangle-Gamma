@@ -16,18 +16,28 @@ package batr.menu.objects
 	
 	public class BatrTextField extends TextField implements IBatrMenuElement
 	{
+		//============Static Constructor============//
+		public static function fromKey(translations:Translations,translationKey:String=null,autoSize:String=TextFieldAutoSize.LEFT):BatrTextField
+		{
+			return new BatrTextField(new TranslationalText(
+				translations==null?Translations.getTranslationByLanguage():translations,
+				translationKey
+			),autoSize);
+		}
+		
 		//============Static Variables============//
 		
 		//============Instance Variables============//
-		protected var _translations:Translations;
-		protected var _translationKey:String;
+		protected var _translationalText:TranslationalText
 		
-		//============Constructor Function============//
-		public function BatrTextField(text:String,translations:Translations,translationKey:String=null,autoSize:String=TextFieldAutoSize.LEFT):void
+		//============Constructor============//
+		public function BatrTextField(translationalText:TranslationalText,autoSize:String=TextFieldAutoSize.LEFT):void
 		{
 			super();
-			this._translations=translations==null?Translations.getTranslationByLanguage():translations;
-			this.textInTranslation=translationKey;
+			//text
+			this._translationalText=translationalText;
+			this.updateByTranslation();
+			//form
 			this.defaultTextFormat=Menu.TEXT_FORMAT;
 			this.setTextFormat(Menu.TEXT_FORMAT);
 			this.autoSize=autoSize;
@@ -36,41 +46,46 @@ package batr.menu.objects
 		//============Destructor Function============//
 		public function deleteSelf():void
 		{
-			
+			this._translationalText=null;
 		}
 		
 		//============Instance Getter And Setter============//
+		public function get translationalText():TranslationalText
+		{
+			return this._translationalText;
+		}
+		
+		public function set translationalText(value:TranslationalText):void
+		{
+			this._translationalText=value;
+			this.updateByTranslation();
+		}
+		
 		public function get translations():Translations
 		{
-			return this._translations;
+			return this._translationalText.translations;
 		}
 		
 		public function get translationKey():String
 		{
-			return this._translationKey;
+			return this._translationalText.key;
 		}
 		
 		public function get textInTranslation():String
 		{
-			return this._translations.getTranslation(this._translationKey);
-		}
-		
-		public function set textInTranslation(value:String):void
-		{
-			this._translationKey=value;
-			this.updateByTranslation();
+			return this._translationalText.currentText;
 		}
 		
 		//============Instance Functions============//
 		public function trunTranslationsTo(translations:Translations):void
 		{
-			this._translations=translations;
+			this._translationalText.translations=translations;
 			this.updateByTranslation();
 		}
 		
 		public function updateByTranslation():void
 		{
-			if(this._translations!=null) this.text=this._translations.getTranslation(this._translationKey);
+			this.text=this.textInTranslation;
 		}
 		
 		public function setText(value:String):void

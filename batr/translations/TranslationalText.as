@@ -109,7 +109,7 @@ package batr.translations
 			var result:Vector.<TranslationalText>=new Vector.<TranslationalText>();
 			for(var i:uint=0;i<Game.VALID_MAP_COUNT;i++)
 			{
-				result.push(new TranslationalText(null,null,Game.ALL_MAPS[i].name));
+				result.push(new ForcedTranslationalText(null,null,Game.ALL_MAPS[i].name));
 			}
 			return result;
 		}
@@ -117,25 +117,23 @@ package batr.translations
 		//============Static Functions============//
 		public static function fromString(value:String):TranslationalText
 		{
-			return new TranslationalText(null,null,value);
+			return new TranslationalText(null,null);
 		}
 		
 		//============Instance Variables============//
 		protected var _key:String;
 		protected var _translations:Translations;
-		protected var _forcedText:String;
 		
 		//============Constructor Function============//
-		public function TranslationalText(translations:Translations,key:String=null,forcedText:String=null):void
+		public function TranslationalText(translations:Translations,key:String=null):void
 		{
 			this._translations=translations
 			this._key=key;
-			this._forcedText=forcedText;
 		}
 		
 		public function clone():TranslationalText
 		{
-			return new TranslationalText(this._translations,this._key,this._forcedText);
+			return new TranslationalText(this._translations,this._key);
 		}
 		
 		//============Destructor Function============//
@@ -165,19 +163,9 @@ package batr.translations
 			this._translations=value;
 		}
 		
-		public function get forcedText():String
-		{
-			return this._forcedText;
-		}
-		
-		public function set forcedText(value:String):void
-		{
-			this._forcedText=value;
-		}
-		
 		public function get currentText():String
 		{
-			if(this._forcedText!=null||this._translations==null) return this._forcedText;
+			if(this._translations==null) return null;
 			return this._translations.getTranslation(this._key);
 		}
 		
@@ -185,18 +173,6 @@ package batr.translations
 		public function toString():String
 		{
 			return this.currentText;
-		}
-		
-		public function removeForce():TranslationalText
-		{
-			this._forcedText=null;
-			return this;
-		}
-		
-		public function setForce(value:String):TranslationalText
-		{
-			this._forcedText=null;
-			return this;
 		}
 	}
 }
