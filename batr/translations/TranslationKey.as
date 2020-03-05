@@ -48,6 +48,7 @@ package batr.translations
 		public static const SAVES:String="batr.menu.saves";
 		public static const BACK:String="batr.menu.back";
 		public static const CONTINUE:String="batr.menu.continue";
+		public static const MAIN_MENU:String="batr.menu.mainMenu";
 		
 		//batr.select
 		public static const PLAYER_COUNT:String="batr.select.playerCount";

@@ -534,7 +534,7 @@ package batr.menu.main
 				//In progress
 				this._sheetGameResult=this.buildSheet(false).appendDirectElements(
 					this._gameResultText=quickTextFieldBuild(TranslationKey.GAME_RESULT,2,2).setBlockSize(20,2).setFormet(RESULT_TITLE_FORMET,true),
-					this.quickBackButtonBuild().setBlockPos(9,21)
+					this.quickButtonBuild2(TranslationKey.MAIN_MENU,this.onMainMenuButtonClick,0xcccccc).setBlockPos(9,21)
 				) as BatrMenuSheet
 			];
 			//Set Variable 2
@@ -600,7 +600,7 @@ package batr.menu.main
 			//set
 			this._gameResultText.translationalText=result.message;
 			//trun
-			this.nowSheet=this._sheetGameResult;
+			this.setNowSheet(this._sheetGameResult);
 		}
 		
 		protected function onTitleTimerTick(event:TimerEvent):void
@@ -730,6 +730,12 @@ package batr.menu.main
 		protected function onSelectAdvancedButtonClick(event:BatrGUIEvent):void
 		{
 			this.nowSheet=this._sheetAdvancedCustom;
+		}
+		
+		protected function onMainMenuButtonClick(event:BatrGUIEvent):void
+		{
+			this._sheetHistory=0;
+			this.setNowSheet(this._sheetMain);
 		}
 		
 		protected function onMaxHealthSelecterClick(event:BatrGUIEvent):void

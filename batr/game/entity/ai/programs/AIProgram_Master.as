@@ -12,6 +12,8 @@ package batr.game.entity.ai.programs
 	import batr.game.main.*;
 	import batr.game.map.*;
 	
+	import flash.utils.Dictionary;
+	
 	/**
 	 * Advanced Advancer.
 	 */
@@ -81,7 +83,7 @@ package batr.game.entity.ai.programs
 		{
 			//Set Rot in mapDealNode
 			n.G=getPathWeight(n,host,owner);
-			n.H=n.getManhattanDistance(target)*10//exMath.intAbs((n.x-target.x)*(n.y-target.y))*10;//With Linear distance
+			n.H=target==null?0:n.getManhattanDistance(target)*10//exMath.intAbs((n.x-target.x)*(n.y-target.y))*10;//With Linear distance
 			return n;
 		}
 		
@@ -169,7 +171,7 @@ package batr.game.entity.ai.programs
 		 */
 		protected var _remember:Vector.<Vector.<Boolean>>;
 		
-		protected var _closeTarget:Vector.<EntityCommon>;
+		protected var _closeTarget:Dictionary;
 		
 		protected var _lastTarget:EntityCommon;
 		
@@ -180,7 +182,7 @@ package batr.game.entity.ai.programs
 		public function AIProgram_Master():void
 		{
 			this._lastTarget=null;
-			this._closeTarget=new Vector.<EntityCommon>();
+			this._closeTarget=new Dictionary(true);
 		}
 		
 		//============Destructor Function============//
@@ -224,17 +226,20 @@ package batr.game.entity.ai.programs
 		
 		protected function inCloseTarget(target:EntityCommon):Boolean
 		{
-			return this._closeTarget.indexOf(target)>=0;
+			return Boolean(this._closeTarget[target]);
 		}
 		
 		protected function addCloseTarget(target:EntityCommon):void
 		{
-			if(!this.inCloseTarget(target)) this._closeTarget.push(target);
+			this._closeTarget[target]=true;
 		}
 		
 		protected function resetCloseTarget():void
 		{
-			this._closeTarget.splice(0,this._closeTarget.length);
+			for(var i in this._closeTarget)
+			{
+				delete this._closeTarget[i];
+			}
 		}
 		
 		/*========AI Tools========*/
@@ -323,12 +328,18 @@ package batr.game.entity.ai.programs
 					lastTargetPlayer!=null&&lastTargetPlayer.isRespawning))
 				{
 					this.resetTarget();
+					traceLog(player,"Clear invalid target!");
 				}
-				//Change target when wreak
+				/*//Change target when wreak
 				else if(lastTargetPlayer!=null&&player.health<lastTargetPlayer.health)
 				{
-					if((this._pickupWeight++)<0) this.resetTarget();
-				}
+					if((this._pickupWeight++)<0)
+					{
+						this.addCloseTarget(this._lastTarget);
+						traceLog(player,"close target when wreak:"+getEntityName(this._lastTarget));
+						this.resetTarget();
+					}
+				}*/
 				//====Dynamic A*====//
 				//If No Target,Get New Target
 				if(this._lastTarget==null)
@@ -445,6 +456,7 @@ package batr.game.entity.ai.programs
 			if(player.healthPercent<0.5)
 			{
 				if(this._pickupWeight>0) this._pickupWeight=-this._pickupWeight;
+				if(attacker!=null) this.addCloseTarget(attacker);
 				this.resetTarget();
 			}
 			else if(attacker!=null&&attacker!=this._lastTarget&&

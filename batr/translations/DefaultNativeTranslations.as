@@ -39,6 +39,7 @@ package batr.translations
 				TranslationKey.SAVES,"Saves",
 				TranslationKey.BACK,"Back",
 				TranslationKey.CONTINUE,"Continue",
+				TranslationKey.MAIN_MENU,"Main Menu",
 				//batr.select
 				TranslationKey.PLAYER_COUNT,"Player Count",
 				TranslationKey.AI_PLAYER_COUNT,"AIPlayer Count",
@@ -107,6 +108,7 @@ package batr.translations
 				TranslationKey.SAVES,"\u5b58\u6863",
 				TranslationKey.BACK,"\u8fd4\u56de",
 				TranslationKey.CONTINUE,"\u7ee7\u7eed",
+				TranslationKey.MAIN_MENU,"\u4e3b\u754c\u9762",
 				//batr.select
 				TranslationKey.PLAYER_COUNT,"\u73a9\u5bb6\u6570\u91cf",
 				TranslationKey.AI_PLAYER_COUNT,"\u0041\u0049\u73a9\u5bb6\u6570\u91cf",

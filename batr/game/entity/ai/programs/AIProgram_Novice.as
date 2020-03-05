@@ -112,7 +112,7 @@ package batr.game.entity.ai.programs
 				//Act
 				if(player.rot!=this._tempRot) player.addActionToThreadAtFirst(AIPlayerAction.getTrunActionFromEntityRot(this._tempRot));
 				this._waitTime++;
-				return AIPlayerAction.MOVE_FORWARD
+				return AIPlayerAction.NULL
 			}
 			//Auto Attack Target
 			else if(target!=null&&this._waitTime>=0&&this._waitTime<this._maxWaitTime)
