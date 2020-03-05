@@ -52,14 +52,16 @@ package batr.game.entity.entities.projectiles
 		//====Graphics Functions====//
 		public override function drawShape():void
 		{
-			super.drawShape()
-			this.scaleX=this.scaleY=BulletNuke.SIZE/BulletBasic.SIZE
-			drawNukeSign()
+			super.drawShape();
+			this.drawNukeSign();
+			this.scaleX=this.scaleY=BulletNuke.SIZE/BulletBasic.SIZE;
 		}
 		
 		protected function drawNukeSign():void
 		{
-			
+			graphics.beginFill(this.ownerLineColor);
+			graphics.drawCircle(0,0,BulletBasic.SIZE*0.125);
+			graphics.endFill();
 		}
 	}
 }

@@ -49,6 +49,8 @@ package batr.translations
 				TranslationKey.NOTHING_WIN,"No player wins in the game",
 				TranslationKey.WIN_SIGNLE_PLAYER," wins in the game",
 				TranslationKey.WIN_MULTI_PLAYER," win in the game",
+				TranslationKey.WIN_PER_PLAYER," players win in the game",
+				TranslationKey.WIN_ALL_PLAYER,"All players win in the game",
 				//batr.game.map
 				TranslationKey.MAP_RANDOM,"Random",
 				//batr.game.key
@@ -115,6 +117,8 @@ package batr.translations
 				TranslationKey.NOTHING_WIN,"\u6ca1\u6709\u73a9\u5bb6\u5728\u6e38\u620f\u4e2d\u80dc\u5229",
 				TranslationKey.WIN_SIGNLE_PLAYER,"\u5728\u6e38\u620f\u4e2d\u80dc\u5229",
 				TranslationKey.WIN_MULTI_PLAYER,"\u5728\u6e38\u620f\u4e2d\u80dc\u5229",
+				TranslationKey.WIN_PER_PLAYER,"\u4e2a\u73a9\u5bb6\u5728\u6e38\u620f\u4e2d\u80dc\u5229",
+				TranslationKey.WIN_ALL_PLAYER,"\u6240\u6709\u73a9\u5bb6\u5728\u6e38\u620f\u4e2d\u80dc\u5229",
 				//batr.game.map
 				TranslationKey.MAP_RANDOM,"\u968f\u673a",
 				//batr.game.key
@@ -167,6 +171,8 @@ package batr.translations
 					"\u57fa\u7840\u5b50\u5f39",
 				TranslationKey.getTypeNameKey(EntityType.BULLET_NUKE),
 					"\u6838\u5f39",
+				TranslationKey.getTypeNameKey(EntityType.SUB_BOMBER),
+					"\u5b50\u8f70\u70b8\u673a",
 				TranslationKey.getTypeNameKey(EntityType.LASER_BASIC),
 					"\u57fa\u7840\u6fc0\u5149",
 				TranslationKey.getTypeNameKey(EntityType.LASER_CONTINUOUS),
@@ -205,6 +211,8 @@ package batr.translations
 					"\u5b50\u5f39",
 				TranslationKey.getTypeNameKey(WeaponType.NUKE),
 					"\u6838\u5f39",
+				TranslationKey.getTypeNameKey(WeaponType.SUB_BOMBER),
+					"\u5b50\u8f70\u70b8\u673a",
 				TranslationKey.getTypeNameKey(WeaponType.LASER),
 					"\u6fc0\u5149",
 				TranslationKey.getTypeNameKey(WeaponType.PULSE_LASER),

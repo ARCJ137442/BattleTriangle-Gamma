@@ -11,7 +11,9 @@ package batr.game.entity
 		
 		public static const BULLET_BASIC:EntityType=new EntityType("BulletBasic")
 		public static const BULLET_NUKE:EntityType=new EntityType("BulletNuke")
+		public static const SUB_BOMBER:EntityType=new EntityType("SubBomber")
 		//public static const BULLET_POISON:EntityType=new EntityType("BulletPoison")
+		
 		public static const LASER_BASIC:EntityType=new EntityType("LaserBasic")
 		public static const LASER_CONTINUOUS:EntityType=new EntityType("LaserContinuous")
 		public static const LASER_TELEPORT:EntityType=new EntityType("LaserTeleport")
@@ -27,7 +29,7 @@ package batr.game.entity
 		public static const PLAYER:EntityType=new EntityType("Player")
 		public static const AI_PLAYER:EntityType=new EntityType("AIPlayer")
 		
-		public static const _BULLETS:Vector.<EntityType>=new <EntityType>[EntityType.BULLET_BASIC,EntityType.BULLET_NUKE]//,EntityType.BULLET_POISON
+		public static const _BULLETS:Vector.<EntityType>=new <EntityType>[EntityType.BULLET_BASIC,EntityType.BULLET_NUKE,EntityType.SUB_BOMBER]//,EntityType.BULLET_POISON
 		public static const _LASERS:Vector.<EntityType>=new <EntityType>[EntityType.LASER_BASIC,EntityType.LASER_CONTINUOUS,EntityType.LASER_TELEPORT,EntityType.LASER_ABSORPTION]
 		//public static const _WAVES:Vector.<EntityType>=new <EntityType>[EntityType.WAVE,EntityType.CHAOS_RING]
 		public static const _PROJECTILES:Vector.<EntityType>=new <EntityType>[EntityType.WAVE,EntityType.THROWED_BLOCK].concat(EntityType._BULLETS,EntityType._LASERS)//EntityType.T_BOMB,EntityType._WAVES

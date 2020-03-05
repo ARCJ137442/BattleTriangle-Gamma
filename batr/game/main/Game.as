@@ -443,6 +443,18 @@ package batr.game.main
 			{
 				return new TranslationalText(this.translations,TranslationKey.NOTHING_WIN);
 			}
+			else if(winners.length==this.rule.playerCount+this.rule.AICount)
+			{
+				return new TranslationalText(this.translations,TranslationKey.WIN_ALL_PLAYER);
+			}
+			else if(winners.length>3)
+			{
+				return new FixedTranslationalText(
+					this.translations,
+					TranslationKey.WIN_PER_PLAYER,
+					winners.length.toString()
+					);
+			}
 			else
 			{
 				return new FixedTranslationalText(
@@ -996,7 +1008,7 @@ package batr.game.main
 			{
 				if(attributes.playerDamage==-1)
 				{
-					player.removeHealth(operateFinalPlayerHurtDamage(player,x,y,this._rule.playerAsphyxiaDamage),null);
+					player.removeHealth(this.operateFinalPlayerHurtDamage(player,x,y,this._rule.playerAsphyxiaDamage),null);
 					returnBoo=true;
 				}
 				else if(attributes.playerDamage>-1)
@@ -1025,14 +1037,17 @@ package batr.game.main
 		/**
 		 * Operate damage to player by blockAtt.playerDamage,
 		 * int.MAX_VALUE -> uint.MAX_VALUE
-		 * [...0) -> uint.MAX_VALUE
+		 * [...-2) -> 0
+		 * -1 -> uint.MAX_VALUE
 		 * [0,100] -> player.maxHealth*playerDamage/100
 		 * (100...] -> playerDamage-100
 		 * @return	The damage.
 		 */
-		protected function operateFinalPlayerHurtDamage(player:Player,x:int,y:int,playerDamage:int):uint
+		public function operateFinalPlayerHurtDamage(player:Player,x:int,y:int,playerDamage:int):uint
 		{
-			if(playerDamage==int.MAX_VALUE||playerDamage<0) return uint.MAX_VALUE;
+			if(playerDamage<-1) return 0;
+			if(playerDamage==-1) return this._rule.playerAsphyxiaDamage;
+			if(playerDamage==int.MAX_VALUE) return uint.MAX_VALUE;
 			if(playerDamage<=100) return player.maxHealth*playerDamage/100;
 			return playerDamage-100;
 		}
@@ -1613,6 +1628,9 @@ package batr.game.main
 					break;
 				case WeaponType.NUKE:
 					p=new BulletNuke(this,spawnX,spawnY,player,chargePercent)
+					break;
+				case WeaponType.SUB_BOMBER:
+					p=new SubBomber(this,spawnX,spawnY,player,chargePercent)
 					break;
 				case WeaponType.LASER:
 					p=new LaserBasic(this,spawnX,spawnY,player,laserLength,chargePercent)

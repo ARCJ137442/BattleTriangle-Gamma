@@ -11,6 +11,7 @@ package batr.game.model
 		
 		public static const BULLET:WeaponType=new WeaponType("Bullet",0.25,5).setExtraProperty(1,1)
 		public static const NUKE:WeaponType=new WeaponType("Nuke",5,320,5,true,true,true).setExtraProperty(20,5)
+		public static const SUB_BOMBER:WeaponType=new WeaponType("Sub Bomber",1,5,1).setExtraProperty(2,1)
 		//public static const POISON_BOMB:WeaponType=new WeaponType("Poison Bomb",9,50)
 		
 		public static const LASER:WeaponType=new WeaponType("Laser",3,120,1).setExtraProperty(8,6)
@@ -35,6 +36,7 @@ package batr.game.model
 		public static const _ALL_AVALIABLE_WEAPON:Vector.<WeaponType>=new <WeaponType>[
 			WeaponType.BULLET,
 			WeaponType.NUKE,
+			WeaponType.SUB_BOMBER,
 			WeaponType.LASER,
 			WeaponType.PULSE_LASER,
 			WeaponType.TELEPORT_LASER,

@@ -110,10 +110,7 @@ package batr.game.entity.ai.programs
 				this._moveSum=this._moveMaxSum;
 				this._tempRot=GlobalRot.fromLinearDistance(lineBonus.entityX-player.gridX,lineBonus.entityY-player.gridY);
 				//Act
-				if(player.rot!=this._tempRot)
-				{
-					player.addActionToThread(AIPlayerAction.getTrunActionFromEntityRot(this._tempRot));
-				}
+				if(player.rot!=this._tempRot) player.addActionToThreadAtFirst(AIPlayerAction.getTrunActionFromEntityRot(this._tempRot));
 				this._waitTime++;
 				return AIPlayerAction.MOVE_FORWARD
 			}

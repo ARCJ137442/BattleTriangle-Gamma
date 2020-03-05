@@ -59,14 +59,15 @@ package batr.game.entity.entities.projectiles
 		//====Tick Function====//
 		public override function onProjectileTick():void
 		{
-			onBulletTick()
-			onBulletCommonTick()
+			this.onBulletTick()
+			this.onBulletCommonTick()
 		}
 		
 		public function onBulletCommonTick():void
 		{
 			//Move
 			//Detect
+			if(this._host==null) return;
 			this.nowBlockType=this._host.getBlockType(this.gridX,this.gridY);
 			if(this.lastBlockType!=this.nowBlockType)
 			{

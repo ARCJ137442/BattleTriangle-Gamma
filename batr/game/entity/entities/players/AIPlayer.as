@@ -21,10 +21,11 @@ package batr.game.entity.entities.players
 		//============Static Functions============//
 		public static function getAIProgram():IAIProgram
 		{
-			switch(exMath.random(3))
+			switch(exMath.random(4))
 			{
 				case 1: return new AIProgram_Novice();
 				case 2: return new AIProgram_Adventurer();
+				case 3: return new AIProgram_Master();
 				default: return new AIProgram_Dummy();
 			}
 		}
@@ -49,6 +50,13 @@ package batr.game.entity.entities.players
 					graphics.lineTo(radius,0);
 					graphics.lineTo(-radius,radius);
 					graphics.lineTo(-radius,-radius);
+					break;
+				case AIProgram_Master.LABEL:
+					graphics.moveTo(-radius,0);
+					graphics.lineTo(0,radius);
+					graphics.lineTo(radius,0);
+					graphics.lineTo(0,-radius);
+					graphics.lineTo(-radius,-0);
 					break;
 			}
 		}
