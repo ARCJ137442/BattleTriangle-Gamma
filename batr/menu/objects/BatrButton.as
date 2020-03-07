@@ -143,13 +143,13 @@ package batr.menu.objects
 		}
 		
 		//============Instance Functions============//
-		public function setPos(x:Number, y:Number):BatrButton 
+		public function setPos(x:Number, y:Number):BatrButton
 		{
 			super.protected::sP(x,y);
 			return this;
 		}
 		
-		public function setBlockPos(x:Number, y:Number):BatrButton 
+		public function setBlockPos(x:Number, y:Number):BatrButton
 		{
 			super.protected::sBP(x,y);
 			return this;

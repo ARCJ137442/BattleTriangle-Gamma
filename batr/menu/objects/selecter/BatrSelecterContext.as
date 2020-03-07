@@ -1,6 +1,7 @@
 package batr.menu.objects.selecter 
 {
 	import batr.translations.*;
+	import batr.game.stat.PlayerStats;
 	
 	public class BatrSelecterContext
 	{
@@ -55,6 +56,16 @@ package batr.menu.objects.selecter
 				TranslationalText.getTextsByLanguages(),0,0
 			).initAsInt(
 				Translations.numTranslations-1,0,initValue
+			).autoInitLoopSelect();
+		}
+		
+		public static function createPlayerNamesContext(playerStats:Vector.<PlayerStats>):BatrSelecterContext
+		{
+			var names:Vector.<TranslationalText>=ForcedTranslationalText.getTextsByPlayerNames(playerStats);
+			return new BatrSelecterContext().initAsEnum(
+				names,0,0
+			).initAsInt(
+				names.length-1,0,0
 			).autoInitLoopSelect();
 		}
 		

@@ -110,9 +110,13 @@ package batr.game.entity.ai.programs
 				this._moveSum=this._moveMaxSum;
 				this._tempRot=GlobalRot.fromLinearDistance(lineBonus.entityX-player.gridX,lineBonus.entityY-player.gridY);
 				//Act
-				if(player.rot!=this._tempRot) player.addActionToThreadAtFirst(AIPlayerAction.getTrunActionFromEntityRot(this._tempRot));
+				if(player.rot!=this._tempRot)
+				{
+					player.addActionToThreadAtFirst(AIPlayerAction.getTrunActionFromEntityRot(this._tempRot));
+				}
+				player.addActionToThreadAtFirst(AIPlayerAction.MOVE_FORWARD);
 				this._waitTime++;
-				return AIPlayerAction.NULL
+				return null;
 			}
 			//Auto Attack Target
 			else if(target!=null&&this._waitTime>=0&&this._waitTime<this._maxWaitTime)

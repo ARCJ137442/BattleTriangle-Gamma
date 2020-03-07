@@ -13,8 +13,11 @@ package batr.game.stat
 		//============Static Functions============//
 		
 		//============Instance Variables============//
-		protected var _rule:GameRule
+		protected var _rule:GameRule;
 		protected var _players:Vector.<PlayerStats>=new Vector.<PlayerStats>();
+		
+		protected var _mapTransformCount:uint=0;
+		protected var _bonusGenerateCount:uint=0;
 		
 		//============Constructor============//
 		public function GameStats(rule:GameRule,players:Vector.<Player>=null):void
@@ -52,6 +55,26 @@ package batr.game.stat
 		public function get players():Vector.<PlayerStats>
 		{
 			return this._players;
+		}
+		
+		public function get mapTransformCount():uint
+		{
+			return this._mapTransformCount;
+		}
+		
+		public function set mapTransformCount(value:uint):void
+		{
+			this._mapTransformCount=value;
+		}
+		
+		public function get bonusGenerateCount():uint
+		{
+			return this._bonusGenerateCount;
+		}
+		
+		public function set bonusGenerateCount(value:uint):void
+		{
+			this._bonusGenerateCount=value;
 		}
 		
 		//============Instance Functions============//

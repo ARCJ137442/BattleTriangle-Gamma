@@ -2,6 +2,7 @@ package batr.menu.main
 {
 	import batr.common.*;
 	import batr.general.*;
+	import batr.game.stat.PlayerStats;
 	
 	import batr.game.block.*;
 	import batr.game.map.*;
@@ -64,6 +65,17 @@ package batr.menu.main
 			null,
 			TextFormatAlign.CENTER);
 		
+		//============Static Functions============//
+		protected static function setFixedTextSuffix(text:BatrTextField,suffix:*):void
+		{
+			var fText:FixedTranslationalText=text.translationalText as FixedTranslationalText;
+			if(fText!=null)
+			{
+				fText.suffix=String(suffix);
+				text.updateByTranslation();
+			}
+		}
+		
 		//============Instance Variables============//
 		protected var _isActive:Boolean
 		
@@ -76,6 +88,7 @@ package batr.menu.main
 		protected var _isShowingMenu:Boolean=false;
 		
 		protected var _languageSelecter:BatrSelecter;
+		protected var _playerStatSelecter:BatrSelecter;
 		
 		//Sheets
 		//List
@@ -93,8 +106,20 @@ package batr.menu.main
 		protected var _selecterListAdvanced_L:BatrSelecterList;
 		protected var _selecterListAdvanced_R:BatrSelecterList;
 		
-		protected var _gameResultText:BatrTextField;
 		protected var _storedGameResult:GameResult;
+		protected var _gameResultText:BatrTextField;
+		
+		protected var _playerStatLevel:BatrTextField;
+		protected var _playerStatKill:BatrTextField;
+		protected var _playerStatDeath:BatrTextField;
+		protected var _playerStatDeathByPlayer:BatrTextField;
+		protected var _playerStatCurseDamage:BatrTextField;
+		protected var _playerStatDamageBy:BatrTextField;
+		protected var _playerStatPickupBonus:BatrTextField;
+		
+		protected var _gameStatMapTransform:BatrTextField;
+		protected var _gameStatBonusGenerate:BatrTextField;
+		
 		/**
 		 * A intager combine with limitted indexes.
 		 */
@@ -304,6 +329,17 @@ package batr.menu.main
 		protected function quickTextFieldBuild(tKey:String,blockX:Number=0,blockY:Number=0):BatrTextField
 		{
 			var textField:BatrTextField=BatrTextField.fromKey(this.translations,tKey);
+			textField.x=GlobalGameVariables.DEFAULT_SIZE*blockX;
+			textField.y=GlobalGameVariables.DEFAULT_SIZE*blockY;
+			textField.initFormetAsMenu();
+			this._subject.addEventListener(TranslationsChangeEvent.TYPE,textField.onTranslationChange);
+			return textField;
+		}
+		
+		//StatTextField Build
+		protected function quickStatTextFieldBuild(tKey:String,blockX:Number=0,blockY:Number=0,autoSize:String=TextFieldAutoSize.LEFT):BatrTextField
+		{
+			var textField:BatrTextField=new BatrTextField(new FixedTranslationalText(this.translations,tKey),autoSize);
 			textField.x=GlobalGameVariables.DEFAULT_SIZE*blockX;
 			textField.y=GlobalGameVariables.DEFAULT_SIZE*blockY;
 			textField.initFormetAsMenu();
@@ -534,7 +570,21 @@ package batr.menu.main
 				//In progress
 				this._sheetGameResult=this.buildSheet(false).appendDirectElements(
 					this._gameResultText=quickTextFieldBuild(TranslationKey.GAME_RESULT,2,2).setBlockSize(20,2).setFormet(RESULT_TITLE_FORMET,true),
-					this.quickButtonBuild2(TranslationKey.MAIN_MENU,this.onMainMenuButtonClick,0xcccccc).setBlockPos(9,21)
+					this.quickButtonBuild2(TranslationKey.MAIN_MENU,this.onMainMenuButtonClick,0xcccccc).setBlockPos(9,21),
+					//player
+					this._playerStatSelecter=this.quickSelecterBuild(null,1,this.onPlayerStatSelecterClick).setBlockPos(5,4.5),
+					this._playerStatLevel=this.quickStatTextFieldBuild(TranslationKey.FINAL_LEVEL,3,5),
+					this._playerStatKill=this.quickStatTextFieldBuild(TranslationKey.KILL_COUNT,3,6),
+					this._playerStatDeath=this.quickStatTextFieldBuild(TranslationKey.DEATH_COUNT,3,7),
+					this._playerStatDeathByPlayer=this.quickStatTextFieldBuild(TranslationKey.DEATH_BY_PLAYER_COUNT,3,8),
+					this._playerStatCurseDamage=this.quickStatTextFieldBuild(TranslationKey.CURSE_DAMAGE,3,9),
+					this._playerStatDamageBy=this.quickStatTextFieldBuild(TranslationKey.DAMAGE_BY,3,10),
+					this._playerStatPickupBonus=this.quickStatTextFieldBuild(TranslationKey.PICKUP_BONUS,3,12),
+					//global
+					this._gameStatMapTransform=this.quickStatTextFieldBuild(TranslationKey.GLOBAL_STAT,14,4,TextFieldAutoSize.CENTER),
+					this._gameStatMapTransform=this.quickStatTextFieldBuild(TranslationKey.TRANSFORM_MAP_COUNT,13,5),
+					this._gameStatMapTransform=this.quickStatTextFieldBuild(TranslationKey.TRANSFORM_MAP_COUNT,13,5),
+					this._gameStatBonusGenerate=this.quickStatTextFieldBuild(TranslationKey.BONUS_GENERATE_COUNT,13,6)
 				) as BatrMenuSheet
 			];
 			//Set Variable 2
@@ -599,8 +649,19 @@ package batr.menu.main
 		{
 			//set
 			this._gameResultText.translationalText=result.message;
+			this._playerStatSelecter.setContext(BatrSelecterContext.createPlayerNamesContext(result.stats.players));
+			this._storedGameResult=result;
+			this.updateStatByResult();
+			//load
 			//trun
 			this.setNowSheet(this._sheetGameResult);
+		}
+		
+		protected function updateStatByResult():void
+		{
+			this.onPlayerStatSelecterClick(null);
+			setFixedTextSuffix(this._gameStatMapTransform,this._storedGameResult.stats.mapTransformCount);
+			setFixedTextSuffix(this._gameStatBonusGenerate,this._storedGameResult.stats.bonusGenerateCount);
 		}
 		
 		protected function onTitleTimerTick(event:TimerEvent):void
@@ -747,6 +808,26 @@ package batr.menu.main
 			{
 				healthSelecter.context.intMax=maxHealthSelecter.currentValue;
 				healthSelecter.updateTextByContext();
+			}
+		}
+		
+		protected function onPlayerStatSelecterClick(event:BatrGUIEvent):void
+		{
+			//Change Texts
+			try
+			{
+				var currentPlayer:PlayerStats=this._storedGameResult.stats.players[this._playerStatSelecter.currentValue];
+				setFixedTextSuffix(this._playerStatCurseDamage,currentPlayer.causeDamage);
+				setFixedTextSuffix(this._playerStatDamageBy,currentPlayer.damageBy);
+				setFixedTextSuffix(this._playerStatDeath,currentPlayer.deathCount);
+				setFixedTextSuffix(this._playerStatDeathByPlayer,currentPlayer.deathByPlayer);
+				setFixedTextSuffix(this._playerStatKill,currentPlayer.killCount);
+				setFixedTextSuffix(this._playerStatLevel,currentPlayer.profile.level);
+				setFixedTextSuffix(this._playerStatPickupBonus,currentPlayer.pickupBonusBoxCount);
+			}
+			catch(err:Error)
+			{
+				trace("ERROR:",err);
 			}
 		}
 		

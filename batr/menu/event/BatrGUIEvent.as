@@ -1,4 +1,4 @@
-package batr.menu.events 
+package batr.menu.event 
 {
 	import batr.menu.objects.*;
 	

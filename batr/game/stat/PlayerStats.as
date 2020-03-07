@@ -14,7 +14,7 @@ package batr.game.stat
 		protected var _profile:IPlayerProfile=null
 		
 		//kills and deaths
-		protected var _killPlayerCount:uint=0
+		protected var _killCount:uint=0
 		protected var _killAICount:uint=0
 		protected var _deathCount:uint=0
 		protected var _deathByPlayer:uint=0
@@ -53,14 +53,19 @@ package batr.game.stat
 		}
 		
 		//============Instance Getter And Setter============//
-		public function get killPlayerCount():uint
+		public function get profile():IPlayerProfile
 		{
-			return this._killPlayerCount;
+			return this._profile;
 		}
 		
-		public function set killPlayerCount(value:uint):void
+		public function get killCount():uint
 		{
-			this._killPlayerCount=value;
+			return this._killCount;
+		}
+		
+		public function set killCount(value:uint):void
+		{
+			this._killCount=value;
 		}
 		
 		public function get killAICount():uint

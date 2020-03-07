@@ -127,7 +127,7 @@ package batr.translations
 		//============Constructor Function============//
 		public function TranslationalText(translations:Translations,key:String=null):void
 		{
-			this._translations=translations
+			this._translations=translations;
 			this._key=key;
 		}
 		

@@ -37,3 +37,4 @@
 * `X`: Trun **Sheet/Translations**
 * `~`: Transform **Game Speed**
 * `Enter`: Makes one **Game Ticking**
+* `Shift+E`: Force get **Game Result**

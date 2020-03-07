@@ -128,6 +128,8 @@ package batr.game.main
 		 */
 		protected var _rule:GameRule
 		
+		protected var _stat:GameStats
+		
 		//BackGround
 		protected var _backGround:BackGround=new BackGround(0,0,true,false,true)
 		
@@ -396,13 +398,13 @@ package batr.game.main
 			return result;
 		}
 		
-		protected function testGameEnd():void
+		public function testGameEnd(force:Boolean=false):void
 		{
 			var alivePlayers:Vector.<Player>=this.getAlivePlayers();
-			if(this.isPlayersEnd(alivePlayers))
+			if(this.isPlayersEnd(alivePlayers)||force)
 			{
 				//if allowTeamVictory=false,reset team colors
-				if(alivePlayers.length>1&&!this.rule.allowTeamVictory)
+				if(!force&&alivePlayers.length>1&&!this.rule.allowTeamVictory)
 				{
 					this.resetPlayersTeamInDifferent(alivePlayers);
 				}
@@ -432,7 +434,7 @@ package batr.game.main
 		{
 			var result:GameResult=new GameResult(this,
 				this.getResultMessage(winners),
-				new GameStats(this.rule,this.entitySystem.players)
+				this._stat
 			);
 			return result;
 		}
@@ -526,6 +528,8 @@ package batr.game.main
 			this._tempSecordPhase=0;
 			this._second=0;
 			this.updateGUIText();
+			//Stats
+			this._stat=new GameStats(this._rule,this.entitySystem.players);
 			//Listen
 			this._rule.addEventListener(GameRuleEvent.TEAMS_CHANGE,this.onPlayerTeamsChange);
 			//Active
@@ -544,6 +548,7 @@ package batr.game.main
 			this.isActive=false;
 			this._isLoaded=false;
 			this._rule=null;
+			this._stat=null;
 			//Map
 			this._map.deleteSelf();
 			this._map=null;
@@ -1231,6 +1236,8 @@ package batr.game.main
 			{
 				if(player is AIPlayer) (player as AIPlayer).onMapTransform();
 			}
+			//Stat
+			this._stat.mapTransformCount++;
 		}
 		
 		public function isOutOfMap(x:Number,y:Number):Boolean
@@ -1782,6 +1789,8 @@ package batr.game.main
 			var bonusBox:BonusBox=new BonusBox(this,x,y,type);
 			this._entitySystem.registerBonusBox(bonusBox);
 			this._bonusBoxContainer.addChild(bonusBox);
+			//Stat
+			this._stat.bonusGenerateCount++;
 		}
 		
 		protected function hasBonusBoxAt(x:int,y:int):Boolean
@@ -1938,7 +1947,7 @@ package batr.game.main
 				if(attacker!=null)
 				{
 					//Attacker
-					attacker.stats.killPlayerCount++
+					attacker.stats.killCount++
 					if(Player.isAI(victim)) attacker.stats.killAICount++
 					attacker.stats.addKillPlayerCount(victim)
 					if(attacker.isAlly(victim)) attacker.stats.killAllyCount++

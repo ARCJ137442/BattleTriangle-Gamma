@@ -89,6 +89,9 @@ package
 						trace("List of Effect UUIDs:",sub.gameObj.effectSystem.getAllUUID());
 					else trace("List of Entity UUIDs:",sub.gameObj.entitySystem.getAllUUID());
 					break;
+				case KeyCode.E:
+					sub.gameObj.testGameEnd(shift);
+					break;
 			}
 		}
 	}

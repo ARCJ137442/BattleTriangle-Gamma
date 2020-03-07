@@ -26,59 +26,6 @@ package batr.game.entity.ai.programs
 		public static const DEBUG:Boolean=false;
 		
 		//============Static Functions============//
-		/*========AI Criteria========*/
-		public static function weaponUseTestWall(owner:Player,host:Game,rot:uint,distance:uint):Boolean
-		{
-			var vx:int=GlobalRot.towardXInt(rot,1);
-			var vy:int=GlobalRot.towardYInt(rot,1);
-			var cx:int,cy:int;
-			var weapon:WeaponType=owner.weapon;
-			for(var i:uint=1;i<distance;i++)
-			{
-				cx=owner.gridX+vx*i;
-				cy=owner.gridY+vy*i;
-				if(host.isIntOutOfMap(cx,cy)) continue;
-				if(!host.testIntCanPass(
-					cx,cy,weapon==WeaponType.MELEE,
-					WeaponType.isBulletWeapon(weapon)||weapon==WeaponType.BLOCK_THROWER,
-					WeaponType.isLaserWeapon(weapon),
-					weaponNotThroughPlayer(weapon),false
-					)
-				) return false;
-			}
-			return true;
-		}
-		
-		protected static function weaponNotThroughPlayer(weapon:WeaponType):Boolean
-		{
-			switch(weapon)
-			{
-				case WeaponType.BULLET:
-				case WeaponType.NUKE:
-				case WeaponType.BLOCK_THROWER:
-				case WeaponType.MELEE:
-				case WeaponType.LIGHTNING:
-					return true;
-			}
-			return false;
-		}
-		
-		protected static function weaponNeedCarryBlock(weapon:WeaponType):Boolean
-		{
-			return weapon==WeaponType.BLOCK_THROWER;
-		}
-		
-		protected static function detectCarryBlock(player:Player):Boolean
-		{
-			if(weaponNeedCarryBlock(player.weapon)&&!player.isCarriedBlock) return false;
-			return true;
-		}
-		
-		protected static function detectBlockCanCarry(player:Player,blockAtt:BlockAttributes):Boolean
-		{
-			return !player.isCarriedBlock&&blockAtt.isCarryable&&player.host.testCarryableWithMap(blockAtt,player.host.map);
-		}
-		
 		protected static function initFGH(n:PathNode,host:Game,owner:Player,target:iPoint):PathNode
 		{
 			//Set Rot in mapDealNode
@@ -104,7 +51,7 @@ package batr.game.entity.ai.programs
 		}
 		
 		//========Dynamic A* PathFind========//
-		public static function getDynamicNode(start:iPoint,target:iPoint,host:Game,owner:AIPlayer,remember:Vector.<Vector.<Boolean>>):PathNode
+		internal static function getDynamicNode(start:iPoint,target:iPoint,host:Game,owner:AIPlayer,remember:Vector.<Vector.<Boolean>>):PathNode
 		{
 			var nearbyNodes:Vector.<PathNode>=new <PathNode>[
 				initDynamicNode(new PathNode(start.x+1,start.y).setFromRot(GlobalRot.RIGHT),host,owner,target),
@@ -116,7 +63,7 @@ package batr.game.entity.ai.programs
 			var _leastF:int=int.MAX_VALUE;
 			for each(var node:PathNode in nearbyNodes)
 			{
-				if(node==null||pointInRemember(node,remember)||
+				if(node==null||AIProgram_Adventurer.pointInRemember(node,remember)||
 					host.operateFinalPlayerHurtDamage(owner,node.x,node.y,host.getBlockPlayerDamage(node.x,node.y))>=owner.health) continue;
 				if(node.F<_leastF)
 				{
@@ -127,42 +74,9 @@ package batr.game.entity.ai.programs
 			return _leastNode;
 		}
 		
-		protected static function pointInRemember(p:iPoint,r:Vector.<Vector.<Boolean>>):Boolean
-		{
-			if(p==null||r==null||r.length<1) return false;
-			return r[p.x][p.y];
-		}
-		
-		protected static function writeRemember(remember:Vector.<Vector.<Boolean>>,x:uint,y:uint,value:Boolean):void
-		{
-			remember[x][y]=value;
-		}
-		
-		protected static function writeRememberPoint(remember:Vector.<Vector.<Boolean>>,p:iPoint,value:Boolean):void
-		{
-			remember[p.x][p.y]=value;
-		}
-		
 		protected static function initDynamicNode(n:PathNode,host:Game,owner:AIPlayer,target:iPoint):PathNode
 		{
 			return initFGH(host.lockIPointInMap(n) as PathNode,host,owner,target);
-		}
-		
-		protected static function getEntityName(target:EntityCommon):String
-		{
-			if(target==null) return "null";
-			if(target is Player) return (target as Player).customName;
-			return target.toString();
-		}
-		
-		/**
-		 * Trace if DEBUG=true.
-		 * @param	owner	the owner.
-		 * @param	message	the text without AIPlayer name.
-		 */
-		protected static function traceLog(owner:Player,message:String):void
-		{
-			if(DEBUG) trace(owner.customName+":",message);
 		}
 		
 		//============Instance Variables============//
@@ -328,15 +242,15 @@ package batr.game.entity.ai.programs
 					lastTargetPlayer!=null&&lastTargetPlayer.isRespawning))
 				{
 					this.resetTarget();
-					traceLog(player,"Clear invalid target!");
+					AIProgram_Adventurer.traceLog(player,"Clear invalid target!");
 				}
-				/*//Change target when wreak
+				/*//Change target when weak
 				else if(lastTargetPlayer!=null&&player.health<lastTargetPlayer.health)
 				{
 					if((this._pickupWeight++)<0)
 					{
 						this.addCloseTarget(this._lastTarget);
-						traceLog(player,"close target when wreak:"+getEntityName(this._lastTarget));
+						AIProgram_Adventurer.traceLog(player,"close target when wreak:"+getEntityName(this._lastTarget));
 						this.resetTarget();
 					}
 				}*/
@@ -357,7 +271,7 @@ package batr.game.entity.ai.programs
 					if(target!=null)
 					{
 						this.changeTarget(player,target);
-						traceLog(player,"trun target to "+getEntityName(this._lastTarget));
+						AIProgram_Adventurer.traceLog(player,"trun target to "+AIProgram_Adventurer.getEntityName(this._lastTarget));
 					}
 					//If all avliable target closed
 					else this.resetCloseTarget();
@@ -367,9 +281,9 @@ package batr.game.entity.ai.programs
 					var tempRot:uint=GlobalRot.fromLinearDistance(this._lastTarget.entityX-player.entityX,this._lastTarget.entityY-player.entityY);
 					//Attack Enemy
 					if(GlobalRot.isValidRot(tempRot)&&
-						detectCarryBlock(player)&&
+						AIProgram_Adventurer.detectCarryBlock(player)&&
 						lastTargetPlayer!=null&&
-						weaponUseTestWall(player,host,tempRot,ownerPoint.getManhattanDistance(lastTargetPlayerPoint))&&
+						AIProgram_Adventurer.weaponUseTestWall(player,host,tempRot,ownerPoint.getManhattanDistance(lastTargetPlayerPoint))&&
 						player.canUseWeaponHurtPlayer(lastTargetPlayer,player.weapon))
 					{
 						//Reset
@@ -378,11 +292,11 @@ package batr.game.entity.ai.programs
 						if(player.rot!=tempRot) player.addActionToThread(AIPlayerAction.getTrunActionFromEntityRot(tempRot));
 						//Press Use
 						if(!player.isPress_Use) return AIPlayerAction.PRESS_KEY_USE;
-						traceLog(player,"attack target "+getEntityName(this._lastTarget))
+						AIProgram_Adventurer.traceLog(player,"attack target "+AIProgram_Adventurer.getEntityName(this._lastTarget))
 					}
 					//Carry Block
-					else if(!detectCarryBlock(player)&&
-							detectBlockCanCarry(player,host.getBlockAttributes(player.getFrontIntX(),player.getFrontIntY())))
+					else if(!AIProgram_Adventurer.detectCarryBlock(player)&&
+							AIProgram_Adventurer.detectBlockCanCarry(player,host.getBlockAttributes(player.getFrontIntX(),player.getFrontIntY())))
 					{
 						//Press Use
 						player.clearActionThread();
@@ -425,19 +339,19 @@ package batr.game.entity.ai.programs
 						{
 							this.addCloseTarget(this._lastTarget);
 							this.resetTarget();
-							traceLog(player,"finalNode==null,forget target");
+							AIProgram_Adventurer.traceLog(player,"finalNode==null,forget target");
 						}
 						//Find Success
 						else
 						{
-							writeRememberPoint(this._remember,finalNode,true);
-							writeRememberPoint(this._remember,ownerPoint,true);
+							AIProgram_Adventurer.writeRememberPoint(this._remember,finalNode,true);
+							AIProgram_Adventurer.writeRememberPoint(this._remember,ownerPoint,true);
 							player.addActionToThread(
 								AIPlayerAction.getMoveActionFromEntityRot(
 									finalNode.fromRot
 								)
 							);
-							traceLog(player,"findPath("+getEntityName(this._lastTarget)+") success!writeRememberAt:"+finalNode+","+ownerPoint);
+							AIProgram_Adventurer.traceLog(player,"findPath("+AIProgram_Adventurer.getEntityName(this._lastTarget)+") success!writeRememberAt:"+finalNode+","+ownerPoint);
 						}
 					}
 				}

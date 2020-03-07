@@ -31,8 +31,8 @@ package batr.menu.objects.selecter
 		protected var _clickFunc:Function=null;
 		
 		//============Constructor Function============//
-		public function BatrSelecterArrow(width:Number=GlobalGameVariables.DEFAULT_SIZE/2,
-										 height:Number=GlobalGameVariables.DEFAULT_SIZE/2,
+		public function BatrSelecterArrow(width:Number=GlobalGameVariables.DEFAULT_SIZE*0.6,
+										 height:Number=GlobalGameVariables.DEFAULT_SIZE*0.6,
 										 lineColor:uint=LINE_COLOR,
 										 fillColor:uint=FILL_COLOR,
 										 lineSize:Number=LINE_SIZE):void

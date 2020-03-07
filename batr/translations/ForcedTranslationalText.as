@@ -1,11 +1,29 @@
 package batr.translations 
 {
+	import batr.game.entity.entities.players.Player;
+	import batr.game.stat.PlayerStats;
+	
 	/**
 	 * ...
 	 * @author ARCJ137442
 	 */
 	public class ForcedTranslationalText extends TranslationalText 
 	{
+		//============Static Getter And Setter============//
+		public static function getTextsByPlayerNames(players:Vector.<PlayerStats>):Vector.<TranslationalText>
+		{
+			var result:Vector.<TranslationalText>=new Vector.<TranslationalText>;
+			for(var i:uint=0;i<players.length;i++)
+			{
+				result.push(
+					new ForcedTranslationalText(
+						null,null,players[i].profile.customName
+					)
+				);
+			}
+			return result;
+		}
+		
 		//============Instance Variables============//
 		protected var _forcedText:String;
 		
@@ -22,7 +40,7 @@ package batr.translations
 		}
 		
 		//============Destructor Function============//
-		override public function deleteSelf():void 
+		override public function deleteSelf():void
 		{
 			this._forcedText=null;
 			super.deleteSelf();

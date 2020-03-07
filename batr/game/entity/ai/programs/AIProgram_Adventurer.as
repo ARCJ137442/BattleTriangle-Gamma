@@ -25,7 +25,7 @@ package batr.game.entity.ai.programs
 		
 		//============Static Functions============//
 		/*========AI Criteria========*/
-		public static function weaponUseTestWall(owner:Player,host:Game,rot:uint,distance:uint):Boolean
+		internal static function weaponUseTestWall(owner:Player,host:Game,rot:uint,distance:uint):Boolean
 		{
 			var vx:int=GlobalRot.towardXInt(rot,1);
 			var vy:int=GlobalRot.towardYInt(rot,1);
@@ -47,12 +47,13 @@ package batr.game.entity.ai.programs
 			return true;
 		}
 		
-		protected static function weaponNotThroughPlayer(weapon:WeaponType):Boolean
+		internal static function weaponNotThroughPlayer(weapon:WeaponType):Boolean
 		{
 			switch(weapon)
 			{
 				case WeaponType.BULLET:
 				case WeaponType.NUKE:
+				case WeaponType.SUB_BOMBER:
 				case WeaponType.BLOCK_THROWER:
 				case WeaponType.MELEE:
 				case WeaponType.LIGHTNING:
@@ -61,18 +62,18 @@ package batr.game.entity.ai.programs
 			return false;
 		}
 		
-		protected static function weaponNeedCarryBlock(weapon:WeaponType):Boolean
+		internal static function weaponNeedCarryBlock(weapon:WeaponType):Boolean
 		{
 			return weapon==WeaponType.BLOCK_THROWER;
 		}
 		
-		protected static function detectCarryBlock(player:Player):Boolean
+		internal static function detectCarryBlock(player:Player):Boolean
 		{
 			if(weaponNeedCarryBlock(player.weapon)&&!player.isCarriedBlock) return false;
 			return true;
 		}
 		
-		protected static function detectBlockCanCarry(player:Player,blockAtt:BlockAttributes):Boolean
+		internal static function detectBlockCanCarry(player:Player,blockAtt:BlockAttributes):Boolean
 		{
 			return !player.isCarriedBlock&&blockAtt.isCarryable&&player.host.testCarryableWithMap(blockAtt,player.host.map);
 		}
@@ -206,7 +207,7 @@ package batr.game.entity.ai.programs
 		}
 		
 		//========Dynamic A* PathFind========//
-		public static function getDynamicNode(start:iPoint,target:iPoint,host:Game,owner:AIPlayer,remember:Vector.<Vector.<Boolean>>):PathNode
+		internal static function getDynamicNode(start:iPoint,target:iPoint,host:Game,owner:AIPlayer,remember:Vector.<Vector.<Boolean>>):PathNode
 		{
 			var nearbyNodes:Vector.<PathNode>=new <PathNode>[
 				initDynamicNode(new PathNode(start.x+1,start.y).setFromRot(GlobalRot.RIGHT),host,owner,target),
@@ -229,28 +230,23 @@ package batr.game.entity.ai.programs
 			return _leastNode;
 		}
 		
-		protected static function pointInRemember(p:iPoint,r:Vector.<Vector.<Boolean>>):Boolean
+		internal static function pointInRemember(p:iPoint,r:Vector.<Vector.<Boolean>>):Boolean
 		{
 			if(p==null||r==null||r.length<1) return false;
 			return r[p.x][p.y];
 		}
 		
-		protected static function writeRemember(remember:Vector.<Vector.<Boolean>>,x:uint,y:uint,value:Boolean):void
+		internal static function writeRemember(remember:Vector.<Vector.<Boolean>>,x:uint,y:uint,value:Boolean):void
 		{
 			remember[x][y]=value;
 		}
 		
-		protected static function writeRememberPoint(remember:Vector.<Vector.<Boolean>>,p:iPoint,value:Boolean):void
+		internal static function writeRememberPoint(remember:Vector.<Vector.<Boolean>>,p:iPoint,value:Boolean):void
 		{
 			remember[p.x][p.y]=value;
 		}
 		
-		protected static function initDynamicNode(n:PathNode,host:Game,owner:AIPlayer,target:iPoint):PathNode
-		{
-			return initFGH(host.lockIPointInMap(n) as PathNode,host,owner,target);
-		}
-		
-		protected static function getEntityName(target:EntityCommon):String
+		internal static function getEntityName(target:EntityCommon):String
 		{
 			if(target==null) return "null";
 			if(target is Player) return (target as Player).customName;
@@ -262,9 +258,14 @@ package batr.game.entity.ai.programs
 		 * @param	owner	the owner.
 		 * @param	message	the text without AIPlayer name.
 		 */
-		protected static function traceLog(owner:Player,message:String):void
+		internal static function traceLog(owner:Player,message:String):void
 		{
 			if(DEBUG) trace(owner.customName+":",message);
+		}
+		
+		protected static function initDynamicNode(n:PathNode,host:Game,owner:AIPlayer,target:iPoint):PathNode
+		{
+			return initFGH(host.lockIPointInMap(n) as PathNode,host,owner,target);
 		}
 		
 		//============Instance Variables============//

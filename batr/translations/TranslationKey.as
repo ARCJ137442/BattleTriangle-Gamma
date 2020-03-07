@@ -49,12 +49,26 @@ package batr.translations
 		public static const BACK:String="batr.menu.back";
 		public static const CONTINUE:String="batr.menu.continue";
 		public static const MAIN_MENU:String="batr.menu.mainMenu";
+		public static const GLOBAL_STAT:String="batr.menu.globalStat";
 		
 		//batr.select
 		public static const PLAYER_COUNT:String="batr.select.playerCount";
 		public static const AI_PLAYER_COUNT:String="batr.select.AIPlayerCount";
 		public static const GAME_MODE:String="batr.select.gameMode";
 		public static const INITIAL_MAP:String="batr.select.initialMap";
+		
+		//batr.custom
+		public static const DEFAULT_WEAPON:String="batr.custom.defaultWeapon";
+		public static const DEFAULT_HEALTH:String="batr.custom.defaultHealth";
+		public static const DEFAULT_MAX_HEALTH:String="batr.custom.defaultMaxHealth";
+		public static const REMAIN_LIFES_PLAYER:String="batr.custom.remainLifesPlayer";
+		public static const REMAIN_LIFES_AI:String="batr.custom.remainLifesAI";
+		public static const MAX_BONUS_COUNT:String="batr.custom.maxBonusCount";
+		public static const BONUS_SPAWN_AFTER_DEATH:String="batr.custom.bonusSpawnAfterPlayerDeath";
+		public static const MAP_TRANSFORM_TIME:String="batr.custom.mapTransformTime";
+		public static const WEAPONS_NO_CD:String="batr.custom.weaponsNoCD";
+		public static const RESPAWN_TIME:String="batr.custom.respawnTime";
+		public static const ASPHYXIA_DAMAGE:String="batr.custom.asphyxiaDamage";
 		
 		//batr.game
 		public static const GAME_RESULT:String="batr.game.gameResult";
@@ -71,18 +85,18 @@ package batr.translations
 		public static const REMAIN_TRANSFORM_TIME:String="batr.game.key.mapTransformTime";
 		public static const GAME_DURATION:String="batr.game.key.gameDuration";
 		
-		//batr.custom
-		public static const DEFAULT_WEAPON:String="batr.custom.defaultWeapon";
-		public static const DEFAULT_HEALTH:String="batr.custom.defaultHealth";
-		public static const DEFAULT_MAX_HEALTH:String="batr.custom.defaultMaxHealth";
-		public static const REMAIN_LIFES_PLAYER:String="batr.custom.remainLifesPlayer";
-		public static const REMAIN_LIFES_AI:String="batr.custom.remainLifesAI";
-		public static const MAX_BONUS_COUNT:String="batr.custom.maxBonusCount";
-		public static const BONUS_SPAWN_AFTER_DEATH:String="batr.custom.bonusSpawnAfterPlayerDeath";
-		public static const MAP_TRANSFORM_TIME:String="batr.custom.mapTransformTime";
-		public static const WEAPONS_NO_CD:String="batr.custom.weaponsNoCD";
-		public static const RESPAWN_TIME:String="batr.custom.respawnTime";
-		public static const ASPHYXIA_DAMAGE:String="batr.custom.asphyxiaDamage";
+		//batr.stat
+		public static const TRANSFORM_MAP_COUNT:String="batr.stat.transformMapCount";
+		public static const BONUS_GENERATE_COUNT:String="batr.stat.bonusGenerateCount";
+		
+		//batr.stat.player
+		public static const FINAL_LEVEL:String="batr.stat.player.finalLevel";
+		public static const KILL_COUNT:String="batr.stat.player.killCount";
+		public static const DEATH_COUNT:String="batr.stat.player.deathCount";
+		public static const DEATH_BY_PLAYER_COUNT:String="batr.stat.player.deathByPlayerCount";
+		public static const CURSE_DAMAGE:String="batr.stat.player.curseDamage";
+		public static const DAMAGE_BY:String="batr.stat.player.damageBy";
+		public static const PICKUP_BONUS:String="batr.stat.player.pickupBonus";
 		
 		//batr.custom.property
 		public static const CERTAINLY_DEAD:String="batr.custom.property.certainlyDead";

@@ -109,6 +109,18 @@ package batr.menu.objects.selecter
 		}
 		
 		//============Instance Functions============//
+		public function setPos(x:Number, y:Number):BatrSelecter
+		{
+			super.protected::sP(x,y);
+			return this;
+		}
+		
+		public function setBlockPos(x:Number, y:Number):BatrSelecter
+		{
+			super.protected::sBP(x,y);
+			return this;
+		}
+		
 		protected function isValidTarget(other:BatrSelecter):Boolean
 		{
 			while(other!=null)
@@ -134,8 +146,7 @@ package batr.menu.objects.selecter
 		protected function copyContextTo(other:BatrSelecter,callee:Boolean=true):void
 		{
 			if(other==null) return;
-			if(this._context!=null) other._context=this._context;
-			other.updateTextByContext();
+			if(this._context!=null) other.setContext(this._context);
 			if(!callee) return;
 			while(other!=null&&other._linkTarget!=null)
 			{
@@ -188,9 +199,17 @@ package batr.menu.objects.selecter
 			return this;
 		}
 		
+		public function setContext(context:BatrSelecterContext):void
+		{
+			this._context=context;
+			this.updateTextByContext();
+		}
+		
 		//Event
 		protected function onClickLeft(E:MouseEvent):void
 		{
+			//Check
+			if(this._context==null) return;
 			//Select
 			this._context.currentValue--;
 			//Update
@@ -202,6 +221,8 @@ package batr.menu.objects.selecter
 		
 		protected function onClickRight(E:MouseEvent):void
 		{
+			//Check
+			if(this._context==null) return;
 			//Select
 			this._context.currentValue++;
 			//Update
