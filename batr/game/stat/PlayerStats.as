@@ -31,10 +31,14 @@ package batr.game.stat
 		protected var _causeDamageOnSelf:uint=0
 		protected var _causeDamageOnAlly:uint=0
 		protected var _damageByAlly:uint=0
+		
 		//weapons
 		
 		//bonus boxes
 		protected var _pickupBonusBoxCount:uint=0
+		
+		//misc
+		protected var _beTeleportCount:uint=0;
 		
 		//============Constructor============//
 		public function PlayerStats(owner:Player):void
@@ -198,6 +202,16 @@ package batr.game.stat
 			this._pickupBonusBoxCount=value;
 		}
 		
+		public function get beTeleportCount():uint
+		{
+			return this._beTeleportCount;
+		}
+		
+		public function set beTeleportCount(value:uint):void
+		{
+			this._beTeleportCount=value;
+		}
+		
 		//============Instance Functions============//
 		//About Profile
 		/**
@@ -207,6 +221,12 @@ package batr.game.stat
 		public function flushProfile():PlayerStats
 		{
 			if(this._profile is Player) this._profile=new PlayerProfile(this._profile);
+			return this;
+		}
+		
+		public function redirectPlayer(player:Player):PlayerStats
+		{
+			this._profile=player;
 			return this;
 		}
 		

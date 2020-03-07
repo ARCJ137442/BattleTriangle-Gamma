@@ -1336,7 +1336,12 @@ package batr.game.main
 			player.isActive=false;
 			if(GlobalRot.isValidRot(rotateTo)) player.setPositions(PosTransform.alignToEntity(x),PosTransform.alignToEntity(y),rotateTo);
 			else player.setXY(PosTransform.alignToEntity(x),PosTransform.alignToEntity(y));
-			if(effect) this.addTeleportEffect(player.entityX,player.entityY);
+			if(effect)
+			{
+				this.addTeleportEffect(player.entityX,player.entityY);
+				//Stat
+				player.stats.beTeleportCount++;
+			}
 			player.isActive=true;
 			return player;
 		}

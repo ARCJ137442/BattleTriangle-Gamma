@@ -81,6 +81,7 @@ package batr.translations
 				TranslationKey.CURSE_DAMAGE,"Curse Damage		",
 				TranslationKey.DAMAGE_BY,"Damage By		",
 				TranslationKey.PICKUP_BONUS,"Ppckup Bonus		",
+				TranslationKey.BE_TELEPORT_COUNT,"Be Teleport Count		",
 				//batr.custom.property
 				TranslationKey.COMPLETELY_RANDOM,"C-Random",
 				TranslationKey.UNIFORM_RANDOM,"U-Random",
@@ -162,6 +163,7 @@ package batr.translations
 				TranslationKey.CURSE_DAMAGE,"\u000a\u9020\u6210\u4f24\u5bb3		",
 				TranslationKey.DAMAGE_BY,"\u000a\u53d7\u5230\u4f24\u5bb3		",
 				TranslationKey.PICKUP_BONUS,"\u62fe\u53d6\u5956\u52b1\u7bb1		",
+				TranslationKey.BE_TELEPORT_COUNT,"\u88ab\u4f20\u9001\u6b21\u6570		",
 				//batr.custom.property
 				TranslationKey.COMPLETELY_RANDOM,"\u5b8c\u5168\u968f\u673a",
 				TranslationKey.UNIFORM_RANDOM,"\u7edf\u4e00\u968f\u673a",

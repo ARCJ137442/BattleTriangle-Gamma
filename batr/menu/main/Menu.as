@@ -116,6 +116,7 @@ package batr.menu.main
 		protected var _playerStatCurseDamage:BatrTextField;
 		protected var _playerStatDamageBy:BatrTextField;
 		protected var _playerStatPickupBonus:BatrTextField;
+		protected var _playerStatBeTeleport:BatrTextField;
 		
 		protected var _gameStatMapTransform:BatrTextField;
 		protected var _gameStatBonusGenerate:BatrTextField;
@@ -580,9 +581,9 @@ package batr.menu.main
 					this._playerStatCurseDamage=this.quickStatTextFieldBuild(TranslationKey.CURSE_DAMAGE,3,9),
 					this._playerStatDamageBy=this.quickStatTextFieldBuild(TranslationKey.DAMAGE_BY,3,10),
 					this._playerStatPickupBonus=this.quickStatTextFieldBuild(TranslationKey.PICKUP_BONUS,3,12),
+					this._playerStatBeTeleport=this.quickStatTextFieldBuild(TranslationKey.BE_TELEPORT_COUNT,3,13),
 					//global
 					this._gameStatMapTransform=this.quickStatTextFieldBuild(TranslationKey.GLOBAL_STAT,14,4,TextFieldAutoSize.CENTER),
-					this._gameStatMapTransform=this.quickStatTextFieldBuild(TranslationKey.TRANSFORM_MAP_COUNT,13,5),
 					this._gameStatMapTransform=this.quickStatTextFieldBuild(TranslationKey.TRANSFORM_MAP_COUNT,13,5),
 					this._gameStatBonusGenerate=this.quickStatTextFieldBuild(TranslationKey.BONUS_GENERATE_COUNT,13,6)
 				) as BatrMenuSheet
@@ -824,6 +825,7 @@ package batr.menu.main
 				setFixedTextSuffix(this._playerStatKill,currentPlayer.killCount);
 				setFixedTextSuffix(this._playerStatLevel,currentPlayer.profile.level);
 				setFixedTextSuffix(this._playerStatPickupBonus,currentPlayer.pickupBonusBoxCount);
+				setFixedTextSuffix(this._playerStatBeTeleport,currentPlayer.beTeleportCount);
 			}
 			catch(err:Error)
 			{

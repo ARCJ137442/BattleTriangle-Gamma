@@ -97,6 +97,7 @@ package batr.translations
 		public static const CURSE_DAMAGE:String="batr.stat.player.curseDamage";
 		public static const DAMAGE_BY:String="batr.stat.player.damageBy";
 		public static const PICKUP_BONUS:String="batr.stat.player.pickupBonus";
+		public static const BE_TELEPORT_COUNT:String="batr.stat.player.beTeleport";
 		
 		//batr.custom.property
 		public static const CERTAINLY_DEAD:String="batr.custom.property.certainlyDead";

@@ -88,7 +88,7 @@ package batr.game.stat
 		{
 			for(var i:uint=0;i<players.length;i++)
 			{
-				this._players.push(players[i].stats.flushProfile());
+				this._players.push(players[i].stats);
 			}
 		}
 		
