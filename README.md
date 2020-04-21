@@ -1,6 +1,7 @@
-![Title](Title_Img.png)
+[![Title]](https://github.com/ARCJ137442/BattleTriangle-Gamma)
+[baidu]:Title_Img.png "Title"
 
-A flash game based on `ActionScript 3.0`
+A flash game based on `ActionScript 3.0`.
 
 ## Spoken Language
 * English
