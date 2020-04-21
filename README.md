@@ -13,3 +13,9 @@ v0.1.0
 
 ## Debug Key in Devloup
 See [CONTROL](CONTROL.md)
+
+## Open Source Licence
+* Plan to use ***GPL License***
+
+## Related Repositories
+[TriangleCraft](https://github.com/ARCJ137442/TriangleCraft)

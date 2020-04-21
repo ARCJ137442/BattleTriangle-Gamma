@@ -1,4 +1,4 @@
-package batr.menu.events 
+package batr.menu.event 
 {
 	import batr.common.*;
 	import batr.general.*;
@@ -45,7 +45,7 @@ package batr.menu.events
 		
 		public override function toString():String
 		{
-			return formatToString("TranslationChangeEvent","type","gui","bubbles","cancelable","eventPhase");
+			return formatToString("TranslationChangeEvent","bubbles","cancelable","eventPhase");
 		}
 	}
 }
