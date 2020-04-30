@@ -4,18 +4,24 @@
 
 A flash game based on `ActionScript 3.0`.
 
-## Spoken Language
+## Language Used in Game
 * English
 * 简体中文
 
 ## Newest Version
 v0.2.0
 
-## Debug Key in Devloup
+## Control Keys for Players
 See [CONTROL](CONTROL.md)
 
-## Open Source Licence
-* Plan to use ***GPL License***
+## Debug Keys in Develop
+See [DEBUG](DEBUG.md)
+
+## FAQ
+See [FAQ](FAQ.md)
+
+## LICENCE
+* Released under the ***GNU General Public License v3(GPLv3)***
 
 ## Related Repositories
 [TriangleCraft](https://github.com/ARCJ137442/TriangleCraft)

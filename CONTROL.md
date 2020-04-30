@@ -1,4 +1,5 @@
 # Keys for Players
+
 ## <Player 1\>
 * Up: `W`
 * Down: `S`
@@ -26,15 +27,3 @@
 * Left: `Numpad 4`
 * Right: `Numpad 6`
 * Use: `Numpad +`
-
-# Keys for Debugging
-* `M`: Trun to **Menu**
-* `G`: Trun to **Game**
-* `R`: Change **Team(Color)**
-* `T`: Transform **Pos/Map**
-* `C`: Clear **Projectile/Effect**
-* `V`: Change **Weapon**
-* `X`: Trun **Sheet/Translations**
-* `~`: Transform **Game Speed**
-* `Enter`: Makes one **Game Ticking**
-* `Shift+E`: Force get **Game Result**
