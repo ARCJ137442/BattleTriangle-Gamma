@@ -312,5 +312,11 @@ package batr.menu.objects.selecter
 			}
 			return this;
 		}
+		
+		//====Debug====//
+		public function toString():String
+		{
+			return "BatrSelecterContext["+this._value+"]{"+this._intMin+"~"+this._intMax+","+this._enumTexts+"/"+this._enumIndexOffect+"}"
+		}
 	}
 }

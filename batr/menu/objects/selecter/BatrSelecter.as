@@ -234,6 +234,9 @@ package batr.menu.objects.selecter
 		
 		public function onTranslationChange(E:TranslationsChangeEvent):void
 		{
+			/* trace(this.name,this._textField.text,this._context);
+			 * The Player Selecter in Game Result Menu dosn't has context when initial load */
+			if(this._context==null) return;
 			this._context.alignTranslationsFrom(E.nowTranslations);
 			this.updateTextByContext();
 		}

@@ -9,7 +9,7 @@ A flash game based on `ActionScript 3.0`.
 * 简体中文
 
 ## Newest Version
-v0.1.0
+v0.2.0
 
 ## Debug Key in Devloup
 See [CONTROL](CONTROL.md)
