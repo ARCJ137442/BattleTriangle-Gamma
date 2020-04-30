@@ -50,6 +50,7 @@ package batr.translations
 		public static const CONTINUE:String="batr.menu.continue";
 		public static const MAIN_MENU:String="batr.menu.mainMenu";
 		public static const GLOBAL_STAT:String="batr.menu.globalStat";
+		public static const SCORE_RANKING:String="batr.menu.scoreRanking";
 		
 		//batr.select
 		public static const PLAYER_COUNT:String="batr.select.playerCount";
@@ -98,6 +99,7 @@ package batr.translations
 		public static const DAMAGE_BY:String="batr.stat.player.damageBy";
 		public static const PICKUP_BONUS:String="batr.stat.player.pickupBonus";
 		public static const BE_TELEPORT_COUNT:String="batr.stat.player.beTeleport";
+		public static const TOTAL_SCORE:String="batr.stat.player.totalScore";
 		
 		//batr.custom.property
 		public static const CERTAINLY_DEAD:String="batr.custom.property.certainlyDead";

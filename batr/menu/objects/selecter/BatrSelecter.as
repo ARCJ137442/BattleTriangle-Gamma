@@ -208,6 +208,32 @@ package batr.menu.objects.selecter
 		//Event
 		protected function onClickLeft(E:MouseEvent):void
 		{
+			this.trunSelectLeft();
+		}
+		
+		protected function onClickRight(E:MouseEvent):void
+		{
+			this.trunSelectRight();
+		}
+		
+		public function onTranslationChange(E:TranslationsChangeEvent):void
+		{
+			/* trace(this.name,this._textField.text,this._context);
+			 * The Player Selecter in Game Result Menu dosn't has context when INITIAL LOAD! */
+			if(this._context==null) return;
+			this._context.alignTranslationsFrom(E.nowTranslations);
+			this.updateTextByContext();
+		}
+		
+		//Select
+		public function trunSelectTo(index:int):BatrSelecter
+		{
+			this._context.currentValue=index;
+			return this;
+		}
+		
+		public function trunSelectLeft():void
+		{
 			//Check
 			if(this._context==null) return;
 			//Select
@@ -219,7 +245,7 @@ package batr.menu.objects.selecter
 			this.dispatchEvent(new BatrGUIEvent(BatrGUIEvent.CLICK_LEFT,this));
 		}
 		
-		protected function onClickRight(E:MouseEvent):void
+		public function trunSelectRight():void
 		{
 			//Check
 			if(this._context==null) return;
@@ -230,22 +256,6 @@ package batr.menu.objects.selecter
 			this.copyContextTo(this._linkTarget);
 			//Event
 			this.dispatchEvent(new BatrGUIEvent(BatrGUIEvent.CLICK_RIGHT,this));
-		}
-		
-		public function onTranslationChange(E:TranslationsChangeEvent):void
-		{
-			/* trace(this.name,this._textField.text,this._context);
-			 * The Player Selecter in Game Result Menu dosn't has context when initial load */
-			if(this._context==null) return;
-			this._context.alignTranslationsFrom(E.nowTranslations);
-			this.updateTextByContext();
-		}
-		
-		//Select
-		public function trunSelectTo(index:int):BatrSelecter
-		{
-			this._context.currentValue=index;
-			return this;
 		}
 	}
 }

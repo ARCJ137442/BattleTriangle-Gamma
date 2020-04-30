@@ -1,5 +1,6 @@
 package batr.game.stat 
 {
+	import batr.common.*;
 	import batr.game.entity.entities.players.*;
 	import batr.game.entity.model.*;
 	
@@ -210,6 +211,18 @@ package batr.game.stat
 		public function set beTeleportCount(value:uint):void
 		{
 			this._beTeleportCount=value;
+		}
+		
+		//Game Score about Playing
+		public function get totalScore():uint
+		{
+			return exMath.intMax(
+			this.profile.level*50+this.profile.experience*5+
+			this.killCount*100-this.deathCount*25+
+			this.causeDamage+
+			this.pickupBonusBoxCount*10+
+			this.killAllyCount-this.suicideCount,
+			0)
 		}
 		
 		//============Instance Functions============//

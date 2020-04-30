@@ -246,7 +246,8 @@ package batr.main
 		
 		public function trunTranslations():void
 		{
-			this.trunTranslationsTo(Translations.translationsList[(Translations.translationsList.indexOf(this._translations)+1)%Translations.numTranslations]);
+			this._menu.languageSelecter.trunSelectRight();
+			this.trunTranslationsTo(Translations.translationsList[this._menu.languageSelecter.currentValue]);
 		}
 		
 		public function resetRule():void

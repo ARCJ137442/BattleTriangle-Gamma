@@ -57,13 +57,24 @@ package batr.menu.main
 		public static const RESULT_TITLE_FORMET:TextFormat=new TextFormat(
 			new MainFont().fontName,
 			GlobalGameVariables.DEFAULT_SIZE,
+			0x333333,
+			true,
+			false,
+			false,
+			null,
+			null,
+			TextFormatAlign.LEFT);
+		
+		public static const RANK_CONTEXT_FORMET:TextFormat=new TextFormat(
+			new MainFont().fontName,
+			GlobalGameVariables.DEFAULT_SIZE*4/5,
 			0x444444,
 			true,
 			false,
 			false,
 			null,
 			null,
-			TextFormatAlign.CENTER);
+			TextFormatAlign.LEFT);
 		
 		//============Static Functions============//
 		protected static function setFixedTextSuffix(text:BatrTextField,suffix:*):void
@@ -71,7 +82,7 @@ package batr.menu.main
 			var fText:FixedTranslationalText=text.translationalText as FixedTranslationalText;
 			if(fText!=null)
 			{
-				fText.suffix=String(suffix);
+				fText.suffix="\t\t"+String(suffix);
 				text.updateByTranslation();
 			}
 		}
@@ -96,6 +107,7 @@ package batr.menu.main
 		protected var _sheetSelect:BatrMenuSheet;
 		protected var _sheetAdvancedCustom:BatrMenuSheet;
 		protected var _sheetGameResult:BatrMenuSheet;
+		protected var _sheetScoreRanking:BatrMenuSheet;
 		
 		//Functional
 		protected var _sheets:Vector.<BatrMenuSheet>;
@@ -108,6 +120,7 @@ package batr.menu.main
 		
 		protected var _storedGameResult:GameResult;
 		protected var _gameResultText:BatrTextField;
+		protected var _rankContextText:BatrTextField;
 		
 		protected var _playerStatLevel:BatrTextField;
 		protected var _playerStatKill:BatrTextField;
@@ -117,6 +130,7 @@ package batr.menu.main
 		protected var _playerStatDamageBy:BatrTextField;
 		protected var _playerStatPickupBonus:BatrTextField;
 		protected var _playerStatBeTeleport:BatrTextField;
+		protected var _playerStatTotalScore:BatrTextField;
 		
 		protected var _gameStatMapTransform:BatrTextField;
 		protected var _gameStatBonusGenerate:BatrTextField;
@@ -224,6 +238,11 @@ package batr.menu.main
 			this._storedGameResult=value;
 		}
 		
+		public function get languageSelecter():BatrSelecter
+		{
+			return this._languageSelecter;
+		}
+		
 		//============Instance Functions============//
 		//========Advanced Functions========//
 		/**
@@ -311,6 +330,7 @@ package batr.menu.main
 			return button;
 		}
 		
+		//quickButtonBuild with color
 		protected function quickButtonBuild2(tKey:String,clickListenerFunction:Function,color:uint,blockWidth:Number=6,blockHeight:Number=1):BatrButton
 		{
 			var button:BatrButton=new BatrButton(GlobalGameVariables.DEFAULT_SIZE*blockWidth,
@@ -326,10 +346,15 @@ package batr.menu.main
 			return this.quickButtonBuild2(TranslationKey.BACK,this.onBackButtonClick,0x333333);
 		}
 		
-		//TextField Build
-		protected function quickTextFieldBuild(tKey:String,blockX:Number=0,blockY:Number=0):BatrTextField
+		protected function quickLinkageButtonBuild(tKey:String,sheetLinkage:String,color:uint,blockX:int=0,blockY:int=0,blockWidth:Number=6,blockHeight:Number=1):BatrButton
 		{
-			var textField:BatrTextField=BatrTextField.fromKey(this.translations,tKey);
+			return quickButtonBuild2(tKey,this.onLinkageButtonClick,color,blockWidth,blockHeight).setLinkage(sheetLinkage).setBlockPos(blockX,blockY);
+		}
+		
+		//TextField Build
+		protected function quickTextFieldBuild(tKey:String,blockX:Number=0,blockY:Number=0,autoSize:String=TextFieldAutoSize.LEFT):BatrTextField
+		{
+			var textField:BatrTextField=BatrTextField.fromKey(this.translations,tKey,autoSize);
 			textField.x=GlobalGameVariables.DEFAULT_SIZE*blockX;
 			textField.y=GlobalGameVariables.DEFAULT_SIZE*blockY;
 			textField.initFormetAsMenu();
@@ -405,22 +430,22 @@ package batr.menu.main
 			//===Build Sheets===//
 			this._sheets=new <BatrMenuSheet>[
 				//Main
-				this._sheetMain=this.buildSheet(true).appendDirectElements(
+				this._sheetMain=this.buildSheet(TranslationKey.MAIN_MENU,true).appendDirectElements(
 					(new BatrButtonList().appendDirectElements(
 						this.quickButtonBuild2(TranslationKey.CONTINUE,this.onContinueButtonClick,0xff8000),
 						this.quickButtonBuild2(TranslationKey.QUICK_GAME,this.onQuickGameButtonClick,0x0080ff),
-						this.quickButtonBuild2(TranslationKey.SELECT_GAME,this.onSelectGameButtonClick,0x00ff80),
-						this.quickButtonBuild2(TranslationKey.CUSTOM_MODE,this.onCustomModeButtonClick,0xff0080)
+						this.quickLinkageButtonBuild(TranslationKey.SELECT_GAME,TranslationKey.SELECT_GAME,0x00ff80),
+						this.quickLinkageButtonBuild(TranslationKey.CUSTOM_MODE,null,0xff0080)
 					) as BatrButtonList).setPos(
 						GlobalGameVariables.DEFAULT_SIZE*9,
 						GlobalGameVariables.DEFAULT_SIZE*9
 					)
 				) as BatrMenuSheet,
 				//Select
-				this._sheetSelect=this.buildSheet(true).appendDirectElements(
+				this._sheetSelect=this.buildSheet(TranslationKey.SELECT_GAME,true).appendDirectElements(
 					(new BatrButtonList().appendDirectElements(
 						this.quickButtonBuild2(TranslationKey.START,this.onSelectStartButtonClick,0x0080ff),
-						this.quickButtonBuild2(TranslationKey.ADVANCED,this.onSelectAdvancedButtonClick,0x00ff80),
+						this.quickLinkageButtonBuild(TranslationKey.ADVANCED,TranslationKey.ADVANCED,0x00ff80),
 						this.quickButtonBuild2(TranslationKey.SAVES,null,0xff0080),
 						this.quickBackButtonBuild()
 					) as BatrButtonList).setPos(
@@ -460,7 +485,7 @@ package batr.menu.main
 					)
 				) as BatrMenuSheet,
 				//Advanced Custom
-				this._sheetAdvancedCustom=this.buildSheet(true).appendDirectElements(
+				this._sheetAdvancedCustom=this.buildSheet(TranslationKey.ADVANCED,true).appendDirectElements(
 					(new BatrButtonList().appendDirectElements(
 						this.quickButtonBuild2(TranslationKey.START,this.onSelectStartButtonClick,0x0080ff),
 						this.quickBackButtonBuild()
@@ -568,10 +593,13 @@ package batr.menu.main
 						true
 					)
 				) as BatrMenuSheet,
-				//In progress
-				this._sheetGameResult=this.buildSheet(false).appendDirectElements(
+				//Game Result
+				this._sheetGameResult=this.buildSheet(TranslationKey.GAME_RESULT,false).appendDirectElements(
+					//Text Title
 					this._gameResultText=quickTextFieldBuild(TranslationKey.GAME_RESULT,2,2).setBlockSize(20,2).setFormet(RESULT_TITLE_FORMET,true),
+					//button
 					this.quickButtonBuild2(TranslationKey.MAIN_MENU,this.onMainMenuButtonClick,0xcccccc).setBlockPos(9,21),
+					this.quickLinkageButtonBuild(TranslationKey.SCORE_RANKING,TranslationKey.SCORE_RANKING,0xccffff).setBlockPos(9,19),
 					//player
 					this._playerStatSelecter=this.quickSelecterBuild(null,1,this.onPlayerStatSelecterClick).setBlockPos(5,4.5),
 					this._playerStatLevel=this.quickStatTextFieldBuild(TranslationKey.FINAL_LEVEL,3,5),
@@ -582,10 +610,20 @@ package batr.menu.main
 					this._playerStatDamageBy=this.quickStatTextFieldBuild(TranslationKey.DAMAGE_BY,3,10),
 					this._playerStatPickupBonus=this.quickStatTextFieldBuild(TranslationKey.PICKUP_BONUS,3,12),
 					this._playerStatBeTeleport=this.quickStatTextFieldBuild(TranslationKey.BE_TELEPORT_COUNT,3,13),
+					this._playerStatTotalScore=this.quickStatTextFieldBuild(TranslationKey.TOTAL_SCORE,3,14),
 					//global
 					this._gameStatMapTransform=this.quickStatTextFieldBuild(TranslationKey.GLOBAL_STAT,14,4,TextFieldAutoSize.CENTER),
 					this._gameStatMapTransform=this.quickStatTextFieldBuild(TranslationKey.TRANSFORM_MAP_COUNT,13,5),
 					this._gameStatBonusGenerate=this.quickStatTextFieldBuild(TranslationKey.BONUS_GENERATE_COUNT,13,6)
+				) as BatrMenuSheet,
+				//Ranking
+				this._sheetScoreRanking=this.buildSheet(TranslationKey.SCORE_RANKING,false).appendDirectElements(
+					//Text Title
+					quickTextFieldBuild(TranslationKey.SCORE_RANKING,2,2).setBlockSize(20,2).setFormet(RESULT_TITLE_FORMET,true),
+					//ranking
+					this._rankContextText=quickTextFieldBuild(null,2,4,TextFieldAutoSize.NONE).setBlockSize(20,20).setFormet(RANK_CONTEXT_FORMET,true),
+					//button
+					this.quickBackButtonBuild().setBlockPos(9,21)
 				) as BatrMenuSheet
 			];
 			//Set Variable 2
@@ -610,11 +648,21 @@ package batr.menu.main
 		}
 		
 		//Sheet
-		public function buildSheet(keepTitle:Boolean=true):BatrMenuSheet
+		public function buildSheet(name:String,keepTitle:Boolean=true):BatrMenuSheet
 		{
 			var sheet:BatrMenuSheet=new BatrMenuSheet(keepTitle);
 			sheet.x=sheet.y=0;
+			sheet.name=name;
 			return sheet;
+		}
+		
+		public function getSheetByName(name:String):BatrMenuSheet
+		{
+			for each(var sheet:BatrMenuSheet in this._sheets)
+			{
+				if(sheet.name==name) return sheet;
+			}
+			return null;
 		}
 		
 		public function trunSheet():void
@@ -653,6 +701,8 @@ package batr.menu.main
 			this._playerStatSelecter.setContext(BatrSelecterContext.createPlayerNamesContext(result.stats.players));
 			this._storedGameResult=result;
 			this.updateStatByResult();
+			//rank
+			this._rankContextText.translationalText=result.rankingText;
 			//load
 			//trun
 			this.setNowSheet(this._sheetGameResult);
@@ -746,6 +796,14 @@ package batr.menu.main
 		}
 		
 		//Game Button
+		protected function onLinkageButtonClick(event:BatrGUIEvent):void
+		{
+			for each(var sheet:BatrMenuSheet in this._sheets)
+			{
+				if(sheet.name==(event.gui as BatrButton).sheetLinkage) this.nowSheet=sheet;
+			}
+		}
+		
 		protected function onContinueButtonClick(event:BatrGUIEvent):void
 		{
 			if(this.game.isLoaded) this._subject.trunToGame();
@@ -756,16 +814,6 @@ package batr.menu.main
 			this._subject.resetRule();
 			this.game.forceStartGame(this.gameRule);
 			this._subject.trunToGame();
-		}
-		
-		protected function onSelectGameButtonClick(event:BatrGUIEvent):void
-		{
-			this.nowSheet=this._sheetSelect;
-		}
-		
-		protected function onCustomModeButtonClick(event:BatrGUIEvent):void
-		{
-			
 		}
 		
 		protected function onBackButtonClick(event:BatrGUIEvent):void
@@ -781,17 +829,13 @@ package batr.menu.main
 			if(selecter==null) return;
 			var nowMapIndex:int=selecter.currentValue;
 			//trace("Now Map ID: "+nowMapIndex);
+			//work in process
 		}
 		
 		protected function onSelectStartButtonClick(event:BatrGUIEvent):void
 		{
 			this.game.forceStartGame(this.getRuleFromMenu(),false);
 			this._subject.trunToGame();
-		}
-		
-		protected function onSelectAdvancedButtonClick(event:BatrGUIEvent):void
-		{
-			this.nowSheet=this._sheetAdvancedCustom;
 		}
 		
 		protected function onMainMenuButtonClick(event:BatrGUIEvent):void
@@ -826,6 +870,7 @@ package batr.menu.main
 				setFixedTextSuffix(this._playerStatLevel,currentPlayer.profile.level);
 				setFixedTextSuffix(this._playerStatPickupBonus,currentPlayer.pickupBonusBoxCount);
 				setFixedTextSuffix(this._playerStatBeTeleport,currentPlayer.beTeleportCount);
+				setFixedTextSuffix(this._playerStatTotalScore,currentPlayer.totalScore);
 			}
 			catch(err:Error)
 			{

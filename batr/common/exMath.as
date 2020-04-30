@@ -33,6 +33,16 @@
 			return (((((X&1)^((X>>1)&1))&((X&1)|2))<<1)|((X+1)&1))-1;
 		}
 		
+		/**
+		 * Get sign of number.
+		 * @param	x	the number.
+		 * @return	0,1 or -1.
+		 */
+		public static function sgn(x:Number):int
+		{
+			return x==0?0:(x>0?1:-1);
+		}
+		
 		//==Int Function==//
 		/**
 		 * lash the number,keep the phase in Section[0,max);
@@ -122,11 +132,6 @@
 			var h:int=exMath.intMax(x,y);
 			var l:int=exMath.intMin(x,y);
 			return l+Math.random()*(h-l);
-		}
-		
-		public static function NumTo1(x:Number):int
-		{
-			return x==0?0:(x>0?1:-1)
 		}
 		
 		public static function isBetween(x:Number,n1:Number,n2:Number,

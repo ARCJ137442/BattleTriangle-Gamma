@@ -38,6 +38,11 @@ package batr.menu.objects
 		protected var _translations:Translations
 		protected var _text:BatrTextField
 		
+		/**
+		 * The Linkage(String) to sheet
+		 */
+		public var sheetLinkage:String
+		
 		//============Constructor Function============//
 		public function BatrButton(width:Number,height:Number,
 								   translations:Translations,
@@ -66,6 +71,7 @@ package batr.menu.objects
 			this.graphics.clear();
 			this._text.deleteSelf();
 			this._text=null;
+			this.sheetLinkage=null;
 			super.deleteSelf();
 		}
 		
@@ -152,6 +158,12 @@ package batr.menu.objects
 		public function setBlockPos(x:Number, y:Number):BatrButton
 		{
 			super.protected::sBP(x,y);
+			return this;
+		}
+		
+		public function setLinkage(lSheet:String):BatrButton
+		{
+			this.sheetLinkage=lSheet;
 			return this;
 		}
 		
