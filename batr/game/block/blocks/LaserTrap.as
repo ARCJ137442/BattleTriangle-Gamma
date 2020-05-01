@@ -8,9 +8,9 @@ package batr.game.block.blocks
 	public class LaserTrap extends BlockCommon
 	{
 		//============Static Variables============//
-		public static const LINE_COLOR:uint=Bedrock.LINE_COLOR
-		public static const FILL_COLOR:uint=Bedrock.FILL_COLOR
-		public static const CENTER_COLOR:uint=ColorSpawner.CENTER_COLOR
+		public static const LINE_COLOR:uint=Bedrock.LINE_COLOR;
+		public static const FILL_COLOR:uint=Bedrock.FILL_COLOR;
+		public static const CENTER_COLOR:uint=ColorSpawner.CENTER_COLOR;
 		
 		public static const LINE_SIZE:uint=Wall.LINE_SIZE
 		
@@ -20,7 +20,7 @@ package batr.game.block.blocks
 		public function LaserTrap():void
 		{
 			super();
-			drawMain()
+			this.drawMain();
 		}
 		
 		//============Destructor Function============//

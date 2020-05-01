@@ -1,5 +1,6 @@
 ﻿package batr.game.entity.entities.projectiles 
 {
+	import batr.common.*;
 	import batr.general.*;
 	
 	import batr.game.entity.entities.players.*;
@@ -9,12 +10,12 @@
 	public class LaserPulse extends LaserBasic 
 	{
 		//============Static Variables============//
-		public static const LIFE:Number=GlobalGameVariables.TPS/8
-		public static const SIZE:Number=GlobalGameVariables.DEFAULT_SIZE/4
-		public static const ALPHA:Number=1/0.75
+		public static const LIFE:Number=GlobalGameVariables.TPS/8;
+		public static const SIZE:Number=GlobalGameVariables.DEFAULT_SIZE/4;
+		public static const ALPHA:Number=1/0.75;
 		
 		//============Instance Variables============//
-		public var isPull:Boolean=false
+		public var isPull:Boolean=false;
 		
 		//============Constructor Function============//
 		public function LaserPulse(host:Game,x:Number,y:Number,owner:Player,length:uint=LENGTH,chargePercent:Number=1):void
