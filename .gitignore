@@ -33,3 +33,4 @@ asconfig.*
 # Other files and folders
 .settings/
 *.note
+desktop.ini
