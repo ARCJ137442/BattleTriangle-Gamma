@@ -79,7 +79,7 @@ package batr.game.entity.entities.players
 		   lineColor:Number=NaN):void
 		{
 			this._AIProgram=program==null?AIPlayer.getAIProgram():program;
-			this.AIRunSpeed=this._AIProgram.referenceSpeed;
+			this.AIRunSpeed=this._AIProgram.referenceSpeed;//once getting
 			super(host,x,y,team,0,isActive,fillColor,lineColor);
 		}
 		
@@ -132,6 +132,11 @@ package batr.game.entity.entities.players
 		public function get AILabel():String
 		{
 			return this._AIProgram==null?null:this._AIProgram.label;
+		}
+		
+		public function get ActionThread():Vector.<AIPlayerAction>
+		{
+			return this._actionThread;
 		}
 		
 		//============Instance Functions============//

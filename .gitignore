@@ -1,8 +1,21 @@
+# Battle Triangle Gamma
+
 # Build and Release Folders
 bin-debug/
 bin-release/
 [Oo]bj/
 [Bb]in/
+[Bb]uild/
+*.lnk
+*.zip
+*.rar
+*.7z
+*.gz
+
+# Windows:
+[Tt]humbs.db
+[Ee]hthumbs.db
+[Dd]esktop.ini
 
 # VS Code
 .vscode/
@@ -24,13 +37,12 @@ git status
 *.apk
 
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-
-# should NOT be excluded as they contain compiler settings and other important
 asconfig.*
 
+# should NOT be excluded as they contain compiler settings and other important
+
 # information for Eclipse / Flash Builder.
+.settings/
 
 # Other files and folders
-.settings/
 *.note
-desktop.ini

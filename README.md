@@ -21,7 +21,7 @@ See [DEBUG](DEBUG.md)
 See [FAQ](FAQ.md)
 
 ## LICENCE
-* Released under the ***GNU General Public License v3(GPLv3)***
+Released under the ***GNU General Public License v3(GPLv3)***
 
 ## Related Repositories
 [TriangleCraft](https://github.com/ARCJ137442/TriangleCraft)

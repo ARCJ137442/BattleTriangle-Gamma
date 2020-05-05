@@ -48,7 +48,7 @@ package batr.game.entity.ai.programs
 		}
 		
 		//============Instance Variables============//
-		protected var _moveSum:uint
+		protected var _moveSum:uint=0
 		protected var _moveMaxSum:uint=8
 		protected var _tempRot:uint
 		
@@ -88,18 +88,16 @@ package batr.game.entity.ai.programs
 		 */
 		public function get referenceSpeed():uint
 		{
-			return 15+exMath.random(5)*5;
+			if(UsefulTools.randomBoolean(1,24)) return 100;
+			return 20+exMath.random(3)*10;
 		}
 		
 		/*========AI Program Main========*/
 		public function requestActionOnTick(player:AIPlayer):AIPlayerAction
 		{
-			if(player==null) return AIPlayerAction.NULL
+			if(player==null) return AIPlayerAction.NULL;
 			//Refresh Wait
-			if(this._waitTime>=this._maxWaitTime)
-			{
-				this._waitTime=-this._moveMaxSum;
-			}
+			if(this._waitTime>=this._maxWaitTime) this._waitTime=-this._moveMaxSum;
 			var target:Player=AIProgram_Novice.getLineEnemyPlayer(player);
 			var lineBonus:BonusBox=AIProgram_Novice.getLineBonusBox(player);
 			//Auto Pickup BonusBox
@@ -110,13 +108,12 @@ package batr.game.entity.ai.programs
 				this._moveSum=this._moveMaxSum;
 				this._tempRot=GlobalRot.fromLinearDistance(lineBonus.entityX-player.gridX,lineBonus.entityY-player.gridY);
 				//Act
+				this._waitTime++;
 				if(player.rot!=this._tempRot)
 				{
-					player.addActionToThreadAtFirst(AIPlayerAction.getTrunActionFromEntityRot(this._tempRot));
+					return AIPlayerAction.getTrunActionFromEntityRot(this._tempRot);
 				}
-				player.addActionToThreadAtFirst(AIPlayerAction.MOVE_FORWARD);
-				this._waitTime++;
-				return null;
+				else return AIPlayerAction.MOVE_FORWARD;
 			}
 			//Auto Attack Target
 			else if(target!=null&&this._waitTime>=0&&this._waitTime<this._maxWaitTime)
@@ -132,7 +129,7 @@ package batr.game.entity.ai.programs
 				}
 				if(!player.isPress_Use) return AIPlayerAction.PRESS_KEY_USE;
 				this._waitTime++;
-				return AIPlayerAction.NULL
+				return AIPlayerAction.NULL;
 			}
 			//Dummy Behavior(Calm)
 			else
@@ -141,58 +138,62 @@ package batr.game.entity.ai.programs
 				if(this._moveSum>=this._moveMaxSum||
 				   !player.host.testPlayerFrontCanPass(player))
 				{
-					this._moveSum=0
-					var i:uint=0
+					this._moveSum=0;
+					var i:uint=0;
 					do
 					{
-						this._tempRot=GlobalRot.RANDOM
-						i++
+						this._tempRot=GlobalRot.RANDOM;
+						i++;
 					}
 					while(i<=8&&!player.host.testPlayerFrontCanPass(player,this._tempRot,true))
-					return AIPlayerAction.getTrunActionFromEntityRot(this._tempRot)
+					return AIPlayerAction.getTrunActionFromEntityRot(this._tempRot);
 				}
 				this._moveSum++
 			}
 			if(this._waitTime<0) this._waitTime++;
-			return AIPlayerAction.MOVE_FORWARD
+			return AIPlayerAction.MOVE_FORWARD;
 		}
 		
 		public function requestActionOnCauseDamage(player:AIPlayer,damage:uint,victim:Player):AIPlayerAction
 		{
 			this._waitTime=0;
-			return AIPlayerAction.NULL
+			return AIPlayerAction.NULL;
 		}
 		
 		public function requestActionOnHurt(player:AIPlayer,damage:uint,attacker:Player):AIPlayerAction
 		{
-			this._waitTime-=damage;
-			return AIPlayerAction.NULL
+			//random move beside on under attack
+			if(UsefulTools.randomBoolean()) return AIPlayerAction.MOVE_LEFT_REL;
+			else return AIPlayerAction.MOVE_RIGHT_REL;
 		}
 		
 		public function requestActionOnKill(player:AIPlayer,damage:uint,victim:Player):AIPlayerAction
 		{
-			return AIPlayerAction.NULL
+			this._waitTime=0;
+			return AIPlayerAction.NULL;
 		}
 		
 		public function requestActionOnDeath(player:AIPlayer,damage:uint,attacker:Player):AIPlayerAction
 		{
-			return AIPlayerAction.NULL
+			this._waitTime=0;
+			return AIPlayerAction.NULL;
 		}
 		
 		public function requestActionOnRespawn(player:AIPlayer):AIPlayerAction
 		{
-			return AIPlayerAction.NULL
+			return AIPlayerAction.NULL;
 		}
 		
 		public function requestActionOnMapTransfrom(player:AIPlayer):AIPlayerAction
 		{
-			return AIPlayerAction.NULL
+			this._waitTime=0;
+			return AIPlayerAction.NULL;
 		}
 		
 		public function requestActionOnPickupBonusBox(player:AIPlayer,box:BonusBox):AIPlayerAction
 		{
 			this._waitTime=0;
-			return AIPlayerAction.NULL
+			return AIPlayerAction.NULL;
 		}
 	}
 }
