@@ -28,11 +28,14 @@ package batr.game.block
 		public static const SUPPLY_POINT:BlockType=new BlockType("Supplypoint",SupplyPoint,BlockAttributes.SUPPLY_POINT).setMapColor(0x66ff00)
 		public static const GATE_OPEN:BlockType=new BlockType("GateOpen",Gate,BlockAttributes.GATE_OPEN).setMapColor(0xcccccc)
 		public static const GATE_CLOSE:BlockType=new BlockType("GateClose",Gate,BlockAttributes.GATE_CLOSE).setMapColor(0x666666)
+		public static const MOVEABLE_WALL:BlockType=new BlockType("MoveableWall",MoveableWall,BlockAttributes.MOVEABLE_WALL).setMapColor(0x88cc88)
 		
 		public static const _SOLID_BLOCKS:Vector.<BlockType>=new <BlockType>[
-		BlockType.WALL,BlockType.GLASS,BlockType.BEDROCK,
-		BlockType.COLORED_BLOCK,BlockType.COLOR_SPAWNER,
-		BlockType.LASER_TRAP,BlockType.METAL,BlockType.GATE_CLOSE];
+			BlockType.WALL,BlockType.GLASS,BlockType.BEDROCK,
+			BlockType.COLORED_BLOCK,BlockType.COLOR_SPAWNER,
+			BlockType.LASER_TRAP,BlockType.METAL,BlockType.GATE_CLOSE,
+			BlockType.MOVEABLE_WALL
+		];
 		public static const _LIQUID_BLOCKS:Vector.<BlockType>=new <BlockType>[BlockType.WATER]
 		public static const _GAS_BLOCKS:Vector.<BlockType>=new <BlockType>[BlockType.GATE_OPEN]
 		public static const _BASE_BLOCKS:Vector.<BlockType>=new <BlockType>[SUPPLY_POINT]

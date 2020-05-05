@@ -62,7 +62,7 @@ package batr.game.entity.ai.programs
 		}
 		
 		//============Destructor Function============//
-		public function deleteSelf():void 
+		public function deleteSelf():void
 		{
 			this._moveSum=0;
 			this._moveMaxSum=0;

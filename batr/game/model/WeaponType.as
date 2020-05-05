@@ -27,10 +27,15 @@ package batr.game.model
 		public static const BLOCK_THROWER:WeaponType=new WeaponType("Block Thrower",.5,200,1,true,true,true).setExtraProperty(10,15)
 		public static const LIGHTNING:WeaponType=new WeaponType("Lightning",0.75,20).setExtraProperty(2,1)
 		
-		public static const _BULLETS:Vector.<WeaponType>=new <WeaponType>[WeaponType.BULLET,WeaponType.NUKE,WeaponType.SUB_BOMBER]//,WeaponType.POISON_BOMB
+		//BOSS WEAPON
+		public static const SHOCKWAVE_LASER:WeaponType=new WeaponType("ShockWave Laser",10,100).setExtraProperty(20,2)
+		
+		//WEAPON SET
+		public static const _BULLETS:Vector.<WeaponType>=new <WeaponType>[WeaponType.BULLET,WeaponType.NUKE,WeaponType.SUB_BOMBER]
 		public static const _LASERS:Vector.<WeaponType>=new <WeaponType>[WeaponType.LASER,WeaponType.PULSE_LASER,WeaponType.TELEPORT_LASER,WeaponType.ABSORPTION_LASER]
 		//public static const _WAVES:Vector.<WeaponType>=new <WeaponType>[WeaponType.WAVE,WeaponType.CHAOS_RING]
-		public static const _SPECIAL:Vector.<WeaponType>=new <WeaponType>[WeaponType.WAVE,WeaponType.MELEE,WeaponType.BLOCK_THROWER,WeaponType.LIGHTNING]//WeaponType.T_BOMB,
+		public static const _SPECIAL:Vector.<WeaponType>=new <WeaponType>[WeaponType.WAVE,WeaponType.MELEE,WeaponType.BLOCK_THROWER,WeaponType.LIGHTNING]
+		public static const _BOSS_WEAPON:Vector.<WeaponType>=new <WeaponType>[WeaponType.SHOCKWAVE_LASER]
 		public static const _ALL_WEAPON:Vector.<WeaponType>=_BULLETS.concat(_LASERS).concat(_SPECIAL)//.concat(_WAVES)
 		
 		public static const _ALL_AVALIABLE_WEAPON:Vector.<WeaponType>=new <WeaponType>[

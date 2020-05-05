@@ -43,7 +43,7 @@ package batr.game.block.blocks
 			return new Metal(this._lineColor,this._fillColor);
 		}
 		
-		protected override function drawMain():void 
+		protected override function drawMain():void
 		{
 			//Line
 			this.graphics.beginFill(this._lineColor);

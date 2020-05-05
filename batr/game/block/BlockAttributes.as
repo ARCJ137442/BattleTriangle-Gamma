@@ -22,6 +22,7 @@ package batr.game.block
 		public static const SUPPLY_POINT:BlockAttributes=new BlockAttributes(0x66ff66).asBase.asSupplyPoint
 		public static const GATE_OPEN:BlockAttributes=new BlockAttributes(0x888888,0x50000000).asGate
 		public static const GATE_CLOSE:BlockAttributes=new BlockAttributes(0x888888).asGateClose
+		public static const MOVEABLE_WALL:BlockAttributes=new BlockAttributes(0xBBFFBB).asSolid.asArenaBlock
 		
 		//============Static Functions============//
 		public static function fromType(type:BlockType):BlockAttributes

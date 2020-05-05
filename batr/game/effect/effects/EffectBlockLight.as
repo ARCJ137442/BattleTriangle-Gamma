@@ -57,7 +57,7 @@ package batr.game.effect.effects
 			return this._color;
 		}
 		
-		public function set color(value:uint):void 
+		public function set color(value:uint):void
 		{
 			this._color=value;
 			drawShape()

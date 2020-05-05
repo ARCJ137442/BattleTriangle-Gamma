@@ -105,7 +105,7 @@ package batr.menu.objects
 			return this._lineColor;
 		}
 		
-		public function set lineColor(value:uint):void 
+		public function set lineColor(value:uint):void
 		{
 			if(this._lineColor==value) return;
 			this._lineColor=value;
@@ -117,19 +117,19 @@ package batr.menu.objects
 			return this._fillColor;
 		}
 		
-		public function set fillColor(value:uint):void 
+		public function set fillColor(value:uint):void
 		{
 			if(this._fillColor==value) return;
 			this._fillColor=value;
 			this.drawShape();
 		}
 		
-		public function get lineSize():Number 
+		public function get lineSize():Number
 		{
 			return this._fillColor;
 		}
 		
-		public function set lineSize(value:Number):void 
+		public function set lineSize(value:Number):void
 		{
 			if(this.lineSize==value) return;
 			this._lineSize=value;

@@ -57,7 +57,8 @@ package batr.game.main
 			Map_V1.MAP_C,
 			Map_V1.MAP_D,
 			Map_V1.MAP_E,
-			Map_V1.MAP_F
+			Map_V1.MAP_F,
+			Map_V1.MAP_G
 		]
 		
 		public static const MAP_TRANSFORM_TEXT_FORMAT:TextFormat=new TextFormat(
@@ -761,8 +762,8 @@ package batr.game.main
 		 * @param	asPlayer	Judge as player
 		 * @param	asBullet	Judge as Bullet
 		 * @param	asLaser	Judge as Laser
-		 * @param	includePlayer	Avoid player(returns false)
-		 * @param	avoidHurting	Avoid harmful block(returns false)
+		 * @param	includePlayer	Avoidplayer(returns false)
+		 * @param	avoidHurting	Avoidharmful block(returns false)
 		 * @return	true if can pass.
 		 */
 		public function testCanPass(x:Number,y:Number,asPlayer:Boolean,asBullet:Boolean,asLaser:Boolean,includePlayer:Boolean=true,avoidHurting:Boolean=false):Boolean
@@ -1131,9 +1132,9 @@ package batr.game.main
 		}
 		
 		/**
-		 * Set Void in map,and clear Block in map displayer.
-		 * @param	x	the Void position x.
-		 * @param	y	the Void position y.
+		 * Set voidin map,and clear Block in map displayer.
+		 * @param	x	the voidposition x.
+		 * @param	y	the voidposition y.
 		 */
 		public function setVoid(x:int,y:int):void
 		{
@@ -1141,7 +1142,7 @@ package batr.game.main
 			this.onBlockUpdate(x,y,null);
 		}
 		
-		public function forceMapDisplay():void 
+		public function forceMapDisplay():void
 		{
 			if(this._map==null)
 			{
@@ -1152,7 +1153,7 @@ package batr.game.main
 			else this._map.forceDisplayToLayers(this._mapDisplayerBottom,this._mapDisplayerMiddle,this._mapDisplayerTop);
 		}
 		
-		public function updateMapDisplay(x:int,y:int,block:BlockCommon):void 
+		public function updateMapDisplay(x:int,y:int,block:BlockCommon):void
 		{
 			this._map.updateDisplayToLayers(x,y,block,this._mapDisplayerBottom,this._mapDisplayerMiddle,this._mapDisplayerTop)
 		}
@@ -1225,7 +1226,7 @@ package batr.game.main
 			if(reSperadPlayer) this.spreadAllPlayer();
 		}
 		
-		public function transformMap():void 
+		public function transformMap():void
 		{
 			this._entitySystem.removeAllProjectile();
 			this._entitySystem.removeAllBonusBox();
@@ -2056,6 +2057,9 @@ package batr.game.main
 				case BlockType.LASER_TRAP:
 					this.laserTrapShootLaser(x,y);
 				break;
+				case BlockType.MOVEABLE_WALL:
+					this.moveableWallMove(x,y,this.getBlock(x,y));
+				break;
 				case BlockType.GATE_CLOSE:
 					this.setBlock(x,y,BlockCommon.fromType(BlockType.GATE_OPEN));
 				break;
@@ -2121,6 +2125,28 @@ package batr.game.main
 				}
 			}
 			while(laserLength<=0&&++i<0x10)
+		}
+		
+		protected function moveableWallMove(x:int,y:int,block:BlockCommon):void
+		{
+			var randomRot:uint,rotX:Number,rotY:Number,laserLength:Number;
+			//add laser by owner=null
+			var p:ThrowedBlock;
+			var i:uint;
+			do
+			{
+				randomRot=GlobalRot.RANDOM;
+				rotX=x+GlobalRot.towardXInt(randomRot);
+				rotY=y+GlobalRot.towardYInt(randomRot);
+				if(this.isIntOutOfMap(rotX,rotY)||!this.testIntCanPass(rotX,rotY,false,true,false,false)) continue;
+				p=new ThrowedBlock(this,PosTransform.alignToEntity(x),PosTransform.alignToEntity(y),null,block.clone(),randomRot,Math.random());
+				this.setVoid(x,y);
+				this.entitySystem.registerProjectile(p);
+				this._projectileContainer.addChild(p);
+				//trace("laser at"+"("+p.entityX+","+p.entityY+"),"+p.life,p.length,p.visible,p.alpha,p.owner);
+				if(!(block is MoveableWall&&(block as MoveableWall).virus)) break;
+			}
+			while(++i<0x10)
 		}
 	}
 }

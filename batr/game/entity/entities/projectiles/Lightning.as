@@ -161,7 +161,7 @@ package batr.game.entity.entities.projectiles
 			this.dealTick();
 		}
 		
-		public override function drawShape():void 
+		public override function drawShape():void
 		{
 			
 		}

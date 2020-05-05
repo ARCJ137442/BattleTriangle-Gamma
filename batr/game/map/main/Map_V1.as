@@ -36,6 +36,7 @@ package batr.game.map.main
 		public static var MAP_D:Map_V1
 		public static var MAP_E:Map_V1
 		public static var MAP_F:Map_V1
+		public static var MAP_G:Map_V1
 		
 		protected static var isInited:Boolean=cInit()
 		
@@ -73,9 +74,9 @@ package batr.game.map.main
 			MAP_D=new Map_V1("D",null,true)
 			MAP_E=new Map_V1("E",null,true)
 			MAP_F=new Map_V1("F",null,true)
+			MAP_G=new Map_V1("G",null,true)
 			//====Basic Frame====//
-			FRAME.fillBlock(0,0,_SIZE-1,_SIZE-1,
-								  BlockType.BEDROCK,true)
+			FRAME.fillBlock(0,0,_SIZE-1,_SIZE-1,BlockType.BEDROCK,true)
 			//====Map 1====//
 			MAP_1.copyContextFrom(FRAME)
 			{
@@ -304,6 +305,7 @@ package batr.game.map.main
 					MAP_C.setBlock(3+(i>>1)*17,4+(i&1)*17,BlockCommon.fromType(BlockType.X_TRAP_HURT));
 				}
 			}
+			//====Map D====//
 			MAP_D.copyContextFrom(FRAME)
 			{
 				for(i=0;i<4;i++)
@@ -342,6 +344,7 @@ package batr.game.map.main
 				//XTrapHurt,r
 				MAP_D.fillBlock(13,10,16,13,BlockType.X_TRAP_HURT)
 			}
+			//====Map E====//
 			MAP_E.copyContextFrom(FRAME)
 			{
 				for(i=0;i<4;i++) MAP_E.addSpawnPointWithMark(2+(i>>1)*19,2+(i&1)*19);
@@ -372,6 +375,7 @@ package batr.game.map.main
 				//hurt,r
 				MAP_E.fillBlock(21,4,21,19,BlockType.X_TRAP_HURT)
 			}
+			//====Map F====//
 			MAP_F.copyContextFrom(EMPTY)
 			{
 				//Center spawnPoint
@@ -396,6 +400,14 @@ package batr.game.map.main
 				setReflectMirrorBlock(MAP_F,true,true,10,7,BlockCommon.fromType(BlockType.GATE_OPEN))
 				setReflectMirrorBlock(MAP_F,true,true,10,8,BlockCommon.fromType(BlockType.BEDROCK))
 				setReflectMirrorBlock(MAP_F,true,true,11,8,BlockCommon.fromType(BlockType.GATE_OPEN))
+			}
+			//====Map G====//
+			MAP_G.copyContextFrom(FRAME)
+			{
+				fillReflectMirrorBlock(MAP_G,true,true,3,3,8,3,BlockType.BEDROCK);
+				setReflectMirrorBlock(MAP_G,true,true,1,1,BlockCommon.fromType(BlockType.MOVEABLE_WALL));
+				MAP_G.fillBlock(4,4,19,19,BlockType.GATE_OPEN,false);
+				for(i=0;i<4;i++) MAP_G.addSpawnPointWithMark(2+(i>>1)*19,2+(i&1)*19);
 			}
 			//Set Variables//
 			return true;
@@ -689,19 +701,19 @@ package batr.game.map.main
 		//========Core========//
 		protected function _getBlock(x:int,y:int):BlockCommon
 		{
-			var block:BlockCommon=this._context[pointToIndex(x,y)] as BlockCommon
-			return block==null?BlockCommon.fromType(BlockType.NULL):block
+			var block:BlockCommon=this._context[pointToIndex(x,y)] as BlockCommon;
+			return block==null?BlockCommon.fromType(BlockType.NULL):block;
 		}
 		
 		protected function _setBlock(x:int,y:int,block:BlockCommon):void
 		{
-			if(block==null) _setVoid(x,y)
-			this._context[pointToIndex(x,y)]=block
+			if(block==null) _setVoid(x,y);
+			this._context[pointToIndex(x,y)]=block;
 		}
 		
 		protected function _setVoid(x:int,y:int):void
 		{
-			delete this._context[pointToIndex(x,y)]
+			delete this._context[pointToIndex(x,y)];
 		}
 		
 		public function fillBlock(x1:int,y1:int,x2:int,y2:int,
@@ -715,14 +727,33 @@ package batr.game.map.main
 			{
 				for(yi=yl;yi<=ym;yi++)
 				{
-					if(!outline||
-					   outline&&((xi==xm||xi==xl)||(yi==ym||yi==yl)))
+					if(!outline||outline&&((xi==xm||xi==xl)||(yi==ym||yi==yl)))
 					{
 						this._setBlock(xi,yi,BlockCommon.fromType(type))
 					}
 				}
 			}
-			return this
+			return this;
+		}
+		
+		public function fillBlock2(x1:int,y1:int,x2:int,y2:int,
+								  block:BlockCommon,
+								  outline:Boolean=false):Map_V1 
+		{
+			var xl:int=Math.min(x1,x2),xm:int=Math.max(x1,x2)
+			var yl:int=Math.min(y1,y2),ym:int=Math.max(y1,y2)
+			var xi:int,yi:int
+			for(xi=xl;xi<=xm;xi++)
+			{
+				for(yi=yl;yi<=ym;yi++)
+				{
+					if(!outline||outline&&((xi==xm||xi==xl)||(yi==ym||yi==yl)))
+					{
+						this._setBlock(xi,yi,block.clone())
+					}
+				}
+			}
+			return this;
 		}
 	}
 }

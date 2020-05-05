@@ -57,7 +57,7 @@ package batr.main
 			return _frame.visible
 		}
 		
-		public function set frameVisible(value:Boolean):void 
+		public function set frameVisible(value:Boolean):void
 		{
 			if(this._frame==null) return
 			_frame.visible=value
@@ -118,7 +118,7 @@ package batr.main
 			this.updateGrid(DEFAULT_DISPLAY_GRIDS,DEFAULT_DISPLAY_GRIDS);
 		}
 		
-		protected function drawLineInGrid(x1:int,y1:int,x2:int,y2:int):void 
+		protected function drawLineInGrid(x1:int,y1:int,x2:int,y2:int):void
 		{
 			this.graphics.moveTo(PosTransform.localPosToRealPos(x1),PosTransform.localPosToRealPos(y1));
 			this.graphics.lineTo(PosTransform.localPosToRealPos(x2),PosTransform.localPosToRealPos(y2));

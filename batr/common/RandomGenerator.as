@@ -62,19 +62,19 @@
 			return this._randomList[0];
 		}
 		
-		public function set seed(value:Number):void 
+		public function set seed(value:Number):void
 		{
 			var reGenerate:Boolean=(value!=this.seed);
 			this._randomList[0]=value;
 			if(reGenerate) dealReset();
 		}
 		
-		public function get mode():Number 
+		public function get mode():Number
 		{
 			return this._mode;
 		}
 		
-		public function set mode(value:Number):void 
+		public function set mode(value:Number):void
 		{
 			var reGenerate:Boolean=(value!=this.mode);
 			this._mode=value;
@@ -86,7 +86,7 @@
 			return this._buffer;
 		}
 		
-		public function set buffer(value:Vector.<Number>):void 
+		public function set buffer(value:Vector.<Number>):void
 		{
 			var reGenerate:Boolean=(!isEqualNumVec(this.buffer,value));
 			this._buffer=value;

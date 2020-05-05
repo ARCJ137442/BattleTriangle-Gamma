@@ -120,7 +120,7 @@ package batr.game.entity.entities.players
 			return this._experience;
 		}
 		
-		public function set experience(value:uint):void 
+		public function set experience(value:uint):void
 		{
 			while(value>this.uplevelExperience)
 			{
@@ -142,7 +142,7 @@ package batr.game.entity.entities.players
 			return this._level;
 		}
 		
-		public function set level(value:uint):void 
+		public function set level(value:uint):void
 		{
 			this._level=value;
 		}
@@ -252,7 +252,7 @@ package batr.game.entity.entities.players
 		}
 		
 		//============Destructor Function============//
-		public override function deleteSelf():void 
+		public override function deleteSelf():void
 		{
 			//Reset Key
 			this.trunAllKeyUp();

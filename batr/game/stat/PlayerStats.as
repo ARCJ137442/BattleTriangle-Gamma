@@ -218,9 +218,8 @@ package batr.game.stat
 		{
 			return exMath.intMax(
 			this.profile.level*50+this.profile.experience*5+
-			this.pickupBonusBoxCount*10+
 			this.killAllyCount-this.suicideCount,
-			0)+exMath.intMax(this.killCount*100-this.deathCount*25,0)+exMath.intMax(this.causeDamage-this.damageBy,0)
+			0)+exMath.intMax(this.pickupBonusBoxCount*10+this.killCount*2-this.deathCount,0)*50+exMath.intMax(this.causeDamage-this.damageBy,0)
 		}
 		
 		//============Instance Functions============//

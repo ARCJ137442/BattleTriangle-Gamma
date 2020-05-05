@@ -22,7 +22,7 @@ package
 			stage.addEventListener(KeyboardEvent.KEY_DOWN,onKD);
 		}
 		
-		public function onKD(E:KeyboardEvent):void 
+		public function onKD(E:KeyboardEvent):void
 		{
 			var code:uint=E.keyCode;
 			var ctrl:Boolean=E.ctrlKey

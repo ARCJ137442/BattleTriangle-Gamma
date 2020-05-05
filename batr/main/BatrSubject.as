@@ -166,7 +166,7 @@ package batr.main
 			this.addChild(this._menu);
 		}
 		
-		public function resize():void 
+		public function resize():void
 		{
 			this.scaleX=this.scaleY=GlobalGameVariables.DEFAULT_SCALE
 		}

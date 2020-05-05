@@ -48,7 +48,7 @@ package batr.game.block.blocks
 			return new Water(this._fillColor)
 		}
 		
-		protected override function drawMain():void 
+		protected override function drawMain():void
 		{
 			this.graphics.beginFill(this._fillColor,Water.ALPHA)
 			this.graphics.drawRect(0,0,GlobalGameVariables.DEFAULT_SIZE,GlobalGameVariables.DEFAULT_SIZE)

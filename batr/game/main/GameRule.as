@@ -350,12 +350,12 @@ package batr.game.main
 			this._bonusBoxMaxCount=value;
 		}
 		
-		public function get bonusBoxSpawnChance():Number 
+		public function get bonusBoxSpawnChance():Number
 		{
 			return this._bonusBoxSpawnChance;
 		}
 		
-		public function set bonusBoxSpawnChance(value:Number):void 
+		public function set bonusBoxSpawnChance(value:Number):void
 		{
 			if(value==this._bonusBoxSpawnChance) return;
 			onVariableUpdate(this._bonusBoxSpawnChance,value);
@@ -444,7 +444,7 @@ package batr.game.main
 			return this._bonusBoxSpawnAfterPlayerDeath;
 		}
 		
-		public function set bonusBoxSpawnAfterPlayerDeath(value:Boolean):void 
+		public function set bonusBoxSpawnAfterPlayerDeath(value:Boolean):void
 		{
 			if(value==this._bonusBoxSpawnAfterPlayerDeath) return;
 			onVariableUpdate(this._bonusBoxSpawnAfterPlayerDeath,value);
@@ -456,7 +456,7 @@ package batr.game.main
 			return this._initialMapID;
 		}
 		
-		public function set initialMapID(value:int):void 
+		public function set initialMapID(value:int):void
 		{
 			if(value==this._initialMapID) return;
 			onVariableUpdate(this._initialMapID,value);
@@ -468,7 +468,7 @@ package batr.game.main
 			return this._mapTransformTime;
 		}
 		
-		public function set mapTransformTime(value:uint):void 
+		public function set mapTransformTime(value:uint):void
 		{
 			if(value==this._mapTransformTime) return;
 			onVariableUpdate(this._mapTransformTime,value);
@@ -534,7 +534,7 @@ package batr.game.main
 			return this._weaponsNoCD;
 		}
 		
-		public function set weaponsNoCD(value:Boolean):void 
+		public function set weaponsNoCD(value:Boolean):void
 		{
 			if(value==this._weaponsNoCD) return;
 			onVariableUpdate(this._weaponsNoCD,value);
@@ -547,31 +547,31 @@ package batr.game.main
 			return this._defaultRespawnTime;
 		}
 		
-		public function set defaultRespawnTime(value:uint):void 
+		public function set defaultRespawnTime(value:uint):void
 		{
 			if(value==this._defaultRespawnTime) return;
 			onVariableUpdate(this._defaultRespawnTime,value);
 			this._defaultRespawnTime=value;
 		}
 		
-		public function get deadPlayerMoveToX():Number 
+		public function get deadPlayerMoveToX():Number
 		{
 			return this._deadPlayerMoveToX;
 		}
 		
-		public function set deadPlayerMoveToX(value:Number):void 
+		public function set deadPlayerMoveToX(value:Number):void
 		{
 			if(value==this._deadPlayerMoveToX) return;
 			onVariableUpdate(this._deadPlayerMoveToX,value);
 			this._deadPlayerMoveToX=value;
 		}
 		
-		public function get deadPlayerMoveToY():Number 
+		public function get deadPlayerMoveToY():Number
 		{
 			return this._deadPlayerMoveToY;
 		}
 		
-		public function set deadPlayerMoveToY(value:Number):void 
+		public function set deadPlayerMoveToY(value:Number):void
 		{
 			if(value==this._deadPlayerMoveToY) return;
 			onVariableUpdate(this._deadPlayerMoveToY,value);
@@ -640,7 +640,7 @@ package batr.game.main
 			return this._playerAsphyxiaDamage;
 		}
 		
-		public function set playerAsphyxiaDamage(value:int):void 
+		public function set playerAsphyxiaDamage(value:int):void
 		{
 			if(value==this._playerAsphyxiaDamage) return;
 			onVariableUpdate(this._playerAsphyxiaDamage,value);
@@ -653,7 +653,7 @@ package batr.game.main
 			return this._coloredTeamCount;
 		}
 		
-		public function set coloredTeamCount(value:uint):void 
+		public function set coloredTeamCount(value:uint):void
 		{
 			if(value==this._coloredTeamCount) return;
 			onVariableUpdate(this._coloredTeamCount,value);
@@ -667,7 +667,7 @@ package batr.game.main
 			return this._grayscaleTeamCount;
 		}
 		
-		public function set grayscaleTeamCount(value:uint):void 
+		public function set grayscaleTeamCount(value:uint):void
 		{
 			if(value==this._grayscaleTeamCount) return;
 			onVariableUpdate(this._grayscaleTeamCount,value);
@@ -687,7 +687,7 @@ package batr.game.main
 			return this._allowTeamVictory;
 		}
 		
-		public function set allowTeamVictory(value:Boolean):void 
+		public function set allowTeamVictory(value:Boolean):void
 		{
 			if(value==this._allowTeamVictory) return;
 			onVariableUpdate(this._allowTeamVictory,value);

@@ -24,7 +24,7 @@ package batr.translations
 		}
 		
 		//============Destructor Function============//
-		override public function deleteSelf():void 
+		override public function deleteSelf():void
 		{
 			this._prefix=this._suffix=null;
 			super.deleteSelf();
