@@ -918,7 +918,7 @@ package batr.game.entity.entities.players
 		
 		public final function operateFinalRadius(defaultRadius:uint):Number
 		{
-			return defaultRadius*this._buffRadius/(1+this._buffRadius)*4;
+			return defaultRadius*(1+Math.min(this.buffRadius/16,3));
 		}
 		
 		public final function operateFinalLightningEnergy(defaultEnergy:uint):int
