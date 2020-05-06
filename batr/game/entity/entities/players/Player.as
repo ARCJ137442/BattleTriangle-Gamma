@@ -109,7 +109,7 @@ package batr.game.entity.entities.players
 		protected var _healDelay:uint=0
 		
 		//========Attributes========//
-		public var moveDistence:Number=1
+		public var moveDistence:uint=1
 		public var invulnerable:Boolean=false
 		
 		//====Experience====//
@@ -284,14 +284,22 @@ package batr.game.entity.entities.players
 			return this._GUI;
 		}
 		
+		/**
+		 * Cannot using INT to return!
+		 * Because it's on the center of block!
+		 */
 		public function get frontX():Number
 		{
-			return getFrontIntX(this.moveDistence);
+			return this.getFrontIntX(this.moveDistence);
 		}
 		
+		/**
+		 * Cannot using INT to return!
+		 * Because it's on the center of block!
+		 */
 		public function get frontY():Number
 		{
-			return getFrontIntY(this.moveDistence);
+			return this.getFrontIntY(this.moveDistence);
 		}
 		
 		public function get team():PlayerTeam
@@ -332,7 +340,7 @@ package batr.game.entity.entities.players
 			if(value==this._weapon) return;
 			this.resetCD();
 			this.resetCharge();
-			onWeaponChange(this._weapon,value);
+			this.onWeaponChange(this._weapon,value);
 			this._weapon=value;
 		}
 		
@@ -822,8 +830,9 @@ package batr.game.entity.entities.players
 		//====Functions About Weapon====//
 		protected function onWeaponChange(oldType:WeaponType,newType:WeaponType):void
 		{
-			initWeaponCharge()
-			this.resetCharge(false)
+			this.initWeaponCharge();
+			this.resetCharge(false);
+			//If The Block is still carring,then throw without charge(WIP,maybe?)
 		}
 		
 		protected function dealUsingCD():void
@@ -841,11 +850,11 @@ package batr.game.entity.entities.players
 				}
 				else if(this._weaponChargeTime<0)
 				{
-					initWeaponCharge();
+					this.initWeaponCharge();
 				}
 				else
 				{
-					dealWeaponCharge();
+					this.dealWeaponCharge();
 				}
 			}
 		}

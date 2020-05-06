@@ -14,8 +14,7 @@ package batr.game.entity.entities.projectiles
 		public var damage:uint
 		
 		//============Constructor Function============//
-		public function ProjectileCommon(host:Game,x:Number,y:Number,
-										 owner:Player):void
+		public function ProjectileCommon(host:Game,x:Number,y:Number,owner:Player):void
 		{
 			super(host,x,y);
 			this._owner=owner;

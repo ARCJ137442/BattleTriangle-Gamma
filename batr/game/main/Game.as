@@ -773,7 +773,7 @@ package batr.game.main
 		
 		public function testIntCanPass(x:int,y:int,asPlayer:Boolean,asBullet:Boolean,asLaser:Boolean,includePlayer:Boolean=true,avoidHurting:Boolean=false):Boolean
 		{
-			//if(debugMode) trace("testCanPass:"+arguments+";"+this.getBlockAttributes(x,y).bulletCanPass,isHitAnyPlayer(x,y))
+			//Debug: trace("testCanPass:"+arguments+";"+this.getBlockAttributes(x,y).bulletCanPass,isHitAnyPlayer(x,y))
 			var mapX:int=this.lockPosInMap(x,true)
 			var mapY:int=this.lockPosInMap(y,false)
 			//if(isOutOfMap(gridX,gridY)) return true
@@ -791,7 +791,7 @@ package batr.game.main
 		 */
 		public function testFrontCanPass(entity:EntityCommon,distance:Number,asPlayer:Boolean,asBullet:Boolean,asLaser:Boolean,includePlayer:Boolean=true,avoidTrap:Boolean=false):Boolean
 		{
-			if(debugMode) trace("testFrontCanPass:"+entity.type.name+","+entity.getFrontX(distance)+","+entity.getFrontY(distance))
+			//Debug: trace("testFrontCanPass:"+entity.type.name+","+entity.getFrontX(distance)+","+entity.getFrontY(distance))
 			return testCanPass(entity.getFrontX(distance),
 							   entity.getFrontY(distance),
 							   asPlayer,
@@ -804,13 +804,12 @@ package batr.game.main
 		/**
 		 * return testCanPass as player in other position.
 		 */
-		public function testPlayerCanPass(player:Player,x:Number,y:Number,includePlayer:Boolean=true,avoidHurting:Boolean=false):Boolean
+		public function testPlayerCanPass(player:Player,x:int,y:int,includePlayer:Boolean=true,avoidHurting:Boolean=false):Boolean
 		{
-			//Debug
-			if(debugMode) trace("testPlayerCanPass:"+player.customName+","+x+","+y+","+includePlayer)
+			//Debug: trace("testPlayerCanPass:"+player.customName+","+x+","+y+","+includePlayer)
 			//Define
-			var gridX:int=this.lockPosInMap(PosTransform.alignToGrid(x),true)
-			var gridY:int=this.lockPosInMap(PosTransform.alignToGrid(y),false)
+			var gridX:int=this.lockIntPosInMap(x,true)
+			var gridY:int=this.lockIntPosInMap(y,false)
 			var attributes:BlockAttributes=this.getBlockAttributes(gridX,gridY)
 			//Test
 			//if(isOutOfMap(gridX,gridY)) return true
@@ -820,13 +819,23 @@ package batr.game.main
 			return true
 		}
 		
-		public function testPlayerFrontCanPass(player:Player,rotatedAsRot:uint=5,includePlayer:Boolean=true,avoidTrap:Boolean=false):Boolean
+		public function testFullPlayerCanPass(player:Player,x:int,y:int,oldX:int,oldY:int,includePlayer:Boolean=true,avoidHurting:Boolean=false):Boolean
 		{
-			return testPlayerCanPass(player,
-									 player.getFrontIntX(player.moveDistence,rotatedAsRot),
-									 player.getFrontIntY(player.moveDistence,rotatedAsRot),
-									 includePlayer,
-									 avoidTrap)
+			//Debug: trace("testFullPlayerCanPass:"+player.customName+","+x+","+y+","+oldX+","+oldY+","+includePlayer)
+			//Target can pass
+			if(!testPlayerCanPass(player,x,y,includePlayer,avoidHurting)) return false;
+			//Test Whether OldBlock can Support
+			//if(!testPlayerCanPass(player,oldX,oldY,includePlayer,avoidHurting)) return false;//don't support
+			return true
+		}
+		
+		public function testPlayerCanPassToFront(player:Player,rotatedAsRot:uint=5,includePlayer:Boolean=true,avoidTrap:Boolean=false):Boolean
+		{
+			return this.testFullPlayerCanPass(player,
+											  PosTransform.alignToGrid(player.getFrontIntX(player.moveDistence,rotatedAsRot)),
+											  PosTransform.alignToGrid(player.getFrontIntY(player.moveDistence,rotatedAsRot)),
+											  player.gridX,player.gridY,
+											  includePlayer,avoidTrap)
 		}
 		
 		public function testCarryableWithMap(blockAtt:BlockAttributes,map:IMap):Boolean
@@ -1361,7 +1370,7 @@ package batr.game.main
 					break;
 				}
 			}
-			if(debugMode) trace("spread "+player.customName+" "+(i+1)+" times.")
+			//Debug: trace("Spread "+player.customName+" "+(i+1)+" times.")
 			return player;
 		}
 		
@@ -1388,7 +1397,7 @@ package batr.game.main
 			this.addSpawnEffect(player.entityX,player.entityY);
 			this.addPlayerDeathLightEffect2(player.entityX,player.entityY,player,true);
 			//Return
-			if(debugMode) trace("respawnPlayer:respawn "+player.customName+".")
+			//Debug: trace("respawnPlayer:respawn "+player.customName+".")
 			return player;
 		}
 		
@@ -1602,16 +1611,13 @@ package batr.game.main
 		{
 			//Detect
 			if(!player.isActive||!player.visible) return
-			//Debug
-			if(debugMode) trace("movePlayer:",player.customName,rot,"pos 1:",player.getX(),player.getY(),
-								"pos 2:",player.getFrontX(distance),player.getFrontY(distance),
-								"pos 3:",player.getFrontIntX(distance),player.getFrontIntY(distance))
+			/*For Debug:trace("movePlayer:",player.customName,rot,"pos 1:",player.getX(),player.getY(),
+						"pos 2:",player.getFrontX(distance),player.getFrontY(distance),
+						"pos 3:",player.getFrontIntX(distance),player.getFrontIntY(distance))
+			*/
 			player.rot=rot
-			if(testPlayerFrontCanPass(player))
-			{
-				player.setXY(player.frontX,player.frontY)
-			}
-			onPlayerMove(player)
+			if(testPlayerCanPassToFront(player)) player.setXY(player.frontX,player.frontY)
+			this.onPlayerMove(player)
 		}
 		
 		public function playerUseWeapon(player:Player,rot:uint,chargePercent:Number):void
@@ -1631,8 +1637,7 @@ package batr.game.main
 			{
 				laserLength=getLaserLength(player,rot)-GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE
 			}
-			//Debug
-			if(debugMode) trace("playerUseWeapon:","X=",player.getX(),spawnX,"Y:",player.getY(),spawnY)
+			//Debug: trace("playerUseWeapon:","X=",player.getX(),spawnX,"Y:",player.getY(),spawnY)
 			//Summon Projectile
 			switch(player.weapon)
 			{

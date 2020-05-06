@@ -15,7 +15,7 @@ package batr.general
 			return p+0.5
 		}
 		
-		public static function alignToGrid(p:Number):Number
+		public static function alignToGrid(p:Number):int
 		{
 			return p<0?-1:0+Math.floor(p)
 		}

@@ -57,7 +57,7 @@ package batr.game.entity.ai.programs
 			if(player==null) return AIPlayerAction.NULL
 			if(!player.isPress_Use) return AIPlayerAction.PRESS_KEY_USE
 			if(this._moveSum>=this._moveMaxSum||
-			   !player.host.testPlayerFrontCanPass(player))
+			   !player.host.testPlayerCanPassToFront(player))
 			{
 				this._moveSum=0
 				var i:uint=0
@@ -66,7 +66,7 @@ package batr.game.entity.ai.programs
 					this._tempRot=GlobalRot.RANDOM
 					i++
 				}
-				while(i<=8&&!player.host.testPlayerFrontCanPass(player,this._tempRot,true))
+				while(i<=8&&!player.host.testPlayerCanPassToFront(player,this._tempRot,true))
 				player.addActionToThread(AIPlayerAction.DISABLE_CHARGE)
 				return AIPlayerAction.getTrunActionFromEntityRot(this._tempRot)
 			}

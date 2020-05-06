@@ -172,8 +172,8 @@ package batr.game.map.main
 			//====Map 7====//
 			MAP_7.copyContextFrom(FRAME)
 			{
-				MAP_7.fillBlock(1,5,23,6,BlockType.WATER)//up side
-				MAP_7.fillBlock(1,17,23,18,BlockType.WATER)//down side
+				MAP_7.fillBlock(1,5,22,6,BlockType.WATER)//up side
+				MAP_7.fillBlock(1,17,22,18,BlockType.WATER)//down side
 				MAP_7.setBlock(10,10,BlockCommon.fromType(BlockType.COLOR_SPAWNER))
 				MAP_7.setBlock(10,13,BlockCommon.fromType(BlockType.COLOR_SPAWNER))
 				MAP_7.setBlock(13,10,BlockCommon.fromType(BlockType.COLOR_SPAWNER))

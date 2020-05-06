@@ -7,6 +7,10 @@ package batr.game.entity
 	
 	import flash.display.Sprite;
 	
+	/**
+	 * ABSTRUCT
+	 * @author ARCJ137442
+	 */
 	public class EntityCommon extends Sprite
 	{
 		//============Static Variables============//
@@ -235,6 +239,16 @@ package batr.game.entity
 		public function getFrontIntY(distance:Number=1,rotatedAsRot:uint=5):Number
 		{
 			return this.getY()+GlobalRot.towardIntY(rotatedAsRot>4?this.rot:rotatedAsRot,distance);
+		}
+		
+		public function getFrontXInt(distance:int=1,rotatedAsRot:uint=5):int
+		{
+			return this.getX()+GlobalRot.towardXInt(rotatedAsRot>4?this.rot:rotatedAsRot,distance);
+		}
+		
+		public function getFrontYInt(distance:int=1,rotatedAsRot:uint=5):int
+		{
+			return this.getY()+GlobalRot.towardYInt(rotatedAsRot>4?this.rot:rotatedAsRot,distance);
 		}
 		
 		public function moveForward(distance:Number=1):void

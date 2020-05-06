@@ -100,6 +100,11 @@ package batr.general
 			return rot*90;
 		}
 		
+		public static function toRealIntRot(rot:int):int
+		{
+			return rot*90;
+		}
+		
 		/** Use for express the currentRot in the containerRot
 		 * 	examples:
 		 * 	1.a rot out a object is 45°(local:0.5),

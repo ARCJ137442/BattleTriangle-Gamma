@@ -15,7 +15,7 @@ package batr.game.entity.entities.projectiles
 	public class BulletBasic extends ProjectileCommon
 	{
 		//============Static Variables============//
-		public static const LINE_SIZE:Number=GlobalGameVariables.DEFAULT_SIZE/96
+		public static const LINE_SIZE:Number=GlobalGameVariables.DEFAULT_SIZE/80
 		public static const SIZE:Number=PosTransform.localPosToRealPos(3/8)
 		public static const DEFAULT_SPEED:Number=16/GlobalGameVariables.TPS*2
 		public static const DEFAULT_EXPLODE_RADIUS:Number=1
@@ -107,26 +107,30 @@ package batr.game.entity.entities.projectiles
 		{
 			var realRadiusX:Number=SIZE/2
 			var realRadiusY:Number=SIZE/2
-			graphics.clear();
-			graphics.lineStyle(LINE_SIZE,this.ownerLineColor);
-			//graphics.beginFill(this._fillColor);
-			var m:Matrix=new Matrix()
-			m.createGradientBox(SIZE,
-								SIZE,0,-realRadiusX,-realRadiusX)
-			graphics.beginGradientFill(GradientType.LINEAR,
-            [this.ownerColor,ownerLineColor],
-            [1,1],
-            [63,255],
-            m,
-            SpreadMethod.PAD,
-            InterpolationMethod.RGB,
-            1)
-			graphics.moveTo(-realRadiusX,-realRadiusY);
-			graphics.lineTo(realRadiusX,0);
-			graphics.lineTo(-realRadiusX,realRadiusY);
-			graphics.lineTo(-realRadiusX,-realRadiusY);
-			//graphics.drawCircle(0,0,10)
-			graphics.endFill();
+			with(this.graphics)
+			{
+				clear();
+				lineStyle(LINE_SIZE,this.ownerLineColor);
+				beginFill(this.ownerColor);
+				/* GRADIENT-FILL REMOVED
+				var m:Matrix=new Matrix()
+				m.createGradientBox(SIZE,
+									SIZE,0,-realRadiusX,-realRadiusX)
+				beginGradientFill(GradientType.LINEAR,
+				[this.ownerColor,ownerLineColor],
+				[1,1],
+				[63,255],
+				m,
+				SpreadMethod.PAD,
+				InterpolationMethod.RGB,
+				1)
+				*/
+				moveTo(-realRadiusX,-realRadiusY);
+				lineTo(realRadiusX,0);
+				lineTo(-realRadiusX,realRadiusY);
+				lineTo(-realRadiusX,-realRadiusY);
+				endFill();
+			}
 		}
 	}
 }

@@ -61,7 +61,7 @@ package batr.game.entity.entities.projectiles
 		//====Tick Function====//
 		public override function onProjectileTick():void
 		{
-			if(!this._host.isOutOfMap(this.lockedEntityX,this.lockedEntityY)&&
+			if(!this._host.isOutOfMap(this.entityX,this.entityY)&&
 				this._host.testCanPass(
 					this.lockedEntityX,this.lockedEntityY,
 					false,true,false,false
