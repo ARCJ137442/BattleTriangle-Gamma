@@ -58,6 +58,16 @@ package batr.game.main
 		 */
 		protected static const d_bonusBoxSpawnAfterPlayerDeath:Boolean=true
 		
+		//====Bonus's Buff====//
+		/**
+		 * Determines bonus(type=buffs)'s amount of addition
+		 */
+		protected static const d_bonusBuffAdditionAmount:uint=1
+		/**
+		 * Determines bonus(type=ADD_LIFE)'s amount of addition
+		 */
+		protected static const d_bonusMaxHealthAdditionAmount:uint=5
+		
 		//====Map====//
 		/**
 		 * [{map:<MAP>,weight:<Number>},...]
@@ -161,6 +171,10 @@ package batr.game.main
 		protected var _bonusBoxSpawnPotentials:Vector.<Object>//[{type:<BonusBoxType>,weight:<Number>},...]
 		protected var _bonusBoxSpawnAfterPlayerDeath:Boolean
 		
+		//Bonus's Buff
+		protected var _bonusBuffAdditionAmount:uint
+		protected var _bonusMaxHealthAdditionAmount:uint
+		
 		//Map
 		/**
 		 * Null means all type can be spawned and they have same weight
@@ -253,7 +267,7 @@ package batr.game.main
 			//Test
 			if(this._bonusBoxSpawnPotentials==null)
 			{
-				return BonusType.RANDOM
+				return BonusType.RANDOM_AVALIABLE
 			}
 			//Add
 			var types:Vector.<BonusType>=new Vector.<BonusType>();
@@ -392,6 +406,43 @@ package batr.game.main
 			this._bonusBoxSpawnPotentials=_v;
 		}
 		
+		public function get bonusBoxSpawnAfterPlayerDeath():Boolean
+		{
+			return this._bonusBoxSpawnAfterPlayerDeath;
+		}
+		
+		public function set bonusBoxSpawnAfterPlayerDeath(value:Boolean):void
+		{
+			if(value==this._bonusBoxSpawnAfterPlayerDeath) return;
+			onVariableUpdate(this._bonusBoxSpawnAfterPlayerDeath,value);
+			this._bonusBoxSpawnAfterPlayerDeath=value;
+		}
+		
+		//Bonus's Buff
+		public function get bonusBuffAdditionAmount():uint
+		{
+			return this._bonusBuffAdditionAmount;
+		}
+		
+		public function set bonusBuffAdditionAmount(value:uint):void
+		{
+			if(value==this._bonusBuffAdditionAmount) return;
+			onVariableUpdate(this._bonusBuffAdditionAmount,value);
+			this._bonusBuffAdditionAmount=value;
+		}
+		
+		public function get bonusMaxHealthAdditionAmount():uint
+		{
+			return this._bonusMaxHealthAdditionAmount;
+		}
+		
+		public function set bonusMaxHealthAdditionAmount(value:uint):void
+		{
+			if(value==this._bonusMaxHealthAdditionAmount) return;
+			onVariableUpdate(this._bonusMaxHealthAdditionAmount,value);
+			this._bonusMaxHealthAdditionAmount=value;
+		}
+		
 		//Map
 		public function get mapRandomPotentials():Vector.<Object>
 		{
@@ -437,18 +488,6 @@ package batr.game.main
 				}
 			}
 			return wv
-		}
-		
-		public function get bonusBoxSpawnAfterPlayerDeath():Boolean
-		{
-			return this._bonusBoxSpawnAfterPlayerDeath;
-		}
-		
-		public function set bonusBoxSpawnAfterPlayerDeath(value:Boolean):void
-		{
-			if(value==this._bonusBoxSpawnAfterPlayerDeath) return;
-			onVariableUpdate(this._bonusBoxSpawnAfterPlayerDeath,value);
-			this._bonusBoxSpawnAfterPlayerDeath=value;
 		}
 		
 		public function get initialMapID():int
@@ -707,6 +746,9 @@ package batr.game.main
 			this._bonusBoxMaxCount=d_bonusBoxMaxCount;
 			this._bonusBoxSpawnPotentials=d_bonusBoxSpawnPotentials;
 			this._bonusBoxSpawnAfterPlayerDeath=d_bonusBoxSpawnAfterPlayerDeath;
+			//Bonus's Buff
+			this._bonusBuffAdditionAmount=d_bonusBuffAdditionAmount;
+			this._bonusMaxHealthAdditionAmount=d_bonusMaxHealthAdditionAmount;
 			//Map
 			this._mapRandomPotentials=d_mapRandomPotentials;
 			this._initialMapID=d_initialMapID;

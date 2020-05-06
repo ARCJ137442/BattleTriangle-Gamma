@@ -2010,30 +2010,35 @@ package batr.game.main
 		
 		public function onPlayerLevelup(player:Player):void
 		{
-			//Random add buff
 			var color:uint;
-			switch(exMath.random(4))
+			var i:uint=0;
+			var nowE:uint=exMath.random(4);
+			//Add buff of cd,resistance,radius,damage
+			player.buffCD+=this.rule.bonusBuffAdditionAmount;
+			player.buffResistance+=this.rule.bonusBuffAdditionAmount;
+			player.buffRadius+=this.rule.bonusBuffAdditionAmount;
+			player.buffDamage+=this.rule.bonusBuffAdditionAmount;
+			while(i<3)
 			{
-				case 1:
-					player.buffCD++;
-					color=BonusBoxSymbol.BUFF_CD_COLOR;
-				break;
-				case 2:
-					player.buffResistance++;
-					color=BonusBoxSymbol.BUFF_RESISTANCE_COLOR;
-				break;
-				case 3:
-					player.buffRadius++;
-					color=BonusBoxSymbol.BUFF_RADIUS_COLOR;
-				break;
-				default:
-					player.buffDamage++;
-					color=BonusBoxSymbol.BUFF_DAMAGE_COLOR;
+				switch(nowE)
+				{
+					case 1:
+						color=BonusBoxSymbol.BUFF_CD_COLOR;
+						break;
+					case 2:
+						color=BonusBoxSymbol.BUFF_RESISTANCE_COLOR;
+						break;
+					case 3:
+						color=BonusBoxSymbol.BUFF_RADIUS_COLOR;
+						break;
+					default:
+						color=BonusBoxSymbol.BUFF_DAMAGE_COLOR;
+				}
+				nowE=(nowE+1)&3;
+				i++;
+				//Add Effect
+				this.addPlayerLevelupEffect(player.entityX+(i&1)-0.5,player.entityY+(i>>1)-0.5,color,0.75);
 			}
-			//Add Effect
-			this.addPlayerLevelupEffect(player.entityX+0.5,
-										player.entityY+0.5,
-										color,0.75);
 		}
 		
 		public function onRandomTick(x:int,y:int):void

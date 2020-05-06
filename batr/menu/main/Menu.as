@@ -408,17 +408,17 @@ package batr.menu.main
 			var versionText=new TextField();
 			versionText.text=GlobalGameInformations.GAME_FULL_VERSION;
 			versionText.setTextFormat(Menu.VERSION_TEXT_FORMAT);
-			versionText.width=versionText.textWidth+10;
+			versionText.width=versionText.textWidth+20;
 			versionText.height=versionText.textHeight+5;
 			versionText.x=PosTransform.localPosToRealPos(1);
 			versionText.y=PosTransform.localPosToRealPos(23)-versionText.textHeight;
-			this.addChild(versionText)
+			this.addChild(versionText);
 			versionText.selectable=false;
 			//Add Language Selecter
 			this._languageSelecter=new BatrSelecter(BatrSelecterContext.createLanguageContext(Translations.getIDFromTranslation(this.translations)));
 			this._languageSelecter.x=PosTransform.localPosToRealPos(21);
 			this._languageSelecter.y=PosTransform.localPosToRealPos(22.5);
-			this._languageSelecter.addEventListener(BatrGUIEvent.CLICK,this.onLanguageChange)
+			this._languageSelecter.addEventListener(BatrGUIEvent.CLICK,this.onLanguageChange);
 			this.addChild(this._languageSelecter);
 		}
 		

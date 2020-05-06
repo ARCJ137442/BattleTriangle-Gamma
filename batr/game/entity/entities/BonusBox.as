@@ -95,6 +95,7 @@ package batr.game.entity.entities
 			//Disactive
 			this.isActive=false;
 			//Effect
+			var buffColor:int=-1;
 			switch(this._bonusType)
 			{
 				//Health,Heal&Life
@@ -105,7 +106,7 @@ package batr.game.entity.entities
 					player.heal+=5*(1+exMath.random(25));
 					break;
 				case BonusType.ADD_LIFE:
-					if(player.infinityLife||player.isFullHealth) player.maxHealth+=5;
+					if(player.infinityLife||player.isFullHealth) player.maxHealth+=this.host.rule.bonusMaxHealthAdditionAmount;
 					else player.lifes++;
 					break;
 				//Weapon
@@ -114,19 +115,24 @@ package batr.game.entity.entities
 					break;
 				//Attributes
 				case BonusType.BUFF_DAMAGE:
-					player.buffDamage++;
+					player.buffDamage+=this.host.rule.bonusBuffAdditionAmount;
+					buffColor=BonusBoxSymbol.BUFF_DAMAGE_COLOR
 					break;
 				case BonusType.BUFF_CD:
-					player.buffCD++;
+					player.buffCD+=this.host.rule.bonusBuffAdditionAmount;
+					buffColor=BonusBoxSymbol.BUFF_CD_COLOR
 					break;
 				case BonusType.BUFF_RESISTANCE:
-					player.buffResistance++;
+					player.buffResistance+=this.host.rule.bonusBuffAdditionAmount;
+					buffColor=BonusBoxSymbol.BUFF_RESISTANCE_COLOR
 					break;
 				case BonusType.BUFF_RADIUS:
-					player.buffRadius++;
+					player.buffRadius+=this.host.rule.bonusBuffAdditionAmount;
+					buffColor=BonusBoxSymbol.BUFF_RADIUS_COLOR
 					break;
 				case BonusType.ADD_EXPERIENCE:
 					player.experience+=((player.level>>2)+1)<<2;
+					buffColor=BonusBoxSymbol.EXPERIENCE_COLOR
 					break;
 				//Team
 				case BonusType.RANDOM_CHANGE_TEAM:
@@ -143,6 +149,7 @@ package batr.game.entity.entities
 					this._host.spreadPlayer(player,false,true);
 					break;
 			}
+			if(buffColor>=0) this.host.addPlayerLevelupEffect(player.entityX+0.5,player.entityY+0.5,buffColor,0.75);
 			//Stats Operations
 			player.stats.pickupBonusBoxCount++;
 			//Remove

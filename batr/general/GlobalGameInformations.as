@@ -9,7 +9,7 @@ package batr.general
 		public static const GAME_VERSION_MAJOR:String="0.2.0";
 		public static const GAME_VERSION_MAIN:String="alpha";
 		public static const GAME_VERSION_BUILD:String="02";
-		public static const GAME_UPDATE_LOG:String="Smarter AI>>>Bug Fix>>>Added Game Score Rank";
+		public static const GAME_UPDATE_LOG:String="Optimize (Experience&Buff) System>>>Smarter AI>>>Bug Fix>>>Added Game Score Rank";
 		
 		//============Static Getter And Setter============//
 		public static function get GAME_FULL_NAME():String
