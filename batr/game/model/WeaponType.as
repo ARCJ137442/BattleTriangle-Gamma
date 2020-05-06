@@ -10,13 +10,13 @@ package batr.game.model
 		public static const ABSTRACT:WeaponType=new WeaponType("Abstract",0,0)
 		
 		public static const BULLET:WeaponType=new WeaponType("Bullet",0.25,5).setExtraProperty(1,1)
-		public static const NUKE:WeaponType=new WeaponType("Nuke",5,320,5,true,true,true).setExtraProperty(20,5)
+		public static const NUKE:WeaponType=new WeaponType("Nuke",5,320,5,true,true,true).setExtraProperty(10,15)
 		public static const SUB_BOMBER:WeaponType=new WeaponType("Sub Bomber",1,10,1).setExtraProperty(2,1)
 		//public static const POISON_BOMB:WeaponType=new WeaponType("Poison Bomb",9,50)
 		
 		public static const LASER:WeaponType=new WeaponType("Laser",3,120,1).setExtraProperty(8,6)
-		public static const PULSE_LASER:WeaponType=new WeaponType("Pulse Laser",0.5,5,0.5).setExtraProperty(5,1)
-		public static const TELEPORT_LASER:WeaponType=new WeaponType("Teleport Laser",3.5,40).setExtraProperty(4,4)
+		public static const PULSE_LASER:WeaponType=new WeaponType("Pulse Laser",0.5,5,0.5).setExtraProperty(3,3)
+		public static const TELEPORT_LASER:WeaponType=new WeaponType("Teleport Laser",3.5,40).setExtraProperty(4,3)
 		public static const ABSORPTION_LASER:WeaponType=new WeaponType("Absorption Laser",4,10).setExtraProperty(4,2)
 		
 		public static const WAVE:WeaponType=new WeaponType("Wave",0.5,20,2).setExtraProperty(3,3)//Full Charge
@@ -24,8 +24,8 @@ package batr.game.model
 		
 		//public static const T_BOMB:WeaponType=new WeaponType("T-Bomb",7.5,80)
 		public static const MELEE:WeaponType=new WeaponType("Melee",0.25,5).setExtraProperty(5,3)
-		public static const BLOCK_THROWER:WeaponType=new WeaponType("Block Thrower",.5,200,1,true,true,true).setExtraProperty(10,15)
-		public static const LIGHTNING:WeaponType=new WeaponType("Lightning",0.75,20).setExtraProperty(2,1)
+		public static const BLOCK_THROWER:WeaponType=new WeaponType("Block Thrower",.5,200,1,true,true,true).setExtraProperty(10,10)
+		public static const LIGHTNING:WeaponType=new WeaponType("Lightning",0.75,20).setExtraProperty(12,10)
 		
 		//BOSS WEAPON
 		public static const SHOCKWAVE_LASER:WeaponType=new WeaponType("ShockWave Laser",10,100).setExtraProperty(20,2)

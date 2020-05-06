@@ -2014,25 +2014,25 @@ package batr.game.main
 			var i:uint=0;
 			var nowE:uint=exMath.random(4);
 			//Add buff of cd,resistance,radius,damage
-			player.buffCD+=this.rule.bonusBuffAdditionAmount;
-			player.buffResistance+=this.rule.bonusBuffAdditionAmount;
-			player.buffRadius+=this.rule.bonusBuffAdditionAmount;
-			player.buffDamage+=this.rule.bonusBuffAdditionAmount;
 			while(i<3)
 			{
 				switch(nowE)
 				{
 					case 1:
 						color=BonusBoxSymbol.BUFF_CD_COLOR;
+						player.buffCD+=this.rule.bonusBuffAdditionAmount;
 						break;
 					case 2:
 						color=BonusBoxSymbol.BUFF_RESISTANCE_COLOR;
+						player.buffResistance+=this.rule.bonusBuffAdditionAmount;
 						break;
 					case 3:
 						color=BonusBoxSymbol.BUFF_RADIUS_COLOR;
+						player.buffRadius+=this.rule.bonusBuffAdditionAmount;
 						break;
 					default:
 						color=BonusBoxSymbol.BUFF_DAMAGE_COLOR;
+						player.buffDamage+=this.rule.bonusBuffAdditionAmount;
 				}
 				nowE=(nowE+1)&3;
 				i++;
