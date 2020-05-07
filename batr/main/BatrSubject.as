@@ -4,6 +4,8 @@ package batr.main
 	import batr.general.*;
 	
 	import batr.game.main.*;
+	import batr.game.model.*;
+	import batr.game.map.main.*;
 	import batr.menu.events.*;
 	import batr.menu.main.*;
 	import batr.translations.*;
@@ -13,6 +15,9 @@ package batr.main
 	
 	public class BatrSubject extends Sprite
 	{
+		//============Static Variables============//
+		private static const FOR_TEST:Boolean=true;
+		
 		//============Instance Variables============//
 		protected var _game:Game
 		protected var _menu:Menu
@@ -118,12 +123,26 @@ package batr.main
 			this._menu.backGround.visible=false;
 			//Menu game preview
 			this.initGamePreview();
+			if(FOR_TEST) this.forTest();
 		}
 		
 		public function onTitleComplete():void
 		{
 			//Menu game preview
 			this.startGamePreview();
+			if(FOR_TEST) this.forTest();
+		}
+		
+		//ForTest
+		private function forTest():void
+		{
+			this.resetRule();
+			this._gameRule.playerCount=4;
+			this._gameRule.AICount=0;
+			this._gameRule.initialMap=Map_V1.MAP_1;
+			this._gameRule.defaultWeaponID=WeaponType.SHOCKWAVE_LASER.weaponID;
+			this._game.forceStartGame(this.gameRule);
+			this.trunToGame();
 		}
 		
 		protected function initGamePreview():void

@@ -262,6 +262,12 @@ package batr.game.entity
 					   GlobalRot.towardIntY(this.rot,distance));
 		}
 		
+		public function moveForwardInt(distance:int=1):void
+		{
+			this.addXY(GlobalRot.towardXInt(this.rot,distance),
+					   GlobalRot.towardYInt(this.rot,distance));
+		}
+		
 		//Hook Functions
 		public function onPositionUpdate(newX:Number,newY:Number,newRot:Number):void
 		{

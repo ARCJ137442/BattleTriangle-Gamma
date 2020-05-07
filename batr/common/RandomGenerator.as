@@ -3,7 +3,7 @@
 	public class RandomGenerator extends Object
 	{
 		//============Static Variables============//
-		public static const DEFAULT_BUFFER:Vector.<Number>=new <Number>[2,1,0]
+		public static const DEFAULT_BUFFER:Vector.<Number>=new <Number>[2,1,0];
 		
 		//============Static Functions============//
 		/*
@@ -35,7 +35,7 @@
 		
 		private static function isEqualNumVec(v1:Vector.<Number>,v2:Vector.<Number>):Boolean
 		{
-			if(v1.length!=v2.length) return false
+			if(v1.length!=v2.length) return false;
 			return v1.every(function(n:Number,i:uint,v:Vector.<Number>):Boolean{return v1[i]==v2[i]});
 		}
 		
@@ -45,9 +45,7 @@
 		protected var _randomList:Vector.<Number>=new Vector.<Number>;
 		
 		//============Init RandomGenerator============//
-		public function RandomGenerator(seed:Number=0,mode:Number=0,
-										buffer:Vector.<Number>=null,
-										length:uint=1):void
+		public function RandomGenerator(seed:Number=0,mode:Number=0,buffer:Vector.<Number>=null,length:uint=1):void
 		{
 			this._mode=mode;
 			this._buffer=buffer!=null?buffer:RandomGenerator.DEFAULT_BUFFER;
@@ -78,7 +76,7 @@
 		{
 			var reGenerate:Boolean=(value!=this.mode);
 			this._mode=value;
-			if(reGenerate) dealReset();
+			if(reGenerate) this.dealReset();
 		}
 		
 		public function get buffer():Vector.<Number> 
@@ -88,9 +86,9 @@
 		
 		public function set buffer(value:Vector.<Number>):void
 		{
-			var reGenerate:Boolean=(!isEqualNumVec(this.buffer,value));
+			var reGenerate:Boolean=!RandomGenerator.isEqualNumVec(this.buffer,value);
 			this._buffer=value;
-			if(reGenerate) dealReset();
+			if(reGenerate) this.dealReset();
 		}
 		
 		public function get numList():Vector.<Number>
@@ -114,10 +112,10 @@
 		{
 			for(var i:uint=0;i<this._randomList.length;i++)
 			{
-				var li:int=this._randomList.lastIndexOf(this._randomList[i],i)
+				var li:int=this._randomList.lastIndexOf(this._randomList[i],i);
 				if(li>i) return li-i;
 			}
-			return uint.MAX_VALUE
+			return uint.MAX_VALUE;
 		}
 		
 		//======Public Functions======//
@@ -164,7 +162,7 @@
 			//index Start At 1
 			if(index==0)
 			{
-				generateNaxt();
+				this.generateNaxt();
 				return this.lastNum;
 			}
 			else if(index<this.numCount)
@@ -173,7 +171,7 @@
 			}
 			else
 			{
-				generateNaxt(index-(this.numCount-1));
+				this.generateNaxt(index-(this.numCount-1));
 				return this.lastNum;
 			}
 		}

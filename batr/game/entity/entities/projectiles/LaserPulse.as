@@ -4,6 +4,7 @@
 	import batr.general.*;
 	
 	import batr.game.entity.entities.players.*;
+	import batr.game.entity.*;
 	import batr.game.model.*;
 	import batr.game.main.*;
 	
@@ -25,6 +26,12 @@
 			this._life=LaserPulse.LIFE;
 			this.damage=this._currentWeapon.defaultDamage;
 			this.dealCharge(chargePercent);
+		}
+		
+		//============Instance Getter And Setter============//
+		public override function get type():EntityType
+		{
+			return EntityType.LASER_PULSE;
 		}
 		
 		//============Instance Functions============//

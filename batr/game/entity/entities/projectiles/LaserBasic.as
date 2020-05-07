@@ -2,6 +2,7 @@ package batr.game.entity.entities.projectiles
 {
 	import batr.general.*;
 	
+	import batr.game.entity.*;
 	import batr.game.entity.entities.players.*;
 	import batr.game.model.*;
 	import batr.game.main.*;
@@ -18,7 +19,7 @@ package batr.game.entity.entities.projectiles
 		public var isDamaged:Boolean=false
 		
 		//============Constructor Function============//
-		public function LaserBasic(host:Game,x:Number,y:Number,owner:Player,length:uint=LENGTH,chargePercent:Number=1):void
+		public function LaserBasic(host:Game,x:Number,y:Number,owner:Player,length:Number=LENGTH,chargePercent:Number=1):void
 		{
 			super(host,x,y,owner);
 			this._currentWeapon=WeaponType.LASER;
@@ -36,6 +37,11 @@ package batr.game.entity.entities.projectiles
 		}
 		
 		//============Instance Getter And Setter============//
+		public override function get type():EntityType
+		{
+			return EntityType.LASER_BASIC;
+		}
+		
 		public function get length():Number
 		{
 			return this.scaleX;

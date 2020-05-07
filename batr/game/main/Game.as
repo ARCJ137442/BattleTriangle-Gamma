@@ -1623,51 +1623,60 @@ package batr.game.main
 		public function playerUseWeapon(player:Player,rot:uint,chargePercent:Number):void
 		{
 			//Test CD
-			if(player.weaponUsingCD>0) return
+			if(player.weaponUsingCD>0) return;
+			//Set Variables
+			var spawnX:Number=player.getFrontIntX(GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE);
+			var spawnY:Number=player.getFrontIntY(GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE);
+			//Use
+			this.playerUseWeaponAt(player,player.weapon,spawnX,spawnY,rot,chargePercent);
+			//Set CD
+			player.weaponUsingCD=_rule.weaponsNoCD?GlobalGameVariables.WEAPON_MIN_CD:player.operateFinalCD(player.weapon);
+		}
+		
+		public function playerUseWeaponAt(player:Player,weapon:WeaponType,x:Number,y:Number,rot:uint,chargePercent:Number):void
+		{
 			//Set Variables
 			var p:ProjectileCommon=null
-			var spawnX:Number=player.getFrontIntX(GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE)
-			var spawnY:Number=player.getFrontIntY(GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE)
-			var spawnCenterX:Number=player.getFrontIntX(1)
-			var spawnCenterY:Number=player.getFrontIntY(1)
+			var centerX:Number=PosTransform.alignToEntity(PosTransform.alignToGrid(x))
+			var centerY:Number=PosTransform.alignToEntity(PosTransform.alignToGrid(y))
 			var frontBlock:BlockCommon
-			var laserLength:uint=this._rule.defaultLaserLength
-			if(WeaponType.isIncludeIn(player.weapon,WeaponType._LASERS)&&
+			var laserLength:Number=this._rule.defaultLaserLength
+			if(WeaponType.isIncludeIn(weapon,WeaponType._LASERS)&&
 			   !_rule.allowLaserThroughAllBlock)
 			{
-				laserLength=getLaserLength(player,rot)-GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE
+				laserLength=this.getLaserLength2(x,y,rot)-GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE
 			}
-			//Debug: trace("playerUseWeapon:","X=",player.getX(),spawnX,"Y:",player.getY(),spawnY)
+			//Debug: trace("playerUseWeapon:","X=",player.getX(),spawnX,"Y:",player.getY(),y)
 			//Summon Projectile
-			switch(player.weapon)
+			switch(weapon)
 			{
 				case WeaponType.BULLET:
-					p=new BulletBasic(this,spawnX,spawnY,player)
+					p=new BulletBasic(this,x,y,player)
 					break;
 				case WeaponType.NUKE:
-					p=new BulletNuke(this,spawnX,spawnY,player,chargePercent)
+					p=new BulletNuke(this,x,y,player,chargePercent)
 					break;
 				case WeaponType.SUB_BOMBER:
-					p=new SubBomber(this,spawnX,spawnY,player,chargePercent)
+					p=new SubBomber(this,x,y,player,chargePercent)
 					break;
 				case WeaponType.LASER:
-					p=new LaserBasic(this,spawnX,spawnY,player,laserLength,chargePercent)
+					p=new LaserBasic(this,x,y,player,laserLength,chargePercent)
 					break;
 				case WeaponType.PULSE_LASER:
-					p=new LaserPulse(this,spawnX,spawnY,player,laserLength,chargePercent)
+					p=new LaserPulse(this,x,y,player,laserLength,chargePercent)
 					break;
 				case WeaponType.TELEPORT_LASER:
-					p=new LaserTeleport(this,spawnX,spawnY,player,laserLength)
+					p=new LaserTeleport(this,x,y,player,laserLength)
 					break;
 				case WeaponType.ABSORPTION_LASER:
-					p=new LaserAbsorption(this,spawnX,spawnY,player,laserLength)
+					p=new LaserAbsorption(this,x,y,player,laserLength)
 					break;
 				case WeaponType.WAVE:
-					p=new Wave(this,spawnX,spawnY,player,chargePercent)
+					p=new Wave(this,x,y,player,chargePercent)
 					break;
 				case WeaponType.BLOCK_THROWER:
-					var carryX:int=this.lockPosInMap(PosTransform.alignToGrid(spawnCenterX),true);
-					var carryY:int=this.lockPosInMap(PosTransform.alignToGrid(spawnCenterY),false);
+					var carryX:int=this.lockPosInMap(PosTransform.alignToGrid(centerX),true);
+					var carryY:int=this.lockPosInMap(PosTransform.alignToGrid(centerY),false);
 					frontBlock=this.getBlock(carryX,carryY);
 					if(player.isCarriedBlock)
 					{
@@ -1675,7 +1684,7 @@ package batr.game.main
 						if(this.testCanPass(carryX,carryY,false,true,false,false,false))
 						{
 							//Add Block
-							p=new ThrowedBlock(this,spawnCenterX,spawnCenterY,player,player.carriedBlock.clone(),player.rot,chargePercent);
+							p=new ThrowedBlock(this,centerX,centerY,player,player.carriedBlock.clone(),rot,chargePercent);
 							//Clear
 							player.setCarriedBlock(null);
 						}
@@ -1688,7 +1697,7 @@ package batr.game.main
 							player.setCarriedBlock(frontBlock,false);
 							this.setBlock(carryX,carryY,null);
 							//Effect
-							this.addBlockLightEffect2(spawnCenterX,spawnCenterY,frontBlock,true);
+							this.addBlockLightEffect2(centerX,centerY,frontBlock,true);
 						}
 					}
 					break;
@@ -1696,17 +1705,18 @@ package batr.game.main
 					
 					break;
 				case WeaponType.LIGHTNING:
-					p=new Lightning(this,spawnCenterX,spawnCenterY,player,player.operateFinalLightningEnergy(100));
+					p=new Lightning(this,centerX,centerY,player,player.operateFinalLightningEnergy(100));
+					break;
+				case WeaponType.SHOCKWAVE_LASER:
+					p=new ShockWaveLaserBase(this,centerX,centerY,player,WeaponType.LASER);
 					break;
 			}
 			if(p!=null)
 			{
-				p.rot=player.rot
-				this._entitySystem.registerProjectile(p)
-				this._projectileContainer.addChild(p)
+				p.rot=player.rot;
+				this._entitySystem.registerProjectile(p);
+				this._projectileContainer.addChild(p);
 			}
-			//Set CD
-			player.weaponUsingCD=_rule.weaponsNoCD?GlobalGameVariables.WEAPON_MIN_CD:player.operateFinalCD(player.weapon);
 		}
 		
 		protected function getLaserLength(player:Player,rot:uint):uint

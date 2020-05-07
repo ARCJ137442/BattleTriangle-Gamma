@@ -63,7 +63,7 @@ package batr.game.entity.entities.projectiles
 		
 		public override function tickFunction():void
 		{
-			onProjectileTick();
+			this.onProjectileTick();
 			super.tickFunction();
 		}
 		

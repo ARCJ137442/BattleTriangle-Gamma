@@ -27,7 +27,7 @@ package batr.general
 		
 		public static function toOpposite(rot:Number):Number
 		{
-			return (rot+2)%4;
+			return (rot+2)&3;
 		}
 		
 		public static function toOppositeInt(rot:uint):uint

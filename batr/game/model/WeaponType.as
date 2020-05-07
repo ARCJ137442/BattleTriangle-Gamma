@@ -48,7 +48,8 @@ package batr.game.model
 			WeaponType.ABSORPTION_LASER,
 			WeaponType.WAVE,
 			WeaponType.BLOCK_THROWER,
-			WeaponType.LIGHTNING];
+			WeaponType.LIGHTNING,
+			WeaponType.SHOCKWAVE_LASER];
 		
 		//============Static Getter And Setter============//
 		public static function get label():String
@@ -186,6 +187,14 @@ package batr.game.model
 		public override function get label():String
 		{
 			return "weapon";
+		}
+		
+		/**
+		 * Dynamic when Weapon List Changing
+		 */
+		public function get weaponID():int
+		{
+			return WeaponType.toWeaponID(this);
 		}
 		
 		public function get defaultCD():uint
