@@ -12,13 +12,13 @@
 v0.2.0
 
 ## 玩家的键盘操作
-参见[操作](CONTROL.md)
+参见[操作](CONTROL.zh.md)
 
 ## 开发中的测试键
-参见[测试](DEBUG.md)
+参见[测试](DEBUG.zh.md)
 
 ## FAQ
-参见[FAQ](FAQ.md)
+参见[FAQ](FAQ.zh.md)
 
 ## 许可证
 以***GNU General Public License v3(GPLv3)***协议发布

@@ -8,10 +8,10 @@
 * Use: `Space`
 
 ## <Player 2\>
-* Up: `Up`
-* Down: `Down`
-* Left: `Left`
-* Right: `Right`
+* Up: `↑`
+* Down: `↓`
+* Left: `←`
+* Right: `→`
 * Use: `Numpad 0`
 
 ## <Player 3\>
