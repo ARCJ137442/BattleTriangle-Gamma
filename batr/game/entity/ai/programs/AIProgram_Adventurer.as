@@ -397,7 +397,7 @@ package batr.game.entity.ai.programs
 		
 		public function get referenceSpeed():uint
 		{
-			return 15*(1+exMath.random(5));
+			return 10*(1+exMath.random(6));
 		}
 		
 		/*========AI Program Main========*/

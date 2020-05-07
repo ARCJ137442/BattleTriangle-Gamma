@@ -222,8 +222,9 @@ package batr.game.entity.entities.players
 			super.onRespawn();
 		}
 		
-		public function onMapTransform():void
+		public override function onMapTransform():void
 		{
+			super.onMapTransform()
 			var action:AIPlayerAction=this.AIProgram.requestActionOnMapTransfrom(this)
 			this.runAction(action)
 		}

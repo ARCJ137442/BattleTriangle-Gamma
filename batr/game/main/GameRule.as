@@ -93,7 +93,7 @@ package batr.game.main
 		//========Preview========//
 		public static const MENU_BACKGROUND:GameRule=GameRule.getBackgroundRule()
 		
-		public static const DEFAULT_DRONE_WEAPON:WeaponType=WeaponType.WAVE
+		public static const DEFAULT_DRONE_WEAPON:WeaponType=WeaponType.LASER
 		
 		private static function getBackgroundRule():GameRule
 		{

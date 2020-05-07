@@ -714,8 +714,7 @@ package batr.game.main
 			{
 				for each(var player:Player in this._entitySystem.players)
 				{
-					/*//Detect
-					if(!player.isActive) continue;*/
+					//Detect - NOT USE:if(player.isRespawning) continue;
 					//Initial Action
 					if(isKeyDown&&!player.isOwnKeyDown(code))
 					{
@@ -1244,7 +1243,7 @@ package batr.game.main
 			var players:Vector.<Player>=this.getAlivePlayers();
 			for each(var player:Player in players)
 			{
-				if(player is AIPlayer) (player as AIPlayer).onMapTransform();
+				if(player is Player) (player as Player).onMapTransform();
 			}
 			//Stat
 			this._stat.mapTransformCount++;

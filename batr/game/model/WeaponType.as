@@ -10,19 +10,16 @@ package batr.game.model
 		public static const ABSTRACT:WeaponType=new WeaponType("Abstract",0,0)
 		
 		public static const BULLET:WeaponType=new WeaponType("Bullet",0.25,5).setExtraProperty(1,1)
-		public static const NUKE:WeaponType=new WeaponType("Nuke",5,320,5,true,true,true).setExtraProperty(10,15)
-		public static const SUB_BOMBER:WeaponType=new WeaponType("Sub Bomber",1,10,1).setExtraProperty(2,1)
-		//public static const POISON_BOMB:WeaponType=new WeaponType("Poison Bomb",9,50)
+		public static const NUKE:WeaponType=new WeaponType("Nuke",5,320,5,true,true,true).setExtraProperty(10,15).setDroneProperty(0)
+		public static const SUB_BOMBER:WeaponType=new WeaponType("Sub Bomber",1,10,1).setExtraProperty(2,1).setDroneProperty(0)
 		
 		public static const LASER:WeaponType=new WeaponType("Laser",3,120,1).setExtraProperty(8,6)
 		public static const PULSE_LASER:WeaponType=new WeaponType("Pulse Laser",0.5,5,0.5).setExtraProperty(3,3)
 		public static const TELEPORT_LASER:WeaponType=new WeaponType("Teleport Laser",3.5,40).setExtraProperty(4,3)
 		public static const ABSORPTION_LASER:WeaponType=new WeaponType("Absorption Laser",4,10).setExtraProperty(4,2)
 		
-		public static const WAVE:WeaponType=new WeaponType("Wave",0.5,20,2).setExtraProperty(3,3).setDroneProperty(0)//Full Charge
-		//public static const CHAOS_RING:WeaponType=new WeaponType("Chaos Ring",7,20)
+		public static const WAVE:WeaponType=new WeaponType("Wave",0.5,20,2).setExtraProperty(3,3).setDroneProperty(0.5)//Full Charge
 		
-		//public static const T_BOMB:WeaponType=new WeaponType("T-Bomb",7.5,80)
 		public static const MELEE:WeaponType=new WeaponType("Melee",0.25,5).setExtraProperty(5,3)
 		public static const BLOCK_THROWER:WeaponType=new WeaponType("Block Thrower",.5,200,1,true,true,true).setExtraProperty(10,10)
 		public static const LIGHTNING:WeaponType=new WeaponType("Lightning",0.75,20).setExtraProperty(12,10)
@@ -34,10 +31,9 @@ package batr.game.model
 		//WEAPON SET
 		public static const _BULLETS:Vector.<WeaponType>=new <WeaponType>[WeaponType.BULLET,WeaponType.NUKE,WeaponType.SUB_BOMBER]
 		public static const _LASERS:Vector.<WeaponType>=new <WeaponType>[WeaponType.LASER,WeaponType.PULSE_LASER,WeaponType.TELEPORT_LASER,WeaponType.ABSORPTION_LASER]
-		//public static const _WAVES:Vector.<WeaponType>=new <WeaponType>[WeaponType.WAVE,WeaponType.CHAOS_RING]
 		public static const _SPECIAL:Vector.<WeaponType>=new <WeaponType>[WeaponType.WAVE,WeaponType.MELEE,WeaponType.BLOCK_THROWER,WeaponType.LIGHTNING]
 		public static const _BOSS_WEAPON:Vector.<WeaponType>=new <WeaponType>[WeaponType.SHOCKWAVE_ALPHA]
-		public static const _ALL_WEAPON:Vector.<WeaponType>=_BULLETS.concat(_LASERS).concat(_SPECIAL)//.concat(_WAVES)
+		public static const _ALL_WEAPON:Vector.<WeaponType>=_BULLETS.concat(_LASERS).concat(_SPECIAL)
 		
 		public static const _ALL_AVALIABLE_WEAPON:Vector.<WeaponType>=new <WeaponType>[
 			WeaponType.BULLET,

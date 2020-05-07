@@ -711,6 +711,12 @@ package batr.game.entity.entities.players
 			
 		}
 		
+		public function onMapTransform():void
+		{
+			this.resetCD();
+			this.resetCharge(false);
+		}
+		
 		public function onPickupBonusBox(box:BonusBox):void
 		{
 			
@@ -850,8 +856,7 @@ package batr.game.entity.entities.players
 			//Change Drone Weapon
 			if(WeaponType.isDroneWeapon(newType))
 			{
-				if(WeaponType.isBulletWeapon(oldType)) this.droneWeapon=WeaponType.BULLET
-				else if(!WeaponType.isAvailableDroneNotUse(oldType)) this._droneWeapon=oldType
+				if(!WeaponType.isAvailableDroneNotUse(oldType)) this._droneWeapon=oldType
 				else this._droneWeapon=GameRule.DEFAULT_DRONE_WEAPON
 			}
 			//If The Block is still carring,then throw without charge(WIP,maybe?)
@@ -894,7 +899,7 @@ package batr.game.entity.entities.players
 		
 		protected function onDisableCharge():void
 		{
-			if(!this.weaponNeedsCharge||this._weaponUsingCD>0) return;
+			if(!this.weaponNeedsCharge||this._weaponUsingCD>0||!this.isActive||this.isRespawning) return;
 			this.useWeapon();
 			resetCharge();
 		}
@@ -1141,24 +1146,12 @@ package batr.game.entity.entities.players
 			else
 			{
 				this.keyDelay_Move=-contolDelay_Move;
-			}/*
-			//Select
-			if(this.someSelectKeyDown)
-			{
-				this.keyDelay_Select++;
-				if(this.keyDelay_Select>=this.contolLoop_Select)
-				{
-					this.keyDelay_Select=0;
-				}
 			}
-			else
-			{
-				this.keyDelay_Select=-contolDelay_Select;
-			}*/
 		}
 		
 		public function runActionByKeyCode(code:uint):void
 		{
+			if(!this.isActive||this.isRespawning) return;
 			switch(code)
 			{
 				case this.contolKey_Up:
@@ -1187,7 +1180,7 @@ package batr.game.entity.entities.players
 		
 		public function dealKeyContol():void
 		{
-			if(this.isRespawning) return;
+			if(!this.isActive||this.isRespawning) return;
 			if(this.someKeyDown)
 			{
 				//Move

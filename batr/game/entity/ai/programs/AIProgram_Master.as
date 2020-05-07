@@ -211,7 +211,8 @@ package batr.game.entity.ai.programs
 		
 		public function get referenceSpeed():uint
 		{
-			return 20*(1+exMath.random(4));
+			if(Math.random()<0.01) return 100;
+			return 10*(1+exMath.random(6));
 		}
 		
 		protected function get pickBonusFirst():Boolean
