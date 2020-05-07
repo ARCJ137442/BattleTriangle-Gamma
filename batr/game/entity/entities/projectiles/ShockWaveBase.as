@@ -14,12 +14,12 @@ package batr.game.entity.entities.projectiles
 	 * ...
 	 * @author ARCJ137442
 	 */
-	public class ShockWaveLaserBase extends ProjectileCommon 
+	public class ShockWaveBase extends ProjectileCommon 
 	{
 		//============Static Variables============//
 		public static const BLOCK_RADIUS:Number=GlobalGameVariables.DEFAULT_SIZE*1.2;
 		
-		public static const LIFE:uint=GlobalGameVariables.TPS;//Life For Charge
+		public static const LIFE:uint=GlobalGameVariables.TPS/2;//Life For Charge
 		
 		//============Static Functions============//
 		
@@ -30,13 +30,22 @@ package batr.game.entity.entities.projectiles
 		protected var _life:uint=0;
 		
 		protected var _weapon:WeaponType;
+		protected var _weaponChargePercent:Number;
+		
+		/**
+		 * Default is 0,Vortex is 1
+		 */
+		public var mode:uint=0;
 		
 		//============Constructor Function============//
-		public function ShockWaveLaserBase(host:Game,x:Number,y:Number,owner:Player,weapon:WeaponType):void
+		public function ShockWaveBase(host:Game,x:Number,y:Number,owner:Player,weapon:WeaponType,weaponCharge:Number,mode:uint=0):void
 		{
 			super(host,x,y,owner);
-			this._currentWeapon=WeaponType.SHOCKWAVE_LASER;
-			this._weapon=weapon!=this._currentWeapon?weapon:WeaponType.LASER;
+			this._currentWeapon=WeaponType.SHOCKWAVE_ALPHA;
+			this._weapon=weapon;
+			this.mode=mode;
+			this._weaponChargePercent=weaponCharge;
+			this.drawShape();
 		}
 		
 		//============Instance Getter And Setter============//
@@ -51,9 +60,7 @@ package batr.game.entity.entities.projectiles
 			//Charging
 			if(this._life>=LIFE)
 			{
-				//Summon Drone
-				this.summonDrone(GlobalRot.rotateInt(this.rot,1));
-				this.summonDrone(GlobalRot.rotateInt(this.rot,-1));
+				this.summonDrones();
 				//Remove
 				this._host.entitySystem.removeProjectile(this);
 			}
@@ -69,12 +76,30 @@ package batr.game.entity.entities.projectiles
 		{
 			this.graphics.beginFill(this.ownerColor);
 			this.graphics.drawRect(-BLOCK_RADIUS,-BLOCK_RADIUS,BLOCK_RADIUS*2,BLOCK_RADIUS*2);
+			this.graphics.drawRect(-BLOCK_RADIUS/2,-BLOCK_RADIUS/2,BLOCK_RADIUS,BLOCK_RADIUS);
 			this.graphics.endFill();
 		}
 		
-		public function summonDrone(rot:uint):void
+		public function summonDrones():void
 		{
-			var drone:ShockWaveLaserDrone=new ShockWaveLaserDrone(this.host,this.entityX,this.entityY,this.owner,this._weapon,this.rot);
+			//Summon Drone
+			switch(this.mode)
+			{
+				case 1:
+					this.summonDrone(0,1);
+					this.summonDrone(1,2);
+					this.summonDrone(2,3);
+					this.summonDrone(3,0);
+				break;
+				default:
+					this.summonDrone(GlobalRot.rotateInt(this.rot,1));
+					this.summonDrone(GlobalRot.rotateInt(this.rot,-1));
+			}
+		}
+		
+		public function summonDrone(rot:uint,weaponRot:int=-1):void
+		{
+			var drone:ShockWaveDrone=new ShockWaveDrone(this.host,this.entityX,this.entityY,this.owner,this._weapon,weaponRot<0?this.rot:weaponRot,this._weaponChargePercent);
 			drone.rot=GlobalRot.lockIntToStandard(rot);
 			this.host.entitySystem.registerProjectile(drone);
 			this.host.projectileContainer.addChild(drone);

@@ -42,6 +42,7 @@ package batr.game.entity.entities.players
 		protected var _team:PlayerTeam
 		protected var _customName:String
 		protected var _weapon:WeaponType
+		protected var _droneWeapon:WeaponType=GameRule.DEFAULT_DRONE_WEAPON
 		
 		//====Graphics Variables====//
 		protected var _lineColor:uint=0x888888;
@@ -330,6 +331,20 @@ package batr.game.entity.entities.players
 		public function get weapon():WeaponType
 		{
 			return this._weapon;
+		}
+		
+		
+		/**
+		 * This weapon is used by drones created from another weapon
+		 */
+		public function get droneWeapon():WeaponType
+		{
+			return this._droneWeapon;
+		}
+		
+		public function set droneWeapon(value:WeaponType):void
+		{
+			this._droneWeapon=value;
 		}
 		
 		/**
@@ -832,6 +847,13 @@ package batr.game.entity.entities.players
 		{
 			this.initWeaponCharge();
 			this.resetCharge(false);
+			//Change Drone Weapon
+			if(WeaponType.isDroneWeapon(newType))
+			{
+				if(WeaponType.isBulletWeapon(oldType)) this.droneWeapon=WeaponType.BULLET
+				else if(!WeaponType.isAvailableDroneNotUse(oldType)) this._droneWeapon=oldType
+				else this._droneWeapon=GameRule.DEFAULT_DRONE_WEAPON
+			}
 			//If The Block is still carring,then throw without charge(WIP,maybe?)
 		}
 		

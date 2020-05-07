@@ -19,7 +19,7 @@ package batr.game.model
 		public static const TELEPORT_LASER:WeaponType=new WeaponType("Teleport Laser",3.5,40).setExtraProperty(4,3)
 		public static const ABSORPTION_LASER:WeaponType=new WeaponType("Absorption Laser",4,10).setExtraProperty(4,2)
 		
-		public static const WAVE:WeaponType=new WeaponType("Wave",0.5,20,2).setExtraProperty(3,3)//Full Charge
+		public static const WAVE:WeaponType=new WeaponType("Wave",0.5,20,2).setExtraProperty(3,3).setDroneProperty(0)//Full Charge
 		//public static const CHAOS_RING:WeaponType=new WeaponType("Chaos Ring",7,20)
 		
 		//public static const T_BOMB:WeaponType=new WeaponType("T-Bomb",7.5,80)
@@ -28,14 +28,15 @@ package batr.game.model
 		public static const LIGHTNING:WeaponType=new WeaponType("Lightning",0.75,20).setExtraProperty(12,10)
 		
 		//BOSS WEAPON
-		public static const SHOCKWAVE_LASER:WeaponType=new WeaponType("ShockWave Laser",10,100).setExtraProperty(20,2)
+		public static const SHOCKWAVE_ALPHA:WeaponType=new WeaponType("ShockWaveALPHA",10,100).setExtraProperty(10,2)
+		public static const SHOCKWAVE_BETA:WeaponType=new WeaponType("ShockWaveBETA",10,100).setExtraProperty(10,2,true)
 		
 		//WEAPON SET
 		public static const _BULLETS:Vector.<WeaponType>=new <WeaponType>[WeaponType.BULLET,WeaponType.NUKE,WeaponType.SUB_BOMBER]
 		public static const _LASERS:Vector.<WeaponType>=new <WeaponType>[WeaponType.LASER,WeaponType.PULSE_LASER,WeaponType.TELEPORT_LASER,WeaponType.ABSORPTION_LASER]
 		//public static const _WAVES:Vector.<WeaponType>=new <WeaponType>[WeaponType.WAVE,WeaponType.CHAOS_RING]
 		public static const _SPECIAL:Vector.<WeaponType>=new <WeaponType>[WeaponType.WAVE,WeaponType.MELEE,WeaponType.BLOCK_THROWER,WeaponType.LIGHTNING]
-		public static const _BOSS_WEAPON:Vector.<WeaponType>=new <WeaponType>[WeaponType.SHOCKWAVE_LASER]
+		public static const _BOSS_WEAPON:Vector.<WeaponType>=new <WeaponType>[WeaponType.SHOCKWAVE_ALPHA]
 		public static const _ALL_WEAPON:Vector.<WeaponType>=_BULLETS.concat(_LASERS).concat(_SPECIAL)//.concat(_WAVES)
 		
 		public static const _ALL_AVALIABLE_WEAPON:Vector.<WeaponType>=new <WeaponType>[
@@ -49,7 +50,8 @@ package batr.game.model
 			WeaponType.WAVE,
 			WeaponType.BLOCK_THROWER,
 			WeaponType.LIGHTNING,
-			WeaponType.SHOCKWAVE_LASER];
+			WeaponType.SHOCKWAVE_ALPHA,
+			WeaponType.SHOCKWAVE_BETA];
 		
 		//============Static Getter And Setter============//
 		public static function get label():String
@@ -144,6 +146,19 @@ package batr.game.model
 			return tempW;
 		}
 		
+		/**
+		 * @return true if the weapon uses player's droneWeapon
+		 */
+		public static function isDroneWeapon(weapon:WeaponType):Boolean
+		{
+			return weapon==WeaponType.SHOCKWAVE_ALPHA;
+		}
+		
+		public static function isAvailableDroneNotUse(weapon:WeaponType):Boolean
+		{
+			return isDroneWeapon(weapon)||weapon==WeaponType.BLOCK_THROWER||weapon==WeaponType.MELEE
+		}
+		
 		//============Instance Variables============//
 		protected var _defaultCD:uint//Tick
 		protected var _defaultChargeTime:uint//Tick
@@ -155,15 +170,19 @@ package batr.game.model
 		//Extra
 		protected var _extraDamageCoefficient:uint=5;
 		protected var _extraResistanceCoefficient:uint=1;
+		protected var _useOnCenter:Boolean=false;
+		
+		//Drone
+		protected var _chargePercentInDrone:Number=1;
 		
 		//============Constructor Function============//
 		public function WeaponType(name:String,
-								   defaultCD:Number=0,
-								   defaultDamage:uint=1,
-								   defaultChargeTime:Number=0,
-								   canHurtEnemy:Boolean=true,
-								   canHurtSelf:Boolean=false,
-								   canHurtAlly:Boolean=false):void
+								  defaultCD:Number=0,
+								  defaultDamage:uint=1,
+								  defaultChargeTime:Number=0,
+								  canHurtEnemy:Boolean=true,
+								  canHurtSelf:Boolean=false,
+								  canHurtAlly:Boolean=false):void
 		{
 			//defaultCD,defaultChargeTime is Per Second
 			super(name)
@@ -175,11 +194,27 @@ package batr.game.model
 			this._canHurtAlly=canHurtAlly
 		}
 		
+		protected function setCanHurt(enemy:Boolean,self:Boolean,ally:Boolean):WeaponType
+		{
+			this._canHurtEnemy=enemy;
+			this._canHurtSelf=self;
+			this._canHurtAlly=ally;
+			return this;
+		}
+		
 		protected function setExtraProperty(damageCoefficient:uint,
-										resistanceCoefficient:uint):WeaponType
+											resistanceCoefficient:uint,
+											useOnCenter:Boolean=false):WeaponType
 		{
 			this._extraDamageCoefficient=damageCoefficient;
 			this._extraResistanceCoefficient=resistanceCoefficient;
+			this._useOnCenter=useOnCenter;
+			return this;
+		}
+		
+		protected function setDroneProperty(chargePercentInDrone:Number=1):WeaponType
+		{
+			this._chargePercentInDrone=chargePercentInDrone;
 			return this;
 		}
 		
@@ -241,6 +276,17 @@ package batr.game.model
 		public function get extraResistanceCoefficient():uint
 		{
 			return this._extraResistanceCoefficient;
+		}
+		
+		public function get useOnCenter():Boolean
+		{
+			return this._useOnCenter;
+		}
+		
+		//About Drone
+		public function get chargePercentInDrone():Number
+		{
+			return this._chargePercentInDrone
 		}
 		
 		//============Instance Functions============//

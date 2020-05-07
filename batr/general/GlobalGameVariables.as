@@ -8,6 +8,7 @@
 	{
 		//============Static Variables============//
 		public static const DEFAULT_SIZE:uint=100
+		public static const DEFAULT_SIZE_FRACTION:Number=1/Number(GlobalGameVariables.DEFAULT_SIZE)
 		public static const DEFAULT_SCALE:Number=32/100
 		public static const DISPLAY_SIZE:uint=768
 		

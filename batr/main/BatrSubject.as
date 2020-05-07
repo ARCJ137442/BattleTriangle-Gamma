@@ -16,7 +16,7 @@ package batr.main
 	public class BatrSubject extends Sprite
 	{
 		//============Static Variables============//
-		private static const FOR_TEST:Boolean=true;
+		private static const FOR_TEST:Boolean=false;
 		
 		//============Instance Variables============//
 		protected var _game:Game
@@ -139,8 +139,10 @@ package batr.main
 			this.resetRule();
 			this._gameRule.playerCount=4;
 			this._gameRule.AICount=0;
-			this._gameRule.initialMap=Map_V1.MAP_1;
-			this._gameRule.defaultWeaponID=WeaponType.SHOCKWAVE_LASER.weaponID;
+			this._gameRule.initialMap=Map_V1.MAP_5;
+			this._gameRule.weaponsNoCD=true;
+			this._gameRule.mapTransformTime=0;
+			this._gameRule.defaultWeaponID=WeaponType.SHOCKWAVE_BETA.weaponID;
 			this._game.forceStartGame(this.gameRule);
 			this.trunToGame();
 		}

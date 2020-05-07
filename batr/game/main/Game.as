@@ -1625,15 +1625,15 @@ package batr.game.main
 			//Test CD
 			if(player.weaponUsingCD>0) return;
 			//Set Variables
-			var spawnX:Number=player.getFrontIntX(GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE);
-			var spawnY:Number=player.getFrontIntY(GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE);
+			var spawnX:Number=player.weapon.useOnCenter?player.entityX:player.getFrontIntX(GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE);
+			var spawnY:Number=player.weapon.useOnCenter?player.entityY:player.getFrontIntY(GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE);
 			//Use
-			this.playerUseWeaponAt(player,player.weapon,spawnX,spawnY,rot,chargePercent);
+			this.playerUseWeaponAt(player,player.weapon,spawnX,spawnY,rot,chargePercent,GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE);
 			//Set CD
 			player.weaponUsingCD=_rule.weaponsNoCD?GlobalGameVariables.WEAPON_MIN_CD:player.operateFinalCD(player.weapon);
 		}
 		
-		public function playerUseWeaponAt(player:Player,weapon:WeaponType,x:Number,y:Number,rot:uint,chargePercent:Number):void
+		public function playerUseWeaponAt(player:Player,weapon:WeaponType,x:Number,y:Number,rot:uint,chargePercent:Number,projectilesSpawnDistance:Number):void
 		{
 			//Set Variables
 			var p:ProjectileCommon=null
@@ -1644,7 +1644,7 @@ package batr.game.main
 			if(WeaponType.isIncludeIn(weapon,WeaponType._LASERS)&&
 			   !_rule.allowLaserThroughAllBlock)
 			{
-				laserLength=this.getLaserLength2(x,y,rot)-GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE
+				laserLength=this.getLaserLength2(x,y,rot)//-projectilesSpawnDistance
 			}
 			//Debug: trace("playerUseWeapon:","X=",player.getX(),spawnX,"Y:",player.getY(),y)
 			//Summon Projectile
@@ -1707,13 +1707,16 @@ package batr.game.main
 				case WeaponType.LIGHTNING:
 					p=new Lightning(this,centerX,centerY,player,player.operateFinalLightningEnergy(100));
 					break;
-				case WeaponType.SHOCKWAVE_LASER:
-					p=new ShockWaveLaserBase(this,centerX,centerY,player,WeaponType.LASER);
+				case WeaponType.SHOCKWAVE_ALPHA:
+					p=new ShockWaveBase(this,centerX,centerY,player,player==null?GameRule.DEFAULT_DRONE_WEAPON:player.droneWeapon,player.droneWeapon.chargePercentInDrone);
+					break;
+				case WeaponType.SHOCKWAVE_BETA:
+					p=new ShockWaveBase(this,centerX,centerY,player,player==null?GameRule.DEFAULT_DRONE_WEAPON:player.droneWeapon,player.droneWeapon.chargePercentInDrone,1);
 					break;
 			}
 			if(p!=null)
 			{
-				p.rot=player.rot;
+				p.rot=rot;
 				this._entitySystem.registerProjectile(p);
 				this._projectileContainer.addChild(p);
 			}
@@ -1731,8 +1734,8 @@ package batr.game.main
 			var cx:int,cy:int
 			for(var i:uint=0;i<=this._rule.defaultLaserLength;i++)
 			{
-				cx=PosTransform.alignToBlock(eX+vx*i)
-				cy=PosTransform.alignToBlock(eY+vy*i)
+				cx=PosTransform.alignToGrid(eX+vx*i)
+				cy=PosTransform.alignToGrid(eY+vy*i)
 				if(!_map.getBlockAttributes(cx,cy).laserCanPass) break
 			}
 			return i

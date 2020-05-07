@@ -58,9 +58,7 @@ package batr.game.entity.entities.projectiles
 			this.graphics.clear();
 			for(var i:uint=0;i<3;i++)//0,1,2
 			{
-				this.drawOwnerLine(-SIZE/Math.pow(2,i+1),
-									SIZE/Math.pow(2,i+1),
-									i*0.1+0.5);
+				this.drawOwnerLine(-SIZE/Math.pow(2,i+1),SIZE/Math.pow(2,i+1),i*0.1+0.5);
 			}
 		}
 		

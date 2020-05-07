@@ -93,9 +93,11 @@ package batr.game.main
 		//========Preview========//
 		public static const MENU_BACKGROUND:GameRule=GameRule.getBackgroundRule()
 		
+		public static const DEFAULT_DRONE_WEAPON:WeaponType=WeaponType.WAVE
+		
 		private static function getBackgroundRule():GameRule
 		{
-			var rule:GameRule=new GameRule()
+			var rule:GameRule=new GameRule();
 			rule.playerCount=0;
 			rule.AICount=8;
 			rule.defaultWeaponID=-2;

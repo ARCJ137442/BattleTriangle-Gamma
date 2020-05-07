@@ -12,15 +12,12 @@
 		public static const BULLET_BASIC:EntityType=new EntityType("BulletBasic")
 		public static const BULLET_NUKE:EntityType=new EntityType("BulletNuke")
 		public static const SUB_BOMBER:EntityType=new EntityType("SubBomber")
-		//public static const BULLET_POISON:EntityType=new EntityType("BulletPoison")
 		
 		public static const LASER_BASIC:EntityType=new EntityType("LaserBasic")
 		public static const LASER_PULSE:EntityType=new EntityType("LaserPulse")
 		public static const LASER_TELEPORT:EntityType=new EntityType("LaserTeleport")
 		public static const LASER_ABSORPTION:EntityType=new EntityType("LaserAbsorption")
 		public static const WAVE:EntityType=new EntityType("Wave")
-		//public static const CHAOS_RING:EntityType=new EntityType("ChaosRing")
-		//public static const T_BOMB:EntityType=new EntityType("TBomb")
 		public static const THROWED_BLOCK:EntityType=new EntityType("ThrowedBlock")
 		public static const LIGHTNING:EntityType=new EntityType("Lightning").asUnrotatable
 		public static const SHOCKWAVE_LASER_BASE:EntityType=new EntityType("ShockLaserBase")

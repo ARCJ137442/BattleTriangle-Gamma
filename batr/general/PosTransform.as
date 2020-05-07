@@ -27,7 +27,7 @@ package batr.general
 		
 		public static function realPosToLocalPos(p:Number):Number
 		{
-			return p/GlobalGameVariables.DEFAULT_SIZE
+			return p*GlobalGameVariables.DEFAULT_SIZE_FRACTION
 		}
 	}
 }

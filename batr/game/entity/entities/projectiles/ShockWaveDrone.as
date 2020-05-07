@@ -12,11 +12,11 @@ package batr.game.entity.entities.projectiles
 	import flash.display.*;
 	import flash.geom.*;
 	
-	public class ShockWaveLaserDrone extends ProjectileCommon
+	public class ShockWaveDrone extends ProjectileCommon
 	{
 		//============Static Variables============//
 		public static const LINE_SIZE:Number=GlobalGameVariables.DEFAULT_SIZE/80
-		public static const BLOCK_RADIUS:Number=GlobalGameVariables.DEFAULT_SIZE/4;
+		public static const BLOCK_RADIUS:Number=GlobalGameVariables.DEFAULT_SIZE/2;
 		
 		public static const MOVING_INTERVAL:uint=GlobalGameVariables.TPS/32;
 		
@@ -24,17 +24,19 @@ package batr.game.entity.entities.projectiles
 		public var lastBlockType:BlockType=BlockType.NULL;
 		public var nowBlockType:BlockType=BlockType.NULL;
 		
-		public var usingWeapon:WeaponType;
+		protected var _weapon:WeaponType;
+		protected var _weaponChargePercent:Number;
 		
 		protected var _weaponRot:uint;
-		protected var _moveTick:uint=0;
+		protected var _moveDuration:uint=0;
 		
 		//============Constructor Function============//
-		public function ShockWaveLaserDrone(host:Game,x:Number,y:Number,owner:Player,weapon:WeaponType,weaponRot:uint):void
+		public function ShockWaveDrone(host:Game,x:Number,y:Number,owner:Player,weapon:WeaponType,weaponRot:uint,weaponChargePercent:Number):void
 		{
 			super(host,x,y,owner);
-			this._currentWeapon=WeaponType.SHOCKWAVE_LASER;
-			this.usingWeapon=weapon;
+			this._currentWeapon=WeaponType.SHOCKWAVE_ALPHA;
+			this._weapon=weapon;
+			this._weaponChargePercent=weaponChargePercent;
 			this._weaponRot=weaponRot;
 			this.drawShape();
 		}
@@ -43,7 +45,7 @@ package batr.game.entity.entities.projectiles
 		public override function deleteSelf():void
 		{
 			this.graphics.clear();
-			this.usingWeapon=null;
+			this._weapon=null;
 			super.deleteSelf();
 		}
 		
@@ -60,22 +62,24 @@ package batr.game.entity.entities.projectiles
 		{
 			if(this._host==null) return;
 			//Ticking
-			if(this._moveTick<ShockWaveLaserDrone.MOVING_INTERVAL) this._moveTick++;
+			if(this._moveDuration>0) this._moveDuration--;
 			else
 			{
-				this._moveTick=0;
+				this._moveDuration=ShockWaveDrone.MOVING_INTERVAL;
+				//Moving
+				this.moveForwardInt(1);
 				var ex:Number=this.entityX;
 				var ey:Number=this.entityY;
-				if(!_host.isOutOfMap(ex,ey)&&
-				   this._host.testCanPass(ex,ey,false,true,false))
+				if(_host.isOutOfMap(ex,ey)||!this._host.testCanPass(ex,ey,false,true,false))
 				{
-					//Moving
-					this.moveForwardInt(1);
-					//Use Weapon
-					this.host.playerUseWeaponAt(this.owner,this.usingWeapon,ex,ey,this._weaponRot,1);
+					//Gone
+					this._host.entitySystem.removeProjectile(this);
 				}
-				//Gone
-				else this._host.entitySystem.removeProjectile(this);
+				//Use Weapon
+				else this.host.playerUseWeaponAt(this.owner,this._weapon,
+												ex+GlobalRot.towardIntX(this._weaponRot,GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE),
+												ey+GlobalRot.towardIntY(this._weaponRot,GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE),
+												this._weaponRot,this._weaponChargePercent,GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE);
 			}
 		}
 		
