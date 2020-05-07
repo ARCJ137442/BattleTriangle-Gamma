@@ -151,7 +151,7 @@ package batr.game.model
 		 */
 		public static function isDroneWeapon(weapon:WeaponType):Boolean
 		{
-			return weapon==WeaponType.SHOCKWAVE_ALPHA;
+			return weapon==WeaponType.SHOCKWAVE_ALPHA||weapon==WeaponType.SHOCKWAVE_BETA;
 		}
 		
 		public static function isAvailableDroneNotUse(weapon:WeaponType):Boolean
