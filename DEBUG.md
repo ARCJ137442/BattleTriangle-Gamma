@@ -8,4 +8,4 @@
 * `X`: Change **Sheet/Translations**
 * `~`: Transform **Game Speed**
 * `Enter`: Enter one **Game Step**
-* `Shift E`: Force get **Game Result**
+* `Shift+E`: Force get **Game Result**
