@@ -261,6 +261,10 @@ package batr.translations
 					"\u8fd1\u6218",
 				TranslationKey.getTypeNameKey(WeaponType.LIGHTNING),
 					"\u95ea\u7535",
+				TranslationKey.getTypeNameKey(WeaponType.SHOCKWAVE_ALPHA),
+					"\u51b2\u51fb\u6ce2\u002d\u03b1",
+				TranslationKey.getTypeNameKey(WeaponType.SHOCKWAVE_BETA),
+					"\u51b2\u51fb\u6ce2\u002d\u03b2",
 				//GameModeTypes
 				TranslationKey.getTypeNameKey(GameModeType.REGULAR),
 					"\u6b63\u5e38",

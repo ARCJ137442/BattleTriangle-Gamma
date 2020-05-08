@@ -21,6 +21,7 @@ package batr.game.model
 		public static const BUFF_CD:BonusType=new BonusType("buffCD")
 		public static const BUFF_RESISTANCE:BonusType=new BonusType("buffResistance")
 		public static const BUFF_RADIUS:BonusType=new BonusType("buffRadius")
+		public static const BUFF_RANDOM:BonusType=new BonusType("buffRandom")
 		
 		public static const ADD_EXPERIENCE:BonusType=new BonusType("addExperience")
 		
@@ -35,11 +36,12 @@ package batr.game.model
 		//General
 		public static const _ABOUT_HEALTH:Vector.<BonusType>=new <BonusType>[BonusType.ADD_HEALTH,BonusType.ADD_HEAL,BonusType.ADD_LIFE]
 		public static const _ABOUT_WEAPON:Vector.<BonusType>=new <BonusType>[BonusType.RANDOM_WEAPON]
-		public static const _ABOUT_ATTRIBUTES:Vector.<BonusType>=new <BonusType>[BonusType.ADD_EXPERIENCE,BonusType.BUFF_CD,BonusType.BUFF_DAMAGE,BonusType.BUFF_RADIUS,BonusType.BUFF_RESISTANCE]
+		public static const _ABOUT_ATTRIBUTES:Vector.<BonusType>=new <BonusType>[BonusType.ADD_EXPERIENCE,BonusType.BUFF_RANDOM]
+		public static const _ABOUT_BUFF:Vector.<BonusType>=new <BonusType>[BonusType.BUFF_CD,BonusType.BUFF_DAMAGE,BonusType.BUFF_RADIUS,BonusType.BUFF_RESISTANCE]
 		public static const _ABOUT_TEAM:Vector.<BonusType>=new <BonusType>[BonusType.RANDOM_CHANGE_TEAM]
 		public static const _OTHER:Vector.<BonusType>=new <BonusType>[BonusType.RANDOM_TELEPORT]
 		//Unused:Unition
-		public static const _UNUSED:Vector.<BonusType>=new <BonusType>[BonusType.UNITE_PLAYER,BonusType.UNITE_AI]
+		public static const _UNUSED:Vector.<BonusType>=new <BonusType>[BonusType.UNITE_PLAYER,BonusType.UNITE_AI].concat(_ABOUT_BUFF)
 		public static const _ALL_AVALIABLE_TYPE:Vector.<BonusType>=BonusType._OTHER.concat(BonusType._ABOUT_HEALTH,BonusType._ABOUT_WEAPON,BonusType._ABOUT_ATTRIBUTES,BonusType._ABOUT_TEAM)
 		public static const _ALL_TYPE:Vector.<BonusType>=BonusType._ALL_AVALIABLE_TYPE.concat(BonusType._UNUSED)
 		
@@ -52,6 +54,11 @@ package batr.game.model
 		public static function get RANDOM_AVALIABLE():BonusType
 		{
 			return _ALL_AVALIABLE_TYPE[exMath.random(_ALL_AVALIABLE_TYPE.length)]
+		}
+		
+		public static function get RANDOM_BUFF():BonusType
+		{
+			return _ABOUT_BUFF[exMath.random(_ABOUT_BUFF.length)]
 		}
 		
 		//============Static Functions============//

@@ -10,7 +10,7 @@ package batr.game.model
 		public static const ABSTRACT:WeaponType=new WeaponType("Abstract",0,0)
 		
 		public static const BULLET:WeaponType=new WeaponType("Bullet",0.25,5).setExtraProperty(1,1)
-		public static const NUKE:WeaponType=new WeaponType("Nuke",5,320,5,true,true,true).setExtraProperty(10,15).setDroneProperty(0)
+		public static const NUKE:WeaponType=new WeaponType("Nuke",5,320,5).setCanHurt(true,true,true).setExtraProperty(10,15).setDroneProperty(0)
 		public static const SUB_BOMBER:WeaponType=new WeaponType("Sub Bomber",1,10,1).setExtraProperty(2,1).setDroneProperty(0)
 		
 		public static const LASER:WeaponType=new WeaponType("Laser",3,120,1).setExtraProperty(8,6)
@@ -21,19 +21,19 @@ package batr.game.model
 		public static const WAVE:WeaponType=new WeaponType("Wave",0.5,20,2).setExtraProperty(3,3).setDroneProperty(0.5)//Full Charge
 		
 		public static const MELEE:WeaponType=new WeaponType("Melee",0.25,5).setExtraProperty(5,3)
-		public static const BLOCK_THROWER:WeaponType=new WeaponType("Block Thrower",.5,200,1,true,true,true).setExtraProperty(10,10)
-		public static const LIGHTNING:WeaponType=new WeaponType("Lightning",0.75,20).setExtraProperty(12,10)
+		public static const BLOCK_THROWER:WeaponType=new WeaponType("Block Thrower",.5,200,1).setCanHurt(true,true,true).setExtraProperty(10,10)
+		public static const LIGHTNING:WeaponType=new WeaponType("Lightning",0.75,20).setCanHurt(true,true,true).setExtraProperty(12,10)
 		
 		//BOSS WEAPON
-		public static const SHOCKWAVE_ALPHA:WeaponType=new WeaponType("ShockWaveALPHA",10,100).setExtraProperty(10,2)
-		public static const SHOCKWAVE_BETA:WeaponType=new WeaponType("ShockWaveBETA",10,100).setExtraProperty(10,2,true)
+		public static const SHOCKWAVE_ALPHA:WeaponType=new WeaponType("Shockwave-α",10,100).setExtraProperty(10,2)
+		public static const SHOCKWAVE_BETA:WeaponType=new WeaponType("Shockwave-β",10,100).setExtraProperty(10,2,true)
 		
 		//WEAPON SET
 		public static const _BULLETS:Vector.<WeaponType>=new <WeaponType>[WeaponType.BULLET,WeaponType.NUKE,WeaponType.SUB_BOMBER]
 		public static const _LASERS:Vector.<WeaponType>=new <WeaponType>[WeaponType.LASER,WeaponType.PULSE_LASER,WeaponType.TELEPORT_LASER,WeaponType.ABSORPTION_LASER]
 		public static const _SPECIAL:Vector.<WeaponType>=new <WeaponType>[WeaponType.WAVE,WeaponType.MELEE,WeaponType.BLOCK_THROWER,WeaponType.LIGHTNING]
-		public static const _BOSS_WEAPON:Vector.<WeaponType>=new <WeaponType>[WeaponType.SHOCKWAVE_ALPHA]
-		public static const _ALL_WEAPON:Vector.<WeaponType>=_BULLETS.concat(_LASERS).concat(_SPECIAL)
+		public static const _BOSS_WEAPON:Vector.<WeaponType>=new <WeaponType>[WeaponType.SHOCKWAVE_ALPHA,WeaponType.SHOCKWAVE_BETA]
+		public static const _ALL_WEAPON:Vector.<WeaponType>=_BULLETS.concat(_LASERS).concat(_SPECIAL).concat(_BOSS_WEAPON)
 		
 		public static const _ALL_AVALIABLE_WEAPON:Vector.<WeaponType>=new <WeaponType>[
 			WeaponType.BULLET,
@@ -152,7 +152,7 @@ package batr.game.model
 		
 		public static function isAvailableDroneNotUse(weapon:WeaponType):Boolean
 		{
-			return isDroneWeapon(weapon)||weapon==WeaponType.BLOCK_THROWER||weapon==WeaponType.MELEE
+			return isDroneWeapon(weapon)||weapon==WeaponType.BLOCK_THROWER||weapon==WeaponType.MELEE||weapon==WeaponType.SUB_BOMBER
 		}
 		
 		//============Instance Variables============//
@@ -175,19 +175,17 @@ package batr.game.model
 		public function WeaponType(name:String,
 								  defaultCD:Number=0,
 								  defaultDamage:uint=1,
-								  defaultChargeTime:Number=0,
-								  canHurtEnemy:Boolean=true,
-								  canHurtSelf:Boolean=false,
-								  canHurtAlly:Boolean=false):void
+								  defaultChargeTime:Number=0):void
 		{
 			//defaultCD,defaultChargeTime is Per Second
-			super(name)
-			this._defaultCD=defaultCD*GlobalGameVariables.TPS/2
-			this._defaultDamage=defaultDamage
-			this._defaultChargeTime=defaultChargeTime*GlobalGameVariables.TPS/2
-			this._canHurtEnemy=canHurtEnemy
-			this._canHurtSelf=canHurtSelf
-			this._canHurtAlly=canHurtAlly
+			super(name);
+			this._defaultCD=defaultCD*GlobalGameVariables.TPS/2;
+			this._defaultDamage=defaultDamage;
+			this._defaultChargeTime=defaultChargeTime*GlobalGameVariables.TPS/2;
+			//default
+			this._canHurtEnemy=true;
+			this._canHurtSelf=false;
+			this._canHurtAlly=false;
 		}
 		
 		protected function setCanHurt(enemy:Boolean,self:Boolean,ally:Boolean):WeaponType

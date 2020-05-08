@@ -8,8 +8,8 @@ package batr.general
 		public static const GAME_DEV_STAGE:String="Gamma";
 		public static const GAME_VERSION_MAJOR:String="0.2.0";
 		public static const GAME_VERSION_MAIN:String="alpha";
-		public static const GAME_VERSION_BUILD:String="03";
-		public static const GAME_UPDATE_LOG:String="Class refactor:Split EntityCommon to EntityInt and EntityFloat - Faild>>>Now Throwed Block can't move out of the map>>>Remove gradient of bullets>>>Fix bug in MAP_7>>>Optimize (Experience&Buff) System>>>Smarter AI>>>Bug Fix>>>Added Game Score Rank";
+		public static const GAME_VERSION_BUILD:String="04";
+		public static const GAME_UPDATE_LOG:String="Optimize:BonusBox,Shockwave-BETA,Lightning";
 		
 		//============Static Getter And Setter============//
 		public static function get GAME_FULL_NAME():String

@@ -33,10 +33,12 @@ package batr.game.entity.entities.projectiles
 		protected var _hurtDefaultDamage:Vector.<uint>=new Vector.<uint>();
 		
 		//============Constructor Function============//
-		public function Lightning(host:Game,x:Number,y:Number,owner:Player,energy:int):void
+		public function Lightning(host:Game,x:Number,y:Number,rot:uint,owner:Player,energy:int):void
 		{
 			super(host,x,y,owner);
+			this.rot=rot;
 			this._initialEnergy=this._energy=energy;
+			this._currentWeapon=WeaponType.LIGHTNING;
 		}
 		
 		//============Destructor Function============//
@@ -62,10 +64,7 @@ package batr.game.entity.entities.projectiles
 			}
 			this.alpha=this._life/Lightning.LIFE
 			if(this._life>0) this._life--;
-			else
-			{
-				this._host.entitySystem.removeProjectile(this);
-			}
+			else this._host.entitySystem.removeProjectile(this);
 		}
 		
 		/**
@@ -75,14 +74,7 @@ package batr.game.entity.entities.projectiles
 		{
 			//Draw in location in this
 			var head:iPoint=new iPoint(this.gridX,this.gridY)
-			//var mapPlayers:Vector.<Player>=this.host.getInMapPlayers();
 			var ownerWeapon:WeaponType=this.currentWeapon;
-			if(this.owner!=null)
-			{
-				//mapPlayers=this.owner.filterPlayersThisCanHurt(mapPlayers,this.owner.weapon);
-				ownerWeapon=this.owner.weapon;
-			}
-			
 			var vx:int,vy:int;
 			var cost:int=0;
 			var player:Player=null;
@@ -133,9 +125,9 @@ package batr.game.entity.entities.projectiles
 			var leastCost:int=operateCost(x+GlobalRot.towardXInt(nowRot),y+GlobalRot.towardYInt(nowRot));
 			var cost:int;
 			var result:uint=GlobalRot.NULL;
-			for(var r:uint=nowRot+1;r<nowRot+4;r+=2)
+			nowRot=GlobalRot.lockIntToStandard(nowRot+exMath.random1());
+			for(var r:int=nowRot;r<nowRot+4;r+=2)
 			{
-				//trace(x,y,":",nowRot,r,leastCost,result)
 				cx=x+GlobalRot.towardXInt(r);
 				cy=y+GlobalRot.towardYInt(r);
 				cost=operateCost(cx,cy);
@@ -151,6 +143,7 @@ package batr.game.entity.entities.projectiles
 		protected function operateCost(x:int,y:int):int
 		{
 			if(this.host.isHitAnyPlayer(x,y)) return 5;//The electricResistance of player
+			if(this.host.isIntOutOfMap(x,y)) return int.MAX_VALUE;//The electricResistance out of world
 			var attributes:BlockAttributes=this.host.getBlockAttributes(x,y);
 			if(attributes!=null) return attributes.electricResistance;
 			return 0;

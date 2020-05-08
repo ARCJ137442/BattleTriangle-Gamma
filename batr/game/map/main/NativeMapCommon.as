@@ -67,6 +67,11 @@ package batr.game.map.main
 			return null;
 		}
 		
+		public function get allMapPositions():Vector.<iPoint>
+		{
+			return null;
+		}
+		
 		public function get spawnPoints():Vector.<uint>
 		{
 			return this._spawnPoints;

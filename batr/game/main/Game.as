@@ -367,7 +367,7 @@ package batr.game.main
 		 */
 		protected function isPlayersEnd(players:Vector.<Player>):Boolean
 		{
-			if(this.rule.playerCount+this._rule.AICount<2) return false;
+			if(this.rule.playerCount+this.rule.AICount<2) return false;
 			var team:PlayerTeam=null;
 			for each(var player:Player in players)
 			{
@@ -793,11 +793,13 @@ package batr.game.main
 			//Debug: trace("testFrontCanPass:"+entity.type.name+","+entity.getFrontX(distance)+","+entity.getFrontY(distance))
 			return testCanPass(entity.getFrontX(distance),
 							   entity.getFrontY(distance),
-							   asPlayer,
-							   asBullet,
-							   asLaser,
-							   includePlayer,
-							   avoidTrap)
+							   asPlayer,asBullet,asLaser,
+							   includePlayer,avoidTrap)
+		}
+		
+		public function testBonusBoxCanPlaceAt(x:int,y:int):Boolean
+		{
+			return this.testIntCanPass(x,y,true,false,false,true,true);
 		}
 		
 		/**
@@ -985,7 +987,7 @@ package batr.game.main
 			{
 				p=players[i];
 				d=damages[i];
-				if(p!=null) p.finalRemoveHealth(lightning.owner,lightning.owner.weapon,d);
+				if(p!=null) p.finalRemoveHealth(lightning.owner,lightning.currentWeapon,d);
 			}
 		}
 		
@@ -1022,7 +1024,7 @@ package batr.game.main
 			{
 				if(attributes.playerDamage==-1)
 				{
-					player.removeHealth(this.operateFinalPlayerHurtDamage(player,x,y,this._rule.playerAsphyxiaDamage),null);
+					player.removeHealth(this.operateFinalPlayerHurtDamage(player,x,y,this.rule.playerAsphyxiaDamage),null);
 					returnBoo=true;
 				}
 				else if(attributes.playerDamage>-1)
@@ -1060,7 +1062,7 @@ package batr.game.main
 		public function operateFinalPlayerHurtDamage(player:Player,x:int,y:int,playerDamage:int):uint
 		{
 			if(playerDamage<-1) return 0;
-			if(playerDamage==-1) return this._rule.playerAsphyxiaDamage;
+			if(playerDamage==-1) return this.rule.playerAsphyxiaDamage;
 			if(playerDamage==int.MAX_VALUE) return uint.MAX_VALUE;
 			if(playerDamage<=100) return player.maxHealth*playerDamage/100;
 			return playerDamage-100;
@@ -1209,18 +1211,18 @@ package batr.game.main
 		 */
 		public function loadMap(isInitial:Boolean=false,update:Boolean=true,reSperadPlayer:Boolean=false):void
 		{
-			if(isInitial&&this._rule.initialMap!=null)
-				this.changeMap(this._rule.initialMap,update,reSperadPlayer);
-			else if(this._rule.mapRandomPotentials==null,this._rule.initialMapID)
+			if(isInitial&&this.rule.initialMap!=null)
+				this.changeMap(this.rule.initialMap,update,reSperadPlayer);
+			else if(this.rule.mapRandomPotentials==null,this.rule.initialMapID)
 				this.changeMap(getRandomMap(),update,reSperadPlayer);
-			else this.changeMap(Game.ALL_MAPS[exMath.intMod(exMath.randomByWeightV(this._rule.mapWeightsByGame),Game.VALID_MAP_COUNT)],update,reSperadPlayer);
+			else this.changeMap(Game.ALL_MAPS[exMath.intMod(exMath.randomByWeightV(this.rule.mapWeightsByGame),Game.VALID_MAP_COUNT)],update,reSperadPlayer);
 		}
 		
 		/* Get Map from Rule
 		 */
 		protected function getRandomMap():IMap
 		{
-			return this._rule.randomMapEnable.generateNew();//ALL_MAPS[exMath.random(Game.VALID_MAP_COUNT)].clone()
+			return this.rule.randomMapEnable.generateNew();//ALL_MAPS[exMath.random(Game.VALID_MAP_COUNT)].clone()
 		}
 		
 		/* Change Map into the other
@@ -1318,17 +1320,17 @@ package batr.game.main
 		{
 			var i:uint,player:Player
 			//Spawn Player
-			for(i=0;i<this._rule.playerCount;i++)
+			for(i=0;i<this.rule.playerCount;i++)
 			{
-				player=addPlayer(i+1,this._rule.randomTeam,-1,-1,0,false)
+				player=addPlayer(i+1,this.rule.randomTeam,-1,-1,0,false)
 				respawnPlayer(player)
 				player.initVariablesByRule(this.rule.defaultWeaponID,this._tempUniformWeapon);
 				player.gui.updateHealth();
 			}
 			//Spawn AIPlayer
-			for(i=0;i<this._rule.AICount;i++)
+			for(i=0;i<this.rule.AICount;i++)
 			{
-				player=addAI(this._rule.randomTeam,-1,-1,0,false)
+				player=addAI(this.rule.randomTeam,-1,-1,0,false)
 				respawnPlayer(player)
 				player.initVariablesByRule(this.rule.defaultWeaponID,this._tempUniformWeapon);
 				player.gui.updateHealth();
@@ -1564,7 +1566,7 @@ package batr.game.main
 			var tempT:PlayerTeam,i:uint=0;
 			do
 			{
-				tempT=this._rule.randomTeam;
+				tempT=this.rule.randomTeam;
 			}
 			while(tempT==player.team&&++i<0xf);
 			player.team=tempT;
@@ -1572,7 +1574,7 @@ package batr.game.main
 		
 		public function setATeamToNotAIPlayer(team:PlayerTeam=null):void
 		{
-			var tempTeam:PlayerTeam=team==null?this._rule.randomTeam:team
+			var tempTeam:PlayerTeam=team==null?this.rule.randomTeam:team
 			for each(var player:Player in this._entitySystem.players)
 			{
 				if(!Player.isAI(player)) player.team=tempTeam
@@ -1581,7 +1583,7 @@ package batr.game.main
 		
 		public function setATeamToAIPlayer(team:PlayerTeam=null):void
 		{
-			var tempTeam:PlayerTeam=team==null?this._rule.randomTeam:team
+			var tempTeam:PlayerTeam=team==null?this.rule.randomTeam:team
 			for each(var player:Player in this._entitySystem.players)
 			{
 				if(Player.isAI(player)) player.team=tempTeam
@@ -1632,18 +1634,18 @@ package batr.game.main
 			player.weaponUsingCD=_rule.weaponsNoCD?GlobalGameVariables.WEAPON_MIN_CD:player.operateFinalCD(player.weapon);
 		}
 		
-		public function playerUseWeaponAt(player:Player,weapon:WeaponType,x:Number,y:Number,rot:uint,chargePercent:Number,projectilesSpawnDistance:Number):void
+		public function playerUseWeaponAt(player:Player,weapon:WeaponType,x:Number,y:Number,weaponRot:uint,chargePercent:Number,projectilesSpawnDistance:Number):void
 		{
 			//Set Variables
 			var p:ProjectileCommon=null
 			var centerX:Number=PosTransform.alignToEntity(PosTransform.alignToGrid(x))
 			var centerY:Number=PosTransform.alignToEntity(PosTransform.alignToGrid(y))
 			var frontBlock:BlockCommon
-			var laserLength:Number=this._rule.defaultLaserLength
+			var laserLength:Number=this.rule.defaultLaserLength
 			if(WeaponType.isIncludeIn(weapon,WeaponType._LASERS)&&
 			   !_rule.allowLaserThroughAllBlock)
 			{
-				laserLength=this.getLaserLength2(x,y,rot)//-projectilesSpawnDistance
+				laserLength=this.getLaserLength2(x,y,weaponRot)//-projectilesSpawnDistance
 			}
 			//Debug: trace("playerUseWeapon:","X=",player.getX(),spawnX,"Y:",player.getY(),y)
 			//Summon Projectile
@@ -1683,7 +1685,7 @@ package batr.game.main
 						if(this.testCanPass(carryX,carryY,false,true,false,false,false))
 						{
 							//Add Block
-							p=new ThrowedBlock(this,centerX,centerY,player,player.carriedBlock.clone(),rot,chargePercent);
+							p=new ThrowedBlock(this,centerX,centerY,player,player.carriedBlock.clone(),weaponRot,chargePercent);
 							//Clear
 							player.setCarriedBlock(null);
 						}
@@ -1704,7 +1706,7 @@ package batr.game.main
 					
 					break;
 				case WeaponType.LIGHTNING:
-					p=new Lightning(this,centerX,centerY,player,player.operateFinalLightningEnergy(100));
+					p=new Lightning(this,centerX,centerY,weaponRot,player,player.operateFinalLightningEnergy(100));
 					break;
 				case WeaponType.SHOCKWAVE_ALPHA:
 					p=new ShockWaveBase(this,centerX,centerY,player,player==null?GameRule.DEFAULT_DRONE_WEAPON:player.droneWeapon,player.droneWeapon.chargePercentInDrone);
@@ -1715,7 +1717,7 @@ package batr.game.main
 			}
 			if(p!=null)
 			{
-				p.rot=rot;
+				p.rot=weaponRot;
 				this._entitySystem.registerProjectile(p);
 				this._projectileContainer.addChild(p);
 			}
@@ -1731,7 +1733,7 @@ package batr.game.main
 			var vx:int=GlobalRot.towardX(rot)
 			var vy:int=GlobalRot.towardY(rot)
 			var cx:int,cy:int
-			for(var i:uint=0;i<=this._rule.defaultLaserLength;i++)
+			for(var i:uint=0;i<=this.rule.defaultLaserLength;i++)
 			{
 				cx=PosTransform.alignToGrid(eX+vx*i)
 				cy=PosTransform.alignToGrid(eY+vy*i)
@@ -1834,30 +1836,32 @@ package batr.game.main
 				rX=this._map.randomX;
 				rY=this._map.randomY;
 			}
-			while(!this.testCanPass(rX,rY,true,false,false,true,true)&&i<0xff)
+			while(!this.testBonusBoxCanPlaceAt(rX,rY)&&i<0xff)
 			this.addBonusBox(rX,rY,type);
 		}
 		
 		public function randomAddRandomBonusBox():void
 		{
-			this.randomAddBonusBox(this._rule.randomBonusEnable);
+			this.randomAddBonusBox(this.rule.randomBonusEnable);
+		}
+		
+		public function fillBonusBox():void
+		{
+			for(var x:uint=0;x<this.map.mapWidth;x++)
+			{
+				for(var y:uint=0;y<this.map.mapHeight;y++)
+				{
+					if(this.testBonusBoxCanPlaceAt(x,y)) this.addBonusBox(x,y,this.rule.randomBonusEnable);
+				}
+			}
 		}
 		
 		//======Effect Functions======//
 		public function addEffectChild(effect:EffectCommon):void
 		{
-			if(effect.layer>0)
-			{
-				this._effectContainerTop.addChild(effect)
-			}
-			else if(effect.layer==0)
-			{
-				this._effectContainerMiddle.addChild(effect)
-			}
-			else
-			{
-				this._effectContainerBottom.addChild(effect)
-			}
+			if(effect.layer>0) this._effectContainerTop.addChild(effect)
+			else if(effect.layer==0) this._effectContainerMiddle.addChild(effect)
+			else this._effectContainerBottom.addChild(effect)
 		}
 		
 		public function addSpawnEffect(x:Number,y:Number):void
@@ -1921,7 +1925,7 @@ package batr.game.main
 			//It's no meaningless of hurt NULL
 			if(victim==null) return
 			//Set Stats
-			if(this._rule.recordPlayerStats)
+			if(this.rule.recordPlayerStats)
 			{
 				victim.stats.damageBy+=damage
 				victim.stats.addDamageByPlayerCount(attacker,damage)
@@ -1960,11 +1964,11 @@ package batr.game.main
 			if(Player.isAI(victim)) (victim as AIPlayer).resetAITick()
 			//Set Respawn
 			var deadX:int=victim.lockedEntityX,deadY:int=victim.lockedEntityY
-			victim.setXY(this._rule.deadPlayerMoveToX,this._rule.deadPlayerMoveToY)
-			victim.respawnTick=this._rule.defaultRespawnTime
+			victim.setXY(this.rule.deadPlayerMoveToX,this.rule.deadPlayerMoveToY)
+			victim.respawnTick=this.rule.defaultRespawnTime
 			victim.gui.visible=false
 			//Store Stats
-			if(this._rule.recordPlayerStats)
+			if(this.rule.recordPlayerStats)
 			{
 				victim.stats.deathCount++
 				if(attacker!=null)
@@ -1983,11 +1987,11 @@ package batr.game.main
 				}
 			}
 			//Add Bonus By Rule
-			if(this._rule.bonusBoxSpawnAfterPlayerDeath&&
-			   this._entitySystem.bonusBoxCount<this._rule.bonusBoxMaxCount&&
+			if(this.rule.bonusBoxSpawnAfterPlayerDeath&&
+			   this._entitySystem.bonusBoxCount<this.rule.bonusBoxMaxCount&&
 			   this.testCanPass(deadX,deadY,true,false,true,true,true))
 			{
-				this.addBonusBox(deadX,deadY,this._rule.randomBonusEnable);
+				this.addBonusBox(deadX,deadY,this.rule.randomBonusEnable);
 			}
 			//If Game End
 			this.testGameEnd();
@@ -2064,10 +2068,10 @@ package batr.game.main
 			if(testCanPass(x,y,true,false,false,true,true))
 			{
 				if(this.getBlockAttributes(x,y).supplingBonus||
-					(this._entitySystem.bonusBoxCount<this._rule.bonusBoxMaxCount&&
-					UsefulTools.randomBoolean2(this._rule.bonusBoxSpawnChance)))
+					(this._entitySystem.bonusBoxCount<this.rule.bonusBoxMaxCount&&
+					UsefulTools.randomBoolean2(this.rule.bonusBoxSpawnChance)))
 				{
-					this.addBonusBox(x,y,this._rule.randomBonusEnable);
+					this.addBonusBox(x,y,this.rule.randomBonusEnable);
 				}
 			}
 			//Other

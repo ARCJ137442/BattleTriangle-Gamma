@@ -74,7 +74,8 @@ package
 					else sub.gameObj.changeAllPlayerWeaponRandomly();
 					break;
 				case KeyCode.B:
-					if(shift) sub.gameObj.entitySystem.removeAllBonusBox();
+					if(ctrl) sub.gameObj.fillBonusBox();
+					else if(shift) sub.gameObj.entitySystem.removeAllBonusBox();
 					else sub.gameObj.randomAddRandomBonusBox();
 					break;
 				case KeyCode.ENTER:

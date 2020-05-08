@@ -201,7 +201,7 @@ package batr.game.block
 			this.drawLayer=0
 			this.playerDamage=-1
 			this.rotateWhenMoveIn=false
-			this.electricResistance=1000
+			this.electricResistance=80
 			return this
 		}
 		
@@ -215,7 +215,7 @@ package batr.game.block
 			this.isBreakable=true
 			this.drawLayer=-1
 			this.rotateWhenMoveIn=false
-			this.electricResistance=5000
+			this.electricResistance=160
 			return this
 		}
 		
@@ -244,7 +244,7 @@ package batr.game.block
 			this.drawLayer=1
 			this.playerDamage=-1
 			this.rotateWhenMoveIn=false
-			this.electricResistance=2000
+			this.electricResistance=120
 			return this
 		}
 		
@@ -258,18 +258,21 @@ package batr.game.block
 		public function loadAsHurtZone(damage:int=10):BlockAttributes
 		{
 			this.playerDamage=damage
+			this.electricResistance=20
 			return this
 		}
 		
 		public function loadAsKillZone():BlockAttributes
 		{
 			this.playerDamage=int.MAX_VALUE
+			this.electricResistance=40
 			return this
 		}
 		
 		public function loadAsRotateZone():BlockAttributes
 		{
 			this.rotateWhenMoveIn=true
+			this.electricResistance=20
 			return this
 		}
 		

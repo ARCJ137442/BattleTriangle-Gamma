@@ -551,6 +551,19 @@ package batr.game.map.main
 			return returnPoints
 		}
 		
+		public override function get allMapPositions():Vector.<iPoint>
+		{
+			var returnPoints:Vector.<iPoint>=new Vector.<iPoint>()
+			for(var x:uint=0;x<this.mapWidth;x++)
+			{
+				for(var y:uint=0;y<this.mapHeight;y++)
+				{
+					returnPoints.push(new iPoint(x,y))
+				}
+			}
+			return returnPoints
+		}
+		
 		/**
 		 * truly overrite virual function
 		 */

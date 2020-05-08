@@ -27,6 +27,7 @@ package batr.game.entity.objects
 		
 		public static const EXPERIENCE_COLOR:uint=0xcc88ff
 		
+		public static const BUFF_RANDOM_COLOR:uint=0x7f7f7f
 		public static const BUFF_DAMAGE_COLOR:uint=0xff6666
 		public static const BUFF_CD_COLOR:uint=0x6666ff
 		public static const BUFF_RESISTANCE_COLOR:uint=0x66ff66
@@ -94,6 +95,9 @@ package batr.game.entity.objects
 					this.drawWeaponSymbol();
 				break;
 				//Attributes
+				case BonusType.BUFF_RANDOM:
+					this.drawAttributesSymbol(BUFF_RANDOM_COLOR);
+				break;
 				case BonusType.BUFF_DAMAGE:
 					this.drawAttributesSymbol(BUFF_DAMAGE_COLOR);
 				break;

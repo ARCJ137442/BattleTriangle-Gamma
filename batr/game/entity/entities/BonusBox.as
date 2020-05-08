@@ -89,14 +89,15 @@ package batr.game.entity.entities
 			this._symbol.type=this._bonusType;
 		}
 		
-		public function onPlayerPickup(player:Player):void
+		public function onPlayerPickup(player:Player,forcedBonusType:BonusType=null):void
 		{
 			if(player==null) return;
 			//Disactive
 			this.isActive=false;
 			//Effect
 			var buffColor:int=-1;
-			switch(this._bonusType)
+			var type:BonusType=forcedBonusType==null?this._bonusType:forcedBonusType;
+			switch(type)
 			{
 				//Health,Heal&Life
 				case BonusType.ADD_HEALTH:
@@ -114,6 +115,9 @@ package batr.game.entity.entities
 					player.weapon=WeaponType.getRandomAvaliableWithout(player.weapon);
 					break;
 				//Attributes
+				case BonusType.BUFF_RANDOM:
+					this.onPlayerPickup(player,BonusType.RANDOM_BUFF);
+					return;
 				case BonusType.BUFF_DAMAGE:
 					player.buffDamage+=this.host.rule.bonusBuffAdditionAmount;
 					buffColor=BonusBoxSymbol.BUFF_DAMAGE_COLOR

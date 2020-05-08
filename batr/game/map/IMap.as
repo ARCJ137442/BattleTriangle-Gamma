@@ -12,6 +12,7 @@ package batr.game.map
 		function get randomX():int
 		function get randomY():int
 		function get allDefinedPositions():Vector.<iPoint>
+		function get allMapPositions():Vector.<iPoint>
 		function get spawnPoints():Vector.<uint>
 		function get numSpawnPoints():uint
 		function get hasSpawnPoint():Boolean

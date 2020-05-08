@@ -1,5 +1,6 @@
 package batr.game.entity.entities.projectiles 
 {
+	import batr.common.*;
 	import batr.general.*;
 	
 	import batr.game.entity.*;
@@ -86,10 +87,8 @@ package batr.game.entity.entities.projectiles
 			switch(this.mode)
 			{
 				case 1:
-					this.summonDrone(0,1);
-					this.summonDrone(1,2);
-					this.summonDrone(2,3);
-					this.summonDrone(3,0);
+					var i:int=exMath.random1();
+					for(var u:int=0;u<4;u++) this.summonDrone(u,u+i);
 				break;
 				default:
 					this.summonDrone(GlobalRot.rotateInt(this.rot,1));
@@ -97,9 +96,9 @@ package batr.game.entity.entities.projectiles
 			}
 		}
 		
-		public function summonDrone(rot:uint,weaponRot:int=-1):void
+		public function summonDrone(rot:int,weaponRot:int=int.MIN_VALUE):void
 		{
-			var drone:ShockWaveDrone=new ShockWaveDrone(this.host,this.entityX,this.entityY,this.owner,this._weapon,weaponRot<0?this.rot:weaponRot,this._weaponChargePercent);
+			var drone:ShockWaveDrone=new ShockWaveDrone(this.host,this.entityX,this.entityY,this.owner,this._weapon,weaponRot==int.MIN_VALUE?this.rot:GlobalRot.lockIntToStandard(weaponRot),this._weaponChargePercent);
 			drone.rot=GlobalRot.lockIntToStandard(rot);
 			this.host.entitySystem.registerProjectile(drone);
 			this.host.projectileContainer.addChild(drone);
