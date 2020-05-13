@@ -11,18 +11,18 @@ package batr.game.model
 		
 		public static const BULLET:WeaponType=new WeaponType("Bullet",0.25,5).setExtraProperty(1,1)
 		public static const NUKE:WeaponType=new WeaponType("Nuke",5,320,5).setCanHurt(true,true,true).setExtraProperty(10,15).setDroneProperty(0)
-		public static const SUB_BOMBER:WeaponType=new WeaponType("Sub Bomber",1,10,1).setExtraProperty(2,1).setDroneProperty(0)
+		public static const SUB_BOMBER:WeaponType=new WeaponType("Sub Bomber",1,10,1,true).setExtraProperty(2,1).setDroneProperty(0)
 		
-		public static const LASER:WeaponType=new WeaponType("Laser",3,120,1).setExtraProperty(8,6)
-		public static const PULSE_LASER:WeaponType=new WeaponType("Pulse Laser",0.5,5,0.5).setExtraProperty(3,3)
+		public static const LASER:WeaponType=new WeaponType("Laser",3,120,1).setExtraProperty(8,6).setDroneProperty(0.8)
+		public static const PULSE_LASER:WeaponType=new WeaponType("Pulse Laser",0.5,5,0.5,true).setExtraProperty(3,3)
 		public static const TELEPORT_LASER:WeaponType=new WeaponType("Teleport Laser",3.5,40).setExtraProperty(4,3)
 		public static const ABSORPTION_LASER:WeaponType=new WeaponType("Absorption Laser",4,10).setExtraProperty(4,2)
 		
-		public static const WAVE:WeaponType=new WeaponType("Wave",0.5,20,2).setExtraProperty(3,3).setDroneProperty(0.5)//Full Charge
+		public static const WAVE:WeaponType=new WeaponType("Wave",0.5,20,2).setExtraProperty(3,3).setDroneProperty(0.25)//Not Full Charge
 		
-		public static const MELEE:WeaponType=new WeaponType("Melee",0.25,5).setExtraProperty(5,3)
+		public static const MELEE:WeaponType=new WeaponType("Melee",0.25,5).setExtraProperty(5,3)//Used in BATR-alpha&beta
 		public static const BLOCK_THROWER:WeaponType=new WeaponType("Block Thrower",.5,200,1).setCanHurt(true,true,true).setExtraProperty(10,10)
-		public static const LIGHTNING:WeaponType=new WeaponType("Lightning",0.75,20).setCanHurt(true,true,true).setExtraProperty(12,10)
+		public static const LIGHTNING:WeaponType=new WeaponType("Lightning",0.25,20,0.5,true).setCanHurt(true,true,true).setExtraProperty(12,10)
 		
 		//BOSS WEAPON
 		public static const SHOCKWAVE_ALPHA:WeaponType=new WeaponType("Shockwave-α",10,100).setExtraProperty(10,2)
@@ -159,6 +159,8 @@ package batr.game.model
 		protected var _defaultCD:uint//Tick
 		protected var _defaultChargeTime:uint//Tick
 		protected var _defaultDamage:uint
+		protected var _reverseCharge:Boolean//Whether the weapon will auto charge and can use before full charge
+		//canHurt
 		protected var _canHurtEnemy:Boolean
 		protected var _canHurtSelf:Boolean
 		protected var _canHurtAlly:Boolean
@@ -175,13 +177,15 @@ package batr.game.model
 		public function WeaponType(name:String,
 								  defaultCD:Number=0,
 								  defaultDamage:uint=1,
-								  defaultChargeTime:Number=0):void
+								  defaultChargeTime:Number=0,
+								  reverseCharge:Boolean=false):void
 		{
 			//defaultCD,defaultChargeTime is Per Second
 			super(name);
 			this._defaultCD=defaultCD*GlobalGameVariables.TPS/2;
 			this._defaultDamage=defaultDamage;
 			this._defaultChargeTime=defaultChargeTime*GlobalGameVariables.TPS/2;
+			this._reverseCharge=reverseCharge;
 			//default
 			this._canHurtEnemy=true;
 			this._canHurtSelf=false;
@@ -239,6 +243,11 @@ package batr.game.model
 		public function get defaultChargeTime():uint
 		{
 			return this._defaultChargeTime
+		}
+		
+		public function get reverseCharge():Boolean
+		{
+			return this._reverseCharge;
 		}
 		
 		public function get defaultDamageOutput():uint

@@ -55,7 +55,14 @@ package batr.game.entity.ai.programs
 		public function requestActionOnTick(player:AIPlayer):AIPlayerAction
 		{
 			if(player==null) return AIPlayerAction.NULL
-			if(!player.isPress_Use) return AIPlayerAction.PRESS_KEY_USE
+			//Press Use
+			if(player.weaponReverseCharge)
+			{
+				if(player.chargingPercent>=1) return AIPlayerAction.PRESS_KEY_USE;
+				else if(player.isPress_Use) return AIPlayerAction.RELEASE_KEY_USE;
+			}
+			else if(!player.isPress_Use) return AIPlayerAction.PRESS_KEY_USE;
+			//Act
 			if(this._moveSum>=this._moveMaxSum||
 			   !player.host.testPlayerCanPassToFront(player))
 			{

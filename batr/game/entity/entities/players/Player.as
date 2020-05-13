@@ -333,7 +333,6 @@ package batr.game.entity.entities.players
 			return this._weapon;
 		}
 		
-		
 		/**
 		 * This weapon is used by drones created from another weapon
 		 */
@@ -354,7 +353,7 @@ package batr.game.entity.entities.players
 		{
 			if(value==this._weapon) return;
 			this.resetCD();
-			this.resetCharge();
+			this.resetCharge(true,false);
 			this.onWeaponChange(this._weapon,value);
 			this._weapon=value;
 		}
@@ -404,6 +403,11 @@ package batr.game.entity.entities.players
 		public function get weaponMaxCD():Number
 		{
 			return this._host.rule.weaponsNoCD?GlobalGameVariables.WEAPON_MIN_CD:this._weapon.getBuffedCD(this.buffCD);
+		}
+		
+		public function get weaponReverseCharge():Boolean
+		{
+			return this._weapon.reverseCharge;
 		}
 		
 		public function get weaponCDPercent():Number
@@ -856,24 +860,26 @@ package batr.game.entity.entities.players
 			//Change Drone Weapon
 			if(WeaponType.isDroneWeapon(newType))
 			{
-				if(!WeaponType.isAvailableDroneNotUse(oldType)) this._droneWeapon=oldType
-				else this._droneWeapon=GameRule.DEFAULT_DRONE_WEAPON
+				if(WeaponType.isBulletWeapon(oldType)) this._droneWeapon=WeaponType.BULLET;
+				else if(!WeaponType.isAvailableDroneNotUse(oldType)) this._droneWeapon=oldType;
+				else this._droneWeapon=GameRule.DEFAULT_DRONE_WEAPON;
 			}
 			//If The Block is still carring,then throw without charge(WIP,maybe?)
 		}
 		
 		protected function dealUsingCD():void
 		{
+				//trace(this.weapon.name,this._weaponChargeTime,this._weaponChargeMaxTime)
 			if(this._weaponUsingCD>0)
 			{
 				this._weaponUsingCD--;
 				this._GUI.updateCD();
 			}
-			else if(this.isPress_Use)
+			else
 			{
 				if(!this.weaponNeedsCharge)
 				{
-					this.useWeapon();
+					if(this.isPress_Use) this.useWeapon();
 				}
 				else if(this._weaponChargeTime<0)
 				{
@@ -881,7 +887,14 @@ package batr.game.entity.entities.players
 				}
 				else
 				{
-					this.dealWeaponCharge();
+					if(this.weaponReverseCharge)
+					{
+						this.dealWeaponReverseCharge();
+					}
+					else if(this.isPress_Use)
+					{
+						this.dealWeaponCharge();
+					}
 				}
 			}
 		}
@@ -891,9 +904,23 @@ package batr.game.entity.entities.players
 			if(this._weaponChargeTime>=this._weaponChargeMaxTime)
 			{
 				this.useWeapon();
-				resetCharge(false,false);
+				this.resetCharge(false,false);
 			}
-			if(this._weaponChargeTime>=0) this._weaponChargeTime++;
+			else this._weaponChargeTime++;
+			this._GUI.updateCharge();
+		}
+		
+		protected function dealWeaponReverseCharge():void
+		{
+			if(this.weaponChargeTime<this.weaponChargeMaxTime)
+			{
+				this._weaponChargeTime++;
+			}
+			if(this.isPress_Use)
+			{
+				this.useWeapon();
+				this.resetCharge(false,false);
+			}
 			this._GUI.updateCharge();
 		}
 		
@@ -901,7 +928,7 @@ package batr.game.entity.entities.players
 		{
 			if(!this.weaponNeedsCharge||this._weaponUsingCD>0||!this.isActive||this.isRespawning) return;
 			this.useWeapon();
-			resetCharge();
+			this.resetCharge();
 		}
 		
 		public function initWeaponCharge():void
@@ -1167,7 +1194,7 @@ package batr.game.entity.entities.players
 					this.moveRight();
 				break;
 				case this.contolKey_Use:
-					this.useWeapon();
+					if(!this.weaponReverseCharge) this.useWeapon();
 				break;
 				/*case this.contolKey_Select_Left:
 					this.moveSelect_Left();

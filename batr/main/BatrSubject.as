@@ -19,11 +19,11 @@ package batr.main
 		private static const FOR_TEST:Boolean=false;
 		
 		//============Instance Variables============//
-		protected var _game:Game
-		protected var _menu:Menu
+		protected var _game:Game;
+		protected var _menu:Menu;
 		
-		protected var _gameRule:GameRule
-		protected var _translations:Translations
+		protected var _gameRule:GameRule;
+		protected var _translations:Translations;
 		
 		//============Constructor Function============//
 		public function BatrSubject():void
@@ -142,7 +142,7 @@ package batr.main
 			this._gameRule.initialMap=Map_V1.MAP_5;
 			this._gameRule.weaponsNoCD=true;
 			this._gameRule.mapTransformTime=0;
-			this._gameRule.defaultWeaponID=WeaponType.SHOCKWAVE_BETA.weaponID;
+			this._gameRule.defaultWeaponID=WeaponType.LIGHTNING.weaponID;
 			this._game.forceStartGame(this.gameRule);
 			this.trunToGame();
 		}
@@ -168,7 +168,7 @@ package batr.main
 			var alt:Boolean=E.altKey;
 			var shift:Boolean=E.shiftKey;
 			// P:Pause
-			if(code==KeyCode.P&&!this.menuVisible)
+			if(code==KeyCode.P)//&&!this.menuVisible
 			{
 				this.toggleGamePause();
 			}
@@ -255,7 +255,16 @@ package batr.main
 		
 		public function toggleGamePause():void
 		{
-			this._game.isActive=!this._game.isActive;
+			//this._game.isActive=!this._game.isActive;
+			if(this._game.isActive)
+			{
+				if(this.menuObj.nowSheet!=this.menuObj.sheetPause) this.menuObj.nowSheet=this.menuObj.sheetPause;
+				this.trunToMenu();
+			}
+			else
+			{
+				this.trunToGame();
+			}
 		}
 		
 		public function trunTranslationsTo(translations:Translations):void

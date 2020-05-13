@@ -9,7 +9,7 @@ package batr.general
 		public static const GAME_VERSION_MAJOR:String="0.2.0";
 		public static const GAME_VERSION_MAIN:String="alpha";
 		public static const GAME_VERSION_BUILD:String="04";
-		public static const GAME_UPDATE_LOG:String="Optimize:BonusBox,Shockwave-BETA,Lightning";
+		public static const GAME_UPDATE_LOG:String="Smarter AI;The reverse charging mechanism of weapon(affected weapons:lightning,sub bomber,pulse laser);Balanced weapon;Pause Screen";
 		
 		//============Static Getter And Setter============//
 		public static function get GAME_FULL_NAME():String

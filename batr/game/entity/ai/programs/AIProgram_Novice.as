@@ -127,7 +127,13 @@ package batr.game.entity.ai.programs
 				{
 					player.addActionToThread(AIPlayerAction.getTrunActionFromEntityRot(this._tempRot));
 				}
-				if(!player.isPress_Use) return AIPlayerAction.PRESS_KEY_USE;
+				//Press Use
+				if(player.weaponReverseCharge)
+				{
+					if(player.chargingPercent>=1) return AIPlayerAction.PRESS_KEY_USE;
+					else if(player.isPress_Use) return AIPlayerAction.RELEASE_KEY_USE;
+				}
+				else if(!player.isPress_Use) return AIPlayerAction.PRESS_KEY_USE;
 				this._waitTime++;
 				return AIPlayerAction.NULL;
 			}

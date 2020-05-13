@@ -42,6 +42,17 @@ package batr.menu.main
 			null,
 			null,
 			TextFormatAlign.CENTER)
+		
+		public static const TEXT_TITLE_FORMAT:TextFormat=new TextFormat(
+			new MainFont().fontName,
+			GlobalGameVariables.DEFAULT_SIZE*15/8,
+			0x000000,
+			true,
+			null,
+			null,
+			null,
+			null,
+			TextFormatAlign.CENTER)
 			
 		public static const VERSION_TEXT_FORMAT:TextFormat=new TextFormat(
 			new MainFont().fontName,
@@ -108,6 +119,7 @@ package batr.menu.main
 		protected var _sheetAdvancedCustom:BatrMenuSheet;
 		protected var _sheetGameResult:BatrMenuSheet;
 		protected var _sheetScoreRanking:BatrMenuSheet;
+		protected var _sheetPause:BatrMenuSheet;
 		
 		//Functional
 		protected var _sheets:Vector.<BatrMenuSheet>;
@@ -207,6 +219,11 @@ package batr.menu.main
 		public function get lastSheet():BatrMenuSheet
 		{
 			return this._lastSheet;
+		}
+		
+		public function get sheetPause():BatrMenuSheet
+		{
+			return this._sheetPause;
 		}
 		
 		public function get numSheet():int
@@ -619,11 +636,26 @@ package batr.menu.main
 				//Ranking
 				this._sheetScoreRanking=this.buildSheet(TranslationKey.SCORE_RANKING,false).appendDirectElements(
 					//Text Title
-					quickTextFieldBuild(TranslationKey.SCORE_RANKING,2,2).setBlockSize(20,2).setFormet(RESULT_TITLE_FORMET,true),
+					this.quickTextFieldBuild(TranslationKey.SCORE_RANKING,2,2).setBlockSize(20,2).setFormet(RESULT_TITLE_FORMET,true),
 					//ranking
 					this._rankContextText=quickTextFieldBuild(null,2,4,TextFieldAutoSize.NONE).setBlockSize(20,20).setFormet(RANK_CONTEXT_FORMET,true),
 					//button
 					this.quickBackButtonBuild().setBlockPos(9,21)
+				) as BatrMenuSheet,
+				//Pause
+				this._sheetPause=this.buildSheet(TranslationKey.PAUSED,false).appendDirectElements(
+					//Text Title
+					quickTextFieldBuild(TranslationKey.PAUSED,2,2,TextFieldAutoSize.CENTER).setBlockSize(20,2).setFormet(TEXT_TITLE_FORMAT,true),
+					//Buttons
+					(new BatrButtonList().appendDirectElements(
+						this.quickButtonBuild2(TranslationKey.CONTINUE,this.onContinueButtonClick,0xff8000),
+						this.quickButtonBuild2(TranslationKey.RESTART,this.onRestartButtonClick,0xff0080),
+						this.quickButtonBuild2(TranslationKey.GAME_RESULT,this.onResultButtonClick,0x00ff80),
+						this.quickButtonBuild2(TranslationKey.MAIN_MENU,this.onMainMenuButtonClick,0x0080ff)
+					) as BatrButtonList).setPos(
+						GlobalGameVariables.DEFAULT_SIZE*9,
+						GlobalGameVariables.DEFAULT_SIZE*9
+					)
 				) as BatrMenuSheet
 			];
 			//Set Variable 2
@@ -814,6 +846,17 @@ package batr.menu.main
 			this._subject.resetRule();
 			this.game.forceStartGame(this.gameRule);
 			this._subject.trunToGame();
+		}
+		
+		protected function onRestartButtonClick(event:BatrGUIEvent):void
+		{
+			this.game.restartGame(this.gameRule);
+			this._subject.trunToGame();
+		}
+		
+		protected function onResultButtonClick(event:BatrGUIEvent):void
+		{
+			this.game.testGameEnd(true);
 		}
 		
 		protected function onBackButtonClick(event:BatrGUIEvent):void

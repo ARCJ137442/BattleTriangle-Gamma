@@ -478,7 +478,12 @@ package batr.game.entity.ai.programs
 						//Trun
 						if(player.rot!=tempRot) player.addActionToThread(AIPlayerAction.getTrunActionFromEntityRot(tempRot));
 						//Press Use
-						if(!player.isPress_Use) return AIPlayerAction.PRESS_KEY_USE;
+						if(player.weaponReverseCharge)
+						{
+							if(player.chargingPercent>=1) return AIPlayerAction.PRESS_KEY_USE;
+							else if(player.isPress_Use) return AIPlayerAction.RELEASE_KEY_USE;
+						}
+						else if(!player.isPress_Use) return AIPlayerAction.PRESS_KEY_USE;
 						traceLog(player,"attack target "+getEntityName(this._lastTarget))
 					}
 					//Carry Block

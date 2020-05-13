@@ -42,6 +42,8 @@ package batr.translations
 				TranslationKey.MAIN_MENU,"Main Menu",
 				TranslationKey.GLOBAL_STAT,"Global Stat",
 				TranslationKey.SCORE_RANKING,"Score Ranking",
+				TranslationKey.PAUSED,"Paused",
+				TranslationKey.RESTART,"Restart",
 				//batr.custom
 				TranslationKey.DEFAULT_WEAPON,"Default Weapon",
 				TranslationKey.DEFAULT_HEALTH,"Default Health",
@@ -126,6 +128,8 @@ package batr.translations
 				TranslationKey.MAIN_MENU,"\u4e3b\u754c\u9762",
 				TranslationKey.GLOBAL_STAT,"\u5168\u5c40\u7edf\u8ba1",
 				TranslationKey.SCORE_RANKING,"\u603b\u5206\u6392\u884c",
+				TranslationKey.PAUSED,"\u5df2\u6682\u505c",
+				TranslationKey.RESTART,"\u91cd\u65b0\u5f00\u59cb",
 				//batr.custom
 				TranslationKey.DEFAULT_WEAPON,"\u9ed8\u8ba4\u6b66\u5668",
 				TranslationKey.DEFAULT_HEALTH,"\u9ed8\u8ba4\u751f\u547d\u503c",

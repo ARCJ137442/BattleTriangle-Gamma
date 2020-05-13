@@ -51,6 +51,8 @@ package batr.translations
 		public static const MAIN_MENU:String="batr.menu.mainMenu";
 		public static const GLOBAL_STAT:String="batr.menu.globalStat";
 		public static const SCORE_RANKING:String="batr.menu.scoreRanking";
+		public static const PAUSED:String="batr.menu.paused";
+		public static const RESTART:String="batr.menu.restart";
 		
 		//batr.select
 		public static const PLAYER_COUNT:String="batr.select.playerCount";

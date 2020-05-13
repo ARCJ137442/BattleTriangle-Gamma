@@ -1706,7 +1706,7 @@ package batr.game.main
 					
 					break;
 				case WeaponType.LIGHTNING:
-					p=new Lightning(this,centerX,centerY,weaponRot,player,player.operateFinalLightningEnergy(100));
+					p=new Lightning(this,centerX,centerY,weaponRot,player,player.operateFinalLightningEnergy(100)*(0.25+chargePercent*0.75));
 					break;
 				case WeaponType.SHOCKWAVE_ALPHA:
 					p=new ShockWaveBase(this,centerX,centerY,player,player==null?GameRule.DEFAULT_DRONE_WEAPON:player.droneWeapon,player.droneWeapon.chargePercentInDrone);
