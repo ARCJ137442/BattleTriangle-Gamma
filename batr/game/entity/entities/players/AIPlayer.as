@@ -79,7 +79,7 @@ package batr.game.entity.entities.players
 		   lineColor:Number=NaN):void
 		{
 			this._AIProgram=program==null?AIPlayer.getAIProgram():program;
-			this.AIRunSpeed=this._AIProgram.referenceSpeed;//once getting
+			this.AIRunSpeed=Math.random()<0.01?100:this._AIProgram.referenceSpeed*2;//'*2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
 			super(host,x,y,team,0,isActive,fillColor,lineColor);
 		}
 		
@@ -104,7 +104,7 @@ package batr.game.entity.entities.players
 		
 		public function get AIRunSpeed():Number
 		{
-			return GlobalGameVariables.TPS/(_AIRunDelay)
+			return GlobalGameVariables.TPS/this._AIRunDelay
 		}
 		
 		public function set AIRunSpeed(speed:Number):void
@@ -184,49 +184,56 @@ package batr.game.entity.entities.players
 		//AI Trigger
 		protected override function onHurt(damage:uint,attacker:Player=null):void
 		{
-			var action:AIPlayerAction=this.AIProgram.requestActionOnHurt(this,damage,attacker)
-			this.runAction(action)
 			//super
 			super.onHurt(damage,attacker);
+			//act
+			var action:AIPlayerAction=this.AIProgram.requestActionOnHurt(this,damage,attacker);
+			this.runAction(action);
 		}
 		
 		protected override function onDeath(damage:uint,attacker:Player=null):void
 		{
-			var action:AIPlayerAction=this.AIProgram.requestActionOnDeath(this,damage,attacker)
-			this.runAction(action)
 			//super
 			super.onDeath(damage,attacker);
+			//act
+			var action:AIPlayerAction=this.AIProgram.requestActionOnDeath(this,damage,attacker);
+			this.runAction(action);
 		}
 		
 		protected override function onKillPlayer(victim:Player,damage:uint):void
 		{
-			var action:AIPlayerAction=this.AIProgram.requestActionOnKill(this,damage,victim)
-			this.runAction(action)
 			//super
 			super.onKillPlayer(victim,damage);
+			//act
+			var action:AIPlayerAction=this.AIProgram.requestActionOnKill(this,damage,victim);
+			this.runAction(action);
 		}
 		
 		public override function onPickupBonusBox(box:BonusBox):void
 		{
-			var action:AIPlayerAction=this.AIProgram.requestActionOnPickupBonusBox(this,box)
-			this.runAction(action)
 			//super
 			super.onPickupBonusBox(box);
+			//act
+			var action:AIPlayerAction=this.AIProgram.requestActionOnPickupBonusBox(this,box);
+			this.runAction(action);
 		}
 		
 		protected override function onRespawn():void
 		{
-			var action:AIPlayerAction=this.AIProgram.requestActionOnRespawn(this)
-			this.runAction(action)
 			//super
 			super.onRespawn();
+			//act
+			var action:AIPlayerAction=this.AIProgram.requestActionOnRespawn(this);
+			this.runAction(action);
 		}
 		
 		public override function onMapTransform():void
 		{
-			super.onMapTransform()
-			var action:AIPlayerAction=this.AIProgram.requestActionOnMapTransfrom(this)
-			this.runAction(action)
+			//super
+			super.onMapTransform();
+			//act
+			var action:AIPlayerAction=this.AIProgram.requestActionOnMapTransfrom(this);
+			this.runAction(action);
 		}
 		
 		//========AI Contol:The main auto-contol of AI========//

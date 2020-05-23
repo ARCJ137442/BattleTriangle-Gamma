@@ -18,7 +18,7 @@ package batr.game.entity.entities.projectiles
 		public static const LINE_SIZE:Number=GlobalGameVariables.DEFAULT_SIZE/80
 		public static const BLOCK_RADIUS:Number=GlobalGameVariables.DEFAULT_SIZE/2;
 		
-		public static const MOVING_INTERVAL:uint=GlobalGameVariables.TPS/32;
+		public static const MOVING_INTERVAL:uint=GlobalGameVariables.TPS*0.0625/2//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>;
 		
 		//============Instance Variables============//
 		public var lastBlockType:BlockType=BlockType.NULL;

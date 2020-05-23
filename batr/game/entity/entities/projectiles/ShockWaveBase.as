@@ -20,7 +20,10 @@ package batr.game.entity.entities.projectiles
 		//============Static Variables============//
 		public static const BLOCK_RADIUS:Number=GlobalGameVariables.DEFAULT_SIZE*1.2;
 		
-		public static const LIFE:uint=GlobalGameVariables.TPS/2;//Life For Charge
+		/**
+		 * Life For Charge
+		 */
+		public static const LIFE:uint=GlobalGameVariables.TPS/2;//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
 		
 		//============Static Functions============//
 		

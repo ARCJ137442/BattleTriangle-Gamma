@@ -211,8 +211,7 @@ package batr.game.entity.ai.programs
 		
 		public function get referenceSpeed():uint
 		{
-			if(Math.random()<0.01) return 100;
-			return 10*(1+exMath.random(6));
+			return 5*(1+exMath.random(6));
 		}
 		
 		protected function get pickBonusFirst():Boolean
@@ -256,8 +255,8 @@ package batr.game.entity.ai.programs
 					}
 				}*/
 				//====Dynamic A*====//
-				//If No Target,Get New Target
-				if(this._lastTarget==null)
+				//If Invalid Target,Get New Target
+				if(this._lastTarget==null||this._lastTarget==player)
 				{
 					//========Find BonusBox========//
 					var target:EntityCommon=null;
@@ -373,19 +372,25 @@ package batr.game.entity.ai.programs
 		
 		public function requestActionOnHurt(player:AIPlayer,damage:uint,attacker:Player):AIPlayerAction
 		{
+			//Run
 			if(player.healthPercent<0.5)
 			{
 				if(this._pickupWeight>0) this._pickupWeight=-this._pickupWeight;
 				if(attacker!=null) this.addCloseTarget(attacker);
 				this.resetTarget();
 			}
-			else if(attacker!=null&&attacker!=this._lastTarget&&
+			//Hurt By Target
+			else if(attacker!=null&&attacker!=this._lastTarget&&attacker!=player&&
 				player.canUseWeaponHurtPlayer(attacker,player.weapon))
 			{
 				this._pickupWeight-=damage;
 				this.changeTarget(player,attacker);
 			}
-			return AIPlayerAction.NULL;
+			//Release Weapon
+			if(player.isCharging) player.runAction(AIPlayerAction.RELEASE_KEY_USE);
+			//random move beside on under attack<From AI-N>
+			if(UsefulTools.randomBoolean()) return AIPlayerAction.MOVE_LEFT_REL;
+			else return AIPlayerAction.MOVE_RIGHT_REL;
 		}
 		
 		public function requestActionOnKill(player:AIPlayer,damage:uint,victim:Player):AIPlayerAction

@@ -15,10 +15,10 @@ package batr.game.entity.entities.projectiles
 	{
 		//============Static Variables============//
 		public static const SIZE:Number=PosTransform.localPosToRealPos(2/5)
-		public static const DEFAULT_SPEED:Number=12/GlobalGameVariables.TPS*2
+		public static const DEFAULT_SPEED:Number=12/GlobalGameVariables.TPS*2//'*2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
 		public static const DEFAULT_EXPLODE_COLOR:uint=0xffcc00
 		public static const DEFAULT_EXPLODE_RADIUS:Number=2
-		public static const MAX_BOMB_TICK:uint=GlobalGameVariables.TPS*0.0625
+		public static const MAX_BOMB_TICK:uint=GlobalGameVariables.TPS*0.125/2//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
 		
 		//============Static Variables============//
 		protected var _bombTick:uint

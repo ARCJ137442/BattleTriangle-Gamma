@@ -3,6 +3,7 @@ package batr.menu.main
 	import batr.common.*;
 	import batr.general.*;
 	import batr.game.stat.PlayerStats;
+	import batr.menu.event.BatrGUIEvent;
 	
 	import batr.game.block.*;
 	import batr.game.map.*;
@@ -27,7 +28,7 @@ package batr.menu.main
 		//============Static Variables============//
 		protected static const _TITLE_HIDE_Y:int=-Title.HEIGHT-GlobalGameVariables.DEFAULT_SIZE*1;
 		protected static const _TITLE_SHOW_Y:int=PosTransform.localPosToRealPos(2);
-		protected static const _TITLE_ANIMATION_TIME:uint=GlobalGameVariables.TPS/2;
+		protected static const _TITLE_ANIMATION_TIME:uint=GlobalGameVariables.TPS/2;//'/2': In order to synchronize the in-game CD with the real CD<Will NOT be removed in 0.2.1>
 		
 		/**
 		 * Menu Text Format
@@ -102,15 +103,14 @@ package batr.menu.main
 		protected var _isActive:Boolean
 		
 		protected var _subject:BatrSubject;
-		protected var _backGround:BackGround=new BackGround(GlobalGameVariables.DISPLAY_GRIDS,
-															GlobalGameVariables.DISPLAY_GRIDS,
-															true,true,false);
+		protected var _backGround:BackGround=new BackGround(GlobalGameVariables.DISPLAY_GRIDS,GlobalGameVariables.DISPLAY_GRIDS,true,true,false);
 		
 		protected var _titleTimer:Timer=new Timer(1000/GlobalGameVariables.TPS,_TITLE_ANIMATION_TIME);
 		protected var _isShowingMenu:Boolean=false;
 		
 		protected var _languageSelecter:BatrSelecter;
 		protected var _playerStatSelecter:BatrSelecter;
+		protected var _frameComplementSelecter:BatrSelecter;
 		
 		//Sheets
 		//List
@@ -260,6 +260,11 @@ package batr.menu.main
 			return this._languageSelecter;
 		}
 		
+		public function get frameComplementSelecter():BatrSelecter
+		{
+			return this._frameComplementSelecter;
+		}
+		
 		//============Instance Functions============//
 		//========Advanced Functions========//
 		/**
@@ -331,7 +336,7 @@ package batr.menu.main
 			this._nowSheet=value;
 			//Set
 			if(addHistory) this.addSheetHistory(this._sheets.indexOf(this._lastSheet)+1);
-			if(this._nowSheet!=null) this.addChild(this._nowSheet);
+			if(this._nowSheet!=null) this.addChildAt(this._nowSheet,0);
 			this._title.visible=this._nowSheet.keepTitle;
 		}
 		
@@ -437,6 +442,13 @@ package batr.menu.main
 			this._languageSelecter.y=PosTransform.localPosToRealPos(22.5);
 			this._languageSelecter.addEventListener(BatrGUIEvent.CLICK,this.onLanguageChange);
 			this.addChild(this._languageSelecter);
+			//Add Frame-Complement Selecter
+			this._frameComplementSelecter=new BatrSelecter(BatrSelecterContext.createBinaryChoiceContext(uint(game.enableFrameComplement),this.translations,TranslationKey.FILL_FRAME_OFF,TranslationKey.FILL_FRAME_ON));
+			this._frameComplementSelecter.x=PosTransform.localPosToRealPos(21);
+			this._frameComplementSelecter.y=PosTransform.localPosToRealPos(21.5);
+			this._frameComplementSelecter.addEventListener(BatrGUIEvent.CLICK,this.onFillFrameChange);
+			this.subject.addEventListener(TranslationsChangeEvent.TYPE,this._frameComplementSelecter.onTranslationChange);
+			this.addChild(this._frameComplementSelecter);
 		}
 		
 		protected function buildSheets():void
@@ -592,7 +604,10 @@ package batr.menu.main
 						true
 					).quickAppendSelecter(
 						this,
-						BatrSelecterContext.createUnsignedIntagerContext(this.gameRule.bonusBoxMaxCount),
+						BatrSelecterContext.createUnsignedIntagerAndOneSpecialContext(
+							this.gameRule.bonusBoxMaxCount,
+							this.quickTranslationalTextBuild(TranslationKey.INFINITY)
+						),
 						TranslationKey.MAX_BONUS_COUNT,
 						true
 					).quickAppendSelecter(
@@ -643,7 +658,7 @@ package batr.menu.main
 					this.quickBackButtonBuild().setBlockPos(9,21)
 				) as BatrMenuSheet,
 				//Pause
-				this._sheetPause=this.buildSheet(TranslationKey.PAUSED,false).appendDirectElements(
+				this._sheetPause=this.buildSheet(TranslationKey.PAUSED,false).setMaskColor(0x7f7f7f,0.5).appendDirectElements(
 					//Text Title
 					quickTextFieldBuild(TranslationKey.PAUSED,2,2,TextFieldAutoSize.CENTER).setBlockSize(20,2).setFormet(TEXT_TITLE_FORMAT,true),
 					//Buttons
@@ -924,6 +939,14 @@ package batr.menu.main
 		protected function onLanguageChange(event:BatrGUIEvent):void
 		{
 			this.subject.trunTranslationsTo(Translations.getTranslationFromID(this._languageSelecter.currentValue));
+		}
+		
+		protected function onFillFrameChange(event:BatrGUIEvent):void
+		{
+			//refresh
+			this.game.refreshLastTime();
+			//set
+			this.game.enableFrameComplement=Boolean(this._frameComplementSelecter.currentValue);
 		}
 	}
 }

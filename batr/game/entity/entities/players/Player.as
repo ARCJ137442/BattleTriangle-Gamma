@@ -25,7 +25,7 @@ package batr.game.entity.entities.players
 		
 		public static const DEFAULT_MAX_HEALTH:int=100
 		public static const DEFAULT_HEALTH:int=DEFAULT_MAX_HEALTH
-		public static const MAX_DAMAGE_DELAY:uint=0.5*GlobalGameVariables.TPS/2
+		public static const MAX_DAMAGE_DELAY:uint=0.5*GlobalGameVariables.TPS/2//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
 		
 		//============Static Functions============//
 		public static function isAI(player:Player):Boolean
@@ -50,17 +50,16 @@ package batr.game.entity.entities.players
 		protected var _fillColor2:uint=0xcccccc;
 		
 		protected var _GUI:PlayerGUI
-		protected var _hurtOverlay:PlayerHurtOverlay
 		protected var _carriedBlock:BlockCommon
 		
 		//====Contol Variables====//
 		//ContolDelay
-		public var contolDelay_Move:uint=GlobalGameVariables.TPS/4
+		public var contolDelay_Move:uint=GlobalGameVariables.TPS*0.5/2//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
 		//public var contolDelay_Use:uint=GlobalGameVariables.TPS/4
 		//public var contolDelay_Select:uint=GlobalGameVariables.TPS/5
 		
 		//ContolLoop
-		public var contolLoop_Move:uint=GlobalGameVariables.TPS/40
+		public var contolLoop_Move:uint=GlobalGameVariables.TPS*0.05/2//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
 		//public var contolLoop_Use:uint=GlobalGameVariables.TPS/25
 		//public var contolLoop_Select:uint=GlobalGameVariables.TPS/40
 		
@@ -245,7 +244,6 @@ package batr.game.entity.entities.players
 			this.drawShape();
 			//Set GUI And Effects
 			this._GUI=new PlayerGUI(this)
-			this._hurtOverlay=new PlayerHurtOverlay(this)
 			this.addChilds()
 			//Set Contol Key
 			this.initContolKey(contolKeyId);
@@ -260,7 +258,6 @@ package batr.game.entity.entities.players
 			this.clearContolKeys();
 			//Remove Display Object
 			UsefulTools.removeChildIfContains(this._host.playerGUIContainer,this._GUI);
-			this.removeChild(this._hurtOverlay);
 			//Remove Variables
 			//Primitive
 			this._customName=null;
@@ -273,8 +270,6 @@ package batr.game.entity.entities.players
 			this._weapon=null;
 			this._GUI.deleteSelf();
 			this._GUI=null;
-			this._hurtOverlay.deleteSelf();
-			this._hurtOverlay=null;
 			//Call Super Class
 			super.deleteSelf();
 		}
@@ -695,7 +690,8 @@ package batr.game.entity.entities.players
 		
 		protected function onHurt(damage:uint,attacker:Player=null):void
 		{
-			this._hurtOverlay.playAnimation();
+			//this._hurtOverlay.playAnimation();
+			this._host.addPlayerHurtEffect(this);
 			this._host.onPlayerHurt(attacker,this,damage);
 		}
 		
@@ -1050,7 +1046,6 @@ package batr.game.entity.entities.players
 		
 		protected function addChilds():void
 		{
-			this.addChild(this._hurtOverlay);
 			this._host.playerGUIContainer.addChild(this._GUI);
 		}
 		
@@ -1062,7 +1057,6 @@ package batr.game.entity.entities.players
 			this.dealKeyContol();
 			this.dealMoveInTest(this.entityX,this.entityY,false,false);
 			this.dealHeal();
-			if(this._hurtOverlay.life>0) this._hurtOverlay.dealLife();
 			super.tickFunction();
 		}
 		
@@ -1151,9 +1145,9 @@ package batr.game.entity.entities.players
 			//this.isPress_Select_Left=false;
 			//this.isPress_Select_Right=false;
 			this.keyDelay_Move=0;
-			this.contolDelay_Move=GlobalGameVariables.TPS/4;
+			this.contolDelay_Move=GlobalGameVariables.TPS*0.5/2;//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
 			//this.contolDelay_Select=GlobalGameVariables.TPS/5;
-			this.contolLoop_Move=GlobalGameVariables.TPS/40;
+			this.contolLoop_Move=GlobalGameVariables.TPS*0.05/2;//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
 			//this.contolLoop_Select=GlobalGameVariables.TPS/40;
 		}
 		

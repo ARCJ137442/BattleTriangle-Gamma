@@ -40,14 +40,19 @@ package batr.menu.objects.selecter
 						).autoInitLoopSelect()
 		}
 		
+		public static function createBinaryChoiceContext(initValue:int,translations:Translations,tKey0:String,tKey1:String):BatrSelecterContext
+		{
+			return new BatrSelecterContext().initAsEnum(new <TranslationalText>[BatrSelecterContext.quickTranslationalTextBuild(tKey0,translations),BatrSelecterContext.quickTranslationalTextBuild(tKey1,translations)],0,0).initAsInt(1,0,initValue).autoInitLoopSelect();
+		}
+		
 		public static function createYorNContext(initValue:int,translations:Translations):BatrSelecterContext
 		{
-			return new BatrSelecterContext().initAsEnum(new <TranslationalText>[BatrSelecterContext.quickTranslationalTextBuild(TranslationKey.BOOLEAN_NO,translations),BatrSelecterContext.quickTranslationalTextBuild(TranslationKey.BOOLEAN_YES,translations)],0,0).initAsInt(1,0,initValue).autoInitLoopSelect();
+			return createBinaryChoiceContext(initValue,translations,TranslationKey.BOOLEAN_NO,TranslationKey.BOOLEAN_YES);
 		}
 		
 		public static function createBooleanContext(initValue:int,translations:Translations):BatrSelecterContext
 		{
-			return new BatrSelecterContext().initAsEnum(new <TranslationalText>[BatrSelecterContext.quickTranslationalTextBuild(TranslationKey.FALSE,translations),BatrSelecterContext.quickTranslationalTextBuild(TranslationKey.TRUE,translations)],0,0).initAsInt(1,0,initValue).autoInitLoopSelect();
+			return createBinaryChoiceContext(initValue,translations,TranslationKey.FALSE,TranslationKey.TRUE);
 		}
 		
 		public static function createLanguageContext(initValue:int):BatrSelecterContext

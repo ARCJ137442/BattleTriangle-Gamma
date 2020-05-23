@@ -80,6 +80,8 @@ package batr.translations
 		public static const WIN_MULTI_PLAYER:String="batr.game.winMultiPlayer";
 		public static const WIN_PER_PLAYER:String="batr.game.winPerPlayer";
 		public static const WIN_ALL_PLAYER:String="batr.game.winAllPlayer";
+		public static const FILL_FRAME_ON:String="batr.game.fillFrameOn"
+		public static const FILL_FRAME_OFF:String="batr.game.fillFrameOff"
 		
 		//batr.game.map
 		public static const MAP_RANDOM:String="batr.game.map.random";

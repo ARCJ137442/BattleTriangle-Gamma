@@ -16,7 +16,7 @@ package batr.game.effect.effects
 		public static const FILL_ALPHA:Number=0.5
 		public static const LINE_SIZE:Number=GlobalGameVariables.DEFAULT_SIZE/25
 		public static const SIZE:uint=GlobalGameVariables.DEFAULT_SIZE*1.6
-		public static const MAX_LIFE:uint=GlobalGameVariables.TPS/4
+		public static const MAX_LIFE:uint=GlobalGameVariables.TPS*0.5/2//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
 		public static const SCALE:Number=1
 		public static const STAGE_1_START_TIME:uint=MAX_LIFE*3/4
 		public static const STAGE_2_START_TIME:uint=MAX_LIFE/4

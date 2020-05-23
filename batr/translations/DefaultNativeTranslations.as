@@ -68,6 +68,8 @@ package batr.translations
 				TranslationKey.WIN_MULTI_PLAYER," win in the game",
 				TranslationKey.WIN_PER_PLAYER," players win in the game",
 				TranslationKey.WIN_ALL_PLAYER,"All players win in the game",
+				TranslationKey.FILL_FRAME_OFF,"Fill Frame:Off",
+				TranslationKey.FILL_FRAME_ON,"Fill Frame:On",
 				//batr.game.map
 				TranslationKey.MAP_RANDOM,"Random",
 				//batr.game.key
@@ -154,6 +156,8 @@ package batr.translations
 				TranslationKey.WIN_MULTI_PLAYER,"\u5728\u6e38\u620f\u4e2d\u80dc\u5229",
 				TranslationKey.WIN_PER_PLAYER,"\u4e2a\u73a9\u5bb6\u5728\u6e38\u620f\u4e2d\u80dc\u5229",
 				TranslationKey.WIN_ALL_PLAYER,"\u6240\u6709\u73a9\u5bb6\u5728\u6e38\u620f\u4e2d\u80dc\u5229",
+				TranslationKey.FILL_FRAME_OFF,"\u8865\u5e27\u5173\u95ed",
+				TranslationKey.FILL_FRAME_ON,"\u8865\u5e27\u5f00\u542f",
 				//batr.game.map
 				TranslationKey.MAP_RANDOM,"\u968f\u673a",
 				//batr.game.key

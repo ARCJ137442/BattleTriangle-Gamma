@@ -16,7 +16,7 @@ package batr.game.entity.entities.projectiles
 	public class ThrowedBlock extends ProjectileCommon
 	{
 		//============Static Variables============//
-		public static const MAX_SPEED:Number=15/GlobalGameVariables.TPS*2
+		public static const MAX_SPEED:Number=15/GlobalGameVariables.TPS*2//'*2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
 		public static const MIN_SPEED:Number=1/3*MAX_SPEED
 		
 		//============Instance Variables============//

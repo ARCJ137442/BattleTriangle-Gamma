@@ -8,8 +8,8 @@ package batr.game.block.blocks
 	public class Bedrock extends Wall
 	{
 		//============Static Variables============//
-		public static const LINE_COLOR:uint=0xaaaaaa
-		public static const FILL_COLOR:uint=0xbbbbbb
+		public static const LINE_COLOR:uint=0x999999
+		public static const FILL_COLOR:uint=0xaaaaaa
 		public static const LINE_SIZE:uint=Wall.LINE_SIZE
 		
 		//============Constructor Function============//

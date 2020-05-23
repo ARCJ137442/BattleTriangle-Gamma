@@ -11,7 +11,7 @@
 	public class LaserPulse extends LaserBasic 
 	{
 		//============Static Variables============//
-		public static const LIFE:Number=GlobalGameVariables.TPS/8;
+		public static const LIFE:Number=GlobalGameVariables.TPS*0.25/2;//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
 		public static const SIZE:Number=GlobalGameVariables.DEFAULT_SIZE/4;
 		public static const ALPHA:Number=1/0.75;
 		

@@ -182,9 +182,9 @@ package batr.game.model
 		{
 			//defaultCD,defaultChargeTime is Per Second
 			super(name);
-			this._defaultCD=defaultCD*GlobalGameVariables.TPS/2;
+			this._defaultCD=defaultCD*GlobalGameVariables.TPS/2;//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
 			this._defaultDamage=defaultDamage;
-			this._defaultChargeTime=defaultChargeTime*GlobalGameVariables.TPS/2;
+			this._defaultChargeTime=defaultChargeTime*GlobalGameVariables.TPS/2;//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
 			this._reverseCharge=reverseCharge;
 			//default
 			this._canHurtEnemy=true;

@@ -397,7 +397,7 @@ package batr.game.entity.ai.programs
 		
 		public function get referenceSpeed():uint
 		{
-			return 10*(1+exMath.random(6));
+			return 5*(1+exMath.random(6));
 		}
 		
 		/*========AI Program Main========*/
@@ -424,23 +424,9 @@ package batr.game.entity.ai.programs
 				{
 					this.resetTarget();
 				}
-				//Old
-				/*{
-					var pathNodes:Vector.<PathNode>=findPath(player,host,player.gridX,player.gridY,box.gridX,box.gridY);
-					var node:PathNode;
-					while(pathNodes.length>0)
-					{
-						node=pathNodes.pop();
-						if(node.hasFromRot)
-						{
-							player.addActionToThread(AIPlayerAction.getTrunActionFromEntityRot(node.fromRot));
-						}
-					}
-					player.addActionToThread(AIPlayerAction.PRESS_KEY_USE);
-				}*/
 				//====Dynamic A*====//
-				//If No Target,Get New Target
-				if(this._lastTarget==null)
+				//If Invalid Target,Get New Target
+				if(this._lastTarget==null||this._lastTarget==player)
 				{
 					//========Find BonusBox========//
 					var target:EntityCommon=null;
@@ -558,7 +544,8 @@ package batr.game.entity.ai.programs
 		
 		public function requestActionOnHurt(player:AIPlayer,damage:uint,attacker:Player):AIPlayerAction
 		{
-			if(attacker!=null&&attacker!=this._lastTarget&&
+			//Hurt By Target
+			if(attacker!=null&&attacker!=this._lastTarget&&attacker!=player&&
 				player.canUseWeaponHurtPlayer(attacker,player.weapon))
 			{
 				this.changeTarget(player,attacker);

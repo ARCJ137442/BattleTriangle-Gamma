@@ -14,6 +14,7 @@ package batr.game.effect
 		public static const TELEPORT:EffectType=new EffectType("Teleport",-1)
 		public static const PLAYER_DEATH_LIGHT:EffectType=new EffectType("PlayerDeathLight",1)
 		public static const PLAYER_DEATH_ALPHA:EffectType=new EffectType("PlayerDeathAlpha",0)
+		public static const PLAYER_HURT:EffectType=new EffectType("PlayerHurt",1)
 		public static const PLAYER_LEVELUP:EffectType=new EffectType("PlayerLevelUp",1)
 		public static const BLOCK_LIGHT:EffectType=new EffectType("BlockLight",1)
 		
@@ -23,6 +24,7 @@ package batr.game.effect
 			EffectType.TELEPORT,
 			EffectType.PLAYER_DEATH_LIGHT,
 			EffectType.PLAYER_DEATH_ALPHA,
+			EffectType.PLAYER_HURT,
 			EffectType.PLAYER_LEVELUP,
 			EffectType.BLOCK_LIGHT]
 		
@@ -67,6 +69,15 @@ package batr.game.effect
 			return "effect";
 		}
 		
+		/**
+		 * GUI,HUD
+		 * <Top>:POSITIVE
+		 * MapTop,Projectile,MapMiddle,Player
+		 * <Middle>:ZERO
+		 * BonusBox,MapBottom
+		 * <Bottom>:NEGATIVE
+		 * Background
+		 */
 		public function get effectLayer():int
 		{
 			return this._effectLayer

@@ -155,11 +155,17 @@ package batr.game.main
 		protected var _effectContainerTop:Sprite=new Sprite()
 		
 		//Global
-		protected var _isActive:Boolean
-		protected var _isLoaded:Boolean
-		protected var _tickTimer:Timer=new Timer(GlobalGameVariables.TICK_TIME_MS)
+		protected var _isActive:Boolean;
+		protected var _isLoaded:Boolean;
+		protected var _tickTimer:Timer=new Timer(GlobalGameVariables.TICK_TIME_MS);
 		//protected var _secondTimer:Timer=new Timer(1000);//When a timer stop and start the timer will lost its phase.
 		protected var _speed:int;
+		
+		//Frame Complement
+		protected var _lastTime:int;
+		protected var _timeDistance:uint;
+		protected var _expectedFrames:uint;
+		protected var _enableFrameComplement:Boolean;
 		
 		//Temp
 		protected var _tempUniformWeapon:WeaponType
@@ -227,6 +233,8 @@ package batr.game.main
 				this._tickTimer.start();
 				//this._secondTimer.addEventListener(TimerEvent.TIMER,this.dealSecond);
 				//this._secondTimer.start();
+				//lastTime
+				this._lastTime=getTimer();
 			}
 			else
 			{
@@ -264,6 +272,16 @@ package batr.game.main
 		public function set speed(value:int):void
 		{
 			this._speed=value;
+		}
+		
+		public function get enableFrameComplement():Boolean
+		{
+			return this._enableFrameComplement;
+		}
+		
+		public function set enableFrameComplement(value:Boolean):void
+		{
+			this._enableFrameComplement=value;
 		}
 		
 		//======Entity Getters======//
@@ -643,7 +661,27 @@ package batr.game.main
 		
 		protected function onGameTick(E:Event):void
 		{
-			for(var i:uint=0;i<this._speed;i++) this.dealGameTick();
+			var i:int=this._speed
+			//Frame Complement
+			if(this._enableFrameComplement)
+			{
+				//Ranging
+				this._timeDistance=getTimer()-this._lastTime;
+				//Computing<Experimental>
+				this._expectedFrames=this._timeDistance/GlobalGameVariables.TICK_TIME_MS;
+				if(this._expectedFrames>1) trace("this._expectedFrames>1! value=",this._expectedFrames,"distance=",this._timeDistance)
+				i=this._expectedFrames*this._speed;
+				//Synchronize
+				this._lastTime+=this._expectedFrames*GlobalGameVariables.TICK_TIME_MS;//this._timeDistance;
+			}
+			//i end at 0
+			while(i-->0) this.dealGameTick();
+		}
+		
+		public function refreshLastTime():void
+		{
+			this._lastTime=getTimer();
+			this._timeDistance=this._expectedFrames=0;
 		}
 		
 		protected function dealSecond():void
@@ -1083,7 +1121,8 @@ package batr.game.main
 			}
 		}
 		
-		/* Function about Player pickup BonusBox
+		/**
+		 * Function about Player pickup BonusBox
 		 */
 		public function bonusBoxTest(player:Player,x:Number=NaN,y:Number=NaN):Boolean
 		{
@@ -1347,6 +1386,8 @@ package batr.game.main
 			player.isActive=false;
 			if(GlobalRot.isValidRot(rotateTo)) player.setPositions(PosTransform.alignToEntity(x),PosTransform.alignToEntity(y),rotateTo);
 			else player.setXY(PosTransform.alignToEntity(x),PosTransform.alignToEntity(y));
+			//Bonus Test<For remove BUG
+			this.bonusBoxTest(player,x,y);
 			if(effect)
 			{
 				this.addTeleportEffect(player.entityX,player.entityY);
@@ -1367,7 +1408,7 @@ package batr.game.main
 				p.y=this.map.randomY;
 				if(testPlayerCanPass(player,p.x,p.y,true,true))
 				{
-					teleportPlayerTo(player,p.x,p.y,(rotatePlayer?GlobalRot.RANDOM:GlobalRot.NULL),createEffect);
+					this.teleportPlayerTo(player,p.x,p.y,(rotatePlayer?GlobalRot.RANDOM:GlobalRot.NULL),createEffect);
 					break;
 				}
 			}
@@ -1909,6 +1950,11 @@ package batr.game.main
 			this._effectSystem.addEffect(EffectBlockLight.fromBlock(this,x,y,block,reverse));
 		}
 		
+		public function addPlayerHurtEffect(player:Player,reverse:Boolean=false):void
+		{
+			this._effectSystem.addEffect(EffectPlayerHurt.fromPlayer(this,player,reverse))
+		}
+		
 		//======Hook Functions======//
 		public function onPlayerMove(player:Player):void
 		{
@@ -1988,7 +2034,7 @@ package batr.game.main
 			}
 			//Add Bonus By Rule
 			if(this.rule.bonusBoxSpawnAfterPlayerDeath&&
-			   this._entitySystem.bonusBoxCount<this.rule.bonusBoxMaxCount&&
+			   (this.rule.bonusBoxMaxCount<0||this._entitySystem.bonusBoxCount<this.rule.bonusBoxMaxCount)&&
 			   this.testCanPass(deadX,deadY,true,false,true,true,true))
 			{
 				this.addBonusBox(deadX,deadY,this.rule.randomBonusEnable);
@@ -2068,7 +2114,7 @@ package batr.game.main
 			if(testCanPass(x,y,true,false,false,true,true))
 			{
 				if(this.getBlockAttributes(x,y).supplingBonus||
-					(this._entitySystem.bonusBoxCount<this.rule.bonusBoxMaxCount&&
+					((this.rule.bonusBoxMaxCount<0||this._entitySystem.bonusBoxCount<this.rule.bonusBoxMaxCount)&&
 					UsefulTools.randomBoolean2(this.rule.bonusBoxSpawnChance)))
 				{
 					this.addBonusBox(x,y,this.rule.randomBonusEnable);

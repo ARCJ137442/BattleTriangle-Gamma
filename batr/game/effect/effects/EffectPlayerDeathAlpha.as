@@ -43,7 +43,7 @@ package batr.game.effect.effects
 		public override function onEffectTick():void
 		{
 			this.alpha=this.reverse?1-life/LIFE:life/LIFE;
-			dealLife();
+			this.dealLife();
 		}
 		
 		public override function drawShape():void

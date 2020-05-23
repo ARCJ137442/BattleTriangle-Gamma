@@ -37,7 +37,13 @@ package batr.game.block
 		public var laserCanPass:Boolean
 		public var isTransParent:Boolean
 		/**
-		 * NEGATIVE means Bottom,POSITIVE means Top,Zero Means Middle
+		 * GUI,HUD,EffectTop
+		 * <Top>:POSITIVE
+		 * Projectile
+		 * <Middle>:ZERO
+		 * Player,EffectMiddle,BonusBox
+		 * <Bottom>:NEGATIVE
+		 * EffectBottom,Background
 		 */
 		public var drawLayer:int=1
 		/**

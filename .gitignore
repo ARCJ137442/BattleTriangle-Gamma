@@ -16,6 +16,7 @@ bin-release/
 [Tt]humbs.db
 [Ee]hthumbs.db
 [Dd]esktop.ini
+*.lnk
 
 # VS Code
 .vscode/

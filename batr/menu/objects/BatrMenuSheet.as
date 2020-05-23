@@ -67,6 +67,24 @@ package batr.menu.objects
 			return this;
 		}
 		
+		/**
+		 * Clear the graphics and draw the background of the specified color.
+		 * @param	color	The color.
+		 * @param	alpha	The alpha.
+		 * @return	this
+		 */
+		public function setMaskColor(color:uint,alpha:Number=1):BatrMenuSheet
+		{
+			with(this.graphics)
+			{
+				clear();
+				beginFill(color,alpha);
+				drawRect(0,0,GlobalGameVariables.DEFAULT_SIZE*GlobalGameVariables.DISPLAY_GRIDS,GlobalGameVariables.DEFAULT_SIZE*GlobalGameVariables.DISPLAY_GRIDS);
+				endFill();
+			}
+			return this;
+		}
+		
 		//========By IBatrMenuElementContainer========//
 		public function appendDirectElement(element:IBatrMenuElement):IBatrMenuElement
 		{

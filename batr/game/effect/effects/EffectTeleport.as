@@ -10,22 +10,22 @@ package batr.game.effect.effects
 	public class EffectTeleport extends EffectCommon
 	{
 		//============Static Variables============//
-		public static const DEFAULT_COLOR:uint=0x44ff44
-		public static const LINE_ALPHA:Number=0.6
-		public static const FILL_ALPHA:Number=0.5
-		public static const LINE_SIZE:Number=GlobalGameVariables.DEFAULT_SIZE/25
-		public static const SIZE:uint=GlobalGameVariables.DEFAULT_SIZE*2
-		public static const SCALE:Number=1
+		public static const DEFAULT_COLOR:uint=0x44ff44;
+		public static const LINE_ALPHA:Number=0.6;
+		public static const FILL_ALPHA:Number=0.5;
+		public static const LINE_SIZE:Number=GlobalGameVariables.DEFAULT_SIZE/25;
+		public static const SIZE:uint=GlobalGameVariables.DEFAULT_SIZE*2;
+		public static const SCALE:Number=1;
 		
 		//============Instance Variables============//
-		protected var maxScale:Number
-		protected var block1:Shape=new Shape()
-		protected var block2:Shape=new Shape()
+		protected var maxScale:Number;
+		protected var block1:Shape=new Shape();
+		protected var block2:Shape=new Shape();
 		
 		//============Constructor Function============//
 		public function EffectTeleport(host:Game,x:Number,y:Number,scale:Number=EffectTeleport.SCALE):void
 		{
-			super(host,x,y,GlobalGameVariables.TPS*1/2);
+			super(host,x,y,GlobalGameVariables.TPS/2);//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
 			this.drawShape();
 			this.maxScale=scale;
 			this.initScale(scale);

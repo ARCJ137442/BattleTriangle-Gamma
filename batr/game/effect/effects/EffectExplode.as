@@ -22,7 +22,7 @@ package batr.game.effect.effects
 		public function EffectExplode(host:Game,x:Number,y:Number,radius:Number=1,
 									  color:uint=DEFAULT_COLOR):void
 		{
-			super(host,x,y,GlobalGameVariables.TPS/4);
+			super(host,x,y,GlobalGameVariables.TPS*0.25);
 			this._color=color;
 			this._radius=radius;
 			this.drawShape();
