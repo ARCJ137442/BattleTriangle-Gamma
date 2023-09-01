@@ -677,8 +677,6 @@ package batr.game.main
 			}
 			//i end at 0
 			this._temp_game_rate+=i;
-			trace(i)
-			trace("this._temp_game_rate=",this._temp_game_rate);
 			while(this._temp_game_rate>=1){
 				this._temp_game_rate--;
 				this.dealGameTick();
