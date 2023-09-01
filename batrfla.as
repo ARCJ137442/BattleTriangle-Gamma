@@ -82,8 +82,10 @@ package
 					sub.gameObj.dealGameTick();
 					break;
 				case KeyCode.BACK_QUOTES:
-					if(shift) sub.gameObj.speed--;
-					else sub.gameObj.speed++;
+					if(ctrl&&shift) sub.gameObj.speed=1; // Reset speed
+					else if(shift) sub.gameObj.speed/=2;
+					else if(ctrl) sub.gameObj.speed+=1;
+					else sub.gameObj.speed*=2;
 					break;
 				case KeyCode.L:
 					if(shift)

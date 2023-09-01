@@ -159,7 +159,7 @@ package batr.game.main
 		protected var _isLoaded:Boolean;
 		protected var _tickTimer:Timer=new Timer(GlobalGameVariables.TICK_TIME_MS);
 		//protected var _secondTimer:Timer=new Timer(1000);//When a timer stop and start the timer will lost its phase.
-		protected var _speed:int;
+		protected var _speed:Number;
 		
 		//Frame Complement
 		protected var _lastTime:int;
@@ -173,6 +173,7 @@ package batr.game.main
 		//protected var _tempTimer:int=getTimer();
 		protected var _tempSecordPhase:uint=0;
 		protected var _second:uint;
+		protected var _temp_game_rate:Number=0.0;
 		
 		//HUD
 		protected var _globalHUDContainer:Sprite=new Sprite()
@@ -264,12 +265,12 @@ package batr.game.main
 			return this._isLoaded;
 		}
 		
-		public function get speed():int
+		public function get speed():Number
 		{
 			return this._speed;
 		}
 		
-		public function set speed(value:int):void
+		public function set speed(value:Number):void
 		{
 			this._speed=value;
 		}
@@ -661,7 +662,7 @@ package batr.game.main
 		
 		protected function onGameTick(E:Event):void
 		{
-			var i:int=this._speed
+			var i:Number=this._speed
 			//Frame Complement
 			if(this._enableFrameComplement)
 			{
@@ -675,7 +676,13 @@ package batr.game.main
 				this._lastTime+=this._expectedFrames*GlobalGameVariables.TICK_TIME_MS;//this._timeDistance;
 			}
 			//i end at 0
-			while(i-->0) this.dealGameTick();
+			this._temp_game_rate+=i;
+			trace(i)
+			trace("this._temp_game_rate=",this._temp_game_rate);
+			while(this._temp_game_rate>=1){
+				this._temp_game_rate--;
+				this.dealGameTick();
+			}
 		}
 		
 		public function refreshLastTime():void
