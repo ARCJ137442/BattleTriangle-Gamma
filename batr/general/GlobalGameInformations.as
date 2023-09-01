@@ -9,8 +9,8 @@ package batr.general
 		public static const GAME_VERSION_MAJOR:String="0.2.0";
 		//WILL REMOVE WHEN DEVELOP 0.2.1: "In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>"
 		public static const GAME_VERSION_MAIN:String="alpha";
-		public static const GAME_VERSION_BUILD:String="05";
-		public static const GAME_UPDATE_LOG:String="Detail optimization;Smarter AI-M;Player damage now has a detention effect;Experimental Frame Complement;Optimized Pause Screen";
+		public static const GAME_VERSION_BUILD:String="06";
+		public static const GAME_UPDATE_LOG:String="Debug Key: Fine game speed adjustment";
 		
 		//============Static Getter And Setter============//
 		public static function get GAME_FULL_NAME():String
