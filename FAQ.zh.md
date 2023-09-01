@@ -1,22 +1,29 @@
 # FAQ
 
 ## 什么是`Battle Triangle`？
+
 在这仓库中，`Battle Triangle`是一个用`ActionScript 3.0`编写的Flash游戏。
 
 ## 如何打开`Battle Triangle`？
+
 由于`Battle Triangle`是一个Flash游戏，您可以下载swf文件并在Adobe Flash Player中打开它。
 
 ## 我如何玩`Battle Triangle`？
+
 如果您不知如何玩`Battle Triangle`,您可以点击**快速游戏**以开始.此外，**自定义游戏**也可以使用多种玩法.
 
 ## 我可以Fork这个游戏并构建我自己的版本吗?
+
 通过许可证，可以这么做。但是您应注明出处。
 
 ## 这游戏会持续开发吗？
+
 通常是。目前为止该游戏仍在持续开发中。
 
 ## 这游戏开发速度有多快？
+
 可能会很慢，因为开发者现在主要使用`Python`
 
 ## 这游戏在未来会如何发展？
+
 开发者将尝试为其开发一个API，尝试支持“游戏模块（Mods）”，最后将其开发为“游戏引擎”。
