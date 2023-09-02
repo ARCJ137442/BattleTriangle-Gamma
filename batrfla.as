@@ -3,13 +3,15 @@ package
 	import batr.common.*;
 	import batr.general.*;
 	import batr.main.*;
+	import batr.game.main.Game;
 	
 	import flash.events.*;
 	import flash.display.MovieClip;
 	
 	public class batrFla extends MovieClip
 	{
-		var sub:BatrSubject=new BatrSubject()
+		var sub:BatrSubject=new BatrSubject();
+		var fixed_mapID:uint=0;
 		
 		public function batrFla()
 		{
@@ -38,6 +40,7 @@ package
 			 * X:Sheet/Translations
 			 * L:Game UUID List
 			 * <`~>:Game Speed
+			 * N:Append Player
 			 * <Enter>:Game Ticking
 			 */
 			switch(code)
@@ -64,7 +67,13 @@ package
 					break;
 				// T: change position/map
 				case KeyCode.T:
-					if(shift) sub.gameObj.transformMap();
+					if(ctrl)
+					{
+						if(shift) sub.gameObj.transformMap(Game.ALL_MAPS[fixed_mapID=exMath.intMod(fixed_mapID-1,Game.VALID_MAP_COUNT)]);
+						else sub.gameObj.transformMap(Game.ALL_MAPS[fixed_mapID=exMath.intMod(fixed_mapID+1,Game.VALID_MAP_COUNT)]);
+						trace("Now transform map to:",sub.gameObj.map.name);
+					}
+					else if(shift) sub.gameObj.transformMap();
 					else sub.gameObj.spreadAllPlayer();
 					break;
 				// C: remove all projectiles/effects

@@ -58,7 +58,8 @@
 			Map_V1.MAP_D,
 			Map_V1.MAP_E,
 			Map_V1.MAP_F,
-			Map_V1.MAP_G
+			Map_V1.MAP_G,
+			Map_V1.MAP_H
 		]
 		
 		public static const MAP_TRANSFORM_TEXT_FORMAT:TextFormat=new TextFormat(
@@ -355,6 +356,11 @@
 		public function get map():IMap
 		{
 			return this._map;
+		}
+
+		public function get mapIndex():uint
+		{
+			return Game.getIDFromMap(this._map);
 		}
 		
 		public function get mapWidth():uint
@@ -1282,7 +1288,7 @@
 		{
 			if(isInitial&&this.rule.initialMap!=null)
 				this.changeMap(this.rule.initialMap,update,reSperadPlayer);
-			else if(this.rule.mapRandomPotentials==null,this.rule.initialMapID)
+			else if(this.rule.mapRandomPotentials==null&&this.rule.initialMapID)
 				this.changeMap(getRandomMap(),update,reSperadPlayer);
 			else this.changeMap(Game.ALL_MAPS[exMath.intMod(exMath.randomByWeightV(this.rule.mapWeightsByGame),Game.VALID_MAP_COUNT)],update,reSperadPlayer);
 		}
@@ -1305,11 +1311,12 @@
 			if(reSperadPlayer) this.spreadAllPlayer();
 		}
 		
-		public function transformMap():void
+		public function transformMap(destination:IMap=null):void
 		{
 			this._entitySystem.removeAllProjectile();
 			this._entitySystem.removeAllBonusBox();
-			this.loadMap(false,true,true);
+			if(destination==null) this.loadMap(false,true,true);
+			else this.changeMap(destination,true,true);
 			//Call AI
 			var players:Vector.<Player>=this.getAlivePlayers();
 			for each(var player:Player in players)

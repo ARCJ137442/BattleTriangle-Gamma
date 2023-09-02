@@ -19,24 +19,25 @@ package batr.game.map.main
 		//============Static Variables============//
 		protected static const _SIZE:uint=GlobalGameVariables.DISPLAY_GRIDS
 		
-		public static var EMPTY:Map_V1
-		public static var FRAME:Map_V1
-		public static var MAP_1:Map_V1
-		public static var MAP_2:Map_V1
-		public static var MAP_3:Map_V1
-		public static var MAP_4:Map_V1
-		public static var MAP_5:Map_V1
-		public static var MAP_6:Map_V1
-		public static var MAP_7:Map_V1
-		public static var MAP_8:Map_V1
-		public static var MAP_9:Map_V1
-		public static var MAP_A:Map_V1
-		public static var MAP_B:Map_V1
-		public static var MAP_C:Map_V1
-		public static var MAP_D:Map_V1
-		public static var MAP_E:Map_V1
-		public static var MAP_F:Map_V1
-		public static var MAP_G:Map_V1
+		public static var EMPTY:Map_V1=new Map_V1("EMPTY")
+		public static var FRAME:Map_V1=new Map_V1("FRAME")
+		public static var MAP_1:Map_V1=new Map_V1("1")
+		public static var MAP_2:Map_V1=new Map_V1("2")
+		public static var MAP_3:Map_V1=new Map_V1("3")
+		public static var MAP_4:Map_V1=new Map_V1("4")
+		public static var MAP_5:Map_V1=new Map_V1("5")
+		public static var MAP_6:Map_V1=new Map_V1("6")
+		public static var MAP_7:Map_V1=new Map_V1("7")
+		public static var MAP_8:Map_V1=new Map_V1("8")
+		public static var MAP_9:Map_V1=new Map_V1("9")
+		public static var MAP_A:Map_V1=new Map_V1("A",null,true)
+		public static var MAP_B:Map_V1=new Map_V1("B",null,true)
+		public static var MAP_C:Map_V1=new Map_V1("C",null,true)
+		public static var MAP_D:Map_V1=new Map_V1("D",null,true)
+		public static var MAP_E:Map_V1=new Map_V1("E",null,true)
+		public static var MAP_F:Map_V1=new Map_V1("F",null,true)
+		public static var MAP_G:Map_V1=new Map_V1("G",null,true)
+		public static var MAP_H:Map_V1=new Map_V1("H",null,true)
 		
 		protected static var isInited:Boolean=cInit()
 		
@@ -57,24 +58,6 @@ package batr.game.map.main
 			//if(isInited) return
 			//========Init Maps========//
 			var i:uint,ix:uint,iy:uint
-			EMPTY=new Map_V1("EMPTY")
-			FRAME=new Map_V1("FRAME")
-			MAP_1=new Map_V1("1")
-			MAP_2=new Map_V1("2")
-			MAP_3=new Map_V1("3")
-			MAP_4=new Map_V1("4")
-			MAP_5=new Map_V1("5")
-			MAP_6=new Map_V1("6")
-			MAP_7=new Map_V1("7")
-			MAP_8=new Map_V1("8")
-			MAP_9=new Map_V1("9")
-			MAP_A=new Map_V1("A",null,true)
-			MAP_B=new Map_V1("B",null,true)
-			MAP_C=new Map_V1("C",null,true)
-			MAP_D=new Map_V1("D",null,true)
-			MAP_E=new Map_V1("E",null,true)
-			MAP_F=new Map_V1("F",null,true)
-			MAP_G=new Map_V1("G",null,true)
 			//====Basic Frame====//
 			FRAME.fillBlock(0,0,_SIZE-1,_SIZE-1,BlockType.BEDROCK,true)
 			//====Map 1====//
@@ -408,6 +391,23 @@ package batr.game.map.main
 				setReflectMirrorBlock(MAP_G,true,true,1,1,BlockCommon.fromType(BlockType.MOVEABLE_WALL));
 				MAP_G.fillBlock(4,4,19,19,BlockType.GATE_OPEN,false);
 				for(i=0;i<4;i++) MAP_G.addSpawnPointWithMark(2+(i>>1)*19,2+(i&1)*19);
+			}
+			//====Map H====//
+			MAP_H.copyContextFrom(FRAME)
+			{
+				fillReflectMirrorBlock(MAP_H,true,true,4,4,9,4,BlockType.BEDROCK);
+				ix=UsefulTools.randomBoolean()?0:9;
+				iy=UsefulTools.randomBoolean()?0:9;
+				MAP_H.fillBlock(5+ix,5+iy,9+ix,9+iy,BlockType.MOVEABLE_WALL,false);
+				for(i=10;i<=13;i++)
+				{
+					//x
+					MAP_H.addSpawnPointWithMark(i, 4);
+					MAP_H.addSpawnPointWithMark(i, 19);
+					//y
+					MAP_H.addSpawnPointWithMark(4, i);
+					MAP_H.addSpawnPointWithMark(19, i);
+				}
 			}
 			//Set Variables//
 			return true;

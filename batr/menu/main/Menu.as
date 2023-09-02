@@ -1,4 +1,4 @@
-package batr.menu.main
+﻿package batr.menu.main
 {
 	import batr.common.*;
 	import batr.general.*;
@@ -763,8 +763,8 @@ package batr.menu.main
 		protected function updateStatByResult():void
 		{
 			this.onPlayerStatSelecterClick(null);
-			this.setFixedTextSuffix(this._gameStatMapTransform,this._storedGameResult.stats.mapTransformCount);
-			this.setFixedTextSuffix(this._gameStatBonusGenerate,this._storedGameResult.stats.bonusGenerateCount);
+			Menu.setFixedTextSuffix(this._gameStatMapTransform,this._storedGameResult.stats.mapTransformCount);
+			Menu.setFixedTextSuffix(this._gameStatBonusGenerate,this._storedGameResult.stats.bonusGenerateCount);
 		}
 		
 		protected function onTitleTimerTick(event:TimerEvent):void
