@@ -411,7 +411,7 @@
 		 */
 		protected function isPlayersEnd(players:Vector.<Player>):Boolean
 		{
-			if(this.rule.playerCount+this.rule.AICount<2) return false;
+			if(this.numPlayers<2) return false;
 			var team:PlayerTeam=null;
 			for each(var player:Player in players)
 			{
@@ -490,7 +490,7 @@
 			{
 				return new TranslationalText(this.translations,TranslationKey.NOTHING_WIN);
 			}
-			else if(winners.length==this.rule.playerCount+this.rule.AICount)
+			else if(winners.length==this.numPlayers)
 			{
 				return new TranslationalText(this.translations,TranslationKey.WIN_ALL_PLAYER);
 			}
@@ -565,7 +565,9 @@
 			this._tempUniformWeapon=this._rule.randomWeaponEnable;
 			this._tempMapTransformSecond=this.mapTransformPeriod;
 			this._speed=1;
-			//Create
+			//Stats
+			this._stat=new GameStats(this._rule); // will be load by spawnPlayersByRule
+			//Players
 			this.spawnPlayersByRule();
 			//Timer
 			this._tickTimer.reset();
@@ -573,8 +575,6 @@
 			this._tempSecordPhase=0;
 			this._second=0;
 			this.updateGUIText();
-			//Stats
-			this._stat=new GameStats(this._rule,this.entitySystem.players);
 			//Listen
 			this._rule.addEventListener(GameRuleEvent.TEAMS_CHANGE,this.onPlayerTeamsChange);
 			//Active
@@ -1364,9 +1364,14 @@
 		//Set player datas for gaming
 		public function setupPlayer(player:Player):Player
 		{
+			//Position
 			this.respawnPlayer(player);
+			//Variables
 			player.initVariablesByRule(this.rule.defaultWeaponID,this._tempUniformWeapon);
+			//GUI
 			player.gui.updateHealth();
+			//Stats
+			this._stat.addPlayer(player)
 			return player;
 		}
 

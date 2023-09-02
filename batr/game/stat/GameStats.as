@@ -1,4 +1,4 @@
-package batr.game.stat 
+﻿package batr.game.stat 
 {
 	import batr.game.main.*;
 	import batr.game.model.*;
@@ -78,6 +78,12 @@ package batr.game.stat
 		}
 		
 		//============Instance Functions============//
+		public function addPlayer(player:Player):GameStats
+		{
+			this._players.push(player.stats);
+			return this;
+		}
+		
 		public function setPlayers(players:Vector.<PlayerStats>):GameStats
 		{
 			this._players=players;
@@ -86,10 +92,8 @@ package batr.game.stat
 		
 		public function loadPlayers(players:Vector.<Player>):void
 		{
-			for(var i:uint=0;i<players.length;i++)
-			{
-				this._players.push(players[i].stats);
-			}
+			for each(var player:Player in players)
+				this.addPlayer(player);
 		}
 		
 		public function clearPlayers():void

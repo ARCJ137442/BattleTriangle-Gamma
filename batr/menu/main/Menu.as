@@ -763,8 +763,8 @@ package batr.menu.main
 		protected function updateStatByResult():void
 		{
 			this.onPlayerStatSelecterClick(null);
-			setFixedTextSuffix(this._gameStatMapTransform,this._storedGameResult.stats.mapTransformCount);
-			setFixedTextSuffix(this._gameStatBonusGenerate,this._storedGameResult.stats.bonusGenerateCount);
+			this.setFixedTextSuffix(this._gameStatMapTransform,this._storedGameResult.stats.mapTransformCount);
+			this.setFixedTextSuffix(this._gameStatBonusGenerate,this._storedGameResult.stats.bonusGenerateCount);
 		}
 		
 		protected function onTitleTimerTick(event:TimerEvent):void
