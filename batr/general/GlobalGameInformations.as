@@ -8,8 +8,8 @@ package batr.general
 		public static const GAME_DEV_STAGE:String="Gamma";
 		public static const GAME_VERSION_MAJOR:String="0.2.0";
 		public static const GAME_VERSION_MAIN:String="alpha";
-		public static const GAME_VERSION_BUILD:String="07";
-		public static const GAME_UPDATE_LOG:String="New Rule: Allow to lock players's team";
+		public static const GAME_VERSION_BUILD:String="08";
+		public static const GAME_UPDATE_LOG:String="New Debug Key: press `N` to append Player / AI(`ctrl`, +`shift` for `Super AI`)";
 		
 		//============Static Getter And Setter============//
 		public static function get GAME_FULL_NAME():String

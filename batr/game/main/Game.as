@@ -1,4 +1,4 @@
-package batr.game.main 
+﻿package batr.game.main 
 {
 	import batr.common.*;
 	import batr.general.*;
@@ -324,6 +324,31 @@ package batr.game.main
 		public function get effectSystem():EffectSystem
 		{
 			return this._effectSystem;
+		}
+
+		public function get numPlayers():uint
+		{
+			return this._entitySystem.players.length //Includes AI players
+		}
+
+		public function get nextPlayerID():uint
+		{
+			var id:uint=1;
+			for each(var player:Player in this._entitySystem.players)
+			{
+				if(!Player.isAI(player)) id++;
+			}
+			return id;
+		}
+
+		public function get nextAIID():uint
+		{
+			var id:uint=1;
+			for each(var player:Player in this._entitySystem.players)
+			{
+				if(Player.isAI(player)) id++;
+			}
+			return id;
 		}
 		
 		//======Map Getters======//
@@ -1335,6 +1360,25 @@ package batr.game.main
 			//Return
 			return p;
 		}
+
+		//Set player datas for gaming
+		public function setupPlayer(player:Player):Player
+		{
+			this.respawnPlayer(player);
+			player.initVariablesByRule(this.rule.defaultWeaponID,this._tempUniformWeapon);
+			player.gui.updateHealth();
+			return player;
+		}
+
+		//Add a player uses random position and weapon
+		public function appendPlayer(controlKeyID:uint=0):Player
+		{
+			var id:uint=controlKeyID==0?this.nextPlayerID:controlKeyID;
+			trace("Append Player in ID",id);
+			return this.setupPlayer(
+				this.addPlayer(id,this.rule.randomTeam,-1,-1,0,false,null)
+			);
+		}
 		
 		protected function createAI(x:int,y:int,team:PlayerTeam,isActive:Boolean=true):AIPlayer
 		{
@@ -1354,6 +1398,13 @@ package batr.game.main
 			//Return
 			return p;
 		}
+
+		public function appendAI():Player
+		{
+			return this.setupPlayer(
+				this.addAI(this.rule.randomTeam,-1,-1,0,false,null)
+			);
+		}
 		
 		public function autoGetAIName(player:AIPlayer):String
 		{
@@ -1363,21 +1414,15 @@ package batr.game.main
 		public function spawnPlayersByRule():void
 		{
 			var i:uint,player:Player
-			//Spawn Player
+			//Setup Player
 			for(i=0;i<this.rule.playerCount;i++)
 			{
-				player=addPlayer(i+1,this.rule.randomTeam,-1,-1,0,false)
-				respawnPlayer(player)
-				player.initVariablesByRule(this.rule.defaultWeaponID,this._tempUniformWeapon);
-				player.gui.updateHealth();
+				this.appendPlayer(i+1);
 			}
-			//Spawn AIPlayer
+			//Setup AIPlayer
 			for(i=0;i<this.rule.AICount;i++)
 			{
-				player=addAI(this.rule.randomTeam,-1,-1,0,false)
-				respawnPlayer(player)
-				player.initVariablesByRule(this.rule.defaultWeaponID,this._tempUniformWeapon);
-				player.gui.updateHealth();
+				this.appendAI();
 			}
 			//Active Player
 			for each(player in this._entitySystem.players)

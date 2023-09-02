@@ -1,13 +1,11 @@
-# [![Title]](https://github.com/ARCJ137442/BattleTriangle-Gamma)
-
-[Title]:Title_Img.png "标题"
+# [![Title](Title_Img.png)](https://github.com/ARCJ137442/BattleTriangle-Gamma)
 
 一个由`ActionScript 3.0`编写的Flash小游戏。
 
 ## 游戏中使用的语言
 
-* English
-* 简体中文
+* [English](README.md)
+* [简体中文](README.zh.md)
 
 ## 最新版本
 

@@ -19,7 +19,7 @@ package batr.game.entity.entities.players
 		public static const DEFAULT_AI_RUN_SPEED:Number=12;
 		
 		//============Static Functions============//
-		public static function getAIProgram():IAIProgram
+		public static function randomAIProgram():IAIProgram
 		{
 			switch(exMath.random(4))
 			{
@@ -78,8 +78,8 @@ package batr.game.entity.entities.players
 		   fillColor:Number=NaN,
 		   lineColor:Number=NaN):void
 		{
-			this._AIProgram=program==null?AIPlayer.getAIProgram():program;
-			this.AIRunSpeed=Math.random()<0.01?100:this._AIProgram.referenceSpeed*2;//'*2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
+			this._AIProgram=program==null?AIPlayer.randomAIProgram():program;
+			this.AIRunSpeed=Math.random()<0.01?100:this._AIProgram.referenceSpeed;
 			super(host,x,y,team,0,isActive,fillColor,lineColor);
 		}
 		
@@ -110,17 +110,8 @@ package batr.game.entity.entities.players
 		public function set AIRunSpeed(speed:Number):void
 		{
 			if(speed==this.AIRunSpeed) return
-			if(isNaN(speed))
-			{
-				//NaN means randomly speed
-				speed=DEFAULT_AI_RUN_SPEED;
-			}
-			else if(!isFinite(speed))
-			{
-				//Infinite means max speed
-				speed=10*GlobalGameVariables.TPS;
-			}
-			this._AIRunMaxDelay=GlobalGameVariables.TPS/speed;
+			if(isNaN(speed)) speed=DEFAULT_AI_RUN_SPEED; //NaN means randomly speed
+			this._AIRunMaxDelay=isFinite(speed)?GlobalGameVariables.TPS/speed:0; //Infinite means max speed
 			this.initAITick();
 		}
 		

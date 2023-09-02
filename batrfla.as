@@ -56,44 +56,65 @@ package
 			if(!sub.gameObj.isLoaded) return;
 			switch(code)
 			{
+				// R: change teams
 				case KeyCode.R:
 					if(ctrl||ctrl&&shift) sub.gameObj.setATeamToAIPlayer();
 					else if(shift) sub.gameObj.setATeamToNotAIPlayer();
 					else sub.gameObj.randomizeAllPlayerTeam();
 					break;
+				// T: change position/map
 				case KeyCode.T:
 					if(shift) sub.gameObj.transformMap();
 					else sub.gameObj.spreadAllPlayer();
 					break;
+				// C: remove all projectiles/effects
 				case KeyCode.C:
 					if(shift) sub.gameObj.effectSystem.removeAllEffect();
 					else sub.gameObj.entitySystem.removeAllProjectile();
 					break;
+				// V: change weapons
 				case KeyCode.V:
 					if(shift) sub.gameObj.changeAllPlayerWeapon();
 					else sub.gameObj.changeAllPlayerWeaponRandomly();
 					break;
+				// B: control bonus boxes
 				case KeyCode.B:
 					if(ctrl) sub.gameObj.fillBonusBox();
 					else if(shift) sub.gameObj.entitySystem.removeAllBonusBox();
 					else sub.gameObj.randomAddRandomBonusBox();
 					break;
+				// ENTER: deal game tick
 				case KeyCode.ENTER:
 					sub.gameObj.dealGameTick();
 					break;
+				// BACK_QUOTES: manipulate speed
 				case KeyCode.BACK_QUOTES:
 					if(ctrl&&shift) sub.gameObj.speed=1; // Reset speed
 					else if(shift) sub.gameObj.speed/=2;
 					else if(ctrl) sub.gameObj.speed+=1;
 					else sub.gameObj.speed*=2;
 					break;
+				//L: List UUIDs
 				case KeyCode.L:
 					if(shift)
 						trace("List of Effect UUIDs:",sub.gameObj.effectSystem.getAllUUID());
 					else trace("List of Entity UUIDs:",sub.gameObj.entitySystem.getAllUUID());
 					break;
+				//E: Test game end
 				case KeyCode.E:
 					sub.gameObj.testGameEnd(shift);
+					break;
+				//N: Create
+				case KeyCode.N:
+					if(ctrl)
+						if(shift) // Append a "SuperAI" 
+						{
+							var p=sub.gameObj.appendAI();
+							p.AIRunSpeed = alt?Infinity:1000;
+						}
+						else sub.gameObj.appendAI();
+					
+					else sub.gameObj.appendPlayer();
 					break;
 			}
 		}

@@ -7,6 +7,7 @@
 * `C`: Clear **Projectile/Effect**
 * `V`: Change **Weapon**
 * `X`: Change **Sheet/Translations**
-* `~`: Transform **Game Speed**
+* `~`: Manipulate **Game Speed**
+* `N`: Append **Player**s
 * `Enter`: Enter one **Game Step**
 * `Shift+E`: Force get **Game Result**

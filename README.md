@@ -1,13 +1,11 @@
-# [![Title]](https://github.com/ARCJ137442/BattleTriangle-Gamma)
-
-[Title]:Title_Img.png "Title"
+# [![Title](Title_Img.png)](https://github.com/ARCJ137442/BattleTriangle-Gamma)
 
 A flash game based on `ActionScript 3.0`.
 
 ## Language Used in Game
 
-* English
-* 简体中文
+* [English](README.md)
+* [简体中文](README.zh.md)
 
 ## Newest Version
 
