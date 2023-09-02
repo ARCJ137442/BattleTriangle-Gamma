@@ -1,9 +1,8 @@
-package batr.game.map 
-{
+package batr.game.map {
+
 	import batr.game.block.*;
-	
-	public interface IMapGenerater
-	{
-		function generateTo(map:IMap,clearBefore:Boolean):IMap
+
+	public interface IMapGenerater {
+		function generateTo(map:IMap, clearBefore:Boolean):IMap;
 	}
 }

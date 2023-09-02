@@ -1,5 +1,4 @@
-﻿package
-{
+﻿package {
 	import batr.common.*;
 	import batr.general.*;
 	import batr.main.*;
@@ -8,14 +7,12 @@
 	import flash.events.*;
 	import flash.display.MovieClip;
 	
-	public class batrFla extends MovieClip
-	{
+	public class batrFla extends MovieClip {
 		var sub:BatrSubject=new BatrSubject();
 		var fixed_mapID:uint=0;
 		var temp_JSON:String;
 		
-		public function batrFla()
-		{
+		public function batrFla() {
 			this.addChild(sub);
 			sub.turnToMenu();
 			sub.gameRule.playerCount=4;
@@ -25,8 +22,7 @@
 			stage.addEventListener(KeyboardEvent.KEY_DOWN,onKD);
 		}
 		
-		public function onKD(E:KeyboardEvent):void
-		{
+		public function onKD(E:KeyboardEvent):void {
 			var code:uint=E.keyCode;
 			var ctrl:Boolean=E.ctrlKey
 			var alt:Boolean=E.altKey
@@ -44,8 +40,7 @@
 			 * N:Append Player
 			 * <Enter>:Game Ticking
 			 */
-			switch(code)
-			{
+			switch(code) {
 				case KeyCode.M:
 					sub.turnToMenu();
 				break;
@@ -58,8 +53,7 @@
 				break;
 			}
 			if(!sub.gameObj.isLoaded) return;
-			switch(code)
-			{
+			switch(code) {
 				// R: change teams
 				case KeyCode.R:
 					if(ctrl||ctrl&&shift) sub.gameObj.setATeamToAIPlayer();
@@ -68,8 +62,7 @@
 					break;
 				// T: change position/map
 				case KeyCode.T:
-					if(ctrl)
-					{
+					if(ctrl) {
 						if(shift) sub.gameObj.transformMap(Game.ALL_MAPS[fixed_mapID=exMath.intMod(fixed_mapID-1,Game.VALID_MAP_COUNT)]);
 						else sub.gameObj.transformMap(Game.ALL_MAPS[fixed_mapID=exMath.intMod(fixed_mapID+1,Game.VALID_MAP_COUNT)]);
 						trace("Now transform map to:",sub.gameObj.map.name);
@@ -117,8 +110,7 @@
 				//N: Create
 				case KeyCode.N:
 					if(ctrl)
-						if(shift) // Append a "SuperAI" 
-						{
+						if(shift) { // Append a "SuperAI"
 							var p=sub.gameObj.appendAI();
 							p.AIRunSpeed = alt?Infinity:1000;
 						}

@@ -1,111 +1,96 @@
-﻿package batr.game.stat 
-{
+﻿package batr.game.stat {
+
 	import batr.game.main.*;
 	import batr.game.model.*;
 	import batr.game.entity.entities.players.*;
-	
+
 	/**
 	 * Thst's a stats(or scoreboard) use for a game
 	 * @author ARCJ137442
 	 */
-	public class GameStats extends Object 
-	{
+	public class GameStats extends Object {
 		//============Static Functions============//
-		
+
 		//============Instance Variables============//
 		protected var _rule:GameRule;
-		protected var _players:Vector.<PlayerStats>=new Vector.<PlayerStats>();
-		
-		protected var _mapTransformCount:uint=0;
-		protected var _bonusGenerateCount:uint=0;
-		
+		protected var _players:Vector.<PlayerStats> = new Vector.<PlayerStats>();
+
+		protected var _mapTransformCount:uint = 0;
+		protected var _bonusGenerateCount:uint = 0;
+
 		//============Constructor============//
-		public function GameStats(rule:GameRule,players:Vector.<Player>=null):void
-		{
+		public function GameStats(rule:GameRule, players:Vector.<Player> = null):void {
 			super();
-			this.rule=rule;
-			if(players!=null) this.loadPlayers(players);
+			this.rule = rule;
+			if (players != null)
+				this.loadPlayers(players);
 		}
-		
-		//Unfinished
-		public function clone():GameStats
-		{
+
+		// Unfinished
+		public function clone():GameStats {
 			return new GameStats(this._rule).setPlayers(this._players);
 		}
-		
+
 		//============Destructor============//
-		public function deleteSelf():void
-		{
-			this.rule=null;
+		public function deleteSelf():void {
+			this.rule = null;
 			this.clearPlayers();
-			this._players=null;
+			this._players = null;
 		}
-		
+
 		//============Instance Getter And Setter============//
-		public function get rule():GameRule
-		{
+		public function get rule():GameRule {
 			return this._rule;
 		}
-		
-		public function set rule(value:GameRule):void
-		{
-			this._rule=value;
+
+		public function set rule(value:GameRule):void {
+			this._rule = value;
 		}
-		
-		public function get players():Vector.<PlayerStats>
-		{
+
+		public function get players():Vector.<PlayerStats> {
 			return this._players;
 		}
-		
-		public function get mapTransformCount():uint
-		{
+
+		public function get mapTransformCount():uint {
 			return this._mapTransformCount;
 		}
-		
-		public function set mapTransformCount(value:uint):void
-		{
-			this._mapTransformCount=value;
+
+		public function set mapTransformCount(value:uint):void {
+			this._mapTransformCount = value;
 		}
-		
-		public function get bonusGenerateCount():uint
-		{
+
+		public function get bonusGenerateCount():uint {
 			return this._bonusGenerateCount;
 		}
-		
-		public function set bonusGenerateCount(value:uint):void
-		{
-			this._bonusGenerateCount=value;
+
+		public function set bonusGenerateCount(value:uint):void {
+			this._bonusGenerateCount = value;
 		}
-		
+
 		//============Instance Functions============//
-		public function addPlayer(player:Player):GameStats
-		{
+		public function addPlayer(player:Player):GameStats {
 			this._players.push(player.stats);
 			return this;
 		}
-		
-		public function setPlayers(players:Vector.<PlayerStats>):GameStats
-		{
-			this._players=players;
+
+		public function setPlayers(players:Vector.<PlayerStats>):GameStats {
+			this._players = players;
 			return this;
 		}
-		
-		public function loadPlayers(players:Vector.<Player>):void
-		{
-			for each(var player:Player in players)
+
+		public function loadPlayers(players:Vector.<Player>):void {
+			for each (var player:Player in players)
 				this.addPlayer(player);
 		}
-		
-		public function clearPlayers():void
-		{
-			this._players.splice(0,int.MAX_VALUE);
+
+		public function clearPlayers():void {
+			this._players.splice(0, int.MAX_VALUE);
 		}
-		
-		public function importPlayersFromGame(game:Game):void
-		{
-			for each(var player:Player in game.entitySystem.players)
-			{
-				if(player!=null) this._players.push(player.stats);
+
+		public function importPlayersFromGame(game:Game):void {
+			for each (var player:Player in game.entitySystem.players) {
+				if (player != null)
+					this._players.push(player.stats);
 			}
 		}
 	}
