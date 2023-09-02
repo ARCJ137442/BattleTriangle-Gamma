@@ -77,7 +77,7 @@ package batr.menu.objects
 		}
 		
 		//============Instance Functions============//
-		public function trunTranslationsTo(translations:Translations):void
+		public function turnTranslationsTo(translations:Translations):void
 		{
 			this._translationalText.translations=translations;
 			this.updateByTranslation();
@@ -137,7 +137,7 @@ package batr.menu.objects
 		//============Deal With Event============//
 		public function onTranslationChange(E:TranslationsChangeEvent):void
 		{
-			this.trunTranslationsTo(E.nowTranslations);
+			this.turnTranslationsTo(E.nowTranslations);
 		}
 	}
 }

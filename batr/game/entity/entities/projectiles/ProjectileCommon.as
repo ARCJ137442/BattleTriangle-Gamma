@@ -35,7 +35,7 @@ package batr.game.entity.entities.projectiles
 		public function set owner(value:Player):void
 		{
 			this._owner=value;
-			drawShape();
+		this.drawShape();
 		}
 		
 		public function get currentWeapon():WeaponType

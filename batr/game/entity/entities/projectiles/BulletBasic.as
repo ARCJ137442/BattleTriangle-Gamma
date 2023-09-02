@@ -17,7 +17,7 @@ package batr.game.entity.entities.projectiles
 		//============Static Variables============//
 		public static const LINE_SIZE:Number=GlobalGameVariables.DEFAULT_SIZE/80
 		public static const SIZE:Number=PosTransform.localPosToRealPos(3/8)
-		public static const DEFAULT_SPEED:Number=16/GlobalGameVariables.TPS*2//'*2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
+		public static const DEFAULT_SPEED:Number=16/GlobalGameVariables.FIXED_TPS
 		public static const DEFAULT_EXPLODE_RADIUS:Number=1
 		
 		//============Instance Variables============//
@@ -86,7 +86,6 @@ package batr.game.entity.entities.projectiles
 			}
 			else
 			{
-				if(Game.debugMode) trace("Bullet explode:",this.getX(),this.getY())
 				this.explode()
 			}
 		}

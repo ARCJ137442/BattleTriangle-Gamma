@@ -10,7 +10,7 @@ package batr.game.entity.objects
 	{
 		//============Static Variables============//
 		public static const COLOR:uint=0xff0000;
-		public static const LIFE:uint=GlobalGameVariables.TPS*0.25/2//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
+		public static const LIFE:uint=GlobalGameVariables.FIXED_TPS*0.25
 		
 		//============Instance Variables============//
 		protected var _life:int=-1;

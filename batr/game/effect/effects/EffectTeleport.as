@@ -25,7 +25,7 @@ package batr.game.effect.effects
 		//============Constructor Function============//
 		public function EffectTeleport(host:Game,x:Number,y:Number,scale:Number=EffectTeleport.SCALE):void
 		{
-			super(host,x,y,GlobalGameVariables.TPS/2);//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
+			super(host,x,y,GlobalGameVariables.FIXED_TPS);
 			this.drawShape();
 			this.maxScale=scale;
 			this.initScale(scale);

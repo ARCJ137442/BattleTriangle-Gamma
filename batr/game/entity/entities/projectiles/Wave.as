@@ -16,11 +16,11 @@ package batr.game.entity.entities.projectiles
 		//============Static Variables============//
 		public static const SIZE:Number=GlobalGameVariables.DEFAULT_SIZE
 		public static const ALPHA:Number=0.64
-		public static const DEFAULT_SPEED:Number=24/GlobalGameVariables.TPS*2//'*2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
+		public static const DEFAULT_SPEED:Number=24/GlobalGameVariables.FIXED_TPS
 		public static const MAX_SCALE:Number=4
 		public static const MIN_SCALE:Number=1/4
-		public static const LIFE:uint=GlobalGameVariables.TPS*4/2//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
-		public static const DAMAGE_DELAY:uint=GlobalGameVariables.TPS/12/2//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
+		public static const LIFE:uint=GlobalGameVariables.FIXED_TPS*4
+		public static const DAMAGE_DELAY:uint=GlobalGameVariables.FIXED_TPS/12
 		
 		//============Instance Variables============//
 		public var speed:Number=DEFAULT_SPEED
@@ -35,7 +35,7 @@ package batr.game.entity.entities.projectiles
 			super(host,x,y,owner);
 			this._currentWeapon=WeaponType.WAVE;
 			dealCharge(chargePercent);
-			drawShape();
+		this.drawShape();
 		}
 		
 		//============Instance Getter And Setter============//

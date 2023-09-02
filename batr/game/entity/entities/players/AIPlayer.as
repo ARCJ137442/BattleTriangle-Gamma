@@ -263,34 +263,34 @@ package batr.game.entity.entities.players
 					this.moveForward()
 				break;
 				case AIPlayerAction.MOVE_BACK:
-					this.trunBack(),this.moveForward()
+					this.turnBack(),this.moveForward()
 				break;
 				case AIPlayerAction.MOVE_LEFT_REL:
-					this.trunRelativeLeft(),this.moveForward()
+					this.turnRelativeLeft(),this.moveForward()
 				break;
 				case AIPlayerAction.MOVE_RIGHT_REL:
-					this.trunRelativeRight(),this.moveForward()
+					this.turnRelativeRight(),this.moveForward()
 				break;
 				case AIPlayerAction.TRUN_UP:
-					this.trunUp()
+					this.turnUp()
 				break;
 				case AIPlayerAction.TRUN_DOWN:
-					this.trunDown()
+					this.turnDown()
 				break;
 				case AIPlayerAction.TRUN_LEFT_ABS:
-					this.trunAbsoluteLeft()
+					this.turnAbsoluteLeft()
 				break;
 				case AIPlayerAction.TRUN_RIGHT_ABS:
-					this.trunAbsoluteRight()
+					this.turnAbsoluteRight()
 				break;
 				case AIPlayerAction.TRUN_BACK:
-					this.trunBack()
+					this.turnBack()
 				break;
 				case AIPlayerAction.TRUN_LEFT_REL:
-					this.trunRelativeLeft()
+					this.turnRelativeLeft()
 				break;
 				case AIPlayerAction.TRUN_RIGHT_REL:
-					this.trunRelativeRight()
+					this.turnRelativeRight()
 				break;
 				case AIPlayerAction.USE_WEAPON:
 					this.useWeapon()

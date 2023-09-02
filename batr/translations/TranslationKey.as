@@ -45,6 +45,7 @@ package batr.translations
 		public static const CUSTOM_MODE:String="batr.menu.customMode";
 		public static const START:String="batr.menu.start";
 		public static const ADVANCED:String="batr.menu.advanced";
+		public static const ADVANCED_CONFIG:String="batr.menu.advancedConfig";
 		public static const SAVES:String="batr.menu.saves";
 		public static const BACK:String="batr.menu.back";
 		public static const CONTINUE:String="batr.menu.continue";

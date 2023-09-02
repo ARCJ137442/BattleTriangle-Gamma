@@ -54,6 +54,7 @@ package batr.game.entity.ai.programs
 				case WeaponType.BULLET:
 				case WeaponType.NUKE:
 				case WeaponType.SUB_BOMBER:
+				case WeaponType.TRACKING_BULLET:
 				case WeaponType.BLOCK_THROWER:
 				case WeaponType.MELEE:
 				case WeaponType.LIGHTNING:
@@ -441,7 +442,7 @@ package batr.game.entity.ai.programs
 					if(target!=null)
 					{
 						this.changeTarget(player,target);
-						traceLog(player,"trun target to "+getEntityName(this._lastTarget));
+						traceLog(player,"turn target to "+getEntityName(this._lastTarget));
 					}
 					//If all avliable target closed
 					else

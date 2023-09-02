@@ -54,7 +54,7 @@ package batr.menu.objects
 			super();
 			this._displayWidth=width;
 			this._displayHeight=height;
-			this._lineColor=Color.trunBrightnessTo(color,0.5);
+			this._lineColor=Color.turnBrightnessTo(color,0.5);
 			this._fillColor=color;
 			this._lineSize=lineSize;
 			this._smoothLine=smoothLine;
@@ -229,13 +229,13 @@ package batr.menu.objects
 		
 		public function onTranslationsChange(E:TranslationsChangeEvent):void
 		{
-			this.trunTranslationsTo(E.nowTranslations);
+			this.turnTranslationsTo(E.nowTranslations);
 		}
 		
-		protected function trunTranslationsTo(translations:Translations):void
+		protected function turnTranslationsTo(translations:Translations):void
 		{
 			this._translations=translations;
-			this._text.trunTranslationsTo(translations);
+			this._text.turnTranslationsTo(translations);
 			/*this._text.width=this._displayWidth;
 			this._text.height=this._displayHeight;*/
 		}

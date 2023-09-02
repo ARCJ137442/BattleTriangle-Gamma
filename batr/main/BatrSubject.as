@@ -144,7 +144,7 @@ package batr.main
 			this._gameRule.mapTransformTime=0;
 			this._gameRule.defaultWeaponID=WeaponType.LIGHTNING.weaponID;
 			this._game.forceStartGame(this.gameRule);
-			this.trunToGame();
+			this.turnToGame();
 		}
 		
 		protected function initGamePreview():void
@@ -226,13 +226,13 @@ package batr.main
 			this._menu.updateMapSize();
 		}
 		
-		public function trunToGame():void
+		public function turnToGame():void
 		{
 			gotoGame();
 			continueGame();
 		}
 		
-		public function trunToMenu():void
+		public function turnToMenu():void
 		{
 			gotoMenu();
 			pauseGame();
@@ -259,25 +259,25 @@ package batr.main
 			if(this._game.isActive)
 			{
 				if(this.menuObj.nowSheet!=this.menuObj.sheetPause) this.menuObj.nowSheet=this.menuObj.sheetPause;
-				this.trunToMenu();
+				this.turnToMenu();
 			}
 			else
 			{
-				this.trunToGame();
+				this.turnToGame();
 			}
 		}
 		
-		public function trunTranslationsTo(translations:Translations):void
+		public function turnTranslationsTo(translations:Translations):void
 		{
 			var oldTranslations:Translations=this._translations;
 			this._translations=translations;
 			this.dispatchEvent(new TranslationsChangeEvent(this._translations,oldTranslations));
 		}
 		
-		public function trunTranslations():void
+		public function turnTranslations():void
 		{
-			this._menu.languageSelecter.trunSelectRight();
-			this.trunTranslationsTo(Translations.translationsList[this._menu.languageSelecter.currentValue]);
+			this._menu.languageSelecter.turnSelectRight();
+			this.turnTranslationsTo(Translations.translationsList[this._menu.languageSelecter.currentValue]);
 		}
 		
 		public function resetRule():void

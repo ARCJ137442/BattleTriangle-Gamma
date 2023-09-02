@@ -109,6 +109,11 @@
 			return (string.toLowerCase().indexOf(spell)>=0)
 		}
 
+		public static function startswith(string:String,start:String):Boolean
+		{
+			return (string.indexOf(start)==0)
+		}
+
 		//============Code Methods============//
 		public static function returnRandom(...Paras):*
 		{

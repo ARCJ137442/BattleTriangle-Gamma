@@ -11,7 +11,7 @@ package batr.game.effect.effects
 	{
 		//============Static Variables============//
 		public static const FILL_COLOR:Number=0xff0000
-		public static const LIFE:uint=GlobalGameVariables.TPS*0.25/2//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
+		public static const LIFE:uint=GlobalGameVariables.FIXED_TPS*0.25
 		
 		//============Static Functions============//
 		public static function fromPlayer(host:Game,player:Player,reverse:Boolean=false):EffectPlayerHurt

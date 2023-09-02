@@ -6,9 +6,9 @@ package batr.general
 		public static const GAME_NAME:String="Battle Triangle";
 		public static const GAME_NAME_SHORT:String="BATR";
 		public static const GAME_DEV_STAGE:String="Gamma";
-		public static const GAME_VERSION_MAJOR:String="0.2.0";
+		public static const GAME_VERSION_MAJOR:String="0.2.1";
 		public static const GAME_VERSION_MAIN:String="alpha";
-		public static const GAME_VERSION_BUILD:String="10";
+		public static const GAME_VERSION_BUILD:String="01";
 		public static const GAME_UPDATE_LOG:String="New Debug Key: press `N` to append Player / AI(`ctrl`, +`shift` for `Super AI`)";
 		
 		//============Static Getter And Setter============//

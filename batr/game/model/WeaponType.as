@@ -12,6 +12,7 @@ package batr.game.model
 		public static const BULLET:WeaponType=new WeaponType("Bullet",0.25,5).setExtraProperty(1,1)
 		public static const NUKE:WeaponType=new WeaponType("Nuke",5,320,5).setCanHurt(true,true,true).setExtraProperty(10,15).setDroneProperty(0)
 		public static const SUB_BOMBER:WeaponType=new WeaponType("Sub Bomber",1,10,1,true).setExtraProperty(2,1).setDroneProperty(0)
+		public static const TRACKING_BULLET:WeaponType=new WeaponType("Tracking Bullet",0.25,5,0.5,true).setExtraProperty(1,1).setDroneProperty(0)
 		
 		public static const LASER:WeaponType=new WeaponType("Laser",3,120,1).setExtraProperty(8,6).setDroneProperty(0.8)
 		public static const PULSE_LASER:WeaponType=new WeaponType("Pulse Laser",0.5,5,0.5,true).setExtraProperty(3,3)
@@ -29,7 +30,7 @@ package batr.game.model
 		public static const SHOCKWAVE_BETA:WeaponType=new WeaponType("Shockwave-β",10,100).setExtraProperty(10,2,true)
 		
 		//WEAPON SET
-		public static const _BULLETS:Vector.<WeaponType>=new <WeaponType>[WeaponType.BULLET,WeaponType.NUKE,WeaponType.SUB_BOMBER]
+		public static const _BULLETS:Vector.<WeaponType>=new <WeaponType>[WeaponType.BULLET,WeaponType.NUKE,WeaponType.SUB_BOMBER,WeaponType.TRACKING_BULLET]
 		public static const _LASERS:Vector.<WeaponType>=new <WeaponType>[WeaponType.LASER,WeaponType.PULSE_LASER,WeaponType.TELEPORT_LASER,WeaponType.ABSORPTION_LASER]
 		public static const _SPECIAL:Vector.<WeaponType>=new <WeaponType>[WeaponType.WAVE,WeaponType.MELEE,WeaponType.BLOCK_THROWER,WeaponType.LIGHTNING]
 		public static const _BOSS_WEAPON:Vector.<WeaponType>=new <WeaponType>[WeaponType.SHOCKWAVE_ALPHA,WeaponType.SHOCKWAVE_BETA]
@@ -39,6 +40,7 @@ package batr.game.model
 			WeaponType.BULLET,
 			WeaponType.NUKE,
 			WeaponType.SUB_BOMBER,
+			WeaponType.TRACKING_BULLET,
 			WeaponType.LASER,
 			WeaponType.PULSE_LASER,
 			WeaponType.TELEPORT_LASER,
@@ -182,9 +184,9 @@ package batr.game.model
 		{
 			//defaultCD,defaultChargeTime is Per Second
 			super(name);
-			this._defaultCD=defaultCD*GlobalGameVariables.TPS/2;//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
+			this._defaultCD=defaultCD*GlobalGameVariables.FIXED_TPS;
 			this._defaultDamage=defaultDamage;
-			this._defaultChargeTime=defaultChargeTime*GlobalGameVariables.TPS/2;//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
+			this._defaultChargeTime=defaultChargeTime*GlobalGameVariables.FIXED_TPS;
 			this._reverseCharge=reverseCharge;
 			//default
 			this._canHurtEnemy=true;

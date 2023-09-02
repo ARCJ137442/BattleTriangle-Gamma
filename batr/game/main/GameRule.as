@@ -34,10 +34,10 @@
 		protected static const d_defaultHealth:uint=100
 		protected static const d_defaultMaxHealth:uint=100
 		/**
-		 * Use as a uint with Infinity
+		 * Use as a int with negative numbers means infinity
 		 */
-		protected static const d_remainLifesPlayer:Number=Infinity
-		protected static const d_remainLifesAI:Number=Infinity
+		protected static const d_remainLifesPlayer:int=-1
+		protected static const d_remainLifesAI:int=-1
 		protected static const d_defaultRespawnTime:uint=3*GlobalGameVariables.TPS//tick
 		protected static const d_deadPlayerMoveToX:Number=-10
 		protected static const d_deadPlayerMoveToY:Number=-10
@@ -105,6 +105,8 @@
 			rule.playerCount=0;
 			rule.AICount=8;
 			rule.defaultWeaponID=-2;
+			rule.remainLifesPlayer=-1;
+			rule.remainLifesAI=-1;
 			return rule;
 		}
 		
@@ -140,6 +142,75 @@
 			}
 			return returnTeams;
 		}
+
+		public static function toJSON(rule:GameRule, replacer:* = null, space:* = null):String
+		{
+			var i = true
+			// get all getter value
+			var o:Object = JSON.parse(JSON.stringify(rule)); //if not: recursive reference problem
+			//filter
+			var k:String,v:*;
+			var result:Object = {}
+			var blankRule:GameRule = new GameRule();
+			for (k in o) {
+				v = o[k];
+				// Make sure the property is writable
+				try
+				{
+					// write as itself
+					blankRule[k] = v;
+				}
+				catch (e)
+				{
+					continue;
+				}
+				// not support with Infinity when JSON.stringify
+				// if (v == Infinity || v == -Infinity) {
+				// 	result[k] = v.toString();
+				// }
+				// Type
+				if (
+					v is Boolean ||
+					v is Number ||
+					v is String ||
+					v is int ||
+					v is uint ||
+					v === null
+					)
+				// Filter
+				if (
+					k != "initialMap"
+				)
+				result[k]=v;
+				trace("Saving data", k, "=", result[k], "(" + v + ")")
+			}
+			return JSON.stringify(result, replacer, space);
+		}
+
+		public static function fromJSON(rule:String):GameRule
+		{
+			var r:GameRule = new GameRule();
+			var o:Object = JSON.parse(rule);
+			var v:*;
+			for (var k in o) {
+				try
+				{
+					v = o[k];
+					// Infinity
+					if      (v === " Infinity") r[k] =  Infinity;
+					else if (v === "-Infinity") r[k] = -Infinity;
+					else {
+						r[k] = v;
+						trace("Loaded data", k, "=", o[k]);
+					}
+				}
+				catch (error:Error)
+				{
+					trace("Error loading data", k, "=", o[k]);
+				}
+			}
+			return r;
+		}
 		
 		//============Instance Variables============//
 		//====rules====//
@@ -156,8 +227,8 @@
 		//GamePlay
 		protected var _defaultHealth:uint
 		protected var _defaultMaxHealth:uint
-		protected var _remainLifesPlayer:Number
-		protected var _remainLifesAI:Number
+		protected var _remainLifesPlayer:int
+		protected var _remainLifesAI:int
 		protected var _defaultRespawnTime:uint
 		protected var _deadPlayerMoveToX:Number
 		protected var _deadPlayerMoveToY:Number
@@ -638,24 +709,24 @@
 		}
 		
 		//Life
-		public function get remainLifesPlayer():Number
+		public function get remainLifesPlayer():int
 		{
 			return this._remainLifesPlayer;
 		}
 		
-		public function set remainLifesPlayer(value:Number):void
+		public function set remainLifesPlayer(value:int):void
 		{
 			if(value==this._remainLifesPlayer) return;
 			onVariableUpdate(this._remainLifesPlayer,value);
 			this._remainLifesPlayer=value;
 		}
 		
-		public function get remainLifesAI():Number
+		public function get remainLifesAI():int
 		{
 			return this._remainLifesAI
 		}
 		
-		public function set remainLifesAI(value:Number):void
+		public function set remainLifesAI(value:int):void
 		{
 			if(value==this._remainLifesAI) return;
 			onVariableUpdate(this._remainLifesAI,value);

@@ -25,9 +25,7 @@ package batr.game.entity.entities.players
 		
 		public static const DEFAULT_MAX_HEALTH:int=100
 		public static const DEFAULT_HEALTH:int=DEFAULT_MAX_HEALTH
-		public static const MAX_DAMAGE_DELAY:uint=0.5*GlobalGameVariables.TPS/2//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
-		
-		//============Static Functions============//
+		public static const MAX_DAMAGE_DELAY:uint=0.5*GlobalGameVariables.FIXED_TPS
 		public static function isAI(player:Player):Boolean
 		{
 			return player is AIPlayer;
@@ -54,12 +52,12 @@ package batr.game.entity.entities.players
 		
 		//====Contol Variables====//
 		//ContolDelay
-		public var contolDelay_Move:uint=GlobalGameVariables.TPS*0.5/2//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
+		public var contolDelay_Move:uint=GlobalGameVariables.FIXED_TPS*0.5
 		//public var contolDelay_Use:uint=GlobalGameVariables.TPS/4
 		//public var contolDelay_Select:uint=GlobalGameVariables.TPS/5
 		
 		//ContolLoop
-		public var contolLoop_Move:uint=GlobalGameVariables.TPS*0.05/2//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
+		public var contolLoop_Move:uint=GlobalGameVariables.FIXED_TPS*0.05
 		//public var contolLoop_Use:uint=GlobalGameVariables.TPS/25
 		//public var contolLoop_Select:uint=GlobalGameVariables.TPS/40
 		
@@ -254,7 +252,7 @@ package batr.game.entity.entities.players
 		public override function deleteSelf():void
 		{
 			//Reset Key
-			this.trunAllKeyUp();
+			this.turnAllKeyUp();
 			this.clearContolKeys();
 			//Remove Display Object
 			UsefulTools.removeChildIfContains(this._host.playerGUIContainer,this._GUI);
@@ -634,7 +632,7 @@ package batr.game.entity.entities.players
 			//Health&Life
 			this._maxHealth=this._host.rule.defaultMaxHealth
 			this._health=this._host.rule.defaultHealth
-			this.setLifeByNumber(this is AIPlayer?this._host.rule.remainLifesAI:this._host.rule.remainLifesPlayer)
+			this.setLifeByInt(this is AIPlayer?this._host.rule.remainLifesAI:this._host.rule.remainLifesPlayer)
 			//Weapon
 			if(weaponID<-1) this._weapon=this.host.rule.randomWeaponEnable;
 			else if(!WeaponType.isValidAvailableWeaponID(weaponID)&&uniformWeapon!=null) this._weapon=uniformWeapon;
@@ -664,22 +662,10 @@ package batr.game.entity.entities.players
 			}
 		}
 		
-		public function setLifeByNumber(lifes:Number):void
+		public function setLifeByInt(lifes:Number):void
 		{
-			if(isNaN(lifes))
-			{
-				this._infinityLife=false;
-				this._lifes=0;
-			}
-			else if(!isFinite(lifes))
-			{
-				this._infinityLife=true;
-			}
-			else
-			{
-				this._lifes=Math.floor(Math.abs(lifes));
-				this._infinityLife=false;
-			}
+			this._infinityLife=(lifes<0);
+			if(this._lifes>=0) this._lifes=lifes;
 		}
 		
 		//====Functions About Hook====//
@@ -1135,7 +1121,7 @@ package batr.game.entity.entities.players
 			contolKey_Use=KeyCode.EMPTY;
 		}
 		
-		public function trunAllKeyUp():void
+		public function turnAllKeyUp():void
 		{
 			this.isPress_Up=false;
 			this.isPress_Down=false;
@@ -1145,9 +1131,9 @@ package batr.game.entity.entities.players
 			//this.isPress_Select_Left=false;
 			//this.isPress_Select_Right=false;
 			this.keyDelay_Move=0;
-			this.contolDelay_Move=GlobalGameVariables.TPS*0.5/2;//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
+			this.contolDelay_Move=GlobalGameVariables.FIXED_TPS*0.5;
 			//this.contolDelay_Select=GlobalGameVariables.TPS/5;
-			this.contolLoop_Move=GlobalGameVariables.TPS*0.05/2;//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
+			this.contolLoop_Move=GlobalGameVariables.FIXED_TPS*0.05;
 			//this.contolLoop_Select=GlobalGameVariables.TPS/40;
 		}
 		
@@ -1289,37 +1275,37 @@ package batr.game.entity.entities.players
 			this._host.movePlayer(this,GlobalRot.DOWN,this.moveDistence);
 		}
 		
-		public function trunUp():void
+		public function turnUp():void
 		{
 			this.rot=GlobalRot.UP;
 		}
 		
-		public function trunDown():void
+		public function turnDown():void
 		{
 			this.rot=GlobalRot.DOWN;
 		}
 		
-		public function trunAbsoluteLeft():void
+		public function turnAbsoluteLeft():void
 		{
 			this.rot=GlobalRot.LEFT;
 		}
 		
-		public function trunAbsoluteRight():void
+		public function turnAbsoluteRight():void
 		{
 			this.rot=GlobalRot.RIGHT;
 		}
 		
-		public function trunBack():void
+		public function turnBack():void
 		{
 			this.rot+=2;
 		}
 		
-		public function trunRelativeLeft():void
+		public function turnRelativeLeft():void
 		{
 			this.rot+=3;
 		}
 		
-		public function trunRelativeRight():void
+		public function turnRelativeRight():void
 		{
 			this.rot+=1;
 		}

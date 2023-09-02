@@ -23,7 +23,7 @@ package batr.game.entity.entities.projectiles
 		/**
 		 * Life For Charge
 		 */
-		public static const LIFE:uint=GlobalGameVariables.TPS/2;//'/2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
+		public static const LIFE:uint=GlobalGameVariables.FIXED_TPS;
 		
 		//============Static Functions============//
 		

@@ -271,7 +271,7 @@ package batr.game.entity.ai.programs
 					if(target!=null)
 					{
 						this.changeTarget(player,target);
-						AIProgram_Adventurer.traceLog(player,"trun target to "+AIProgram_Adventurer.getEntityName(this._lastTarget));
+						AIProgram_Adventurer.traceLog(player,"turn target to "+AIProgram_Adventurer.getEntityName(this._lastTarget));
 					}
 					//If all avliable target closed
 					else this.resetCloseTarget();

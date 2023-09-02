@@ -208,12 +208,12 @@ package batr.menu.objects.selecter
 		//Event
 		protected function onClickLeft(E:MouseEvent):void
 		{
-			this.trunSelectLeft();
+			this.turnSelectLeft();
 		}
 		
 		protected function onClickRight(E:MouseEvent):void
 		{
-			this.trunSelectRight();
+			this.turnSelectRight();
 		}
 		
 		public function onTranslationChange(E:TranslationsChangeEvent):void
@@ -226,13 +226,13 @@ package batr.menu.objects.selecter
 		}
 		
 		//Select
-		public function trunSelectTo(index:int):BatrSelecter
+		public function turnSelectTo(index:int):BatrSelecter
 		{
 			this._context.currentValue=index;
 			return this;
 		}
 		
-		public function trunSelectLeft():void
+		public function turnSelectLeft():void
 		{
 			//Check
 			if(this._context==null) return;
@@ -245,7 +245,7 @@ package batr.menu.objects.selecter
 			this.dispatchEvent(new BatrGUIEvent(BatrGUIEvent.CLICK_LEFT,this));
 		}
 		
-		public function trunSelectRight():void
+		public function turnSelectRight():void
 		{
 			//Check
 			if(this._context==null) return;

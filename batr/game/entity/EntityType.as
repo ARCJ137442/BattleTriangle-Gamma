@@ -1,4 +1,4 @@
-	package batr.game.entity 
+﻿	package batr.game.entity 
 {
 	import batr.common.*;
 	import batr.general.*;
@@ -12,6 +12,7 @@
 		public static const BULLET_BASIC:EntityType=new EntityType("BulletBasic")
 		public static const BULLET_NUKE:EntityType=new EntityType("BulletNuke")
 		public static const SUB_BOMBER:EntityType=new EntityType("SubBomber")
+		public static const BULLET_TRACKING:EntityType=new EntityType("TrackingBullet")
 		
 		public static const LASER_BASIC:EntityType=new EntityType("LaserBasic")
 		public static const LASER_PULSE:EntityType=new EntityType("LaserPulse")
@@ -28,7 +29,7 @@
 		public static const PLAYER:EntityType=new EntityType("Player")
 		public static const AI_PLAYER:EntityType=new EntityType("AIPlayer")
 		
-		public static const _BULLETS:Vector.<EntityType>=new <EntityType>[EntityType.BULLET_BASIC,EntityType.BULLET_NUKE,EntityType.SUB_BOMBER]
+		public static const _BULLETS:Vector.<EntityType>=new <EntityType>[EntityType.BULLET_BASIC,EntityType.BULLET_NUKE,EntityType.SUB_BOMBER,EntityType.BULLET_TRACKING]
 		public static const _LASERS:Vector.<EntityType>=new <EntityType>[EntityType.LASER_BASIC,EntityType.LASER_PULSE,EntityType.LASER_TELEPORT,EntityType.LASER_ABSORPTION]
 		public static const _WAVES:Vector.<EntityType>=new <EntityType>[EntityType.WAVE]
 		public static const _PROJECTILES:Vector.<EntityType>=new <EntityType>[EntityType.SHOCKWAVE_LASER_BASE,EntityType.SHOCKWAVE_LASER_DRONE,EntityType.WAVE,EntityType.THROWED_BLOCK].concat(EntityType._BULLETS,EntityType._LASERS)

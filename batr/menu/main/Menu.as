@@ -28,7 +28,7 @@
 		//============Static Variables============//
 		protected static const _TITLE_HIDE_Y:int=-Title.HEIGHT-GlobalGameVariables.DEFAULT_SIZE*1;
 		protected static const _TITLE_SHOW_Y:int=PosTransform.localPosToRealPos(2);
-		protected static const _TITLE_ANIMATION_TIME:uint=GlobalGameVariables.TPS/2;//'/2': In order to synchronize the in-game CD with the real CD<Will NOT be removed in 0.2.1>
+		protected static const _TITLE_ANIMATION_TIME:uint=GlobalGameVariables.FIXED_TPS;
 		
 		/**
 		 * Menu Text Format
@@ -88,6 +88,17 @@
 			null,
 			TextFormatAlign.LEFT);
 		
+		public static const INPUT_FORMAT:TextFormat=new TextFormat(
+			new MainFont().fontName,
+			GlobalGameVariables.DEFAULT_SIZE*3.5/8,
+			0x000000,
+			true,
+			null,
+			null,
+			null,
+			null,
+			TextFormatAlign.LEFT)
+		
 		//============Static Functions============//
 		protected static function setFixedTextSuffix(text:BatrTextField,suffix:*):void
 		{
@@ -117,6 +128,7 @@
 		protected var _sheetMain:BatrMenuSheet;
 		protected var _sheetSelect:BatrMenuSheet;
 		protected var _sheetAdvancedCustom:BatrMenuSheet;
+		protected var _sheetCustomGameConfig:BatrMenuSheet;
 		protected var _sheetGameResult:BatrMenuSheet;
 		protected var _sheetScoreRanking:BatrMenuSheet;
 		protected var _sheetPause:BatrMenuSheet;
@@ -146,6 +158,8 @@
 		
 		protected var _gameStatMapTransform:BatrTextField;
 		protected var _gameStatBonusGenerate:BatrTextField;
+
+		protected var _gameRuleConfig:BatrTextInput;
 		
 		/**
 		 * A intager combine with limitted indexes.
@@ -395,6 +409,17 @@
 			return textField;
 		}
 		
+		//StatTextField Build
+		protected function quickTextInputBuild(text:String,blockX:Number=0,blockY:Number=0,blockW:Number=10,blockH:Number=5,autoSize:String=TextFieldAutoSize.LEFT):BatrTextInput
+		{
+			var textInput:BatrTextInput=new BatrTextInput(text,autoSize);
+			textInput.x=GlobalGameVariables.DEFAULT_SIZE*blockX;
+			textInput.y=GlobalGameVariables.DEFAULT_SIZE*blockY;
+			textInput.width=GlobalGameVariables.DEFAULT_SIZE*blockW;
+			textInput.height=GlobalGameVariables.DEFAULT_SIZE*blockH;
+			return textInput;
+		}
+		
 		//Selecter Build
 		protected function quickSelecterBuild(context:BatrSelecterContext,
 											 minTextBlockWidth:Number=1,selecterClickFunction:Function=null):BatrSelecter
@@ -518,10 +543,7 @@
 					(new BatrButtonList().appendDirectElements(
 						this.quickButtonBuild2(TranslationKey.START,this.onSelectStartButtonClick,0x0080ff),
 						this.quickBackButtonBuild()
-					) as BatrButtonList).setPos(
-						GlobalGameVariables.DEFAULT_SIZE*9,
-						GlobalGameVariables.DEFAULT_SIZE*19
-					),
+					) as BatrButtonList).setBlockPos(9,19),
 					//Left
 					this._selecterListAdvanced_L=new BatrSelecterList(PosTransform.localPosToRealPos(8)).setBlockPos(
 						2,9
@@ -628,7 +650,18 @@
 						),
 						TranslationKey.ASPHYXIA_DAMAGE,
 						true
-					)
+					),
+					// Config Entry
+					this.quickButtonBuild2(TranslationKey.ADVANCED_CONFIG,this.onCustomGameConfigButtonClick,0x8000ff).setBlockPos(16,19)
+				) as BatrMenuSheet,
+				//Config File
+				this._sheetCustomGameConfig=this.buildSheet(TranslationKey.ADVANCED_CONFIG,false).appendDirectElements(
+					this.quickTextFieldBuild(TranslationKey.ADVANCED_CONFIG,1,1),
+					//input
+					this._gameRuleConfig=this.quickTextInputBuild("JSON",1,2,22,18,TextFieldAutoSize.NONE),
+					//start
+					this.quickButtonBuild2(TranslationKey.START,this.onCustomGameConfigStartButtonClick,0x0080ff).setBlockPos(9,21),
+					this.quickBackButtonBuild().setBlockPos(2,21)
 				) as BatrMenuSheet,
 				//Game Result
 				this._sheetGameResult=this.buildSheet(TranslationKey.GAME_RESULT,false).appendDirectElements(
@@ -671,7 +704,8 @@
 						this.quickButtonBuild2(TranslationKey.CONTINUE,this.onContinueButtonClick,0xff8000),
 						this.quickButtonBuild2(TranslationKey.RESTART,this.onRestartButtonClick,0xff0080),
 						this.quickButtonBuild2(TranslationKey.GAME_RESULT,this.onResultButtonClick,0x00ff80),
-						this.quickButtonBuild2(TranslationKey.MAIN_MENU,this.onMainMenuButtonClick,0x0080ff)
+						this.quickButtonBuild2(TranslationKey.MAIN_MENU,this.onMainMenuButtonClick,0x0080ff),
+						this.quickButtonBuild2(TranslationKey.ADVANCED_CONFIG,this.onCustomGameConfigButtonClick2,0x8000ff)
 					) as BatrButtonList).setPos(
 						GlobalGameVariables.DEFAULT_SIZE*9,
 						GlobalGameVariables.DEFAULT_SIZE*9
@@ -694,11 +728,6 @@
 			return (value==Infinity?-1:int(value));
 		}
 		
-		protected function getLifesToRule(value:int):Number
-		{
-			return value<0?Infinity:Number(value);
-		}
-		
 		//Sheet
 		public function buildSheet(name:String,keepTitle:Boolean=true):BatrMenuSheet
 		{
@@ -717,7 +746,7 @@
 			return null;
 		}
 		
-		public function trunSheet():void
+		public function turnSheet():void
 		{
 			this.nowSheet=this._sheets[(this._sheets.indexOf(this._nowSheet)+1)%this.numSheet];
 		}
@@ -756,7 +785,7 @@
 			//rank
 			this._rankContextText.translationalText=result.rankingText;
 			//load
-			//trun
+			//turn
 			this.setNowSheet(this._sheetGameResult);
 		}
 		
@@ -813,10 +842,10 @@
 				rule.defaultMaxHealth=defaultMaxHealthSelecter==null?100:defaultMaxHealthSelecter.currentValue;
 				//DefaultLifesPlayer
 				var defaultLifesSelecterP:BatrSelecter=this._selecterListAdvanced_L.getSelecterByName(TranslationKey.REMAIN_LIFES_PLAYER);
-				rule.remainLifesPlayer=this.getLifesToRule(defaultLifesSelecterP==null?-1:defaultLifesSelecterP.currentValue);
+				rule.remainLifesPlayer=defaultLifesSelecterP==null?-1:defaultLifesSelecterP.currentValue;
 				//DefaultLifesAI
 				var defaultLifesSelecterA:BatrSelecter=this._selecterListAdvanced_L.getSelecterByName(TranslationKey.REMAIN_LIFES_AI);
-				rule.remainLifesAI=this.getLifesToRule(defaultLifesSelecterA==null?-1:defaultLifesSelecterA.currentValue);
+				rule.remainLifesAI=defaultLifesSelecterA==null?-1:defaultLifesSelecterA.currentValue;
 				//DefaultRespawnTime
 				var defaultRespawnTimeSelecter:BatrSelecter=this._selecterListAdvanced_L.getSelecterByName(TranslationKey.RESPAWN_TIME);
 				rule.defaultRespawnTime=defaultRespawnTimeSelecter.currentValue*GlobalGameVariables.TPS;
@@ -849,6 +878,11 @@
 			}
 			return rule;
 		}
+
+		protected function getRuleFromConfigField(input:TextField):GameRule
+		{
+			return GameRule.fromJSON(input.text);
+		}
 		
 		//Game Button
 		protected function onLinkageButtonClick(event:BatrGUIEvent):void
@@ -861,20 +895,20 @@
 		
 		protected function onContinueButtonClick(event:BatrGUIEvent):void
 		{
-			if(this.game.isLoaded) this._subject.trunToGame();
+			if(this.game.isLoaded) this._subject.turnToGame();
 		}
 		
 		protected function onQuickGameButtonClick(event:BatrGUIEvent):void
 		{
 			this._subject.resetRule();
 			this.game.forceStartGame(this.gameRule);
-			this._subject.trunToGame();
+			this._subject.turnToGame();
 		}
 		
 		protected function onRestartButtonClick(event:BatrGUIEvent):void
 		{
 			this.game.restartGame(this.gameRule);
-			this._subject.trunToGame();
+			this._subject.turnToGame();
 		}
 		
 		protected function onResultButtonClick(event:BatrGUIEvent):void
@@ -901,7 +935,35 @@
 		protected function onSelectStartButtonClick(event:BatrGUIEvent):void
 		{
 			this.game.forceStartGame(this.getRuleFromMenu(),false);
-			this._subject.trunToGame();
+			this._subject.turnToGame();
+		}
+		
+		protected function onCustomGameConfigButtonClick(event:BatrGUIEvent):void
+		{
+			this.setNowSheet(this._sheetCustomGameConfig);
+			this._gameRuleConfig.text=GameRule.toJSON(this.getRuleFromMenu(), null, 4);
+		}
+		
+		// from pause screen
+		protected function onCustomGameConfigButtonClick2(event:BatrGUIEvent):void
+		{
+			this.setNowSheet(this._sheetCustomGameConfig);
+			this._gameRuleConfig.text=GameRule.toJSON(this.gameRule, null, 4);
+		}
+
+		protected function onCustomGameConfigStartButtonClick(event:BatrGUIEvent):void
+		{
+			try
+			{
+				var rule:GameRule=this.getRuleFromConfigField(this._gameRuleConfig);
+			}
+			catch (e:Error)
+			{
+				trace("Load Rule Error:", e);
+				return;
+			}
+			this.game.forceStartGame(rule,false);
+			this._subject.turnToGame();
 		}
 		
 		protected function onMainMenuButtonClick(event:BatrGUIEvent):void
@@ -946,7 +1008,7 @@
 		
 		protected function onLanguageChange(event:BatrGUIEvent):void
 		{
-			this.subject.trunTranslationsTo(Translations.getTranslationFromID(this._languageSelecter.currentValue));
+			this.subject.turnTranslationsTo(Translations.getTranslationFromID(this._languageSelecter.currentValue));
 		}
 		
 		protected function onFillFrameChange(event:BatrGUIEvent):void

@@ -15,7 +15,7 @@ package batr.game.entity.entities.projectiles
 	{
 		//============Static Variables============//
 		public static const SIZE:Number=PosTransform.localPosToRealPos(1/2)
-		public static const DEFAULT_SPEED:Number=12/GlobalGameVariables.TPS*2//'*2': In order to synchronize the in-game CD with the real CD<Will be removed in 0.2.1>
+		public static const DEFAULT_SPEED:Number=12/GlobalGameVariables.FIXED_TPS
 		public static const DEFAULT_EXPLODE_COLOR:uint=0xffcc00
 		public static const DEFAULT_EXPLODE_RADIUS:Number=6.4
 		
@@ -26,7 +26,7 @@ package batr.game.entity.entities.projectiles
 			super(host,x,y,owner,DEFAULT_SPEED*(2-scalePercent),DEFAULT_EXPLODE_RADIUS*(2*scalePercent));
 			this._currentWeapon=WeaponType.NUKE;
 			this.damage=this._currentWeapon.defaultDamage*scalePercent;
-			drawShape();
+		this.drawShape();
 		}
 		
 		//============Destructor Function============//

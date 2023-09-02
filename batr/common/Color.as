@@ -177,7 +177,7 @@ package batr.common
 		}
 		
 		//====Color Transform====//
-		public static function trunBrightnessTo(I:uint,brightness:Number):uint
+		public static function turnBrightnessTo(I:uint,brightness:Number):uint
 		{
 			return (uint(((I&0xff0000)>>16)*brightness)<<16|
 					uint(((I&0xff00)>>8)*brightness)<<8|

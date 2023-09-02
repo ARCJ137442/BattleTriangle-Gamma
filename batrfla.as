@@ -1,4 +1,4 @@
-package
+﻿package
 {
 	import batr.common.*;
 	import batr.general.*;
@@ -12,11 +12,12 @@ package
 	{
 		var sub:BatrSubject=new BatrSubject();
 		var fixed_mapID:uint=0;
+		var temp_JSON:String;
 		
 		public function batrFla()
 		{
 			this.addChild(sub);
-			sub.trunToMenu();
+			sub.turnToMenu();
 			sub.gameRule.playerCount=4;
 			sub.gameRule.AICount=6;
 			//sub.gameRule.defaultWeaponID=WeaponType.RANDOM_AVAILABLE_ID;
@@ -46,14 +47,14 @@ package
 			switch(code)
 			{
 				case KeyCode.M:
-					sub.trunToMenu();
+					sub.turnToMenu();
 				break;
 				case KeyCode.G:
-					sub.trunToGame();
+					sub.turnToGame();
 				break;
 				case KeyCode.X:
-					if(shift) sub.trunTranslations();
-					else sub.menuObj.trunSheet();
+					if(shift) sub.turnTranslations();
+					else sub.menuObj.turnSheet();
 				break;
 			}
 			if(!sub.gameObj.isLoaded) return;

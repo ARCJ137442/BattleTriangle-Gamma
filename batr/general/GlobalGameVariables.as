@@ -13,6 +13,7 @@
 		public static const DISPLAY_SIZE:uint=768
 		
 		public static const TPS:uint=100
+		public static const FIXED_TPS:uint=TPS/2 // (For CD, to be solved) In order to synchronize the in-game CD with the real CD
 		public static const TICK_TIME_S:Number=1/TPS
 		public static const TICK_TIME_MS:Number=TICK_TIME_S*1000
 		//Timer:A delay lower than 20 milliseconds is not recommended

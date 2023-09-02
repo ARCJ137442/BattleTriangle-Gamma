@@ -1763,6 +1763,9 @@
 				case WeaponType.SUB_BOMBER:
 					p=new SubBomber(this,x,y,player,chargePercent)
 					break;
+				case WeaponType.TRACKING_BULLET:
+					p=new BulletTracking(this,x,y,player,chargePercent)
+					break;
 				case WeaponType.LASER:
 					p=new LaserBasic(this,x,y,player,laserLength,chargePercent)
 					break;
@@ -2066,7 +2069,7 @@
 			//Set Victim
 			victim.visible=false
 			victim.isActive=false
-			//victim.trunAllKeyUp()
+			//victim.turnAllKeyUp()
 			victim.resetCD()
 			victim.resetCharge()
 			if(Player.isAI(victim)) (victim as AIPlayer).resetAITick()
