@@ -1,4 +1,4 @@
-package batr.game.main 
+﻿package batr.game.main 
 {
 	import batr.common.*;
 	import batr.general.*;
@@ -25,6 +25,10 @@ package batr.game.main
 		protected static const d_coloredTeamCount:uint=8
 		protected static const d_grayscaleTeamCount:uint=3
 		protected static const d_playerTeams:Vector.<PlayerTeam>=initPlayerTeams(d_coloredTeamCount,d_grayscaleTeamCount)
+		/**
+		 * Allows players change their teams by general means
+		 */
+		protected static const d_allowPlayerChangeTeam:Boolean=true
 		
 		//====GamePlay====//
 		protected static const d_defaultHealth:uint=100
@@ -88,7 +92,7 @@ package batr.game.main
 		protected static const d_weaponsNoCD:Boolean=false
 		
 		//====End&Victory====//
-		protected static const d_allowTeamVictory:Boolean=false;
+		protected static const d_allowTeamVictory:Boolean=true;
 		
 		//========Preview========//
 		public static const MENU_BACKGROUND:GameRule=GameRule.getBackgroundRule()
@@ -147,6 +151,7 @@ package batr.game.main
 		protected var _coloredTeamCount:uint
 		protected var _grayscaleTeamCount:uint
 		protected var _playerTeams:Vector.<PlayerTeam>
+		protected var _allowPlayerChangeTeam:Boolean
 		
 		//GamePlay
 		protected var _defaultHealth:uint
@@ -269,7 +274,9 @@ package batr.game.main
 			//Test
 			if(this._bonusBoxSpawnPotentials==null)
 			{
-				return BonusType.RANDOM_AVALIABLE
+				// return BonusType.RANDOM_AVALIABLE
+				// 20230902: now initialize an equivalent potentials
+				this._bonusBoxSpawnPotentials=BonusType.AVALIABLE_SPAWN_POTENTIALS;
 			}
 			//Add
 			var types:Vector.<BonusType>=new Vector.<BonusType>();
@@ -279,20 +286,31 @@ package batr.game.main
 			{
 				if(bonusPotential["type"] is BonusType&&bonusPotential["weight"] is Number)
 				{
+					//Filter
+					if(
+						// if the rule disallow player change their team, the type that potential can change player's team willn't be push
+						!this._allowPlayerChangeTeam&&(
+							bonusPotential["type"]==BonusType.RANDOM_CHANGE_TEAM||
+							bonusPotential["type"]==BonusType.UNITE_PLAYER||
+							bonusPotential["type"]==BonusType.UNITE_AI
+						)
+					) continue;
+					//Push
 					types.push(bonusPotential["type"] as BonusType);
-					weights.push(Number(bonusPotential["weight"]));
 					sum+=Number(bonusPotential["weight"]);
+					weights.push(sum);
 				}
 			}
 			var randomNum:Number=exMath.randomFloat(sum);
 			//Choose
 			for(var i:uint=0;i<weights.length;i++)
 			{
-				if(weights[i]>=randomNum&&randomNum<weights[i+1])
+				if(randomNum<=weights[i])
 				{
 					return types[i];
 				}
 			}
+			trace("warn@GameRule.as: no bonus type is selected, return NULL!");
 			return BonusType.NULL;
 		}
 		
@@ -721,6 +739,18 @@ package batr.game.main
 		{
 			return this._playerTeams;
 		}
+
+		public function get allowPlayerChangeTeam():Boolean
+		{
+			return this._allowPlayerChangeTeam;
+		}
+		
+		public function set allowPlayerChangeTeam(value:Boolean):void
+		{
+			if(value==this._allowPlayerChangeTeam) return;
+			onVariableUpdate(this._allowPlayerChangeTeam,value);
+			this._allowPlayerChangeTeam=value;
+		}
 		
 		//End&Victory
 		public function get allowTeamVictory():Boolean 
@@ -775,6 +805,7 @@ package batr.game.main
 			this._playerAsphyxiaDamage=d_playerAsphyxiaDamage;
 			//Team
 			this._playerTeams=d_playerTeams;
+			this._allowPlayerChangeTeam=d_allowPlayerChangeTeam;
 			//End&Victory
 			this._allowTeamVictory=d_allowTeamVictory;
 		}

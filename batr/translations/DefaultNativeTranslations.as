@@ -61,6 +61,7 @@ package batr.translations
 				TranslationKey.AI_PLAYER_COUNT,"AIPlayer Count",
 				TranslationKey.GAME_MODE,"Game Mode",
 				TranslationKey.INITIAL_MAP,"Initial Map",
+				TranslationKey.LOCK_TEAMS,"Lock Teams",
 				//batr.game
 				TranslationKey.GAME_RESULT,"Game Result",
 				TranslationKey.NOTHING_WIN,"No player wins in the game",
@@ -83,7 +84,7 @@ package batr.translations
 				TranslationKey.KILL_COUNT,"Kill Count",
 				TranslationKey.DEATH_COUNT,"Death Count",
 				TranslationKey.DEATH_BY_PLAYER_COUNT,"Death by Player Count",
-				TranslationKey.CURSE_DAMAGE,"Curse Damage",
+				TranslationKey.CURSE_DAMAGE,"Cause Damage",
 				TranslationKey.DAMAGE_BY,"Damage By",
 				TranslationKey.PICKUP_BONUS,"Ppckup Bonus",
 				TranslationKey.BE_TELEPORT_COUNT,"Be Teleport Count",
@@ -149,6 +150,7 @@ package batr.translations
 				TranslationKey.AI_PLAYER_COUNT,"\u0041\u0049\u73a9\u5bb6\u6570\u91cf",
 				TranslationKey.GAME_MODE,"\u6e38\u620f\u6a21\u5f0f",
 				TranslationKey.INITIAL_MAP,"\u521d\u59cb\u5730\u56fe",
+				TranslationKey.LOCK_TEAMS,"\u9501\u5b9a\u961f\u4f0d",
 				//batr.game
 				TranslationKey.GAME_RESULT,"\u6e38\u620f\u7ed3\u679c",
 				TranslationKey.NOTHING_WIN,"\u6ca1\u6709\u73a9\u5bb6\u5728\u6e38\u620f\u4e2d\u80dc\u5229",

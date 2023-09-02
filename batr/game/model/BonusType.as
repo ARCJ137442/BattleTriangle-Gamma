@@ -1,4 +1,4 @@
-package batr.game.model 
+﻿package batr.game.model 
 {
 	import batr.common.*;
 	import batr.general.*;
@@ -59,6 +59,21 @@ package batr.game.model
 		public static function get RANDOM_BUFF():BonusType
 		{
 			return _ABOUT_BUFF[exMath.random(_ABOUT_BUFF.length)]
+		}
+
+		public static function get AVALIABLE_SPAWN_POTENTIALS():Vector.<Object>
+		{
+			var result:Vector.<Object>=new Vector.<Object>();
+			for each(var bType:BonusType in _ALL_AVALIABLE_TYPE)
+			{
+				result.push(
+					{
+						type: bType,
+						weight: 1.0
+					}
+				);
+			}
+			return result;
 		}
 		
 		//============Static Functions============//

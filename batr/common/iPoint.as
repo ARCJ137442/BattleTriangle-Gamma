@@ -10,7 +10,7 @@ package batr.common
 		//============Static Variables============//
 		
 		//============Static Functions============//
-		public static function inventPoint(p:iPoint):iPoint
+		public static function invertPoint(p:iPoint):iPoint
 		{
 			return new iPoint(p.y,p.x);
 		}
@@ -114,7 +114,7 @@ package batr.common
 			return "\u0028\u0078\u003d"+this.x+"\u002c\u0079\u003d"+this.y+"\u0029";
 		}
 		
-		public function invent():iPoint
+		public function invert():iPoint
 		{
 			x^=y;
 			y^=x;

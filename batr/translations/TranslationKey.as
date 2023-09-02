@@ -59,6 +59,7 @@ package batr.translations
 		public static const AI_PLAYER_COUNT:String="batr.select.AIPlayerCount";
 		public static const GAME_MODE:String="batr.select.gameMode";
 		public static const INITIAL_MAP:String="batr.select.initialMap";
+		public static const LOCK_TEAMS:String="batr.select.lockTeam";
 		
 		//batr.custom
 		public static const DEFAULT_WEAPON:String="batr.custom.defaultWeapon";
@@ -99,7 +100,7 @@ package batr.translations
 		public static const KILL_COUNT:String="batr.stat.player.killCount";
 		public static const DEATH_COUNT:String="batr.stat.player.deathCount";
 		public static const DEATH_BY_PLAYER_COUNT:String="batr.stat.player.deathByPlayerCount";
-		public static const CURSE_DAMAGE:String="batr.stat.player.curseDamage";
+		public static const CURSE_DAMAGE:String="batr.stat.player.causeDamage";
 		public static const DAMAGE_BY:String="batr.stat.player.damageBy";
 		public static const PICKUP_BONUS:String="batr.stat.player.pickupBonus";
 		public static const BE_TELEPORT_COUNT:String="batr.stat.player.beTeleport";

@@ -138,7 +138,7 @@ package batr.menu.main
 		protected var _playerStatKill:BatrTextField;
 		protected var _playerStatDeath:BatrTextField;
 		protected var _playerStatDeathByPlayer:BatrTextField;
-		protected var _playerStatCurseDamage:BatrTextField;
+		protected var _playerStatCauseDamage:BatrTextField;
 		protected var _playerStatDamageBy:BatrTextField;
 		protected var _playerStatPickupBonus:BatrTextField;
 		protected var _playerStatBeTeleport:BatrTextField;
@@ -537,14 +537,19 @@ package batr.menu.main
 						false
 					).appendSelecterAndText(
 						this._subject,
-						imS_2=this.quickSelecterBuild(null,1),
+						imS_2=this.quickSelecterBuild(null, 1),
 						TranslationKey.INITIAL_MAP,
+						false
+					).quickAppendSelecter(
+						this,
+						BatrSelecterContext.createYorNContext(this.gameRule.allowPlayerChangeTeam?0:1,this.translations),
+						TranslationKey.LOCK_TEAMS,
 						false
 					).quickAppendSelecter(//New
 						this,
 						BatrSelecterContext.createPositiveIntagerContext(this.gameRule.defaultHealth),
 						TranslationKey.DEFAULT_HEALTH,
-						true
+						false
 					).quickAppendSelecter(
 						this,
 						BatrSelecterContext.createPositiveIntagerContext(this.gameRule.defaultMaxHealth),
@@ -638,7 +643,7 @@ package batr.menu.main
 					this._playerStatKill=this.quickStatTextFieldBuild(TranslationKey.KILL_COUNT,3,6),
 					this._playerStatDeath=this.quickStatTextFieldBuild(TranslationKey.DEATH_COUNT,3,7),
 					this._playerStatDeathByPlayer=this.quickStatTextFieldBuild(TranslationKey.DEATH_BY_PLAYER_COUNT,3,8),
-					this._playerStatCurseDamage=this.quickStatTextFieldBuild(TranslationKey.CURSE_DAMAGE,3,9),
+					this._playerStatCauseDamage=this.quickStatTextFieldBuild(TranslationKey.CURSE_DAMAGE,3,9),
 					this._playerStatDamageBy=this.quickStatTextFieldBuild(TranslationKey.DAMAGE_BY,3,10),
 					this._playerStatPickupBonus=this.quickStatTextFieldBuild(TranslationKey.PICKUP_BONUS,3,12),
 					this._playerStatBeTeleport=this.quickStatTextFieldBuild(TranslationKey.BE_TELEPORT_COUNT,3,13),
@@ -815,6 +820,9 @@ package batr.menu.main
 				//DefaultRespawnTime
 				var defaultRespawnTimeSelecter:BatrSelecter=this._selecterListAdvanced_L.getSelecterByName(TranslationKey.RESPAWN_TIME);
 				rule.defaultRespawnTime=defaultRespawnTimeSelecter.currentValue*GlobalGameVariables.TPS;
+				//LockTeam
+				var lockTeam:BatrSelecter=this._selecterListAdvanced_L.getSelecterByName(TranslationKey.LOCK_TEAMS);
+				rule.allowPlayerChangeTeam=defaultRespawnTimeSelecter.currentValue==0; // inverted boolean
 				//====Right====//
 				//DefaultWeapon
 				var defaultWeaponSelecter:BatrSelecter=this._selecterListAdvanced_R.getSelecterByName(TranslationKey.DEFAULT_WEAPON);
@@ -920,7 +928,7 @@ package batr.menu.main
 			try
 			{
 				var currentPlayer:PlayerStats=this._storedGameResult.stats.players[this._playerStatSelecter.currentValue];
-				setFixedTextSuffix(this._playerStatCurseDamage,currentPlayer.causeDamage);
+				setFixedTextSuffix(this._playerStatCauseDamage,currentPlayer.causeDamage);
 				setFixedTextSuffix(this._playerStatDamageBy,currentPlayer.damageBy);
 				setFixedTextSuffix(this._playerStatDeath,currentPlayer.deathCount);
 				setFixedTextSuffix(this._playerStatDeathByPlayer,currentPlayer.deathByPlayer);
