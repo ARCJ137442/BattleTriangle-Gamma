@@ -263,7 +263,7 @@
 	/**
 	 * int.MAX_VALUE -> uint.MAX_VALUE
 	 * Negative number -> uint.MAX_VALUE
-	 * damage operator function=Game.operateFinalPlayerHurtDamage
+	 * damage operator function=Game.computeFinalPlayerHurtDamage
 	 */
 	protected var _playerAsphyxiaDamage:int;
 

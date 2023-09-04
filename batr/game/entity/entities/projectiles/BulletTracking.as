@@ -16,7 +16,7 @@
 		public static const SIZE:Number = PosTransform.localPosToRealPos(3 / 8);
 		public static const DEFAULT_SPEED:Number = 12 / GlobalGameVariables.FIXED_TPS;
 		public static const DEFAULT_EXPLODE_COLOR:uint = 0xffff00;
-		public static const DEFAULT_EXPLODE_RADIUS:Number = 1.25;
+		public static const DEFAULT_EXPLODE_RADIUS:Number = 0.625;
 
 		//============Instance Variables============//
 		protected var _target:Player = null;

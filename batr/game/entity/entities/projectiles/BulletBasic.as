@@ -35,7 +35,7 @@ package batr.game.entity.entities.projectiles {
 			super(host, x, y, owner);
 			this.speed = speed;
 
-			this.finalExplodeRadius = owner == null ? defaultExplodeRadius : owner.operateFinalRadius(defaultExplodeRadius);
+			this.finalExplodeRadius = owner == null ? defaultExplodeRadius : owner.computeFinalRadius(defaultExplodeRadius);
 			this._currentWeapon = WeaponType.BULLET;
 
 			this.damage = this._currentWeapon.defaultDamage;

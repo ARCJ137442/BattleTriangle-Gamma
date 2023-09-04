@@ -62,7 +62,7 @@ package batr.game.entity.ai.programs {
 			var _leastF:int = int.MAX_VALUE;
 			for each (var node:PathNode in nearbyNodes) {
 				if (node == null || AIProgram_Adventurer.pointInRemember(node, remember) ||
-						host.operateFinalPlayerHurtDamage(owner, node.x, node.y, host.getBlockPlayerDamage(node.x, node.y)) >= owner.health)
+						host.computeFinalPlayerHurtDamage(owner, node.x, node.y, host.getBlockPlayerDamage(node.x, node.y)) >= owner.health)
 					continue;
 				if (node.F < _leastF) {
 					_leastNode = node;

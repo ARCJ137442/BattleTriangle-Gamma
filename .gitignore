@@ -19,7 +19,7 @@ bin-release/
 *.lnk
 
 # VS Code
-.vscode/
+.vscode
 .code-workspace
 
 # Bash Log

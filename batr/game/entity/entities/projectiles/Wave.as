@@ -58,7 +58,7 @@ package batr.game.entity.entities.projectiles {
 		//============Instance Functions============//
 		public function dealCharge(percent:Number):void {
 			this.tempScale = Wave.MIN_SCALE + (Wave.MAX_SCALE - Wave.MIN_SCALE) * percent;
-			this.finalScale = this._owner == null ? tempScale : (1 + this._owner.operateFinalRadius(this.tempScale) / 2);
+			this.finalScale = this._owner == null ? tempScale : (1 + this._owner.computeFinalRadius(this.tempScale) / 2);
 			this.damage = this._currentWeapon.defaultDamage * tempScale / Wave.MAX_SCALE;
 		}
 

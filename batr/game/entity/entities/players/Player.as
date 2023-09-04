@@ -959,7 +959,7 @@ package batr.game.entity.entities.players {
 		 * @param	defaultDamage	The original damage by attacker.
 		 * @return	The Final Damage.
 		 */
-		public final function operateFinalDamage(attacker:Player, attackerWeapon:WeaponType, defaultDamage:uint):uint {
+		public final function computeFinalDamage(attacker:Player, attackerWeapon:WeaponType, defaultDamage:uint):uint {
 			if (attacker == null)
 				return attackerWeapon == null ? 0 : attackerWeapon.defaultDamage;
 			if (attackerWeapon == null)
@@ -970,18 +970,18 @@ package batr.game.entity.entities.players {
 		}
 
 		public final function finalRemoveHealth(attacker:Player, attackerWeapon:WeaponType, defaultDamage:uint):void {
-			this.removeHealth(this.operateFinalDamage(attacker, attackerWeapon, defaultDamage), attacker);
+			this.removeHealth(this.computeFinalDamage(attacker, attackerWeapon, defaultDamage), attacker);
 		}
 
-		public final function operateFinalCD(weapon:WeaponType):uint {
+		public final function computeFinalCD(weapon:WeaponType):uint {
 			return weapon.getBuffedCD(this.buffCD);
 		}
 
-		public final function operateFinalRadius(defaultRadius:uint):Number {
+		public final function computeFinalRadius(defaultRadius:Number):Number {
 			return defaultRadius * (1 + Math.min(this.buffRadius / 16, 3));
 		}
 
-		public final function operateFinalLightningEnergy(defaultEnergy:uint):int {
+		public final function computeFinalLightningEnergy(defaultEnergy:uint):int {
 			return defaultEnergy * (1 + this._buffDamage / 20 + this._buffRadius / 10);
 
 		}

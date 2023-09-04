@@ -958,7 +958,7 @@
 						continue;
 
 					// Operate
-					finalDamage = attacker == null ? damage : victim.operateFinalDamage(attacker, laser.currentWeapon, damage);
+					finalDamage = attacker == null ? damage : victim.computeFinalDamage(attacker, laser.currentWeapon, damage);
 					// Effects
 					if (attacker == null || attacker.canUseWeaponHurtPlayer(victim, laser.currentWeapon)) {
 						// Damage
@@ -1070,11 +1070,11 @@
 			var returnBoo:Boolean = false;
 			if (attributes != null) {
 				if (attributes.playerDamage == -1) {
-					player.removeHealth(this.operateFinalPlayerHurtDamage(player, x, y, this.rule.playerAsphyxiaDamage), null);
+					player.removeHealth(this.computeFinalPlayerHurtDamage(player, x, y, this.rule.playerAsphyxiaDamage), null);
 					returnBoo = true;
 				}
 				else if (attributes.playerDamage > -1) {
-					player.removeHealth(this.operateFinalPlayerHurtDamage(player, x, y, attributes.playerDamage), null);
+					player.removeHealth(this.computeFinalPlayerHurtDamage(player, x, y, attributes.playerDamage), null);
 					returnBoo = true;
 				}
 				else if (attributes.playerDamage == -2) {
@@ -1103,7 +1103,7 @@
 		 * (100...] -> playerDamage-100
 		 * @return	The damage.
 		 */
-		public function operateFinalPlayerHurtDamage(player:Player, x:int, y:int, playerDamage:int):uint {
+		public function computeFinalPlayerHurtDamage(player:Player, x:int, y:int, playerDamage:int):uint {
 			if (playerDamage < -1)
 				return 0;
 			if (playerDamage == -1)
@@ -1718,7 +1718,7 @@
 			// Use
 			this.playerUseWeaponAt(player, player.weapon, spawnX, spawnY, rot, chargePercent, GlobalGameVariables.PROJECTILES_SPAWN_DISTANCE);
 			// Set CD
-			player.weaponUsingCD = _rule.weaponsNoCD ? GlobalGameVariables.WEAPON_MIN_CD : player.operateFinalCD(player.weapon);
+			player.weaponUsingCD = _rule.weaponsNoCD ? GlobalGameVariables.WEAPON_MIN_CD : player.computeFinalCD(player.weapon);
 		}
 
 		public function playerUseWeaponAt(player:Player, weapon:WeaponType, x:Number, y:Number, weaponRot:uint, chargePercent:Number, projectilesSpawnDistance:Number):void {
@@ -1805,7 +1805,7 @@
 
 					break;
 				case WeaponType.LIGHTNING:
-					p = new Lightning(this, centerX, centerY, weaponRot, player, player.operateFinalLightningEnergy(100) * (0.25 + chargePercent * 0.75));
+					p = new Lightning(this, centerX, centerY, weaponRot, player, player.computeFinalLightningEnergy(100) * (0.25 + chargePercent * 0.75));
 					break;
 				case WeaponType.SHOCKWAVE_ALPHA:
 					p = new ShockWaveBase(this, centerX, centerY, player, player == null ? GameRule.DEFAULT_DRONE_WEAPON : player.droneWeapon, player.droneWeapon.chargePercentInDrone);
