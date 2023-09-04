@@ -13,15 +13,15 @@ v0.2.0
 
 ## 玩家的键盘操作
 
-参见[操作](CONTROL.zh.md)
+参见[操作](docs/CONTROL.zh.md)
 
 ## 开发中的测试键
 
-参见[测试](DEBUG.zh.md)
+参见[调试键](docs/DEBUG.zh.md)
 
 ## FAQ
 
-参见[FAQ](FAQ.zh.md)
+参见[问与答](docs/FAQ.zh.md)
 
 ## 许可证
 

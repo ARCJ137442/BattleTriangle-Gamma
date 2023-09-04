@@ -1,6 +1,6 @@
 # Keys for Players
 
-## <Player 1\>
+## <Player 1 (P1)\>
 
 * Up: `W`
 * Down: `S`
@@ -8,7 +8,7 @@
 * Right: `D`
 * Use: `Space`
 
-## <Player 2\>
+## <Player 2 (P2)\>
 
 * Up: `↑`
 * Down: `↓`
@@ -16,7 +16,7 @@
 * Right: `→`
 * Use: `Numpad 0`
 
-## <Player 3\>
+## <Player 3 (P3)\>
 
 * Up: `U`
 * Down: `J`
@@ -24,7 +24,7 @@
 * Right: `K`
 * Use: `]`
 
-## <Player 4\>
+## <Player 4 (P4)\>
 
 * Up: `Numpad 8`
 * Down: `Numpad 5`

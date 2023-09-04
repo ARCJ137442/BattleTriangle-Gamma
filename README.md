@@ -13,17 +13,17 @@ v0.2.0
 
 ## Control Keys for Players
 
-See [CONTROL](CONTROL.md)
+See [CONTROL](docs/CONTROL.md)
 
 ## Debug Keys in Develop
 
-See [DEBUG](DEBUG.md)
+See [DEBUG](docs/DEBUG.md)
 
 ## FAQ
 
-See [FAQ](FAQ.md)
+See [FAQ](docs/FAQ.md)
 
-## LICENCE
+## LICENSE
 
 Released under the ***GNU General Public License v3(GPLv3)***
 

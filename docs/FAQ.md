@@ -22,8 +22,10 @@ Usually yes.So far, the game is still under continuous development.
 
 ## How fast is this game developed?
 
-It maybe slowly,because the developer now mainly uses `Python`
+The project is currently under active maintenance, but the speed of development depends on the developer's free time.
+
+In addition, developers are learning TypeScript, so the AS3 version may be replaced by the TypeScript version in the near future.
 
 ## How will this game develop in the future?
 
-The developer will try to develop this as an API,try to support `Game Module(Mods)`,and finally develop this to a `Game Engine`.
+The developer will try to develop this as an API,try to support `Game Module(Mods)`,and finally develop this to an AI test platform.
